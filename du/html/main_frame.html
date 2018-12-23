@@ -244,12 +244,12 @@
     function init(){
      wareTypeList=$api.getStorage('WareTypeList');
  }
- function openWareWin(){
+ function openWareWin(_wareId){
    api.openWin({
     name: 'ware',
     url: './ware.html',
     pageParam: {
-        wareId: 'w1234567890'
+        wareId: _wareId
     }
 });
 }

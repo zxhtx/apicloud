@@ -235,7 +235,7 @@ function initUIScrollPicture() {
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
 
-function getWareInfo(wareId_) {
+function getWareInfo(_wareId) {
     api.showProgress({
         style: 'default',
         animationType: 'fade',
@@ -246,7 +246,7 @@ function getWareInfo(wareId_) {
     var params = {
         fields: {},
         where: {
-            id: wareId_
+            id: _wareId
         },
         skip: 0,
         limit: 1,
@@ -257,7 +257,7 @@ function getWareInfo(wareId_) {
         url: 'http://d.apicloud.com/mcm/api/ware?filter=' + params,
         method: 'get',
         headers: {
-            "X-APICloud-AppId": "A6921544633372",
+            "X-APICloud-AppId": "A6099267504667",
             "X-APICloud-AppKey": appKey
         }
     }, function(ret, err) {
