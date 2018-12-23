@@ -248,11 +248,11 @@ function getWareInfo(_wareId) {
     var params = {
         fields: {},
         where: {
-            // id: _wareId
+            id: _wareId
         },
         skip: 0,
         limit: 1,
-        // include: ['wareInfoPointer']
+        include: ['wareInfoPointer']
     }
     params = $api.jsonToStr(params);
      api.ajax({
@@ -264,39 +264,38 @@ function getWareInfo(_wareId) {
         },
         
     },function(ret, err) {
-        alert(JSON.stringify(ret))
-        // if (ret) {
-        //     api.hideProgress();
-        //     // 更新商品详情展示
-        //     fnUpdateWareInfo(ret);
-        //     alert(JSON.stringify(ret))
-        // } else {
-        //   api.toast({
-        //       msg: err.msg,
-        //       duration: 2000,
-        //       location: 'bottom'
-        //   });
-        // }
+        if (ret) {
+            api.hideProgress();
+            // 更新商品详情展示
+            fnUpdateWareInfo(ret[0]);
+            // alert(JSON.stringify(ret))
+        } else {
+          api.toast({
+              msg: err.msg,
+              duration: 2000,
+              location: 'bottom'
+          });
+        }
     });
 }
 
 // 更新商品详情展示
-function fnUpdateWareInfo(ware_) {
+function fnUpdateWareInfo(_ware) {
     // alert(ware_[0])
     // 商品名称
     var wareName = $api.byId('wareName');
-    wareName.innerHTML = ware_[0].name;
+    wareName.innerHTML = _ware.name;
     // alert(ware_.name)
 
     // 商品描述
     var description = $api.byId('description');
-    description.innerHTML = ware_[0].description;
+    description.innerHTML = _ware.description;
      // alert(ware_.description)
 
 
     // 商品价格
     var price = $api.byId('price');
-    price.innerHTML = '￥' + ware_[0].price;
+    price.innerHTML = '￥' + _ware.price;
     // alert(ware_.price)
 
 
