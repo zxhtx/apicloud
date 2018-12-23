@@ -265,7 +265,7 @@ function getWareInfo(_wareId) {
         if (ret) {
             api.hideProgress();
             // 更新商品详情展示
-            fnUpdateWareInfo(ret[0]);
+            fnUpdateWareInfo(ret);
         } else {
           api.toast({
               msg: err.msg,
@@ -278,22 +278,22 @@ function getWareInfo(_wareId) {
 
 // 更新商品详情展示
 function fnUpdateWareInfo(ware_) {
-    alert(ware_)
+    alert(ware_[0])
     // 商品名称
     var wareName = $api.byId('wareName');
-    wareName.innerHTML = ware_.name;
-    alert(ware_.name)
+    wareName.innerHTML = ware_[0].name;
+    // alert(ware_.name)
 
     // 商品描述
     var description = $api.byId('description');
-    description.innerHTML = ware_.description;
-     alert(ware_.description)
+    description.innerHTML = ware_[0].description;
+     // alert(ware_.description)
 
 
     // 商品价格
     var price = $api.byId('price');
-    price.innerHTML = '￥' + ware_.price;
-    alert(ware_.price)
+    price.innerHTML = '￥' + ware_[0].price;
+    // alert(ware_.price)
 
 
     // 更新轮播图中的图片
