@@ -302,8 +302,8 @@ function fnUpdateWareInfo(_ware) {
     // 更新轮播图中的图片
     var paths = [];
     for (var i = 0; i < 6; i++) {
-        if (ware_.wareInfo['picture' + i]) {
-            paths.push(ware_.wareInfo['picture' + i].url);
+        if (_ware.wareInfo['picture' + i]) {
+            paths.push(_ware.wareInfo['picture' + i].url);
         }
     }
     UIScrollPicture.reloadData({
