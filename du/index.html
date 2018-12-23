@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>Hello APP</title>
+  <link rel="stylesheet" type="text/css" href="./css/api.css" />
+  <style type="text/css">
+
+</style>
+</head>
+
+<body class="wrap">
+
+</body>
+<script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript" src="./script/SHA1.js"></script>
+<script type="text/javascript">
+  apiready = function() {
+    getWareTypeList();
+    init();
+
+    api.openWin({
+      name: 'main',
+      url: './html/main.html',
+      pageParam: {
+        name: 'test'
+      }
+    });
+  }
+  function init(){
+    var WareTypeList=$api.getStorage('WareTypeList');
+    if (!WareTypeList) {
+     wareTypeList=[
+     {
+      "id": "56c80da883af652643474b6b",
+      "name": "水果",
+      "banner": {
+        "url": "http://7y0hol.com1.z0.glb.clouddn.com/apicloud/f761997f8fd33af25af5354737e37bcc.png",
+        "name": "56c80da883af652643474b6b.png",
+        "id": "57f63bdf0d3febfe58585568"
+      },
+      "createdAt": "2016-02-20T06:54:32.808Z",
+      "updatedAt": "2016-10-06T11:56:16.288Z"
+    },
+    {
+      "id": "56c80db78d04c83d3d1dedea",
+      "name": "食材",
+      "banner": {
+        "url": "http://7y0hol.com1.z0.glb.clouddn.com/apicloud/be93f9fdeda576ad81d0c728528cef50.png",
+        "name": "56c80dc88d04c83d3d1dedf3.png",
+        "id": "57f63be70d3febfe5858556c"
+      },
+      "createdAt": "2016-02-20T06:54:47.996Z",
+      "updatedAt": "2016-10-06T11:56:23.906Z"
+    },
+    {
+      "id": "56c80dc031da9e480de1cb49",
+      "name": "零食",
+      "banner": {
+        "url": "http://7y0hol.com1.z0.glb.clouddn.com/apicloud/be93f9fdeda576ad81d0c728528cef50.png",
+        "name": "56c80dc88d04c83d3d1dedf3.png",
+        "id": "57f63bec9592b3fc6a341b59"
+      },
+      "createdAt": "2016-02-20T06:54:56.243Z",
+      "updatedAt": "2016-10-06T11:56:28.778Z"
+    },
+    {
+      "id": "56c80dc383af652643474b6d",
+      "name": "牛奶",
+      "banner": {
+        "url": "http://7y0hol.com1.z0.glb.clouddn.com/apicloud/f761997f8fd33af25af5354737e37bcc.png",
+        "name": "56c80da883af652643474b6b.png",
+        "id": "57f63bf0c6f05d0956108828"
+      },
+      "createdAt": "2016-02-20T06:54:59.891Z",
+      "updatedAt": "2016-10-06T11:56:32.300Z"
+    },
+    {
+      "id": "56c80dc88d04c83d3d1dedf3",
+      "name": "蔬菜",
+      "banner": {
+        "url": "http://7y0hol.com1.z0.glb.clouddn.com/apicloud/be93f9fdeda576ad81d0c728528cef50.png",
+        "name": "56c80db78d04c83d3d1dedea.png",
+        "id": "57f63bf39592b3fc6a341b5d"
+      },
+      "createdAt": "2016-02-20T06:55:04.285Z",
+      "updatedAt": "2016-10-06T11:56:35.789Z"
+    }
+    ]
+  }
+}
+function getWareTypeList(){
+ var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
+
+      var params={
+        fields:{},
+        where:{},
+        skip:0,
+        limit:5
+      }
+      params=$api.jsonToStr(params);
+      api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/wareType?filter='+params,
+        method: 'get',
+        headers: {
+          "X-APICloud-AppId": "A6099267504667",
+          "X-APICloud-AppKey":   appKey
+        },
+
+      },function(ret, err){
+        if (ret) {
+         $api.setStorage('WareTypeList', ret);
+       } else {
+        // alert( err.msg );
+      }
+    });
+    }
+
+  </script>
+
+  </html>
