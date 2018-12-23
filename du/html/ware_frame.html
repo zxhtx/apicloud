@@ -157,6 +157,7 @@
     <section>
         <div id="picture" class="picture"></div>
         <div class="info-name">
+
             <div id="wareName" class="name">佳沛绿奇异果</div>
             <div id="description" class="description">享受清爽汁水融入齿间感觉</div>
         </div>
@@ -228,7 +229,11 @@ function initUIScrollPicture() {
         if (ret) {
             //alert(JSON.stringify(ret));
         } else {
-            alert(JSON.stringify(err));
+            api.toast({
+                msg: err.msg,
+                duration: 2000,
+                location: 'bottom'
+            });
         }
     });
 }

@@ -88,6 +88,44 @@
       }else{
         
       }
+      var params={
+        fields: {},
+        skip: 0,
+    }
+    params=$api.jsonToStr(params);
+      api.ajax({
+          url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
+          method: 'get',
+          headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey
+        },
+      },function(ret, err){
+          if (ret) {
+             $api.setStorage('Register',ret);
+          } else {
+            api.toast({
+                msg: err.msg,
+                duration: 2000,
+                location: 'bottom'
+            });
+          }
+      });
+      var Register=$api.getStorage('Register');
+        if (Register){
+          for (var i =0; i<Register.length; i++) {
+              if (usernameValue==Register[i].username) {
+                api.toast({
+                    msg: '该用户名已被注册',
+                    duration: 2000,
+                    location: 'bottom'
+                });
+                return;
+              } 
+             
+          }
+          
+        }
 
       api.ajax({
         url: 'https://d.apicloud.com/mcm/api/user',
