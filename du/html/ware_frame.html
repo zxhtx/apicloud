@@ -266,6 +266,7 @@ function getWareInfo(_wareId) {
             api.hideProgress();
             // 更新商品详情展示
             fnUpdateWareInfo(ret);
+            alert(JSON.stringify(ret))
         } else {
           api.toast({
               msg: err.msg,
