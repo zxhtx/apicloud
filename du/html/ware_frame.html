@@ -254,14 +254,15 @@ function getWareInfo(_wareId) {
         // include: ['wareInfoPointer']
     }
     params = $api.jsonToStr(params);
-    api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/ware?filter='+ params,
+     api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/ware?filter='+params,
         method: 'get',
         headers: {
             "X-APICloud-AppId": "A6099267504667",
-            "X-APICloud-AppKey": appKey
-        }
-    }, function(ret, err) {
+            "X-APICloud-AppKey":   appKey
+        },
+        
+    },function(ret, err) {
         if (ret) {
             api.hideProgress();
             // 更新商品详情展示
