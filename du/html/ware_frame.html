@@ -56,7 +56,7 @@
         width: 100%;
         height: 24px;
         line-height: 24px;
-        color: #e3007f;
+        color: black
         font-size: 24px;
         font-weight: bolder;
     }
@@ -161,29 +161,145 @@
         </div>
         <div class="info-price">
             <div id="price" class="price">¥18.9</div>
-            <div class="other">
-                <div class="origin-price">
-                    <del id="originPrice">原价：99.8</del>
-                </div>
-                <div id="unit" class="unit">规格：4件</div>
-                <div id="detail" class="place">产地：中国</div>
-            </div>
         </div>
         <div class="info-discount">
             <div class="name">优惠活动：</div>
-            <div class="value">全场满49元包邮</div>
-        </div>
-        <div class="push">
-            <div class="top">“亚当和夏娃都无法抵挡的禁果诱惑”</div>
-            <div class="bottom">下滑查看商品详情</div>
         </div>
     </section>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
 apiready = function() {
+    // 初始化轮播图模块
+    initUIScrollPicture();
 
+    // 获取商品详情数据
+    getWareInfo(api.pageParam.wareId);
 };
+
+var UIScrollPicture;
+
+function initUIScrollPicture() {
+
+    // 获取占位的div元素，并设置元素的宽高
+    var picture = $api.byId('picture');
+    picture.style.width = api.winWidth + 'px';
+    picture.style.height = api.winWidth + 'px';
+    var rect = $api.offset(picture);
+
+    // 引入UIScrollPicture模块，并指定位置和宽高
+    UIScrollPicture = api.require('UIScrollPicture');
+    UIScrollPicture.open({
+        rect: {
+            x: rect.l,
+            y: rect.t,
+            w: rect.w,
+            h: rect.h
+        },
+        data: {
+            paths: [
+                'widget://image/default_rect.png',
+                'widget://image/default_rect.png'
+            ]
+        },
+        styles: {
+            caption: {
+                height: 35,
+                color: '#E0FFFF',
+                size: 13,
+                bgColor: '#696969',
+                position: 'bottom'
+            },
+            indicator: {
+                align: 'center',
+                color: '#FFFFFF',
+                activeColor: '#DA70D6'
+            }
+        },
+        placeholderImg: 'widget://image/default_rect.png',
+        contentMode: 'scaleToFill',
+        interval: 5,
+        fixedOn: api.frameName,
+        loop: true,
+        fixed: false
+    }, function(ret, err) {
+        if (ret) {
+            //alert(JSON.stringify(ret));
+        } else {
+            alert(JSON.stringify(err));
+        }
+    });
+}
+
+     var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
+
+function getWareInfo(wareId_) {
+    api.showProgress({
+        style: 'default',
+        animationType: 'fade',
+        title: '努力加载中...',
+        text: '先喝杯茶...',
+        modal: false
+    });
+    var params = {
+        fields: {},
+        where: {
+            id: wareId_
+        },
+        skip: 0,
+        limit: 1,
+        include: ['wareInfoPointer']
+    }
+    params = $api.jsonToStr(params);
+    api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/ware?filter=' + params,
+        method: 'get',
+        headers: {
+            "X-APICloud-AppId": "A6921544633372",
+            "X-APICloud-AppKey": appKey
+        }
+    }, function(ret, err) {
+        if (ret) {
+            api.hideProgress();
+            // 更新商品详情展示
+            fnUpdateWareInfo(ret[0]);
+        } else {
+            alert(JSON.stringify(err));
+        }
+    });
+}
+
+// 更新商品详情展示
+function fnUpdateWareInfo(ware_) {
+
+    // 商品名称
+    var wareName = $api.byId('wareName');
+    wareName.innerHTML = ware_.name;
+
+    // 商品描述
+    var description = $api.byId('description');
+    description.innerHTML = ware_.description;
+
+    // 商品价格
+    var price = $api.byId('price');
+    price.innerHTML = '￥' + ware_.price;
+
+
+    // 更新轮播图中的图片
+    var paths = [];
+    for (var i = 0; i < 6; i++) {
+        if (ware_.wareInfo['picture' + i]) {
+            paths.push(ware_.wareInfo['picture' + i].url);
+        }
+    }
+    UIScrollPicture.reloadData({
+        data: {
+            paths: paths
+        }
+    });
+}
 </script>
 
 </html>

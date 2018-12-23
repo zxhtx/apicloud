@@ -151,6 +151,10 @@
        var header=$api.byId('header');
        var footer=$api.byId('footer');
        $api.fixStatusBar(header);
+          api.setStatusBarStyle({
+            style: 'light',
+            color:'#fff'
+        });
         // 获取header和nav的高
         headerH=$api.offset(header).h
         footerH=$api.offset(footer).h;
