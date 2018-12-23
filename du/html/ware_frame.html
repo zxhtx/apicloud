@@ -246,9 +246,9 @@ function getWareInfo(_wareId) {
     });
     var params = {
         fields: {},
-        // where: {
-        //     id: _wareId
-        // },
+        where: {
+            // id: _wareId
+        },
         skip: 0,
         limit: 1,
         // include: ['wareInfoPointer']
@@ -257,7 +257,7 @@ function getWareInfo(_wareId) {
      api.ajax({
         url: 'http://d.apicloud.com/mcm/api/ware?filter='+params,
         method: 'get',
-        headers: {
+         headers: {
             "X-APICloud-AppId": "A6099267504667",
             "X-APICloud-AppKey":   appKey
         },
