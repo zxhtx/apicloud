@@ -217,7 +217,7 @@ function initUIScrollPicture() {
                 activeColor: '#DA70D6'
             }
         },
-        placeholderImg: 'widget://image/default_rect.png',
+        placeholderImg:   'widget://image/default_rect.png',
         contentMode: 'scaleToFill',
         interval: 5,
         fixedOn: api.frameName,
@@ -278,7 +278,7 @@ function getWareInfo(_wareId) {
 
 // 更新商品详情展示
 function fnUpdateWareInfo(ware_) {
-
+    alert(ware_)
     // 商品名称
     var wareName = $api.byId('wareName');
     wareName.innerHTML = ware_.name;
@@ -293,7 +293,7 @@ function fnUpdateWareInfo(ware_) {
     // 商品价格
     var price = $api.byId('price');
     price.innerHTML = '￥' + ware_.price;
- alert(ware_.price)
+    alert(ware_.price)
 
 
     // 更新轮播图中的图片
