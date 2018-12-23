@@ -176,7 +176,6 @@ apiready = function() {
 
     // 获取商品详情数据
     getWareInfo(api.pageParam.wareId);
-    alert(api.pageParam.wareId)
 };
 
 var UIScrollPicture;
@@ -235,7 +234,7 @@ function initUIScrollPicture() {
 
      var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
 
 function getWareInfo(_wareId) {
     api.showProgress({
@@ -283,14 +282,18 @@ function fnUpdateWareInfo(ware_) {
     // 商品名称
     var wareName = $api.byId('wareName');
     wareName.innerHTML = ware_.name;
+    alert(ware_.name)
 
     // 商品描述
     var description = $api.byId('description');
     description.innerHTML = ware_.description;
+     alert(ware_.description)
+
 
     // 商品价格
     var price = $api.byId('price');
     price.innerHTML = '￥' + ware_.price;
+ alert(ware_.price)
 
 
     // 更新轮播图中的图片
