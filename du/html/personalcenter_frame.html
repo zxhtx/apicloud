@@ -195,10 +195,13 @@ function setAvatar(){
     }, function(ret, err){
         if( ret ){
             var sourceTypes=['camera','album']
+             if (ret.buttonIndex == (sourceTypes.length + 1)) {
+                return;
+            }
             api.getPicture({
                 sourceType: sourceTypes[ret.buttonIndex-1],
                 allowEdit: true,
-                quality: 50,
+                quality: 100,
                 targetWidth: 100,
                 targetHeight: 100,
                 saveToPhotoAlbum: false
