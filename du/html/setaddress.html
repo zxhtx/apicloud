@@ -12,7 +12,7 @@
         position: relative;
         width: 100%;
         height: 50px;
-        background-color: #e3007f
+        background-color: white
     }
     
     header .back {
@@ -32,8 +32,8 @@
         height: 50px;
         line-height: 50px;
         text-align: center;
-        color: #fff;
-        font-size: 20px;
+        color: black;
+        font-size: 18px;
     }
     
     header .right {
@@ -44,7 +44,7 @@
         width: 50px;
         height: 50px;
         line-height: 50px;
-        color: #fff;
+        color: black;
         font-size: 15px;
         text-align: center;
     }
@@ -53,7 +53,7 @@
 
 <body>
     <header id="header">
-        <div class="back"></div>
+        <div class="back" tapmode onclick="api.closeWin();"></div>
         <h1>收货地址</h1>
         <div id="right" class="right">删除</div>
     </header>
@@ -61,6 +61,29 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
 apiready = function() {
+      var header=$api.byId('header');
+         api.setStatusBarStyle({
+            style: 'light',
+            color:'#000'
+        });
+       $api.fixStatusBar(header);
+        // 获取header和nav的高
+        headerH=$api.offset(header).h
+        api.openFrame({
+            name: 'setaddress_frame',
+            url: './setaddress_frame.html',
+            rect: {
+                x: 0,
+                y: headerH,
+                w: 'auto',
+                h: 'auto'
+            },
+            pageParam: {
+                name: 'test'
+            },
+            bounces: true,
+           
+        });
 };
 </script>
 

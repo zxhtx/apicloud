@@ -114,15 +114,15 @@
     .highlight {
         opacity: 0.7;
     }
-    </style>
+</style>
 </head>
 
 <body>
     <header>
-        <div class="icon-panel">
+        <div class="icon-panel" tapmode onclick="setAvatar()">
             <div id="icon" class="icon"></div>
         </div>
-        <div id="username" class="username">broad</div>
+        <div id="username" class="username">******</div>
     </header>
     <section>
         <div class="option">
@@ -132,7 +132,7 @@
                 <div class="text">查看所有订单详情</div>
             </div>
         </div>
-        <div class="option">
+        <div class="option" tapmode onclick="OpenAddressWin()">
             <div class="icon icon-address"></div>
             <div class="title">收货地址</div>
             <div class="arrow-panel">
@@ -142,10 +142,64 @@
     </section>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
-apiready = function() {
+    apiready = function() {
+        getUsername()
+        var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
 
-};
+
+  };
+  function OpenAddressWin(){
+    api.openWin({
+        name: 'address',
+        url: './address.html',
+        pageParam: {
+            name: 'test'
+        }
+    });
+}
+function setAvatar(){
+
+}
+function getUsername(){
+    var username=$api.byId('username');
+    var usernameinfo=$api.getStorage('userInfo');
+
+    var now = Date.now();
+    var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+    var params={
+        fields: {},
+        where:{
+            id:usernameinfo.userId
+        },
+        skip: 0,
+    }
+    params=$api.jsonToStr(params);
+    api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
+        method: 'get',
+        headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey
+        },
+
+    },function(ret, err){
+        if (ret) {
+            // 存储用户名
+         $api.setStorage('user', ret);
+           username.innerHTML=ret[0].username;
+       } else {
+        api.toast({
+            msg: err.msg,
+            duration: 2000,
+            location: 'bottom'
+        });
+    }
+});
+
+}   
 </script>
 
 </html>

@@ -36,7 +36,7 @@
         -webkit-flex: 1;
         flex: 1;
         box-sizing: border-box;
-        padding-top: 6px;
+        padding-top: 5px;
         padding-left: 6px;
         padding-right: 6px;
         height: 28px;
@@ -126,7 +126,7 @@
 <body>
     <header>
         <div class="input">
-            <input id="searchText" type="search" placeholder="小区/写字楼">
+            <input id="searchText" type="search" placeholder="例 北京市西城区">
         </div>
         <div class="button">清空</div>
     </header>
@@ -143,8 +143,45 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
 apiready = function() {
-
+    InitUIInput();
 };
+    function InitUIInput(){
+        var searchText=$api.byId('searchText');
+        var rect=$api.offset(searchText);
+        var  UIInput=api.require('UIInput');
+        UIInput.open({
+             rect: {
+                x: rect.l,
+                y: rect.t,
+                w: rect.w,
+                h: rect.h
+            },
+            styles: {
+                bgColor: '#eee',
+                size: 14,
+                color: '#000',
+                placeholder: {
+                    color: '#ccc'
+                }
+            },
+            autoFocus: false,
+            maxRows: 4,
+            placeholder: '例 北京市西城区',
+            keyboardType: 'number',
+            fixedOn: api.frameName
+        }, function(ret, err){
+            if( ret ){
+                var uiInputId=ret.id;
+                 if (ret && ret.eventType=="show") {
+                    setTimeout(function(){
+                        UIInput.popupKeyboard(uiInputId);
+                    },300)
+                 }
+            }else{
+                 alert( JSON.stringify( err ) );
+            }
+        });
+    }
 </script>
 
 </html>
