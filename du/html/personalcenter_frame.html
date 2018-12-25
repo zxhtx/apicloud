@@ -145,24 +145,169 @@
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
     apiready = function() {
-        getUsername()
-        var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+        getUsername();
+        getuserInfo();
 
 
-  };
-  function OpenAddressWin(){
-    api.openWin({
-        name: 'address',
-        url: './address.html',
-        pageParam: {
-            name: 'test'
+    };
+
+    function getuserInfo(){
+        var userInfo=$api.getStorage('userInfo');
+         var now = Date.now();
+  var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+       api.ajax({
+    url: 'https://d.apicloud.com/mcm/api/user/'+userInfo.userId,
+    method: 'get',
+       headers: {
+        "X-APICloud-AppId": "A6099267504667",
+        "X-APICloud-AppKey":   appKey,
+        "Authorization":userInfo.id
+    },
+   
+},function(ret, err){
+    if (ret) {
+     updateLocalAvatar(ret)
+    } else {
+        api.toast({
+            msg: err.msg,
+            duration: 2000,
+            location: 'bottom'
+        });
+    }
+});
+}   
+
+    function OpenAddressWin(){
+        api.openWin({
+            name: 'address',
+            url: './address.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+    }
+// 在个人中心中显示头像
+function setAvatar(){
+    api.actionSheet({
+        title: '选择',
+        cancelTitle: '取消',
+        buttons: ['拍照','相册']
+    }, function(ret, err){
+        if( ret ){
+            var sourceTypes=['camera','album']
+            api.getPicture({
+                sourceType: sourceTypes[ret.buttonIndex-1],
+                allowEdit: true,
+                quality: 50,
+                targetWidth: 100,
+                targetHeight: 100,
+                saveToPhotoAlbum: false
+            }, function(ret, err){ 
+                if(ret){
+                    uploadAtavar(ret.data);
+                }else{
+                    api.toast({
+                        msg: err.msg,
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                }
+            });
+
+        }else{
+         api.toast({
+             msg: err.msg,
+             duration: 2000,
+             location: 'bottom'
+         });
+     }
+ });
+
+}
+// 上传头像 
+function uploadAtavar(_data){
+  var now = Date.now();
+  var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+  api.ajax({
+    url: 'https://d.apicloud.com/mcm/api/file',
+    method: 'post',
+    data: {
+        values: { 
+            filename: 'icon'
+        },
+        files: { 
+            file: _data
+        }
+    },
+    headers: {
+        "X-APICloud-AppId": "A6099267504667",
+        "X-APICloud-AppKey":   appKey
+    },
+},function(ret, err){
+    if (ret) {
+        updateUserAtavar(ret)
+    } else {
+        api.toast({
+            msg: err.msg,
+            duration: 2000,
+            location: 'bottom'
+        });
+    }
+});
+}
+// 更改头像
+function updateUserAtavar(_data){
+  var now = Date.now();
+  var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+  var userInfo=$api.getStorage('userInfo');
+  api.ajax({
+    url: 'https://d.apicloud.com/mcm/api/user/'+userInfo.userId,
+    method: 'put',
+       headers: {
+        "X-APICloud-AppId": "A6099267504667",
+        "X-APICloud-AppKey":   appKey,
+        "Authorization":userInfo.id
+    },
+    data: {
+        values: { 
+            avatar: _data
+        }
+
+    }
+},function(ret, err){
+    if (ret) {
+        // alert(JSON.stringify(ret));
+        // return;
+     updateLocalAvatar(ret)
+    } else {
+        api.toast({
+            msg: err.msg,
+            duration: 2000,
+            location: 'bottom'
+        });
+    }
+});
+}   
+// 改变头像路径
+function updateLocalAvatar(_data){
+    var icon=$api.byId('icon');
+    api.imageCache({
+        url: _data.avatar.url
+    }, function(ret, err){
+        if( ret ){
+             icon.style.background='url('+ret.url+')';
+        }else{
+            api.toast({
+                msg: err.msg,
+                duration: 2000,
+                location: 'bottom'
+            });
+            
         }
     });
+   
 }
-function setAvatar(){
-
-}
+// 在个人中心中显示用户名
 function getUsername(){
     var username=$api.byId('username');
     var usernameinfo=$api.getStorage('userInfo');
@@ -188,16 +333,16 @@ function getUsername(){
     },function(ret, err){
         if (ret) {
             // 存储用户名
-         $api.setStorage('user', ret);
-           username.innerHTML=ret[0].username;
-       } else {
-        api.toast({
-            msg: err.msg,
-            duration: 2000,
-            location: 'bottom'
-        });
-    }
-});
+            $api.setStorage('user', ret);
+            username.innerHTML=ret[0].username;
+        } else {
+            api.toast({
+                msg: err.msg,
+                duration: 2000,
+                location: 'bottom'
+            });
+        }
+    });
 
 }   
 </script>
