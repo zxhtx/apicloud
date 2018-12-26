@@ -131,16 +131,29 @@
         <div class="button">清空</div>
     </header>
     <section id="list">
-        <div class="option">
+      <!--   <div class="option">
             <div class="icon"></div>
             <div class="info">
                 <div class="top">门头沟</div>
                 <div class="bottom">正在获取...</div>
             </div>
-        </div>
+        </div> -->
     </section>
 </body>
+<script type="text/template" id="template">
+    {{~it.results:value}}
+     <div class="option" tapmode onclick="selectAddress('{{=value.address}}')">
+            <div class="icon"></div>
+            <div class="info">
+                <div class="top">{{=value.name}}</div>
+                <div class="bottom">{{=value.address}}</div>
+            </div>
+        </div>
+    {{~}}
+</script>
 <script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+
 <script type="text/javascript">
 apiready = function() {
     InitUIInput();
@@ -176,11 +189,55 @@ apiready = function() {
                     setTimeout(function(){
                         UIInput.popupKeyboard(uiInputId);
                     },300)
+                 }else if (ret.eventType=="change") {
+                    UIInput.value({
+                            id:uiInputId
+                    },function( ret, err ){
+                        if( ret ){
+                            if (ret.status) {
+                                searchIncity(ret.msg)
+                            }
+                        }else{
+                             alert( JSON.stringify( err ) );
+                        }
+                    });
                  }
             }else{
                  alert( JSON.stringify( err ) );
             }
         });
+    }
+    function searchIncity(_data){
+        var bMap=api.require('bMap');
+        bMap.searchInCity({
+            city:'中国',
+            keyword: _data,
+            pageIndex: 0,
+            pageCapacity: 20
+        },function(ret){
+            if(ret.status){
+               updateSearchList(ret)
+            }else{
+            
+            }
+        });
+    }
+    function updateSearchList(_data){
+        var template=$api.byId('template');
+        var list=$api.byId('list');
+        var tempFn=doT.template(template.innerHTML);
+        var html=tempFn(_data);
+        $api.html(list, html);
+
+    }
+    function selectAddress(_data){
+        api.execScript({
+        name: 'setaddress',
+        frameName: 'setaddress_frame',
+        script: 'setAddressDetail(\'' + _data + '\');'
+    });
+    api.closeWin();
+
     }
 </script>
 
