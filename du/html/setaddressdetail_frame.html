@@ -178,16 +178,17 @@ apiready = function() {
                 }
             },
             autoFocus: false,
-            maxRows: 4,
+            maxRows: 1,
             placeholder: '例 北京市西城区',
-            keyboardType: 'number',
+            keyboardType: 'default',
+            inputType:'text',
             fixedOn: api.frameName
         }, function(ret, err){
             if( ret ){
                 var uiInputId=ret.id;
                  if (ret && ret.eventType=="show") {
                     setTimeout(function(){
-                        UIInput.popupKeyboard(uiInputId);
+                        UIInput.popupKeyboard({id: uiInputId});
                     },300)
                  }else if (ret.eventType=="change") {
                     UIInput.value({
