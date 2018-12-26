@@ -128,7 +128,7 @@
         <div class="input">
             <input id="searchText" type="search" placeholder="例 北京市西城区">
         </div>
-        <div class="button">清空</div>
+        <div class="button" tapmode onclick="closeaddress()">清空</div>
     </header>
     <section id="list">
       <!--   <div class="option">
@@ -238,6 +238,11 @@ apiready = function() {
         script: 'setAddressDetail(\'' + _data + '\');'
     });
     api.closeWin();
+
+    }
+    function closeaddress(){searchText
+        var searchText=$api.byId('searchText');
+        searchText.innerHTML='';
 
     }
 </script>
