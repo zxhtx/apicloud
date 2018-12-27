@@ -48,27 +48,28 @@
         font-size: 15px;
         text-align: center;
     }
-    </style>
+</style>
 </head>
 
 <body>
     <header id="header">
         <div class="back" tapmode onclick="api.closeWin();"></div>
         <h1>收货地址</h1>
-        <div id="right" class="right">删除</div>
+        <div id="right" class="right" tapmode onclick="fnDelete()">删除</div>
     </header>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
-apiready = function() {
-      var header=$api.byId('header');
-         api.setStatusBarStyle({
-            style: 'light',
-            color:'#000'
-        });
-       $api.fixStatusBar(header);
-        // 获取header和nav的高
-        headerH=$api.offset(header).h
+    apiready = function() {
+        if (api.pageParam.id) {
+            var right = $api.byId('right');
+            right.style.display = 'block';
+        }
+
+        var header = $api.byId('header');
+        $api.fixStatusBar(header);
+        var headerH = $api.offset(header).h;
         api.openFrame({
             name: 'setaddress_frame',
             url: './setaddress_frame.html',
@@ -78,13 +79,45 @@ apiready = function() {
                 w: 'auto',
                 h: 'auto'
             },
-            pageParam: {
-                name: 'test'
-            },
-            bounces: true,
-           
+            pageParam: api.pageParam,
+            bounces: false
         });
-};
+    };
+
+    function fnDelete() {
+       var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+      var userInfo = $api.getStorage('userInfo');
+      api.confirm({
+        title: '提示',
+        msg: '删除收货地址',
+        buttons: ['确定', '取消']
+    }, function(ret, err) {
+        if (ret) {
+            if (1 == ret.buttonIndex) {
+                api.ajax({
+                    url: 'https://d.apicloud.com/mcm/api/address/' + api.pageParam.id,
+                    method: 'delete',
+                    headers: {
+                      "X-APICloud-AppId": "A6099267504667",
+                      "X-APICloud-AppKey":   appKey,
+                      "Authorization": userInfo.id
+                  }
+              }, function(ret, err) {
+                if (ret) {
+                    api.sendEvent({
+                        name: 'updateAddress'
+                    });
+                    api.closeWin();
+                } else {
+                    alert(JSON.stringify(err));
+                }
+            });
+            }
+        }
+    });
+  }
 </script>
 
 </html>

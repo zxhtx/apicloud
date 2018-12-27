@@ -142,7 +142,7 @@
 </body>
 <script type="text/template" id="template">
     {{~it.results:value}}
-     <div class="option" tapmode onclick="selectAddress('{{=value.address}}')">
+     <div class="option" tapmode onclick="selectAddress('{{=value.address}}','{{=value.name}}')">
             <div class="icon"></div>
             <div class="info">
                 <div class="top">{{=value.name}}</div>
@@ -214,7 +214,7 @@ apiready = function() {
             city:'中国',
             keyword: _data,
             pageIndex: 0,
-            pageCapacity: 20
+            pageCapacity: 5
         },function(ret){
             if(ret.status){
                updateSearchList(ret)
@@ -231,11 +231,11 @@ apiready = function() {
         $api.html(list, html);
 
     }
-    function selectAddress(_data){
+    function selectAddress(_data,_datatwo){
         api.execScript({
         name: 'setaddress',
         frameName: 'setaddress_frame',
-        script: 'setAddressDetail(\'' + _data + '\');'
+        script: "setAddressDetail('"+ _data + "','" + _datatwo+"')"
     });
     api.closeWin();
 

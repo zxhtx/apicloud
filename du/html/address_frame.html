@@ -18,12 +18,13 @@
     }
     
     .list {
-        display: none;
+        display: block;
         width: 100%;
         height: auto;
     }
     
     .list .address {
+        position: relative;
         box-sizing: border-box;
         width: 100%;
         height: auto;
@@ -34,13 +35,13 @@
     
     .list .address .icon {
         position: absolute;
-        top: 21px;
+        top: 28px;
         left: 16px;
         width: 19px;
         height: 24px;
         background-image: url(../image/icon_address.png);
         background-repeat: no-repeat;
-        background-size: auto 20px;
+        background-size: auto 30px;
         background-position: center center;
     }
     
@@ -103,7 +104,7 @@
     .list .address .info .bottom .type {
         display: inline;
         width: auto;
-        color: #e3007f;
+        color: black;
         font-weight: bolder;
     }
     
@@ -115,7 +116,7 @@
     .list .address .arrow {
         position: absolute;
         right: 16px;
-        top: 32px;
+        top: 18px;
         width: 8px;
         height: 16px;
         background-image: url(../image/item_user_address_right.png);
@@ -125,7 +126,7 @@
     }
     
     .empty {
-        display: block;
+        display: none;
         position: absolute;
         width: 100%;
         height: 100%;
@@ -139,12 +140,21 @@
     .highlight {
         opacity: 0.7;
     }
+    .default{
+        position: absolute;
+        right: 10px;
+        bottom: 8px;
+        font-size: 13px;
+        border: 1px solid black;
+        border-radius: 22px;
+        padding: 5px;
+    }
     </style>
 </head>
 
 <body>
     <section id="list" class="list">
-        <div class="address">
+<!--         <div class="address">
             <div class="icon"></div>
             <div class="sign">[默认]</div>
             <div class="info">
@@ -158,15 +168,135 @@
                 </div>
             </div>
             <div class="arrow"></div>
-        </div>
+        </div> -->
     </section>
     <section id="empty" class="empty"></section>
 </body>
+<script type="text/template" id="template">
+    {{~it:value:index}}
+    <div class="address" tapmode onclick="fnOpenSetAddressWin('{{=index}}');">
+        <div class="icon"></div>
+        <div class="info">
+            <div class="top">
+                <div class="consignee">收货人：{{=value.name}}</div>
+                <div class="mobile">{{=value.mobile}}</div>
+            </div>
+            <div class="bottom">
+                <div class="type">[{{=types[parseInt(value.type)]}}]</div>
+                <div class="text">{{=value.address}}  {{=value.house}}</div>
+            </div>
+        </div>
+        <div class="arrow"></div>
+        <div class="default" tapmode onclick="defaultbtn('{{=value.data}}')">
+        <input type="button" value="设为默认">
+        </div>
+    </div>
+    {{~}}
+</script>
 <script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
 apiready = function() {
-
+    initEventListener();
+    getAddressList();
 };
+
+var types = ['公司', '住宅', '学校', '其它'];
+var data;
+function defaultbtn(_data){
+   event.stopPropagation();
+    api.toast({
+        msg: '开发中...',
+        duration: 2000,
+        location: 'bottom'
+    });
+   return;
+}
+function getAddressList() {
+      var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+    var userInfo = $api.getStorage('userInfo');
+    api.showProgress({
+        style: 'default',
+        animationType: 'fade',
+        title: '努力加载中...',
+        text: '请稍后...',
+        modal: false
+    });
+    var params = {
+        fields: {},
+        where: {
+            user: userInfo.userId
+        },
+        skip: 0,
+        limit: 20
+    }
+    params = $api.jsonToStr(params);
+    api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/address?filter=' + params,
+        method: 'get',
+        headers: {
+           "X-APICloud-AppId": "A6099267504667",
+               "X-APICloud-AppKey":   appKey,
+            "Authorization": userInfo.id
+        }
+    }, function(ret, err) {
+        if (ret && ret.length > 0) {
+            data = ret;
+            // 在界面中更新收货地址列表显示
+            fnUpdateAddressList(ret);
+            fnShowAddressList(true);
+        } else {
+            fnShowAddressList(false);
+        }
+
+        // 隐藏加载状态对话框
+        api.hideProgress();
+    });
+}
+
+function initEventListener() {
+    api.addEventListener({
+        name: 'updateAddress'
+    }, function(ret, err) {
+        getAddressList();
+    });
+}
+
+function fnUpdateAddressList(data_) {
+    var list = $api.byId('list');
+
+    // 编译模板函数
+    var tempFn = doT.template($api.byId('template').innerHTML);
+
+    // 使用模板函数生成HTML文本
+    var resultHTML = tempFn(data_);
+    $api.html(list, resultHTML);
+    api.parseTapmode();
+}
+
+// 显示商品列表
+function fnShowAddressList(show_) {
+    var empty = $api.byId('empty');
+    var list = $api.byId('list');
+    if (show_) {
+        empty.style.display = 'none';
+        list.style.display = 'block';
+    } else {
+        empty.style.display = 'block';
+        list.style.display = 'none';
+    }
+}
+
+function fnOpenSetAddressWin(index_) {
+    api.openWin({
+        name: 'setaddress',
+        url: './setaddress.html',
+        pageParam: data[index_]
+    });
+}
 </script>
 
 </html>
