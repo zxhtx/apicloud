@@ -25,7 +25,7 @@
     header {
         width: 100%;
         height: 50px;
-        background-color: #e3007f
+        background-color: white;
     }
     
     header .back {
@@ -44,7 +44,7 @@
         width: 100%;
         height: 50px;
         text-align: center;
-        color: #fff;
+        color: #000;
         font-size: 20px;
         line-height: 50px;
     }
@@ -99,13 +99,7 @@
         padding-bottom: 8px;
     }
     
-    .control .info .top {
-        height: 20px;
-        font-size: 14px;
-        color: #444;
-        text-align: left;
-        line-height: 20px;
-    }
+    
     
     .control .info .bottom {
         height: 14px;
@@ -113,6 +107,7 @@
         color: #888;
         text-align: left;
         line-height: 14px;
+        margin-top: 8px;
     }
     
     .panel {
@@ -142,14 +137,14 @@
     
     .panel .info .top .amount {
         font-weight: bold;
-        color: #e3007f;
+        color: black;
     }
     
     .panel .info .bottom {
         position: relative;
         height: 14px;
-        font-size: 10px;
-        color: #888;
+        font-size: 13px;
+        color: black;
         text-align: right;
         line-height: 14px;
     }
@@ -173,7 +168,7 @@
 
 <body>
     <header id="header">
-        <div class="back"></div>
+        <div class="back" tapmode onclick="api.closeWin();"></div>
         <h1>购物车</h1>
     </header>
     <section></section>
@@ -181,25 +176,66 @@
         <div class="control">
             <div id="select" class="select"></div>
             <div class="info">
-                <div class="top">全选</div>
                 <div class="bottom">已选<span id="count" class="count">0</span>件</div>
             </div>
         </div>
         <div class="panel">
             <div class="info">
                 <div class="top">总金额:<span id="amount" class="amount">￥0</span></div>
-                <div class="bottom">不含运费</div>
+                <div class="bottom">运费平台付</div>
             </div>
-        </div>
-        <div class="buy">
-            <img class="buy-button" src="../image/buy.png">
         </div>
     </footer>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
 apiready = function() {
+     var header=$api.byId('header');
+       var footer=$api.byId('footer');
+       $api.fixStatusBar(header);
+          api.setStatusBarStyle({
+            style: 'light',
+            color:'#000'
+        });
+        // 获取header和nav的高
+        headerH=$api.offset(header).h
+        footerH=$api.offset(footer).h;
+
+        api.openFrame({
+          name: 'shoppingcart',
+          url: './shoppingcart_frame.html',
+          rect: {
+              x: 0,
+              y: headerH,
+              w: 'auto',
+              h: api.winHeight-headerH-footerH 
+          },
+          pageParam: {
+              wareId:api.pageParam.wareId
+          },
+          bounces: true,
+          bgColor: 'rgba(0,0,0,0)',
+          vScrollBarEnabled: true,
+          hScrollBarEnabled: true
+      });
 };
+// 设置购物车中的商品数量和金额，被购物车Frame调用
+function fnSetWareCountAndAmount (count_, amount_) {
+    var count = $api.byId('count');
+    var amount = $api.byId('amount');
+    count.innerHTML = count_;
+    amount.innerHTML = '￥' + amount_;
+}
+
+function fnOpenOrderWin () {
+    api.openWin({
+        name: 'order',
+        url: './order.html',
+        pageParam: {
+            name: 'test'
+        }
+    });
+}
 </script>
 
 </html>

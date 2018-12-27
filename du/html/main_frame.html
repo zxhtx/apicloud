@@ -256,13 +256,7 @@
 }
 // 获取列表页数据
 function getWareList(_LoadMore){
-    api.showProgress({
-        style: 'default',
-        animationType: 'fade',
-        title: '努力加载中...',
-        text: '先喝杯茶...',
-        modal: false
-    });
+  
     var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
@@ -291,7 +285,6 @@ function getWareList(_LoadMore){
         
     },function(ret, err){
         if (ret) {
-          api.hideProgress();
           // 隐藏下拉刷新
           api.refreshHeaderLoadDone();
          // 模板渲染
