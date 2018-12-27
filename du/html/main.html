@@ -133,6 +133,24 @@
         }, function(ret, err){
            SetNavMenuselected(ret.index);
         });
+
+        api.openFrame({
+            name: 'minicart_frame',
+            url: './minicart_frame.html',
+            rect: {
+                x: 0,
+                y: api.winHeight-88,
+                w: 150,
+                h: 34
+            },
+            pageParam: {
+                name: 'test'
+            },
+            bounces: false,
+        });
+        api.bringFrameToFront({
+            from: 'minicart_frame',
+        });
     }
     var menus, headerH , navH;
 

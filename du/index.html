@@ -17,10 +17,12 @@
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
 <script type="text/javascript" src="./script/SHA1.js"></script>
+<script type="text/javascript" src="./script/db.js"></script>
 <script type="text/javascript">
   apiready = function() {
     WareTypeList();
-    initPushGeTui();
+    // initPushGeTui();
+    initdb();
 
     api.openWin({
       name: 'main',
@@ -30,10 +32,13 @@
       }
     });
   }
-  // var pushGeTui;
+  function initdb(){
+    $db.open();
+  }
+  var pushGeTui;
   function initPushGeTui(){
   var uzgetuisdk = api.require('pushGeTui');
-uzgetuisdk.initialize(function(ret) {
+    uzgetuisdk.initialize(function(ret) {
     var value = "";
     switch (ret.type) {
         case 'cid':
@@ -52,10 +57,9 @@ uzgetuisdk.initialize(function(ret) {
           value = 'onNotificationMessageArrived' + ret.onNotificationMessageArrived
           break;
     }
-    alert(value)
 });
 
- }
+ } 
  function WareTypeList(){
   var WareTypeList=$api.getStorage('WareTypeList');
   if (!WareTypeList) {

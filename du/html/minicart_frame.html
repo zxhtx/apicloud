@@ -48,16 +48,43 @@
 
 <body>
     <section>
-        <span class="prefix">￥</span>
-        <span id="amount" class="amount">0</span>
+        <span class="prefix"></span>
+        <span id="amount" class="amount"></span>
         <span id="count" class="count"></span>
     </section>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/db.js"></script>
 <script type="text/javascript">
 apiready = function() {
-
+    initEventListenner();
+    getwareListFromdb();
 };
+function initEventListenner(){
+    api.addEventListener({
+        name: 'updateshoppingcart'
+    }, function(ret, err){
+        if( ret ){
+            // alert(ret.value.wareCount)
+           var result= $db.select(ret.value.wareId);
+            if (result && result.data.length>0) {
+                $db.update(ret.value.wareId,ret.value.wareCount)
+            }else{
+                $db.insert(ret.value.wareId,ret.value.wareCount)
+            }
+        }else{
+            api.toast({
+                msg: err.msg ,
+                duration: 2000,
+                location: 'bottom'
+            });
+        }
+    });
+}
+function getwareListFromdb(){
+    var ret=$db.select();
+    alert($api.jsonToStr(ret));
+}
 </script>
 
 </html>
