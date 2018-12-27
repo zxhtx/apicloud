@@ -19,8 +19,8 @@
 <script type="text/javascript" src="./script/SHA1.js"></script>
 <script type="text/javascript">
   apiready = function() {
-    getWareTypeList();
-    init();
+    WareTypeList();
+    initPushGeTui();
 
     api.openWin({
       name: 'main',
@@ -30,57 +30,84 @@
       }
     });
   }
-  function init(){
-    var WareTypeList=$api.getStorage('WareTypeList');
-    if (!WareTypeList) {
-     wareTypeList=[
-     {
-      "id": "56c80da883af652643474b6b",
-      "name": "水果",
-      "banner": {
-        "url": "http://7y0hol.com1.z0.glb.clouddn.com/apicloud/f761997f8fd33af25af5354737e37bcc.png",
-        "name": "56c80da883af652643474b6b.png",
-        "id": "57f63bdf0d3febfe58585568"
-      }
-    },
-    {
-      "id": "56c80db78d04c83d3d1dedea",
-      "name": "食材",
-      "banner": {
-        "url": "http://7y0hol.com1.z0.glb.clouddn.com/apicloud/be93f9fdeda576ad81d0c728528cef50.png",
-        "name": "56c80dc88d04c83d3d1dedf3.png",
-        "id": "57f63be70d3febfe5858556c"
-      }
-    },
-    {
-      "id": "56c80dc031da9e480de1cb49",
-      "name": "零食",
-      "banner": {
-        "url": "http://7y0hol.com1.z0.glb.clouddn.com/apicloud/be93f9fdeda576ad81d0c728528cef50.png",
-        "name": "56c80dc88d04c83d3d1dedf3.png",
-        "id": "57f63bec9592b3fc6a341b59"
-      }
-    },
-    {
-      "id": "56c80dc383af652643474b6d",
-      "name": "牛奶",
-      "banner": {
-        "url": "http://7y0hol.com1.z0.glb.clouddn.com/apicloud/f761997f8fd33af25af5354737e37bcc.png",
-        "name": "56c80da883af652643474b6b.png",
-        "id": "57f63bf0c6f05d0956108828"
-      }
-    },
-    {
-      "id": "56c80dc88d04c83d3d1dedf3",
-      "name": "蔬菜",
-      "banner": {
-        "url": "http://7y0hol.com1.z0.glb.clouddn.com/apicloud/be93f9fdeda576ad81d0c728528cef50.png",
-        "name": "56c80db78d04c83d3d1dedea.png",
-        "id": "57f63bf39592b3fc6a341b5d"
-      }
+  // var pushGeTui;
+  function initPushGeTui(){
+  var uzgetuisdk = api.require('pushGeTui');
+uzgetuisdk.initialize(function(ret) {
+    var value = "";
+    switch (ret.type) {
+        case 'cid':
+            value = 'cid:' + ret.cid;
+            break;
+        case 'payload':
+            value = 'payload:' + ret.payload;
+            break;
+        case 'occurError':
+            value = 'occurError';
+            break;
+        case'onNotificationMessageClicked':
+          value = 'onNotificationMessageClicked' + ret.onNotificationMessageClicked
+          break;
+        case'onNotificationMessageArrived':
+          value = 'onNotificationMessageArrived' + ret.onNotificationMessageArrived
+          break;
     }
-    ];
+    alert(value)
+});
+
+ }
+ function WareTypeList(){
+  var WareTypeList=$api.getStorage('WareTypeList');
+  if (!WareTypeList) {
+   wareTypeList=[
+   {
+    "id": "56c80da883af652643474b6b",
+    "name": "水果",
+    "banner": {
+      "url": "http://7y0hol.com1.z0.glb.clouddn.com/apicloud/f761997f8fd33af25af5354737e37bcc.png",
+      "name": "56c80da883af652643474b6b.png",
+      "id": "57f63bdf0d3febfe58585568"
+    }
+  },
+  {
+    "id": "56c80db78d04c83d3d1dedea",
+    "name": "食材",
+    "banner": {
+      "url": "http://7y0hol.com1.z0.glb.clouddn.com/apicloud/be93f9fdeda576ad81d0c728528cef50.png",
+      "name": "56c80dc88d04c83d3d1dedf3.png",
+      "id": "57f63be70d3febfe5858556c"
+    }
+  },
+  {
+    "id": "56c80dc031da9e480de1cb49",
+    "name": "零食",
+    "banner": {
+      "url": "http://7y0hol.com1.z0.glb.clouddn.com/apicloud/be93f9fdeda576ad81d0c728528cef50.png",
+      "name": "56c80dc88d04c83d3d1dedf3.png",
+      "id": "57f63bec9592b3fc6a341b59"
+    }
+  },
+  {
+    "id": "56c80dc383af652643474b6d",
+    "name": "牛奶",
+    "banner": {
+      "url": "http://7y0hol.com1.z0.glb.clouddn.com/apicloud/f761997f8fd33af25af5354737e37bcc.png",
+      "name": "56c80da883af652643474b6b.png",
+      "id": "57f63bf0c6f05d0956108828"
+    }
+  },
+  {
+    "id": "56c80dc88d04c83d3d1dedf3",
+    "name": "蔬菜",
+    "banner": {
+      "url": "http://7y0hol.com1.z0.glb.clouddn.com/apicloud/be93f9fdeda576ad81d0c728528cef50.png",
+      "name": "56c80db78d04c83d3d1dedea.png",
+      "id": "57f63bf39592b3fc6a341b5d"
+    }
   }
+  ];
+}
+getWareTypeList();
 }
 function getWareTypeList(){
  var now = Date.now();
