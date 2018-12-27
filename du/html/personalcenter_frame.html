@@ -294,6 +294,9 @@ function updateUserAtavar(_data){
 // 改变头像路径
 function updateLocalAvatar(_data){
     var icon=$api.byId('icon');
+    if (!_data.avatar) {
+        return;
+    }
     api.imageCache({
         url: _data.avatar.url
     }, function(ret, err){
