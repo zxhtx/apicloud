@@ -361,23 +361,6 @@ function initRefresh(){
     });
 
 }
-function Minus(_wareId){
-     event.stopPropagation();
-    var count=$api.byId('count_'+_wareId);
-    var panel=$api.byId('panel_'+_wareId);
-    var countNumber=parseInt(count.innerHTML);
-    countNumber-=1;
-    count.innerHTML=countNumber;
-    panel.style.display=(countNumber>0)? 'block':'none'
-    api.sendEvent({
-        name: 'updateshoppingcart',
-        extra: {
-            wareId:_wareId, 
-            wareCount:countNumber
-        }
-    });
-
-}
 function Add(_wareId){
      event.stopPropagation();
 
@@ -386,9 +369,8 @@ function Add(_wareId){
 
     // 更新商品数量及显示状态
     var countNumber = parseInt(count.innerHTML);
-    countNumber += 1;
+    countNumber = 1;
     count.innerHTML = countNumber;
-    panel.style.display = (countNumber > 0) ? 'block' : 'none';
      api.sendEvent({
         name: 'updateshoppingcart',
         extra: {
@@ -396,6 +378,11 @@ function Add(_wareId){
             wareCount:countNumber
         }
     });
+     api.toast({
+         msg: '已加入购物车',
+         duration: 2000,
+         location: 'bottom'
+     });
     
 }
 </script>

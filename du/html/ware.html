@@ -136,11 +136,11 @@
     </header>
     <section></section>
     <footer id="footer">
-        <div class="control">
+     <!--    <div class="control">
             <img id="minus" src="../image/jian.png" class="minus" onclick="Minus();">
             <div id="count" class="count">0</div>
             <img id="add" src="../image/jia.png" class="add" onclick="Add();">
-        </div>
+        </div> -->
         <img src="../image/buynow.png" class="buy-button">
     </footer>
 </body>
@@ -158,8 +158,7 @@
         headerH=$api.offset(header).h
         footerH=$api.offset(footer).h;
          // 更新商品数量
-         count = $api.byId('count');
-         count.innerHTML = api.pageParam.wareCount;
+         
 
          api.openFrame({
           name: 'ware_frame',
@@ -182,7 +181,7 @@
             url: './minicart_frame.html',
             rect: {
                 x: 0,
-                y: api.winHeight - 55 - footerH,
+                y: api.winHeight - 188 - footerH,
                 w: 150,
                 h: 34
             },
@@ -197,43 +196,7 @@
 
 var count;
 
-// 添加到购物车按钮的监听函数
-function Add() {
 
-    // 更新商品数量及显示状态
-    var wareCount = parseInt(count.innerHTML);
-    wareCount += 1;
-    count.innerHTML = wareCount;
-
-    // 发送购物车更新自定义事件，传递商品Id和商品数量
-    api.sendEvent({
-        name: 'updateShoppingCart',
-        extra: {
-            wareId: api.pageParam.wareId,
-            wareCount: wareCount
-        }
-    });
-}
-
-// 从购物车删除按钮的监听函数
-function Minus() {
-
-    // 更新商品数量及显示状态
-    var wareCount = parseInt(count.innerHTML);
-    if (wareCount > 0) {
-        wareCount -= 1;
-    }
-    count.innerHTML = wareCount;
-
-    // 发送购物车更新自定义事件，传递商品Id和商品数量
-    api.sendEvent({
-        name: 'updateShoppingCart',
-        extra: {
-            wareId: api.pageParam.wareId,
-            wareCount: wareCount
-        }
-    });
-}
 
 
 </script>
