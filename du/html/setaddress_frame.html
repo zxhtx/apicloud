@@ -186,7 +186,7 @@
     };
 
     var addressInfo = {
-        isDefault: true,
+        default: 1,
         type: 0
     };
     var consignee, mobile, area, focus, house;
@@ -249,7 +249,7 @@ function fnSave() {
     addressInfo.mobile = mobile.value;
     addressInfo.address = focus.innerHTML;
     addressInfo.house = house.value;
-    addressInfo.user = userInfo.userId;
+    addressInfo.userId = userInfo.userId;
 
     var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey

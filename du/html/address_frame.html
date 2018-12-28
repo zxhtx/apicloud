@@ -149,7 +149,7 @@
         border-radius: 22px;
         padding: 5px;
     }
-    </style>
+</style>
 </head>
 
 <body>
@@ -187,9 +187,17 @@
             </div>
         </div>
         <div class="arrow"></div>
-        <div class="default" tapmode onclick="defaultbtn('{{=value.data}}')">
-        <input type="button" value="设为默认">
+        {{? value.default==1}}
+        <div class="default" tapmode onclick="defaultbtn('{{=value.default}}','{{=value.id}}')">
+            <input type="button" value="设为默认">
         </div>
+        {{?? value.default==0}}
+        <div class="default" tapmode onclick="defaultbtn('{{=value.default}}','{{=value.id}}')">
+            <input type="button" value="已设为默认">
+        </div>
+
+        {{?}} 
+
     </div>
     {{~}}
 </script>
@@ -197,38 +205,149 @@
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
-apiready = function() {
-    initEventListener();
-    getAddressList();
-};
+    apiready = function() {
+        initEventListener();
+        getAddressList();
+    };
 
-var types = ['公司', '住宅', '学校', '其它'];
-var data;
-function defaultbtn(_data){
-   event.stopPropagation();
-    api.toast({
-        msg: '开发中...',
-        duration: 2000,
-        location: 'bottom'
-    });
-   return;
+    var types = ['公司', '住宅', '学校', '其它'];
+    var data;
+    function defaultbtn(_data,Id){
+     event.stopPropagation();
+     if (_data==0) {
+        api.toast({
+            msg: '该地址已是默认地址',
+            duration: 2000,
+            location: 'bottom'
+        });
+    }else if (_data==1) {
+        getAddressone(_data,Id);
+        getAddresszreo();
+
+    }
 }
-function getAddressList() {
-      var now = Date.now();
+     //获取default字段为1的数据
+     function getAddressone(_data,Id){
+       var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-    var userInfo = $api.getStorage('userInfo');
-    api.showProgress({
-        style: 'default',
-        animationType: 'fade',
-        title: '努力加载中...',
-        text: '请稍后...',
-        modal: false
-    });
-    var params = {
+      var params={
+         fields: {},
+         where: {
+            id: Id,
+            default:_data
+        },
+        skip: 0
+    }
+    params = $api.jsonToStr(params);
+    api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/address?filter='+params,
+        method: 'get',
+        headers: {
+         "X-APICloud-AppId": "A6099267504667",
+         "X-APICloud-AppKey":   appKey
+     }
+ },function(ret, err){
+    if (ret) {
+        updateAddressone(ret[0])
+    } else {
+        alert( JSON.stringify( err ) );
+    }
+}); 
+
+}   
+// 把default为1的修改成0 
+    function updateAddressone(_data){
+          var userInfo = $api.getStorage('userInfo');
+
+        var now = Date.now();
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+      api.ajax({
+          url: 'https://d.apicloud.com/mcm/api/address/'+_data.id,
+          method: 'put',
+          data: {
+            values:{
+                  "default":0,
+            }
+       },
+       headers: {
+         "X-APICloud-AppId": "A6099267504667",
+         "X-APICloud-AppKey":   appKey,
+          "Authorization": userInfo.id
+     }
+ },function(ret, err){
+  if (ret) {
+      api.toast({
+          msg: '已选为默认地址',
+          duration: 2000,
+          location: 'bottom'
+      });
+  } 
+});
+ 
+}
+//把default为0的数据查出来
+function  getAddresszreo(){
+     var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+      var params={
+         fields: {},
+         where: {
+            default:0
+        },
+        skip: 0
+    }
+    params = $api.jsonToStr(params);
+    api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/address?filter='+params,
+        method: 'get',
+        headers: {
+         "X-APICloud-AppId": "A6099267504667",
+         "X-APICloud-AppKey":   appKey
+     }
+ },function(ret, err){
+    if (ret) {
+        updateAddresszreo(ret[0])
+    } else {
+        alert( JSON.stringify( err ) );
+    }
+}); 
+
+}
+// 把default为0的修改成1 
+function updateAddresszreo(_data){
+// alert(JSON.stringify( _data))
+  var userInfo = $api.getStorage('userInfo');
+
+        var now = Date.now();
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+      api.ajax({
+          url: 'https://d.apicloud.com/mcm/api/address/'+_data.id,
+          method: 'put',
+          data: {
+            values:{
+                  "default":1,
+            }
+       },
+       headers: {
+         "X-APICloud-AppId": "A6099267504667",
+         "X-APICloud-AppKey":   appKey,
+          "Authorization": userInfo.id
+     }
+ },function(ret, err){
+    getAddressList();
+});
+}
+function getAddressList() {
+  var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+      var userInfo = $api.getStorage('userInfo');
+      var params = {
         fields: {},
         where: {
-            user: userInfo.userId
+            userId: userInfo.userId
         },
         skip: 0,
         limit: 20
@@ -238,13 +357,13 @@ function getAddressList() {
         url: 'http://d.apicloud.com/mcm/api/address?filter=' + params,
         method: 'get',
         headers: {
-           "X-APICloud-AppId": "A6099267504667",
-               "X-APICloud-AppKey":   appKey,
-            "Authorization": userInfo.id
-        }
-    }, function(ret, err) {
-        if (ret && ret.length > 0) {
-            data = ret;
+         "X-APICloud-AppId": "A6099267504667",
+         "X-APICloud-AppKey":   appKey,
+         "Authorization": userInfo.id
+     }
+ }, function(ret, err) {
+    if (ret && ret.length > 0) {
+        data = ret;
             // 在界面中更新收货地址列表显示
             fnUpdateAddressList(ret);
             fnShowAddressList(true);
@@ -252,8 +371,7 @@ function getAddressList() {
             fnShowAddressList(false);
         }
 
-        // 隐藏加载状态对话框
-        api.hideProgress();
+        
     });
 }
 
