@@ -72,19 +72,24 @@
         width: 100%;
         height: 50px;
         background-color: white;
+        position:relative;
     }
     
     .buy-button {
-        width: 112px;
+        width:40px;
         height: 40px;
-        float: right;
-        margin-top: 5px
+        position: absolute;
+        right: 0;
+        margin-top: 5px;
+        margin-right:8px;
     }
     
     .control {
         position: absolute;
         top: 12px;
         left: 16px;
+        font-size: 16px;
+        color: #2c2c2c;
         width: 110px;
         height: 25px;
     }
@@ -136,12 +141,10 @@
     </header>
     <section></section>
     <footer id="footer">
-     <!--    <div class="control">
-            <img id="minus" src="../image/jian.png" class="minus" onclick="Minus();">
-            <div id="count" class="count">0</div>
-            <img id="add" src="../image/jia.png" class="add" onclick="Add();">
-        </div> -->
-        <img src="../image/buynow.png" class="buy-button">
+      <div class="control">
+        运费平台付
+        </div> 
+        <img src="../image/buynow.png" class="buy-button" tapmode onclick="oporderWin()">
     </footer>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
@@ -174,7 +177,8 @@
           },
           bounces: true,
 
-      });
+
+      }); 
          // 打开mini购物车Frame
          api.openFrame({
             name: 'minicart_frame',
@@ -194,7 +198,16 @@
     });
 };
 
-var count;
+    function oporderWin(){
+        // alert(api.pageParam.wareId);
+        api.openWin({
+            name: 'order',
+            url: './order.html',
+            pageParam: {
+                wareId:api.pageParam.wareId 
+            }
+        });
+    }
 
 
 
