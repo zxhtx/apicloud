@@ -111,6 +111,9 @@ apiready = function() {
         });
     }
     function logout(){
+        api.clearCache(function(){
+        });
+
        api.toast({
            msg: '注销成功',
            duration: 2000,

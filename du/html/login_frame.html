@@ -86,6 +86,7 @@
 <script type="text/javascript">
     apiready = function() {
 
+
     };
     function Login(){
       var username=$api.byId('username');
@@ -135,9 +136,20 @@
                     duration: 2000,
                     location: 'bottom'
                 });
-                api.closeToWin({
+                if (api.pageParam.ware) {
+                    api.openWin({
+                        name: 'ware',
+                        url: './ware.html',
+                        pageParam: {
+                            wareId: api.pageParam.ware
+                        }
+                    });
+                }else{
+                    api.closeToWin({
                     name: 'main'
                 });
+                }
+                
        } else {
         api.toast({
             msg: '账号或密码错误',

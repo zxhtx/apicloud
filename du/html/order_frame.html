@@ -159,11 +159,11 @@
         width: 64px;
         height: 64px;
         border-radius: 8px;
-        background-image: url(../image/order_ware.gif);
-        background-repeat: no-repeat;
-        background-size: 64px 64px;
-        background-position: center center;
     }
+     .order .icon-panel .icon img{
+        width: 64px;
+        height: 64px;
+     }
     
     .order .icon-panel .info {
         position: relative;
@@ -366,23 +366,25 @@
 
 <body>
     <section class="address" id="address">
-      <!--   <div class="icon"></div>
+        <div class="icon">
+        </div>
         <div class="info">
             <div class="top">
-                <div class="consignee">收货人：李小璐</div>
-                <div class="mobile">18818881888</div>
+                <div class="consignee" id="shouhuoren">收货人：李小璐</div>
+                <div class="mobile" id="mobile">18818881888</div>
             </div>
             <div class="bottom">
-                <div class="type">【公司】</div>
-                <div class="text">北京市海淀区龙翔路甲1号</div>
+                <div class="type" id="type">【公司】</div>
+                <div class="text" id="text">北京市海淀区龙翔路甲1号</div>
             </div>
         </div>
-        <div class="arrow"></div> -->
     </section>
     <section class="order">
         <div class="title">订单信息</div>
         <div class="icon-panel">
-            <div class="icon" id="icon"></div>
+            <div class="icon">
+                <img src="../image/order_ware.gif" id="image" alt="">
+            </div>
             <div class="info">
                 <div class="top" id="warename">佳沛绿奇异果</div>
                 <div class="bottom" id="wareprice">￥19.9</div>
@@ -394,7 +396,7 @@
         </div>
         <div class="row">
             <div class="text">运费：</div>
-            <div class="value value-2">&nbsp;运费平台给</div>
+            <div class="value value-2">&nbsp;运费平台付</div>
         </div>
         <div class="row">
             <div class="text">优惠金额：</div>
@@ -405,28 +407,8 @@
         </div>
     </section>
 </body>
-<script type="text/template" id="template">
-   
-    {{~it:value:index}}
-     <div class="icon"></div>
-        <div class="info">
-            <div class="top">
-                <div class="consignee">收货人：{{=value.name}}</div>
-                <div class="mobile">{{=value.mobile}}</div>
-            </div>
-            <div class="bottom">
-                <div class="type">[{{=types[parseInt(value.type)]}}]</div>
-                <div class="text">{{=value.address}}/{{=value.house}}</div>
-            </div>
-        </div>
-        <div class="arrow"></div>
-     {{~}}
-
-</script>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
-<script type="text/javascript" src="../script/doT.min.js"></script>
-
 <script type="text/javascript">
     apiready = function() {
         getware();
@@ -475,12 +457,13 @@ function updateWare(_data){
     var wareprice=$api.byId('wareprice');
     var price1=$api.byId('price1');
     var price2=$api.byId('price2');
-    var image=$api.byId('icon');    
+    var image=$api.byId('image');    
     warename.innerHTML=_data[0].name;
     wareprice.innerHTML='￥'+_data[0].price;
     price1.innerHTML='￥'+_data[0].price;
     price2.innerHTML='￥'+_data[0].price;
-    image.style.background='url('+_data[0].thumbnail.url+')';
+    image.src=_data[0].thumbnail.url;
+    
 }
 
 function getaddress(){
@@ -493,7 +476,6 @@ function getaddress(){
          where: {
             default:1,
             userId:userInfo.userId
-
         },
         skip: 0
     }
@@ -509,17 +491,32 @@ function getaddress(){
     if (ret) {
         updateaddress(ret);
       
-    } else {
-        alert( JSON.stringify( err ) );
-    }
+    } 
 }); 
 }
 function updateaddress(_data){
-     var address=$api.byId('address');
-    var tempFn=doT.template($api.byId('template').innerHTML);
-    var resultText=tempFn(_data);
-    $api.html(address, resultText);
-
+  
+        var data=$api.jsonToStr(_data);
+        if (_data[0]==undefined) {
+            alert('您还没有设置收货地址');
+            api.closeWin({
+                name: 'order'
+            });
+       
+        }else{
+             var shouhuoren=$api.byId('shouhuoren');
+          var mobile=$api.byId('mobile');
+          var type=$api.byId('type');
+          var text=$api.byId('text');
+        // alert($api.jsonToStr(_data))
+        shouhuoren.innerHTML='收货人:'+_data[0].name;
+        mobile.innerHTML=_data[0].mobile;
+        type.innerHTML='['+ types[_data[0].type] +']'
+        text.innerHTML=_data[0].address+'/'+_data[0].house
+        }
+         
+        
+      
 }
 </script>
 

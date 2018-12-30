@@ -199,7 +199,18 @@
 };
 
     function oporderWin(){
-        // alert(api.pageParam.wareId);
+        var userInfo=$api.getStorage('userInfo');
+        if (userInfo==undefined && userInfo==null) {
+            alert('您还未登录')
+            api.openWin({
+                name: 'login',
+                url: './login.html',
+                pageParam: {
+                    ware: api.pageParam.wareId 
+                }
+            });
+            return;
+        }
         api.openWin({
             name: 'order',
             url: './order.html',
