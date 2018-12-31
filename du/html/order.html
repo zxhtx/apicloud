@@ -67,8 +67,9 @@
         flex-flow: row;
         width: 100%;
         height: 50px;
-        background-color: #000;
-        border-top: 1px solid #d1d1d1;
+        background-color: #fff;
+        /*border-top: 1px solid #d1d1d1;*/
+        position: relative;
     }
     
     footer .panel {
@@ -79,20 +80,22 @@
         box-sizing: border-box;
         padding-left: 16px;
         line-height: 50px;
-        color: #fff;
+        color: #000;
         font-size: 18px;
         text-align: left;
     }
     
     footer .buy {
-        width: 112px;
-        height: 50px;
+        width: 47px;
+        height: 47px;
     }
     
     footer .buy .buy-button {
-        width: 112px;
-        height: 40px;
-        margin-top: 5px;
+        width: 47px;
+        height: 47px;
+        position: absolute;
+        right: 0;
+        margin-right: 18px;
     }
     
     .highlight {
@@ -114,7 +117,7 @@
     <footer id="footer">
         <div class="panel" id="price">总金额:￥24.9</div>
         <div class="buy">
-            <img class="buy-button" src="../image/confirm.png">
+            <img class="buy-button" src="../image/confirm.png" tapmode onclick="yesadd()">
         </div>
     </footer>
 </body>
@@ -152,6 +155,10 @@ apiready = function() {
     };
     
 
+ var addInfo = {
+        dindantypeid:'5c2a3991af3114d73d9ddfc2',
+
+    };
 function getprice(){
      var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
@@ -186,6 +193,134 @@ function getprice(){
 });
 
 }
+
+
+  function getware(){
+     var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
+      var params={
+        fields:{},
+        fields: {},
+        where: {
+            id:api.pageParam.wareId
+        },
+        skip:0
+    }
+    params=$api.jsonToStr(params);
+    api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/ware?filter='+params,
+        method: 'get',
+        headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey
+        },
+        
+    },function(ret, err){
+        if (ret) {
+            addInfo.wareid=ret[0].id;
+            addInfo.price=ret[0].price;
+            addInfo.description=ret[0].description;
+            addInfo.warename=ret[0].name;
+            addInfo.url=ret[0].thumbnail.url;
+
+
+        } else {
+         api.toast({
+             msg: err.msg,
+             duration: 2000,
+             location: 'bottom'
+         });
+     }
+ });
+
+}
+function getaddress(){
+    var userInfo=$api.getStorage('userInfo');
+     var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+      var params={
+         fields: {},
+         where: {
+            default:1,
+            userId:userInfo.userId
+        },
+        skip: 0
+    }
+    params = $api.jsonToStr(params);
+    api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/address?filter='+params,
+        method: 'get',
+        headers: {
+         "X-APICloud-AppId": "A6099267504667",
+         "X-APICloud-AppKey":   appKey
+     }
+ },function(ret, err){
+    addInfo.addressid=ret[0].id;
+    addInfo.address=ret[0].address;
+    addInfo.shoppingname=ret[0].name;
+    addInfo.userid=ret[0].userId;
+    addInfo.house=ret[0].house;
+    addInfo.addresstype=ret[0].type;
+    addInfo.mobile=ret[0].mobile; 
+    if (addInfo.url!=null && addInfo.addresstype!=null) {
+             save();
+        }
+}); 
+}
+
+  function yesadd(){
+        getware();
+        getaddress();
+       
+        
+       
+    }
+  function save(){
+         var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+      var userInfo=$api.getStorage('userInfo');
+           api.ajax({
+            url: 'https://d.apicloud.com/mcm/api/shoppinginformation',
+            method: 'post',
+            headers: {
+               "X-APICloud-AppId": "A6099267504667",
+               "X-APICloud-AppKey":   appKey,
+               "Authorization": userInfo.id
+           },
+           data: {
+            values: addInfo
+        }
+    }, function(ret, err) {
+        if (ret) {
+            api.alert({
+                title: '下单',
+                msg: '下单成功请去我的订单页付款',
+            }, function(ret, err){
+                if( ret ){
+                     if (ret.buttonIndex==1) {
+                        api.openWin({
+                            name: 'personalcenter',
+                            url: './personalcenter.html',
+                            pageParam: {
+                                name: 'test'
+                            }
+                        });
+                        api.closeWin({
+                            name: 'order'
+                        });
+                     }
+                }else{
+                     alert( JSON.stringify( err ) );
+                }
+            });
+        } else {
+            alert(JSON.stringify(err));
+        }
+    });
+    }
 </script>
 
 </html>

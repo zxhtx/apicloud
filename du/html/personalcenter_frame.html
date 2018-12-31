@@ -125,7 +125,7 @@
         <div id="username" class="username">******</div>
     </header>
     <section>
-        <div class="option">
+        <div class="option" tapmode onclick="OpendindanWin()">
             <div class="icon icon-myorder"></div>
             <div class="title">我的订单</div>
             <div class="arrow-panel">
@@ -147,6 +147,7 @@
     apiready = function() {
         getUsername();
         getuserInfo();
+        dindantypeList();
 
 
     };
@@ -176,6 +177,15 @@
     }
 });
 }   
+    function OpendindanWin(){
+          api.openWin({
+            name: 'dindan',
+            url: './dindan.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+    }
 
     function OpenAddressWin(){
         api.openWin({
@@ -351,6 +361,51 @@ function getUsername(){
     });
 
 }   
+ function dindantypeList(){
+  var dindantypeList=$api.getStorage('dindantypeList');
+  if (!dindantypeList) {
+   dindantypeList=[
+   {
+    "id": "5c2a39add37a824c5ac6cc64",
+    "name": "已签收"
+  },
+ 
+  {
+    "id": "5c2a3991af3114d73d9ddfc2",
+    "name": "待付款",
+  } ,
+  {
+    "id": "5c2a39a2af3114d73d9ddfc3",
+    "name": "待收货"
+  }
+  ];
+}
+getdindantypeList();
+}
+function getdindantypeList(){
+ var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
+
+      var params={
+        fields:{},
+        where:{},
+        skip:0,
+        limit:3
+      }
+      params=$api.jsonToStr(params);
+      api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/dindantype?filter='+params,
+        method: 'get',
+        headers: {
+          "X-APICloud-AppId": "A6099267504667",
+          "X-APICloud-AppKey":   appKey
+        },
+
+      },function(ret, err){
+         $api.setStorage('dindantypeList', ret);
+    });
+    }
 </script>
 
 </html>

@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+    header{
+        position: relative;
+        width: 100%;
+        height: 50px;
+        background-color: white;
+    }
+
+    header .back {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 50px;
+        z-index: 2;
+    }
+    
+    header .back img {
+        margin-top: 16px;
+        margin-left: 12px;
+        width: 11px;
+        height: 18px;
+    }
+    header h1{
+        position: relative;
+        height: 50px;
+        line-height: 50px;
+        font-size: 18px ;
+        color: black;
+        text-align: center;
+    }
+    header .right{
+        position: absolute;
+        bottom:0;
+        right: 0;
+        width: 40px;
+        height: 50px;
+        background: url(../image/touxiang.png);
+        background-size: 20px 20px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        z-index: 2;
+
+
+    }
+    nav{
+        display: -webkit-box ;
+        display: -webkit-flex ;
+        display: flex ;
+        -webkit-box-orient: horizontal;
+        -webkit-flex-flow: row;
+        flex-flow: row;
+        position: relative;
+        width: 100%;
+        height: 30px;
+        background-color: white;
+    }
+    nav .menu{
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        font-size: 13px;
+        color: black;
+        text-align: center;
+
+    }
+    nav .menu.selected{
+        font-size: 14px;
+        color: black;
+        font-weight: bolder;
+    }
+
+</style>
+</head>
+
+<body>
+<header id="header">
+	  <div class="back" tapmode onclick="api.closeWin()">
+	  	 <img src="../image/back.png">
+	  </div>
+    <h1>我的订单</h1>
+</header>
+    <nav id="nav">
+        <div class="menu selected" tapmode="selected" onclick="setNavMenuIndex(0)">待付款</div>
+        <div class="menu" tapmode="selected" onclick="setNavMenuIndex(1)">待收货</div>
+        <div class="menu" tapmode="selected" onclick="setNavMenuIndex(2)">已签收</div>
+    </nav>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+
+       
+
+        var header=$api.byId('header');
+        var nav=$api.byId('nav');
+        $api.fixStatusBar(header);
+        api.setStatusBarStyle({
+            style: 'light',
+            color:'#000'
+        });
+        // 获取header和nav的高
+        headerH=$api.offset(header).h
+        navH=$api.offset(nav).h;
+
+         menus=$api.domAll(nav, '.menu');
+
+         openFrames();
+
+    };
+
+
+    function openFrames(){
+
+         var frames=[];
+        for (var i = 0; i <menus.length; i++) {
+            frames.push({
+                name:'dindan_frame_'+i,
+                url:'./dindan_frame.html',
+                pageParam:{
+                    dindantypeIndex:i
+                }
+            })
+        }
+
+        api.openFrameGroup ({
+            name: 'mainFrameGroup',
+            scrollEnabled: true,
+            rect: {
+                 x: 0,
+                 y: headerH+navH,
+                 w: 'auto',
+                 h: 'auto'
+            },
+            frames: frames
+        }, function(ret, err){
+           SetNavMenuselected(ret.index);
+        });
+    }
+    var menus, headerH , navH;
+
+    // 滑动时标题变化
+    function SetNavMenuselected(_index){
+        for (var i = 0; i<menus.length; i++) {
+            if (_index==i) {
+                $api.addCls(menus[i], 'selected');
+            }else{
+                $api.removeCls(menus[i],'selected');
+            }
+        }
+    }
+
+    function setNavMenuIndex(_index){
+        api.setFrameGroupIndex({
+            name: 'mainFrameGroup',
+            index: _index,
+            scroll: true
+        });
+    }
+
+  
+
+        
+</script>
+
+</html>

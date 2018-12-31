@@ -1,0 +1,396 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>首页Frame</title>
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+	<style type="text/css">
+
+	section {
+		position: relative;
+		width: 100%;
+		height: auto;
+		box-sizing: border-box;
+		padding: 0 8px;
+	}
+
+	.content {
+		width: 100%;
+		height: 100%;
+	}
+
+
+
+	.ware-1 {
+		position: relative;
+		width: 100%;
+		height: 105px;
+		box-sizing: border-box;
+		padding-top: 15px;
+		/*border: 1px solid red;*/
+		padding-bottom: 15px;
+		border-bottom: 1px solid #d1d1d1;
+	}
+
+	.ware-1 .thumbnail {
+		position: absolute;
+		top: 20px;
+		left: 0px;
+		height: 50px;
+		width: 50px;
+	}
+
+	.ware-1 .info {
+		width: 100%;
+		height: 114px;
+		box-sizing: border-box;
+		padding-left: 66px;
+		padding-right: 28px;
+
+	}
+
+	.ware-1 .info .name {
+		width: 100%;
+		height: 15px;
+		color: #555555;
+		/*margin-top: 14px;*/
+		font-size: 15px;
+	}
+
+	.ware-1 .info .description {
+		margin-top: 10px;
+		width: 100%;
+		height: 13px;
+		font-size: 13px;
+		color: #9d9d9d;
+	}
+
+	.ware-1 .info .price-tag {
+		margin-top: 10px;
+		width: 100%;
+		height: 12px;
+		font-size: 12px;
+		vertical-align: top;
+	}
+
+	.ware-1 .info .price-tag .price {
+		color: black;
+		font-size: 16px;
+	}
+
+	.ware-1 .info .price-tag .unit {
+		font-size: 8px;
+		color: #cbcbcb;
+	}
+
+	.ware-1 .info .origin-price {
+		margin-top: 5px;
+		width: 100%;
+		height: 10px;
+		font-size: 10px;
+		color: #d3d3d3;
+	}
+
+	.ware .control {
+		position: absolute;
+		width: 110px;
+		height: 23px;
+		right: 8px;
+	}
+
+	.ware-1 .control {
+		top: 90px;
+	}
+
+	.ware .control .panel {
+		display: none;
+		height: 23px;
+	}
+
+	.ware .control .minus {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 23px;
+		height: 23px;
+	}
+
+	.ware .control .count {
+		position: relative;
+		top: 0;
+		margin-left: 31px;
+		margin-right: 31px;
+		width: auto;
+		height: 23px;
+		text-align: center;
+		line-height: 23px;
+		color: #444;
+		font-size: 12px;
+		background-image: url(../image/count.png);
+		background-repeat: no-repeat;
+		background-size: 48px 23px;
+	}
+
+	.ware .control .add {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 23px;
+		height: 23px;
+	}
+
+	.push-status {
+		width: 100%;
+		height: 40px;
+		font-size: 16px;
+		color: #888;
+		line-height: 40px;
+		text-align: center;
+		background-color: #fff;
+	}
+
+	.active {
+		opacity: 0.7;
+	}
+	 .default{
+        position: absolute;
+        right: 10px;
+        bottom: 8px;
+        font-size: 13px;
+        border: 1px solid black;
+        border-radius: 22px;
+        padding: 5px;
+    }
+</style>
+</head>
+
+<body>
+	<section id="list">
+     <!--    <div class="ware ware-0">
+            <div class="content">
+                <img class="thumbnail" src="../image/default_rect.png">
+                <div class="info">
+                    <span class="price">RMB14.9</span>
+                    <span class="unit">/4盒</span>
+                    <span class="origin-price">&nbsp;超市:<del>19.9元</del></span>
+                </div>
+                <div class="control">
+                    <div class="panel">
+                        <img class="minus" src="../image/minus.png">
+                        <div class="count">0</div>
+                    </div>
+                    <img class="add" src="../image/add.png">
+                </div>
+            </div>
+        </div>
+        <div class="ware ware-1" >
+            <div class="content" >
+                <img class="thumbnail" src="../image/default_square.png">
+                <div class="info" tapmode onclick="openWareWin()">
+                    <div class="name">牛奶巧克力</div>
+                    <div class="description">下雨天更配哦</div>
+                    <div class="price-tag">
+                        <span class="price">￥28.9</span>
+                        <span class="unit">/1盒</span>
+                    </div>
+                    <div class="origin-price">超市:
+                        <del>59.9元</del>
+                    </div>
+                </div>
+                <div class="control">
+                    <div class="panel">
+                        <img class="minus" src="../image/minus.png">
+                        <div class="count">0</div>
+                    </div>
+                    <img class="add" src="../image/add.png ">
+                </div>
+            </div>
+        </div> -->
+    </section>
+    <div class="push-status" id="pushStatus"></div>
+</body>
+<script type="text/template" id="template">
+	{{~it:value:index}}
+	<div class="ware ware-1" >
+		<div class="content" >
+			<img onload="LoadImage(this)" data-url="{{=value.url}}" class="thumbnail" src="../image/default_square.png">
+			<div class="info" tapmode onclick="openWareWin('{{=value.wareid}}')">
+				<div class="name">{{=value.warename}}</div>
+				<div class="description">{{=value.description}}</div>
+				<div class="price-tag">
+					<span class="price">￥{{=value.price}}</span>
+
+				</div>
+				{{? value.dindantypeid=='5c2a3991af3114d73d9ddfc2'}}
+				<div class="default" tapmode onclick="defaultbtn('{{=value.default}}','{{=value.id}}')">
+					<input type="button" value="去支付">
+				</div>
+				{{?? value.dindantypeid=='5c2a39a2af3114d73d9ddfc3'}}
+				<div class="default" tapmode onclick="defaultbtn('{{=value.default}}','{{=value.id}}')">
+					<input type="button" value="查看详情">
+				</div>
+				{{?? value.dindantypeid=='5c2a39add37a824c5ac6cc64'}}
+					<div class="default" tapmode onclick="defaultbtn('{{=value.default}}','{{=value.id}}')">
+					<input type="button" value="已签收">
+				</div>
+				{{?}}
+			</div>
+		</div>
+	</div>
+	{{~}}
+
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript">
+	apiready = function() {
+		init();
+		getWareList();
+		initRefresh();
+		initEventListenter();
+
+	};
+	var dindantypeList;
+	var userInfo;
+	var skip=0;
+	var LIMIT=5;
+	function init(){
+		userInfo=$api.getStorage('userInfo');
+		dindantypeList=$api.getStorage('dindantypeList');
+	}
+	function openWareWin(_wareId){
+
+		api.openWin({
+			name: 'ware',
+			url: './ware.html',
+			pageParam: {
+				wareId: _wareId
+			}
+		});
+
+	}
+	function defaultbtn(){
+		  event.stopPropagation();
+		api.toast({
+		    msg: '开发中',
+		    duration: 2000,
+		    location: 'bottom'
+		});
+	}
+// 获取列表页数据
+function getWareList(_LoadMore){
+
+	var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
+      if (_LoadMore) {
+      	skip+=LIMIT;
+      }else{
+      	skip=0;
+      }
+      var params={
+      	fields:{},
+      	fields: {},
+      	where: {
+      		dindantypeid: dindantypeList[api.pageParam.dindantypeIndex].id,
+      		userid:userInfo.userId
+      	},
+      	skip:skip,
+      	limit:LIMIT
+      }
+      params=$api.jsonToStr(params);
+      api.ajax({
+      	url: 'http://d.apicloud.com/mcm/api/shoppinginformation?filter='+params,
+      	method: 'get',
+      	headers: {
+      		"X-APICloud-AppId": "A6099267504667",
+      		"X-APICloud-AppKey":   appKey
+      	},
+
+      },function(ret, err){
+      	if (ret) {
+          // 隐藏下拉刷新
+          // alert($api.jsonToStr(ret))
+          api.refreshHeaderLoadDone();
+         // 模板渲染
+         updateWareList(ret,_LoadMore);
+     } else {
+     	api.toast({
+     		msg: err.msg,
+     		duration: 2000,
+     		location: 'bottom'
+     	});
+     }
+ });
+  }
+  function updateWareList(_data,_LoadMore){
+  	var list=$api.byId('list');
+  	var tempFn=doT.template($api.byId('template').innerHTML);
+  	var resultText=tempFn(_data)
+  	if (_LoadMore) {
+  		$api.append(list, resultText);
+  	}else{
+  		$api.html(list, resultText);
+  	}
+    // 优化
+    api.parseTapmode();
+    if (_LoadMore) {
+    	if (_data.length<LIMIT) {
+    		var pushStatus=$api.byId('pushStatus');
+    		pushStatus.innerHTML="我是有底线滴"
+    	}
+    }
+}
+
+// 列表页图片缓存
+
+function LoadImage(_this){
+	var dataUrl=$api.attr(_this, 'data-url');
+	if (dataUrl) {
+		api.imageCache({
+			url: dataUrl
+		}, function(ret, err){
+			if( ret ){
+				_this.src=ret.url;
+				$api.attr(_this, 'data-url', '');
+			}else{
+             // alert( JSON.stringify( err ) );
+         }
+     });
+	}
+
+}
+// 监听 
+function initEventListenter(){
+	api.addEventListener({
+		name:'scrolltobottom',
+		extra:{
+			threshold:100
+		}
+	}, function(ret, err){        
+		getWareList(true);
+	});
+}
+// 下拉刷新
+function initRefresh(){
+	api.setRefreshHeaderInfo({
+		visible: true,
+		loadingImg: 'widget://image/refresh.png',
+		bgColor: '#ccc',
+		textColor: '#fff',
+		textDown: '下拉刷新...',
+		textUp: '松开刷新...',
+		showTime: true
+	}, function(ret, err){
+		getWareList();
+	});
+
+}
+
+</script>
+
+</html>
