@@ -225,7 +225,7 @@
 
 				</div>
 				{{? value.dindantypeid=='5c2a3991af3114d73d9ddfc2'}}
-				<div class="default" tapmode onclick="defaultbtn('{{=value.default}}','{{=value.id}}')">
+				<div class="default" tapmode onclick="pay('{{=value.id}}','{{=value.wareid}}','{{=value.addressid}}')">
 					<input type="button" value="去支付">
 				</div>
 				{{?? value.dindantypeid=='5c2a39a2af3114d73d9ddfc3'}}
@@ -270,6 +270,22 @@
 			pageParam: {
 				wareId: _wareId
 			}
+		});
+
+	}
+	function pay(id,wareid,addressid){
+		  event.stopPropagation();
+		ware={
+			id:id,
+			wareId:wareid,
+			addressId:addressid
+		}
+		api.openWin({
+		    name: 'pay',
+		    url: './pay.html',
+		    pageParam: {
+		        ware:ware
+		    }
 		});
 
 	}
