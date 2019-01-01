@@ -413,7 +413,7 @@
     apiready = function() {
         getware();
         getaddress();
-
+        initEventLisen();
 
 
     };  var types = ['公司', '住宅', '学校', '其它'];
@@ -498,10 +498,24 @@ function updateaddress(_data){
   
         var data=$api.jsonToStr(_data);
         if (_data[0]==undefined) {
-            alert('您还没有设置收货地址');
-            api.closeWin({
-                name: 'order'
+            api.confirm({
+                title: '提示',
+                msg: '去设置收货地址',
+                buttons: ['确定', '取消']
+            }, function(ret, err){
+                if( ret.buttonIndex==1 ){
+                    api.openWin({
+                        name: 'address',
+                        url: './address.html',
+                        pageParam: {
+                            order: api.pageParam.wareId
+                        }
+                    });
+                     
+                }
+                
             });
+         
        
         }else{
              var shouhuoren=$api.byId('shouhuoren');
@@ -518,6 +532,16 @@ function updateaddress(_data){
         
       
 }
+function initEventLisen(){
+    api.addEventListener({
+        name: 'createAddress'
+    }, function(ret, err){
+        getware();
+        getaddress();
+        
+    });
+}
+
 </script>
 
 </html>

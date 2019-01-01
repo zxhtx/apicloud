@@ -23,10 +23,10 @@
     header .icon-panel .icon {
         display: inline-block;
         box-sizing: border-box;
-        width: 86px;
-        height: 86px;
+        width: 108px;
+        height: 108px;
         border: 3px solid black;
-        border-radius: 86px;
+        border-radius: 108px;
         background-repeat: no-repeat;
         background-image: url(../image/default_square.png);
         background-size: 100% 100%;
@@ -39,6 +39,7 @@
         font-size: 14px;
         color: black;
         text-align: center;
+        margin-top: 20px;
     }
     
     header .account-info {
@@ -75,6 +76,9 @@
     .option .icon-address {
         background-image: url(../image/dizhi.png);
     }
+     .option .icon-tuijian {
+        background-image: url(../image/tuijian.png);
+    }
     
     .option .title {
         position: relative;
@@ -99,10 +103,30 @@
         background-size: 16px 24px;
         background-position: right center;
     }
-    
+    .option .arrow-pane2 {
+        position: absolute;
+        top: 0;
+        right: 12px;
+        width: auto;
+        height: 60px;
+        background-image: url(../image/hongbao.png);
+        background-repeat: no-repeat;
+        background-size: 24px 24px;
+        background-position: right center;
+    }
     .option .arrow-panel .text {
         box-sizing: border-box;
         padding-right: 20px;
+        width: auto;
+        height: 60px;
+        line-height: 60px;
+        font-size: 13px;
+        color: #888;
+        text-align: left;
+    }
+     .option .arrow-pane2 .text {
+        box-sizing: border-box;
+        padding-right: 28px;
         width: auto;
         height: 60px;
         line-height: 60px;
@@ -137,6 +161,13 @@
             <div class="title">收货地址</div>
             <div class="arrow-panel">
                 <div class="text">管理我的收货地址</div>
+            </div>
+        </div>
+         <div class="option" tapmode onclick="OpentuijianWin()">
+            <div class="icon icon-tuijian"></div>
+            <div class="title">推荐赚佣金</div>
+            <div class="arrow-pane2">
+                <div class="text">躺着都能赚钱啦!</div>
             </div>
         </div>
     </section>
@@ -196,6 +227,15 @@
             }
         });
     }
+    function OpentuijianWin(){
+        api.openWin({
+            name: 'tuijian',
+            url: './tuijian.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+    }
 // 在个人中心中显示头像
 function setAvatar(){
     api.actionSheet({
@@ -239,6 +279,7 @@ function setAvatar(){
 }
 // 上传头像 
 function uploadAtavar(_data){
+
   var now = Date.now();
   var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
   api.ajax({
@@ -270,6 +311,7 @@ function uploadAtavar(_data){
 }
 // 更改头像
 function updateUserAtavar(_data){
+    // alert($api.jsonToStr(_data))
   var now = Date.now();
   var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
   var userInfo=$api.getStorage('userInfo');

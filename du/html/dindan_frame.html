@@ -20,6 +20,7 @@
 	.content {
 		width: 100%;
 		height: 100%;
+		/*border: 1px solid red*/
 	}
 
 
@@ -66,6 +67,7 @@
 		height: 13px;
 		font-size: 13px;
 		color: #9d9d9d;
+		overflow: hidden;
 	}
 
 	.ware-1 .info .price-tag {
@@ -155,15 +157,24 @@
 	.active {
 		opacity: 0.7;
 	}
-	 .default{
-        position: absolute;
-        right: 10px;
-        bottom: 8px;
-        font-size: 13px;
-        border: 1px solid black;
-        border-radius: 22px;
-        padding: 5px;
-    }
+	.default{
+		position: absolute;
+		right: 10px;
+		bottom: 8px;
+		font-size: 13px;
+		border: 1px solid black;
+		border-radius: 22px;
+		padding: 5px;
+	}
+	.no{
+		position: absolute;
+		right: 66px;
+		bottom: 8px;
+		font-size: 13px;
+		border: 1px solid black;
+		border-radius: 22px;
+		padding: 5px;
+	}
 </style>
 </head>
 
@@ -225,6 +236,9 @@
 
 				</div>
 				{{? value.dindantypeid=='5c2a3991af3114d73d9ddfc2'}}
+				<div class="no" tapmode onclick="no('{{=value.id}}')">
+					<input type="button" value="取消">
+				</div>
 				<div class="default" tapmode onclick="pay('{{=value.id}}','{{=value.wareid}}','{{=value.addressid}}')">
 					<input type="button" value="去支付">
 				</div>
@@ -233,7 +247,7 @@
 					<input type="button" value="查看详情">
 				</div>
 				{{?? value.dindantypeid=='5c2a39add37a824c5ac6cc64'}}
-					<div class="default" tapmode onclick="defaultbtn('{{=value.default}}','{{=value.id}}')">
+				<div class="default" tapmode onclick="defaultbtn('{{=value.default}}','{{=value.id}}')">
 					<input type="button" value="已签收">
 				</div>
 				{{?}}
@@ -273,30 +287,50 @@
 		});
 
 	}
-	function pay(id,wareid,addressid){
-		  event.stopPropagation();
-		ware={
-			id:id,
-			wareId:wareid,
-			addressId:addressid
-		}
-		api.openWin({
-		    name: 'pay',
-		    url: './pay.html',
-		    pageParam: {
-		        ware:ware
-		    }
-		});
+	function no(_data){
+		event.stopPropagation();
+		var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
+      api.ajax({
+      	url: 'http://d.apicloud.com/mcm/api/shoppinginformation/'+_data,
+      	method: 'delete',
+      	headers: {
+      		"X-APICloud-AppId": "A6099267504667",
+      		"X-APICloud-AppKey":   appKey
+      	},
 
-	}
-	function defaultbtn(){
-		  event.stopPropagation();
-		api.toast({
-		    msg: '开发中',
-		    duration: 2000,
-		    location: 'bottom'
-		});
-	}
+      },function(ret, err){
+      	if (ret) {
+      		getWareList();
+      	} 
+      });
+
+  }
+  function pay(id,wareid,addressid){
+  	event.stopPropagation();
+  	ware={
+  		id:id,
+  		wareId:wareid,
+  		addressId:addressid
+  	}
+  	api.openWin({
+  		name: 'pay',
+  		url: './pay.html',
+  		pageParam: {
+  			ware:ware
+  		}
+  	});
+
+  }
+  function defaultbtn(){
+  	event.stopPropagation();
+  	api.toast({
+  		msg: '开发中',
+  		duration: 2000,
+  		location: 'bottom'
+  	});
+  }
 // 获取列表页数据
 function getWareList(_LoadMore){
 
@@ -390,6 +424,11 @@ function initEventListenter(){
 	}, function(ret, err){        
 		getWareList(true);
 	});
+	api.addEventListener({
+		name: 'updatedindantype'
+	}, function(ret, err){
+		getWareList();
+	});
 }
 // 下拉刷新
 function initRefresh(){
@@ -406,6 +445,7 @@ function initRefresh(){
 	});
 
 }
+
 
 </script>
 
