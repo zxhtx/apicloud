@@ -596,6 +596,16 @@
             }
         );
     };
+    u.date = function() {
+        var xhr = new window.XMLHttpRequest();
+        xhr.open("POST", "http://www.baidu.com/robots.txt", false);
+        xhr.send(null);
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            return xhr.getResponseHeader("Date");
+        } else {
+            return '';
+        }
+    };
 
 /*end*/
     

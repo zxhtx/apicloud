@@ -152,11 +152,12 @@ apiready = function() {
             bounces: true
         });
         getprice();
+        
     };
-    
-
+     var username=$api.getStorage('user');
  var addInfo = {
         dindantypeid:'5c2a3991af3114d73d9ddfc2',
+        username:username[0].username
 
     };
 function getprice(){
@@ -275,7 +276,6 @@ function getaddress(){
         getaddress();
        
         
-       
     }
   function save(){
          var now = Date.now();
@@ -312,13 +312,9 @@ function getaddress(){
                             name: 'order'
                         });
                      }
-                }else{
-                     alert( JSON.stringify( err ) );
                 }
             });
-        } else {
-            alert(JSON.stringify(err));
-        }
+        } 
     });
     }
 </script>
