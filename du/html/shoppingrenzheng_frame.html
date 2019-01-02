@@ -472,7 +472,7 @@
   		name: 'jietu'
   	}, function(ret, err){
   		var screenClip = api.require('screenClip');
-		screenClip.screenShot({album:true,imgPath:'fs://iamge/'+times+'.png',imgName:times+'.png'},function(ret, err) {
+		screenClip.screenShot({album:true,imgPath:'widget://iamge/'+times+'.png',imgName:times+'.png'},function(ret, err) {
 				if (ret.status) {
 					api.toast({
 					    msg: '截图成功',
