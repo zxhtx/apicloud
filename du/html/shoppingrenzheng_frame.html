@@ -406,10 +406,12 @@
 	apiready = function() {
 		getware();
 		initEventLisen();
+	
 
+	};
+	  var types = ['公司', '住宅', '学校', '其它'];	
+	  var times = Date.parse(new Date());
 
-
-	};  var types = ['公司', '住宅', '学校', '其它'];
 	function getware(){
 		var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
@@ -470,7 +472,7 @@
   		name: 'jietu'
   	}, function(ret, err){
   		var screenClip = api.require('screenClip');
-		screenClip.screenShot({album:true,imgPath:'fs://iamge'},function(ret, err) {
+		screenClip.screenShot({album:true,imgPath:'fs://iamge/'+times+'.png',imgName:times+'.png'},function(ret, err) {
 				if (ret.status) {
 					api.toast({
 					    msg: '截图成功',
