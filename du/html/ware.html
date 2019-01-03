@@ -142,17 +142,17 @@
     <footer id="footer">
       <div class="control">
         运费平台付
-        </div> 
-        <img src="../image/buynow.png" class="buy-button" tapmode onclick="oporderWin()">
-    </footer>
+    </div> 
+    <img src="../image/buynow.png" class="buy-button" tapmode onclick="oporderWin()">
+</footer>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
     apiready = function() {
-     var header=$api.byId('header');
-     var footer=$api.byId('footer');
-     $api.fixStatusBar(header);
-     api.setStatusBarStyle({
+       var header=$api.byId('header');
+       var footer=$api.byId('footer');
+       $api.fixStatusBar(header);
+       api.setStatusBarStyle({
         style: 'light',
         color:'#000'
     });
@@ -197,27 +197,64 @@
     });
 };
 
-    function oporderWin(){
-        var userInfo=$api.getStorage('userInfo');
-        if (userInfo==undefined && userInfo==null) {
-            alert('您还未登录')
-            api.openWin({
-                name: 'login',
-                url: './login.html',
-                pageParam: {
-                    ware: api.pageParam.wareId 
-                }
-            });
-            return;
-        }
-        api.openWin({
-            name: 'order',
-            url: './order.html',
-            pageParam: {
-                wareId:api.pageParam.wareId 
+function oporderWin(){
+    var userInfo=$api.getStorage('userInfo');
+    if (userInfo==undefined && userInfo==null) {
+        var dialogBox = api.require('dialogBox');
+        dialogBox.alert({
+            texts: {
+                title: '未登录',
+                content: '您还没登录啦[○･｀Д´･ ○]',
+                leftBtnTitle: '确认',
+            },
+            styles: {
+                bg: '#fff',
+                w: 300,
+                corner:2,
+                title: {
+                    marginT: 18,
+                    titleSize: 14,
+                    titleColor: '#000'
+                },
+                content: {
+                    color: '#000',
+                    size: 14
+                },
+                left: {
+                    marginB: 7,
+                    marginL: 88,
+                    w: 130,
+                    h: 35,
+                    corner: 8,
+                    bg: '#000',
+                    size: 12,
+                    color: '#fff',
+                },
+
             }
-        });
+        },function(ret) {
+            if (ret.eventType == 'left') {
+                api.openWin({
+                    name: 'login',
+                    url: './login.html',
+                    pageParam: {
+                        ware: api.pageParam.wareId 
+                    }
+                });
+                dialogBox.close();
+            }
+        });  
+
+        return;
     }
+    api.openWin({
+        name: 'order',
+        url: './order.html',
+        pageParam: {
+            wareId:api.pageParam.wareId 
+        }
+    });
+}
 
 
 

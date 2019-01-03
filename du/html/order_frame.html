@@ -160,10 +160,10 @@
         height: 64px;
         border-radius: 8px;
     }
-     .order .icon-panel .icon img{
+    .order .icon-panel .icon img{
         width: 64px;
         height: 64px;
-     }
+    }
     
     .order .icon-panel .info {
         position: relative;
@@ -413,12 +413,11 @@
     apiready = function() {
         getware();
         getaddress();
-        initEventLisen();
 
 
     };  var types = ['公司', '住宅', '学校', '其它'];
     function getware(){
-     var now = Date.now();
+       var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
       var params={
@@ -443,13 +442,13 @@
             // 赋值
             updateWare(ret);
         } else {
-         api.toast({
-             msg: err.msg,
-             duration: 2000,
-             location: 'bottom'
-         });
-     }
- });
+           api.toast({
+               msg: err.msg,
+               duration: 2000,
+               location: 'bottom'
+           });
+       }
+   });
 
 }
 function updateWare(_data){
@@ -468,78 +467,96 @@ function updateWare(_data){
 
 function getaddress(){
     var userInfo=$api.getStorage('userInfo');
-     var now = Date.now();
+    var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       var params={
-         fields: {},
-         where: {
-            default:1,
-            userId:userInfo.userId
-        },
-        skip: 0
-    }
-    params = $api.jsonToStr(params);
-    api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/address?filter='+params,
-        method: 'get',
-        headers: {
-         "X-APICloud-AppId": "A6099267504667",
-         "X-APICloud-AppKey":   appKey
-     }
- },function(ret, err){
+       fields: {},
+       where: {
+        default:1,
+        userId:userInfo.userId
+    },
+    skip: 0
+}
+params = $api.jsonToStr(params);
+api.ajax({
+    url: 'http://d.apicloud.com/mcm/api/address?filter='+params,
+    method: 'get',
+    headers: {
+       "X-APICloud-AppId": "A6099267504667",
+       "X-APICloud-AppKey":   appKey
+   }
+},function(ret, err){
     if (ret) {
         updateaddress(ret);
-      
+
     } 
 }); 
 }
 function updateaddress(_data){
-  
-        var data=$api.jsonToStr(_data);
-        if (_data[0]==undefined) {
-            api.confirm({
-                title: '提示',
-                msg: '去设置收货地址',
-                buttons: ['确定', '取消']
-            }, function(ret, err){
-                if( ret.buttonIndex==1 ){
-                    api.openWin({
-                        name: 'address',
-                        url: './address.html',
-                        pageParam: {
-                            order: api.pageParam.wareId
-                        }
-                    });
-                     
+
+    var data=$api.jsonToStr(_data);
+    if (_data[0]==undefined) {
+       var dialogBox = api.require('dialogBox');
+       dialogBox.alert({
+        texts: {
+            title: '收货地址',
+            content: '去设置收货地址',
+            leftBtnTitle: '确认',
+        },
+        styles: {
+            bg: '#fff',
+            w: 300,
+            corner:2,
+            title: {
+                marginT: 18,
+                titleSize: 14,
+                titleColor: '#000'
+            },
+            content: {
+                color: '#000',
+                size: 14
+            },
+            left: {
+                marginB: 7,
+                marginL: 88,
+                w: 130,
+                h: 35,
+                corner: 8,
+                bg: '#000',
+                size: 12,
+                color: '#fff',
+            },
+
+        }
+    }, function(ret) {
+        if (ret.eventType == 'left') {
+            api.openWin({
+                name: 'address.html',
+                url: './address.html',
+                pageParam: {
+                    order: api.pageParam.wareId
                 }
-                
             });
-         
+            dialogBox.close();
+            api.closeWin();
+        }
+    });  
        
-        }else{
-             var shouhuoren=$api.byId('shouhuoren');
-          var mobile=$api.byId('mobile');
-          var type=$api.byId('type');
-          var text=$api.byId('text');
+   }else{
+       var shouhuoren=$api.byId('shouhuoren');
+       var mobile=$api.byId('mobile');
+       var type=$api.byId('type');
+       var text=$api.byId('text');
         // alert($api.jsonToStr(_data))
         shouhuoren.innerHTML='收货人:'+_data[0].name;
         mobile.innerHTML=_data[0].mobile;
         type.innerHTML='['+ types[_data[0].type] +']'
         text.innerHTML=_data[0].address+'/'+_data[0].house
-        }
-         
-        
-      
-}
-function initEventLisen(){
-    api.addEventListener({
-        name: 'createAddress'
-    }, function(ret, err){
-        getware();
-        getaddress();
-        
-    });
+    }
+
+
+
 }
 
 </script>

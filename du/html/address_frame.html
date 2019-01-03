@@ -215,16 +215,7 @@
     var data;
     function defaultbtn(_data,Id){
        event.stopPropagation();
-       if (api.pageParam.order) {
-        setTimeout(function(){
-           api.sendEvent({
-            name: 'createAddress',
-        });
-       },1000)
-         
-
-       }
-        
+          
  
     if (_data==1) {
         api.toast({
