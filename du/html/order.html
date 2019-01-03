@@ -334,7 +334,7 @@ function save(){
         dialogBox.alert({
             texts: {
                 title: '下单成功',
-                content: '下单成功去的我订单支付',
+                content: '下单成功去我的订单支付(〃'▽'〃)',
                 leftBtnTitle: '确认',
             },
             styles: {
@@ -364,6 +364,7 @@ function save(){
             }
         }, function(ret) {
             if (ret.eventType == 'left') {
+                api.closeWin();
                 api.openWin({
                     name: 'dindan.html',
                     url: './dindan.html',
@@ -372,7 +373,7 @@ function save(){
                     }
                 });
                 dialogBox.close();
-                api.closeWin();
+              
             }
         });  
 
