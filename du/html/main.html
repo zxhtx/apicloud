@@ -87,7 +87,7 @@
     apiready = function() {
 
         //监听back事件
-            InitEventListenner();
+            exitApp();
 
         var header=$api.byId('header');
         var nav=$api.byId('nav');
@@ -196,13 +196,34 @@
     }
 
         // 监听返回按键
-    function InitEventListenner(){
-        api.addEventListener({
-            name:'keyback'
-        }, function(ret, err){        
-             api.closeWidget();
+   
+function exitApp(){
+    api.addEventListener({
+        name: 'keyback'
+    }, function(ret, err){
+        api.toast({
+            msg: '在次点击返回键退出APP',
+            duration:2000,
+            location: 'bottom'
         });
-    }
+ 
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err){
+            $api.setStorage("gesture",false);
+            api.closeWidget({
+            id: 'A6099267504667', //这里需要修改为自己的应用ID
+            retData: {name:'closeWidget'},
+            silent:true
+            });
+        });
+ 
+        setTimeout(function(){
+            exitApp();
+        },3000)
+    });
+}
+
 </script>
 
 </html>
