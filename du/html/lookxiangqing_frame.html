@@ -361,6 +361,26 @@
 	.highlight {
 		opacity: 0.7;
 	}
+	.wuliu{
+		width: 95%;
+		height: 280px;
+		margin:10px;
+		/*border: 1px solid red;*/
+		overflow-y: scroll;
+
+	}
+	.text{
+		color: black;
+		font-size: 15px;
+		word-break:break-all
+
+	}
+	.time{
+		color: gray;
+		font-size: 12px;
+		padding-top: 2px;
+		margin-bottom: 10px;
+	}
 </style>
 </head>
 
@@ -395,42 +415,58 @@
 			<div class="text">单号:</div>
 			<div class="value value-2" id="danhao">&nbsp;</div>
 		</div>
-
+		<div class="row">
+			<div class="text">物流公司:</div>
+			<div class="value value-2" id="wuliugongsi">&nbsp;...</div>
+		</div>
+	</section>
+	<section class="wuliu" id="wuliu">
+		<span class="text"></span>
+		<p class="time"></p>
 	</section>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/template" id="template">
+	{{~it:value:index}}
+	<span class="text">{{=value.remark}}</span>
+	<p class="time">{{=value.datetime}}</p>
+	{{~}}
+</script>
 <script type="text/javascript">
 	apiready = function() {
 		getware();
 
 
 	};  var types = ['公司', '住宅', '学校', '其它'];
-	function getware(){
-		var now = Date.now();
+	var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
-      var params={
-      	fields:{},
-      	fields: {},
-      	where: {
-      		id:api.pageParam.lookid
-      	},
-      	skip:0
-      }
-      params=$api.jsonToStr(params);
-      api.ajax({
-      	url: 'http://d.apicloud.com/mcm/api/shoppinginformation?filter='+params,
-      	method: 'get',
-      	headers: {
-      		"X-APICloud-AppId": "A6099267504667",
-      		"X-APICloud-AppKey":   appKey
-      	},
+      function getware(){
+		// var now = Date.now();
+  //     //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+  //     var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
+  var params={
+  	fields:{},
+  	fields: {},
+  	where: {
+  		id:api.pageParam.lookid
+  	},
+  	skip:0
+  }
+  params=$api.jsonToStr(params);
+  api.ajax({
+  	url: 'http://d.apicloud.com/mcm/api/shoppinginformation?filter='+params,
+  	method: 'get',
+  	headers: {
+  		"X-APICloud-AppId": "A6099267504667",
+  		"X-APICloud-AppKey":   appKey
+  	},
 
-      },function(ret, err){
-      	if (ret) {
+  },function(ret, err){
+  	if (ret) {
             // 赋值
-            alert($api.jsonToStr(ret))
             updateWare(ret);
         } else {
         	api.toast({
@@ -441,26 +477,53 @@
         }
     });
 
-  }
-  function updateWare(_data){
-  	var warename=$api.byId('warename');
-  	var wareprice=$api.byId('wareprice');
-  	var danhao=$api.byId('danhao');
-  	var image=$api.byId('image');
-  	var shouhuoren=$api.byId('shouhuoren');
-  	var mobile=$api.byId('mobile');
-  	var type=$api.byId('type');
-  	var text=$api.byId('text');
-        shouhuoren.innerHTML='收货人:'+_data[0].shoppingname;
-        mobile.innerHTML=_data[0].mobile;
-        type.innerHTML='['+ types[_data[0].addresstype] +']'
-        text.innerHTML=_data[0].address+'/'+_data[0].house    
-        warename.innerHTML=_data[0].warename;
-        wareprice.innerHTML='￥'+_data[0].price;
-        image.src=_data[0].url;
+}
+function updateWare(_data){
+	var warename=$api.byId('warename');
+	var wareprice=$api.byId('wareprice');
+	var danhao=$api.byId('danhao');
+	var image=$api.byId('image');
+	var shouhuoren=$api.byId('shouhuoren');
+	var mobile=$api.byId('mobile');
+	var type=$api.byId('type');
+	var text=$api.byId('text');
+	shouhuoren.innerHTML='收货人:'+_data[0].shoppingname;
+	mobile.innerHTML=_data[0].mobile;
+	type.innerHTML='['+ types[_data[0].addresstype] +']'
+	text.innerHTML=_data[0].address+'/'+_data[0].house    
+	warename.innerHTML=_data[0].warename;
+	wareprice.innerHTML='￥'+_data[0].price;
+	image.src=_data[0].url;
+	if (_data[0].danhao) {
+		danhao.innerHTML=_data[0].danhao;
+		wuliu(_data[0].danhao);
+	}
 
-    }
+}
+function wuliu(danhao){
+	api.ajax({
+		url: "http://v.juhe.cn/exp/index?key=7b32645388324eaaba98ce93e4bf4682&com=tt&no="+danhao,
+		method: 'get',
+		headers: {
+			"X-APICloud-AppId": "A6099267504667",
+			"X-APICloud-AppKey":   appKey
+		},
 
+	},function(ret, err){
+		if (ret) {
+			// alert($api.jsonToStr(ret))
+			var wuliugongsi=$api.byId('wuliugongsi');
+			wuliugongsi.innerHTML=ret.result.company+'快递';
+			updatewuliu(ret.result.list)
+		} 
+	});
+}
+function updatewuliu(_data){
+	var list=$api.byId('wuliu');
+	var tempFn=doT.template($api.byId('template').innerHTML);
+	var resultText=tempFn(_data)
+	$api.html(list, resultText);
+}
 
 </script>
 

@@ -215,10 +215,10 @@
     var types = ['公司', '住宅', '学校', '其它'];
     var data;
     function defaultbtn(_data,Id){
-     event.stopPropagation();
+       event.stopPropagation();
 
 
-     if (_data==1) {
+       if (_data==1) {
         api.toast({
             msg: '该地址已是默认地址',
             duration: 2000,
@@ -237,10 +237,10 @@
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       var params={
-         fields: {},
-         where: {
-            id: Id,
-            userId:userInfo.userId
+       fields: {},
+       where: {
+        id: Id,
+        userId:userInfo.userId
             // default:null
         },
         skip: 0
@@ -250,10 +250,10 @@
         url: 'http://d.apicloud.com/mcm/api/address?filter='+params,
         method: 'get',
         headers: {
-         "X-APICloud-AppId": "A6099267504667",
-         "X-APICloud-AppKey":   appKey
-     }
- },function(ret, err){
+           "X-APICloud-AppId": "A6099267504667",
+           "X-APICloud-AppKey":   appKey
+       }
+   },function(ret, err){
     if (ret) {
         updateAddressnull(ret[0])
     } else {
@@ -276,10 +276,10 @@ function updateAddressnull(_data){
       }
   },
   headers: {
-     "X-APICloud-AppId": "A6099267504667",
-     "X-APICloud-AppKey":   appKey,
-     "Authorization": userInfo.id
- }
+   "X-APICloud-AppId": "A6099267504667",
+   "X-APICloud-AppKey":   appKey,
+   "Authorization": userInfo.id
+}
 },function(ret, err){
   if (ret) {
       api.toast({
@@ -294,27 +294,27 @@ function updateAddressnull(_data){
 }
 //把default为1的数据查出来
 function  getAddressone(){
-   var userInfo=$api.getStorage('userInfo');
-   var now = Date.now();
+ var userInfo=$api.getStorage('userInfo');
+ var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       var params={
-         fields: {},
-         where: {
-            userId:userInfo.userId,
-            default:1
-        },
-        skip: 0
-    }
-    params = $api.jsonToStr(params);
-    api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/address?filter='+params,
-        method: 'get',
-        headers: {
-         "X-APICloud-AppId": "A6099267504667",
-         "X-APICloud-AppKey":   appKey
-     }
- },function(ret, err){
+       fields: {},
+       where: {
+        userId:userInfo.userId,
+        default:1
+    },
+    skip: 0
+}
+params = $api.jsonToStr(params);
+api.ajax({
+    url: 'http://d.apicloud.com/mcm/api/address?filter='+params,
+    method: 'get',
+    headers: {
+       "X-APICloud-AppId": "A6099267504667",
+       "X-APICloud-AppKey":   appKey
+   }
+},function(ret, err){
     if (ret) {
         updateAddressone(ret[0])
     } else {
@@ -342,17 +342,17 @@ api.ajax({
   }
 },
 headers: {
- "X-APICloud-AppId": "A6099267504667",
- "X-APICloud-AppKey":   appKey,
- "Authorization": userInfo.id
+   "X-APICloud-AppId": "A6099267504667",
+   "X-APICloud-AppKey":   appKey,
+   "Authorization": userInfo.id
 }
 },function(ret, err){
     getAddressList();
 });
 }
 function getAddressList() {
-   activity = api.require('UILoading');
-   activity.keyFrame({
+ activity = api.require('UILoading');
+ activity.keyFrame({
     rect: {
         w: 80,
         h: 100
@@ -368,7 +368,7 @@ function getAddressList() {
     }
 });
 
-   var now = Date.now();
+ var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       var userInfo = $api.getStorage('userInfo');
@@ -385,11 +385,11 @@ function getAddressList() {
         url: 'http://d.apicloud.com/mcm/api/address?filter=' + params,
         method: 'get',
         headers: {
-         "X-APICloud-AppId": "A6099267504667",
-         "X-APICloud-AppKey":   appKey,
-         "Authorization": userInfo.id
-     }
- }, function(ret, err) {
+           "X-APICloud-AppId": "A6099267504667",
+           "X-APICloud-AppKey":   appKey,
+           "Authorization": userInfo.id
+       }
+   }, function(ret, err) {
     if (ret && ret.length > 0) {
         data = ret;
             // 在界面中更新收货地址列表显示
@@ -445,6 +445,7 @@ function fnOpenSetAddressWin(index_) {
         pageParam: data[index_]
     });
 }
+
 </script>
 
 </html>
