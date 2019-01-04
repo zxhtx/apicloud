@@ -147,7 +147,7 @@
         background-color: #fff;
         background-image: url(../image/shoppingcart_empty.png);
         background-repeat: no-repeat;
-        background-size: 200px 200px;
+        background-size: 128px 128px;
         background-position: center 50px;
     }
     
@@ -210,7 +210,7 @@
         initEventListener();
         getWareListFromDB();
     };
-
+    var activity;
     var curShoppingCart;
 
     function initEventListener() {
@@ -245,12 +245,21 @@ function getWareListFromDB() {
 }
 
 function fnGetWareList(wareList_) {
-    api.showProgress({
-        style: 'default',
-        animationType: 'fade',
-        title: '努力加载中...',
-        text: '先喝杯茶...',
-        modal: false
+   activity = api.require('UILoading');
+    activity.keyFrame({
+        rect: {
+            w: 80,
+            h: 100
+        },
+        styles: {
+            bg: 'rgba(0,0,0,0.5)',
+            corner: 5,
+            interval: 50,
+            frame: {
+                w: 80,
+                h: 80
+            }
+        }
     });
     var wares = [];
     for (var i = 0; i < wareList_.length; i++) {
@@ -310,6 +319,7 @@ function fnUpdateWareListByShoppingCart(data_) {
     // 使用模板函数生成HTML文本
     var resultHTML = tempFn(data_);
     list.innerHTML = resultHTML;
+    activity.closeKeyFrame();
 }
 
 // 计算购物车中的商品总数及总金额
