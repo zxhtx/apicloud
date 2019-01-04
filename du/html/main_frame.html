@@ -366,28 +366,22 @@ function initEventListenter(){
 }
 // 下拉刷新
 function initRefresh(){
-    // api.setRefreshHeaderInfo({
-    //     visible: true,
-    //     loadingImg: 'widget://image/refresh.png',
-    //     bgColor: '#ccc',
-    //     textColor: '#fff',
-    //     textDown: '下拉刷新...',
-    //     textUp: '松开刷新...',
-    //     showTime: true
-    // }, function(ret, err){
-    //     getWareList();
-    // });
     api.setCustomRefreshHeaderInfo({
-    bgColor: '#C0C0C0',
-    isScale: true
-}, function() {
-    getWareList();
-    api.addEventListener({
-        name: 'shake'
-    }, function(ret, err) {
-        api.refreshHeaderLoadDone()
+        bgColor: '#C0C0C0',
+        isScale: true
+    }, function() {
+        getWareList();
+        api.toast({
+            msg: '摇一摇关闭刷新',
+            duration: 5000,
+            location: 'bottom'
+        });
+        api.addEventListener({
+            name: 'shake'
+        }, function(ret, err) {
+            api.refreshHeaderLoadDone()
+        });
     });
-});
 
 }
 function Add(_wareId){

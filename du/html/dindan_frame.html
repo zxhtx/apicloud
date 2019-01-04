@@ -544,9 +544,6 @@ function getAddressList(_LoadMore){
 
       },function(ret, err){
       	if (ret) {
-          // 隐藏下拉刷新
-          // alert($api.jsonToStr(ret))
-          api.refreshHeaderLoadDone();
          // 模板渲染
          updateWareList(ret,_LoadMore);
      } else {
@@ -614,17 +611,22 @@ function initEventListenter(){
 }
 // 下拉刷新
 function initRefresh(){
-	api.setRefreshHeaderInfo({
-		visible: true,
-		loadingImg: 'widget://image/refresh.png',
-		bgColor: '#ccc',
-		textColor: '#fff',
-		textDown: '下拉刷新...',
-		textUp: '松开刷新...',
-		showTime: true
-	}, function(ret, err){
-		getAddressList();
-	});
+	    api.setCustomRefreshHeaderInfo({
+        bgColor: '#C0C0C0',
+        isScale: true
+    }, function() {
+        getWareList();
+        api.toast({
+            msg: '摇一摇关闭刷新',
+            duration: 5000,
+            location: 'bottom'
+        });
+        api.addEventListener({
+            name: 'shake'
+        }, function(ret, err) {
+            api.refreshHeaderLoadDone()
+        });
+    });
 
 }
 

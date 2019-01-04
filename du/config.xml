@@ -17,6 +17,7 @@
  	<content src="index.html" />
 
  	<access origin="*" />
+ 	<preference name="customRefreshHeader" value="UIPullRefreshFlash"/>
 
  	<preference name="pageBounce" value="false"/>
 
