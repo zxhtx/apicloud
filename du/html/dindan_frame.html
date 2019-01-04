@@ -312,7 +312,7 @@
 				</div>
 				{{?? value.dindantypeid=='5c2a39add37a824c5ac6cc64'}}
 				<div class="default" tapmode onclick="defaultbtn('{{=value.default}}','{{=value.id}}')">
-					<input type="button" value="已签收">
+					<input type="button" value="此商品已签收">
 				</div>
 				{{?}}
 			</div>
@@ -327,11 +327,12 @@
 <script type="text/javascript">
 	apiready = function() {
 		init();
-		getWareList();
+		getAddressList();
 		initRefresh();
 		initEventListenter();
 
 	};
+	var activity;
 	var dindantypeList;
 	var userInfo;
 	var skip=0;
@@ -352,23 +353,23 @@
 
 	}
 	function look(_id){
-			event.stopPropagation();
+		event.stopPropagation();
 		api.openWin({
-		    name: 'lookxiangqing.html',
-		    url: './lookxiangqing.html',
-		    pageParam: {
-		        lookid:_id
-		    }
+			name: 'lookxiangqing.html',
+			url: './lookxiangqing.html',
+			pageParam: {
+				lookid:_id
+			}
 		});
 	}
 	function shoppingrenzheng(_id){
 		event.stopPropagation();
 		api.openWin({
-		    name: 'shoppingrenzheng.html',
-		    url: './shoppingrenzheng.html',
-		    pageParam: {
-		        shopping:_id
-		    }
+			name: 'shoppingrenzheng.html',
+			url: './shoppingrenzheng.html',
+			pageParam: {
+				shopping:_id
+			}
 		});
 		
 
@@ -376,48 +377,48 @@
 	function qianshou(_id){
 		event.stopPropagation();
 		var dialogBox = api.require('dialogBox');
-      dialogBox.alert({
-        texts: {
-            title: '收货地址',
-            content: '您真的已签收了快递了么ლ(′◉❥◉｀ლ)',
-            leftBtnTitle: '取消',
-            rightBtnTitle: '确认'
-        },
-        styles: {
-            bg: '#fff',
-            w: 300,
-            corner:2,
-            title: {
-                marginT: 18,
-                titleSize: 14,
-                titleColor: '#000'
-            },
-            content: {
-                color: '#000',
-                size: 14
-            },
-             right: {
-                marginB: 7,
-                marginL: 10,
-                w: 130,
-                h: 35,
-                corner: 8,
-                bg: '#000',
-                size: 12,
-                color: '#fff',
-            },
-            left: {
-                marginB: 7,
-                marginL: 20,
-                w: 130,
-                h: 35,
-                corner: 8,
-                bg: '#000',
-                size: 12,
-                color: '#fff',
-            },
-            
-        }
+		dialogBox.alert({
+			texts: {
+				title: '收货地址',
+				content: '您真的已签收了快递了么ლ(′◉❥◉｀ლ)',
+				leftBtnTitle: '取消',
+				rightBtnTitle: '确认'
+			},
+			styles: {
+				bg: '#fff',
+				w: 300,
+				corner:2,
+				title: {
+					marginT: 18,
+					titleSize: 14,
+					titleColor: '#000'
+				},
+				content: {
+					color: '#000',
+					size: 14
+				},
+				right: {
+					marginB: 7,
+					marginL: 10,
+					w: 130,
+					h: 35,
+					corner: 8,
+					bg: '#000',
+					size: 12,
+					color: '#fff',
+				},
+				left: {
+					marginB: 7,
+					marginL: 20,
+					w: 130,
+					h: 35,
+					corner: 8,
+					bg: '#000',
+					size: 12,
+					color: '#fff',
+				},
+
+			}
 		}, function(ret, err){
 			if( ret.eventType == 'right' ){
 				var now = Date.now();
@@ -439,9 +440,9 @@
 					}
 				},function(ret, err){
 					if (ret) {
-						getWareList();
+						getAddressList();
 					} 
-					  dialogBox.close();
+					dialogBox.close();
 				});
 
 			}else{
@@ -467,7 +468,7 @@
 
       },function(ret, err){
       	if (ret) {
-      		getWareList();
+      		getAddressList();
       	} 
       });
 
@@ -491,14 +492,29 @@
   function defaultbtn(){
   	event.stopPropagation();
   	api.toast({
-  		msg: '开发中',
+  		msg: '此商品已签收',
   		duration: 2000,
   		location: 'bottom'
   	});
   }
 // 获取列表页数据
-function getWareList(_LoadMore){
-
+function getAddressList(_LoadMore){
+	activity = api.require('UILoading');
+	activity.keyFrame({
+		rect: {
+			w: 80,
+			h: 100
+		},
+		styles: {
+			bg: 'rgba(0,0,0,0.5)',
+			corner: 5,
+			interval: 50,
+			frame: {
+				w: 80,
+				h: 80
+			}
+		}
+	});
 	var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
@@ -559,6 +575,7 @@ function getWareList(_LoadMore){
     		pushStatus.innerHTML="我是有底线滴"
     	}
     }
+    activity.closeKeyFrame()
 }
 
 // 列表页图片缓存
@@ -587,12 +604,12 @@ function initEventListenter(){
 			threshold:100
 		}
 	}, function(ret, err){        
-		getWareList(true);
+		getAddressList(true);
 	});
 	api.addEventListener({
 		name: 'updatedindantype'
 	}, function(ret, err){
-		getWareList();
+		getAddressList();
 	});
 }
 // 下拉刷新
@@ -606,7 +623,7 @@ function initRefresh(){
 		textUp: '松开刷新...',
 		showTime: true
 	}, function(ret, err){
-		getWareList();
+		getAddressList();
 	});
 
 }

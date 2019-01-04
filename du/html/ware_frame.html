@@ -150,7 +150,7 @@
         height: 20px;
         line-height: 20px;
     }
-    </style>
+</style>
 </head>
 
 <body>
@@ -172,7 +172,7 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
-apiready = function() {
+    apiready = function() {
     // 初始化轮播图模块
     initUIScrollPicture();
 
@@ -181,6 +181,7 @@ apiready = function() {
 };
 
 var UIScrollPicture;
+var activity;
 
 function initUIScrollPicture() {
 
@@ -201,8 +202,8 @@ function initUIScrollPicture() {
         },
         data: {
             paths: [
-                'widget://image/default_rect.png',
-                'widget://image/default_rect.png'
+            'widget://image/default_rect.png',
+            'widget://image/default_rect.png'
             ]
         },
         styles: {
@@ -238,39 +239,48 @@ function initUIScrollPicture() {
     });
 }
 
-     var now = Date.now();
+var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
 
-function getWareInfo(_wareId) {
-    api.showProgress({
-        style: 'default',
-        animationType: 'fade',
-        title: '努力加载中...',
-        text: '先喝杯茶...',
-        modal: false
-    });
-    var params = {
-        fields: {},
-        where: {
-            id: _wareId
-        },
-        skip: 0,
-        limit: 1,
-        include: ['wareInfoPointer']
-    }
-    params = $api.jsonToStr(params);
-     api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/ware?filter='+params,
-        method: 'get',
-         headers: {
-            "X-APICloud-AppId": "A6099267504667",
-            "X-APICloud-AppKey":   appKey
-        },
-        
-    },function(ret, err) {
-        if (ret) {
-            api.hideProgress();
+      function getWareInfo(_wareId) {
+        activity = api.require('UILoading');
+        activity.keyFrame({
+            rect: {
+                w: 80,
+                h: 100
+            },
+            styles: {
+                bg: 'rgba(0,0,0,0.5)',
+                corner: 5,
+                interval: 50,
+                frame: {
+                    w: 80,
+                    h: 80
+                }
+            }
+        });
+
+        var params = {
+            fields: {},
+            where: {
+                id: _wareId
+            },
+            skip: 0,
+            limit: 1,
+            include: ['wareInfoPointer']
+        }
+        params = $api.jsonToStr(params);
+        api.ajax({
+            url: 'http://d.apicloud.com/mcm/api/ware?filter='+params,
+            method: 'get',
+            headers: {
+                "X-APICloud-AppId": "A6099267504667",
+                "X-APICloud-AppKey":   appKey
+            },
+
+        },function(ret, err) {
+            if (ret) {
             // 更新商品详情展示
             fnUpdateWareInfo(ret[0]);
             // alert(JSON.stringify(ret))
@@ -280,9 +290,9 @@ function getWareInfo(_wareId) {
               duration: 2000,
               location: 'bottom'
           });
-        }
-    });
-}
+      }
+  });
+    }
 
 // 更新商品详情展示
 function fnUpdateWareInfo(_ware) {
@@ -316,6 +326,8 @@ function fnUpdateWareInfo(_ware) {
             paths: paths
         }
     });
+    activity.closeKeyFrame();
+
 }
 </script>
 

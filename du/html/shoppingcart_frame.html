@@ -100,8 +100,8 @@
     
     .ware .control {
         position: absolute;
-        width: 30px;
-        height: 23px;
+        width: 38px;
+        height: 38px;
         top: 53px;
         right: 8px;
         /*border: 1px solid red;*/
@@ -111,8 +111,8 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 23px;
-        height: 23px;
+        width: 32px;
+        height: 32px;
     }
   /*  
     .ware .control .count {
@@ -154,7 +154,7 @@
     .active {
         opacity: 0.7;
     }
-    </style>
+</style>
 </head>
 
 <body>
@@ -199,21 +199,21 @@
         </div>
         <div class="control" id="control_{{=value.id}}">
             <img class="minus" src="../image/jian.png" tapmode onclick="fnMinus('{{=value.id}}');">
-             <div id="count_{{=value.id}}" class="count"></div>
+            <div id="count_{{=value.id}}" class="count"></div>
         </div>
     </div>
     {{~}}
 </script>
 <script type="text/javascript">
-    
-apiready = function() {
-    initEventListener();
-    getWareListFromDB();
-};
 
-var curShoppingCart;
+    apiready = function() {
+        initEventListener();
+        getWareListFromDB();
+    };
 
-function initEventListener() {
+    var curShoppingCart;
+
+    function initEventListener() {
     // 监听购物车更新事件(自定义事件)，同步更新列表展示中选定商品的数量
     api.addEventListener({
         name: 'updateShoppingCart'
@@ -393,33 +393,76 @@ function fnOpenWareWin(wareId_) {
 
 // 从购物车删除按钮的监听函数
 function fnMinus(wareId_) { 
- event.stopPropagation();
-    api.confirm({
-        title: '提示',
-        msg: '确定删除此商品么',
-        buttons: ['确定', '取消']
-    }, function(ret, err){
-        if( ret.buttonIndex==1 ){
-             
-              var count = $api.byId('count_' + wareId_);
-              var control = $api.byId('control_' + wareId_);
-              var countNumber = parseInt(count.innerHTML);
-              countNumber = 0;
-              count.innerHTML = countNumber;
-              control.style.display = (countNumber > 0) ? 'block' : 'none';
-              fnUpdateWareCount(wareId_, countNumber);
-              api.sendEvent({
-                name: 'updateShoppingCart',
-                extra: {
-                    wareId: wareId_,
-                    wareCount: countNumber
-                }
-            });
-             }
-        
-    });
-  
-  
+   event.stopPropagation();
+   var dialogBox = api.require('dialogBox');
+   dialogBox.alert({
+    texts: {
+        title: '收货地址',
+        content: '您真的要删除此商品么ლ(′◉❥◉｀ლ)',
+        leftBtnTitle: '取消',
+        rightBtnTitle: '确认'
+    },
+    styles: {
+        bg: '#fff',
+        w: 300,
+        corner:2,
+        title: {
+            marginT: 18,
+            titleSize: 14,
+            titleColor: '#000'
+        },
+        content: {
+            color: '#000',
+            size: 14
+        },
+        right: {
+            marginB: 7,
+            marginL: 10,
+            w: 130,
+            h: 35,
+            corner: 8,
+            bg: '#000',
+            size: 12,
+            color: '#fff',
+        },
+        left: {
+            marginB: 7,
+            marginL: 20,
+            w: 130,
+            h: 35,
+            corner: 8,
+            bg: '#000',
+            size: 12,
+            color: '#fff',
+        },
+
+    }
+}, function(ret, err){
+    if (ret) {
+        if (ret.eventType == 'right') {
+
+          var count = $api.byId('count_' + wareId_);
+          var control = $api.byId('control_' + wareId_);
+          var countNumber = parseInt(count.innerHTML);
+          countNumber = 0;
+          count.innerHTML = countNumber;
+          control.style.display = (countNumber > 0) ? 'block' : 'none';
+          fnUpdateWareCount(wareId_, countNumber);
+          api.sendEvent({
+            name: 'updateShoppingCart',
+            extra: {
+                wareId: wareId_,
+                wareCount: countNumber
+            }
+        });
+           dialogBox.close();
+      }else{
+         dialogBox.close();
+      }
+  }
+});
+
+
 }
 
 // 设置商品是否选中
