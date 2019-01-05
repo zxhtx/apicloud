@@ -163,6 +163,7 @@
 </body>
 <script type="text/template" id="template">
 	{{~it:value:index}}
+
 	<div class="ware ware-1" >
 		<div class="content" >
 			<img onload="LoadImage(this)" data-url="{{=value.thumbnail.url}}" class="thumbnail" src="../image/default_square.png">
@@ -280,6 +281,11 @@ function searchval(val,_LoadMore){
 });
 }
 function updateWareList(_data,_LoadMore){
+	var pushStatus=$api.byId('pushStatus');
+	if (_data[0]==undefined) {
+		  pushStatus.innerHTML="该商品暂未上架"
+		
+	}
     var list=$api.byId('list');
     var tempFn=doT.template($api.byId('template').innerHTML);
     var resultText=tempFn(_data)
@@ -292,7 +298,7 @@ function updateWareList(_data,_LoadMore){
     api.parseTapmode();
     if (_LoadMore) {
         if (_data.length<LIMIT) {
-            var pushStatus=$api.byId('pushStatus');
+            
             pushStatus.innerHTML="我是有底线滴"
         }
     }
