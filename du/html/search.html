@@ -16,13 +16,15 @@
 		-webkit-flex-flow: row;
 		flex-flow: row;
 		padding: 16px;
-		height: 60px;
+		height: 50px;
+		width: 100%;
 		margin-bottom: 2px;
 		background-color: #fff;
+		/*border: 1px solid red*/
 	}
  header .back {
         position: absolute;
-        bottom: 0;
+        bottom: -10px;
         left: 0;
         width: 50px;
         height: 50px;
@@ -36,6 +38,7 @@
 		-webkit-flex: 1;
 		flex: 1;
 		box-sizing: border-box;
+		margin-top: 1px;
 		margin-left: 18px;
 		padding-top: 5px;
 		padding-left: 6px;
@@ -43,12 +46,13 @@
 		height: 28px;
 		background-color: #eee;
 		border-radius: 14px;
+		border: 1px solid red
 	}
 
 	header .input input {
 		width: 100%;
 		height: 20px;
-		vertical-align: top;
+		vertical-align:bottom ;
 		font-size: 14px;
 	}
 
@@ -68,10 +72,11 @@
 </head>
 <body>
 	<header id="header">
-		<div class="back" tapmode onclick="api.closeWin()"></div>
+		
 		<div class="input">
 			<input id="searchText" type="search" placeholder="搜索其实很简单">
 		</div>
+		<div class="back" tapmode onclick="api.closeWin()"></div>
 		<div class="button" tapmode onclick="search()">搜索</div>
 	</header>
 </body>
