@@ -32,25 +32,22 @@
         background-size: 20px 20px;
         background-position: center center;
         background-repeat: no-repeat;
-        z-index: 2;
 
 
     }
-     }
-    header .left{
+
+    header .left {
         position: absolute;
-        bottom:0;
-        left: 30px;
+        bottom: 0;
+        left: 0;
         width: 40px;
         height: 50px;
         background: url(../image/search.png);
-        background-size: 20px 20px;
         background-position: center center;
+        background-size: 20px 20px;
         background-repeat: no-repeat;
-        z-index: 3;
-
-
     }
+
     nav{
         display: -webkit-box ;
         display: -webkit-flex ;
@@ -85,11 +82,12 @@
 </head>
 
 <body>
-<header id="header">
-    <div class="left" tapmode onclick="OpenSearchWin()" ></div>
-    <h1>毒</h1>
-    <div class="right" tapmode onclick="OpenPersonCenterWin()" ></div>
-</header>
+    <header id="header">
+
+        <h1>毒</h1>
+        <div class="left" tapmode onclick="openSearchWin()"></div>
+        <div class="right" tapmode onclick="OpenPersonCenterWin()" ></div>
+    </header>
     <nav id="nav">
         <div class="menu selected" tapmode="selected" onclick="setNavMenuIndex(0)">水果</div>
         <div class="menu" tapmode="selected" onclick="setNavMenuIndex(1)">食材</div>
@@ -103,7 +101,7 @@
     apiready = function() {
 
         //监听back事件
-            exitApp();
+        exitApp();
 
         var header=$api.byId('header');
         var nav=$api.byId('nav');
@@ -116,59 +114,59 @@
         headerH=$api.offset(header).h
         navH=$api.offset(nav).h;
 
-         menus=$api.domAll(nav, '.menu');
+        menus=$api.domAll(nav, '.menu');
 
-         openFrames();
+        openFrames();
 
     };
 
 
     function openFrames(){
 
-         var frames=[];
-        for (var i = 0; i <menus.length; i++) {
-            frames.push({
-                name:'main_frame_'+i,
-                url:'./main_frame.html',
-                pageParam:{
-                    wareTypeIndex:i
-                }
-            })
-        }
-
-        api.openFrameGroup ({
-            name: 'mainFrameGroup',
-            scrollEnabled: true,
-            rect: {
-                 x: 0,
-                 y: headerH+navH,
-                 w: 'auto',
-                 h: 'auto'
-            },
-            frames: frames
-        }, function(ret, err){
-           SetNavMenuselected(ret.index);
-        });
-
-        api.openFrame({
-            name: 'minicart_frame',
-            url: './minicart_frame.html',
-            rect: {
-                x: 0,
-                y: api.winHeight-88,
-                w: 150,
-                h: 34
-            },
-            pageParam: {
-                name: 'test'
-            },
-            bounces: false,
-        });
-        api.bringFrameToFront({
-            from: 'minicart_frame',
-        });
+       var frames=[];
+       for (var i = 0; i <menus.length; i++) {
+        frames.push({
+            name:'main_frame_'+i,
+            url:'./main_frame.html',
+            pageParam:{
+                wareTypeIndex:i
+            }
+        })
     }
-    var menus, headerH , navH;
+
+    api.openFrameGroup ({
+        name: 'mainFrameGroup',
+        scrollEnabled: true,
+        rect: {
+           x: 0,
+           y: headerH+navH,
+           w: 'auto',
+           h: 'auto'
+       },
+       frames: frames
+   }, function(ret, err){
+     SetNavMenuselected(ret.index);
+ });
+
+    api.openFrame({
+        name: 'minicart_frame',
+        url: './minicart_frame.html',
+        rect: {
+            x: 0,
+            y: api.winHeight-88,
+            w: 150,
+            h: 34
+        },
+        pageParam: {
+            name: 'test'
+        },
+        bounces: false,
+    });
+    api.bringFrameToFront({
+        from: 'minicart_frame',
+    });
+}
+var menus, headerH , navH;
 
     // 滑动时标题变化
     function SetNavMenuselected(_index){
@@ -200,46 +198,55 @@
                 }
             });
         }else{
-              api.openWin({
+          api.openWin({
             name: 'login',
             url: './login.html',
             pageParam: {
                 name: 'test'
             }
         });
-        }
+      }
 
-    }
+  }
 
         // 监听返回按键
-   
-function exitApp(){
-    api.addEventListener({
-        name: 'keyback'
-    }, function(ret, err){
-        api.toast({
-            msg: '再按一次退出应用',
-            duration:2000,
-            location: 'bottom'
-        });
- 
-        api.addEventListener({
-            name: 'keyback'
-        }, function(ret, err){
-            $api.setStorage("gesture",false);
-            api.closeWidget({
+
+        function exitApp(){
+            api.addEventListener({
+                name: 'keyback'
+            }, function(ret, err){
+                api.toast({
+                    msg: '再按一次退出应用',
+                    duration:2000,
+                    location: 'bottom'
+                });
+
+                api.addEventListener({
+                    name: 'keyback'
+                }, function(ret, err){
+                    $api.setStorage("gesture",false);
+                    api.closeWidget({
             id: 'A6099267504667', //这里需要修改为自己的应用ID
             retData: {name:'closeWidget'},
             silent:true
-            });
         });
- 
-        setTimeout(function(){
-            exitApp();
-        },3000)
-    });
-}
+                });
 
-</script>
+                setTimeout(function(){
+                    exitApp();
+                },3000)
+            });
+        }
 
-</html>
+        function openSearchWin(){
+            api.openWin({
+                name: 'search',
+                url: './search.html',
+                pageParam: {
+                    name: 'test'
+                }
+            });
+        }
+    </script>
+
+    </html>

@@ -1,23 +1,376 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-    <title>title</title>
-    <link rel="stylesheet" type="text/css" href="api.css"/>
-    <style>
-        body{
-            
-        }
-    </style>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+	<style>
+
+    section {
+        position: relative;
+        width: 100%;
+        height: auto;
+        box-sizing: border-box;
+        padding: 0 8px;
+    }
+
+    .content {
+        width: 100%;
+        height: 100%;
+    }
+
+
+
+    .ware-1 {
+        position: relative;
+        width: 100%;
+        height: 145px;
+        box-sizing: border-box;
+        padding-top: 15px;
+        /*border: 1px solid red;*/
+        padding-bottom: 15px;
+        border-bottom: 1px solid #d1d1d1;
+    }
+
+    .ware-1 .thumbnail {
+        position: absolute;
+        top: 20px;
+        left: 0px;
+        height: 100px;
+        width: 100px;
+    }
+
+    .ware-1 .info {
+        width: 100%;
+        height: 114px;
+        box-sizing: border-box;
+        padding-left: 112px;
+        padding-right: 28px;
+    }
+
+    .ware-1 .info .name {
+        width: 100%;
+        height: 15px;
+        color: #555555;
+        margin-top: 14px;
+        font-size: 15px;
+    }
+
+    .ware-1 .info .description {
+        margin-top: 10px;
+        width: 100%;
+        height: 13px;
+        font-size: 13px;
+        color: #9d9d9d;
+    }
+
+    .ware-1 .info .price-tag {
+        margin-top: 10px;
+        width: 100%;
+        height: 12px;
+        font-size: 12px;
+        vertical-align: top;
+    }
+
+    .ware-1 .info .price-tag .price {
+        color: black;
+        font-size: 16px;
+    }
+
+    .ware-1 .info .price-tag .unit {
+        font-size: 8px;
+        color: #cbcbcb;
+    }
+
+    .ware-1 .info .origin-price {
+        margin-top: 5px;
+        width: 100%;
+        height: 10px;
+        font-size: 10px;
+        color: #d3d3d3;
+    }
+
+    .ware .control {
+        position: absolute;
+        width: 38px;
+        height: 38px;
+        right: 8px;
+    }
+
+    .ware-1 .control {
+        top: 90px;
+    }
+
+    .ware .control .panel {
+        display: none;
+        height: 23px;
+    }
+
+    .ware .control .minus {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 23px;
+        height: 23px;
+    }
+
+    .ware .control .count {
+        position: relative;
+        top: 0;
+        margin-left: 31px;
+        margin-right: 31px;
+        width: auto;
+        height: 23px;
+        text-align: center;
+        line-height: 23px;
+        color: #444;
+        font-size: 12px;
+        background-image: url(../image/count.png);
+        background-repeat: no-repeat;
+        background-size: 48px 23px;
+    }
+
+    .ware .control .add {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 28px;
+        height: 28px;
+    }
+
+    .push-status {
+        width: 100%;
+        height: 40px;
+        font-size: 16px;
+        color: #888;
+        line-height: 40px;
+        text-align: center;
+        background-color: #fff;
+    }
+
+    .active {
+        opacity: 0.7;
+    }
+
+</style>
 </head>
 <body>
-    
+	<section id="list">
+	</section>
+	  <div class="push-status" id="pushStatus"></div>
+
 </body>
-<script type="text/javascript" src="api.js"></script>
+<script type="text/template" id="template">
+	{{~it:value:index}}
+	<div class="ware ware-1" >
+		<div class="content" >
+			<img onload="LoadImage(this)" data-url="{{=value.thumbnail.url}}" class="thumbnail" src="../image/default_square.png">
+			<div class="info" tapmode onclick="openWareWin('{{=value.id}}')">
+				<div class="name">{{=value.name}}</div>
+				<div class="description">{{=value.description}}</div>
+				<div class="price-tag">
+					<span class="price">￥{{=value.price}}</span>
+
+				</div>
+			</div>
+			<div class="control">
+				<div class="panel" id="panel_{{=value.id}}">
+					<img class="minus" src="../image/jian.png" tapmode onclick="Minus('{{=value.id}}')">
+					<div class="count" id="count_{{=value.id}}">0</div>
+				</div>
+				<img class="add" src="../image/jia.png" tapmode onclick="Add('{{=value.id}}')">
+			</div>
+		</div>
+	</div>
+	{{~}}
+
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript">
-    apiready = function(){
-        
+    apiready = function() {
+        init();
+        // getWareList();
+        initRefresh();
+        initEventListenter();
+
     };
+    var searchvalue;
+     var activity ;
+    var wareTypeList;
+    var skip=0;
+    var LIMIT=8;
+    function init(){
+       wareTypeList=$api.getStorage('WareTypeList');
+   }
+   function openWareWin(_wareId){
+     api.openWin({
+        name: 'ware',
+        url: './ware.html',
+        pageParam: {
+            wareId: _wareId
+        }
+    });
+
+ }
+// 获取列表页数据
+function searchval(val,_LoadMore){
+	// alert($api.jsonToStr($api.getStorage('history_list')))
+	// alert(val)
+	searchvalue=val;
+     activity = api.require('UILoading');
+    activity.keyFrame({
+        rect: {
+            w: 80,
+            h: 100
+        },
+        styles: {
+            bg: 'rgba(0,0,0,0.5)',
+            corner: 5,
+            interval: 50,
+            frame: {
+                w: 80,
+                h: 80
+            }
+        }
+    });
+
+    var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
+      if (_LoadMore) {
+        skip+=LIMIT;
+    }else{
+        skip=0;
+    }
+    var params={
+        fields:{},
+        fields: {},
+        where: {
+            "name":{"like":val},
+        },
+        skip:skip,
+        limit:LIMIT
+    }
+    params=$api.jsonToStr(params);
+    api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/ware?filter='+params,
+        method: 'get',
+        headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey
+        },
+        
+    },function(ret, err){
+        if (ret) {
+          // 隐藏下拉刷新
+          // api.refreshHeaderLoadDone();
+         // 模板渲染
+         // alert($api.jsonToStr(ret))
+         updateWareList(ret,_LoadMore);
+     } else {
+       api.toast({
+           msg: err.msg,
+           duration: 2000,
+           location: 'bottom'
+       });
+   }
+});
+}
+function updateWareList(_data,_LoadMore){
+    var list=$api.byId('list');
+    var tempFn=doT.template($api.byId('template').innerHTML);
+    var resultText=tempFn(_data)
+    if (_LoadMore) {
+        $api.append(list, resultText);
+    }else{
+        $api.html(list, resultText);
+    }
+    // 优化
+    api.parseTapmode();
+    if (_LoadMore) {
+        if (_data.length<LIMIT) {
+            var pushStatus=$api.byId('pushStatus');
+            pushStatus.innerHTML="我是有底线滴"
+        }
+    }
+    activity.closeKeyFrame();
+}
+
+// 列表页图片缓存
+
+function LoadImage(_this){
+    var dataUrl=$api.attr(_this, 'data-url');
+    if (dataUrl) {
+        api.imageCache({
+            url: dataUrl
+        }, function(ret, err){
+            if( ret ){
+                _this.src=ret.url;
+                $api.attr(_this, 'data-url', '');
+            }else{
+             // alert( JSON.stringify( err ) );
+         }
+     });
+    }
+
+}
+// 监听 
+function initEventListenter(){
+    api.addEventListener({
+        name:'scrolltobottom',
+        extra:{
+            threshold:100
+        }
+    }, function(ret, err){        
+     searchval(searchvalue,true);
+ });
+}
+// 下拉刷新
+function initRefresh(){
+    api.setCustomRefreshHeaderInfo({
+        bgColor: '#C0C0C0',
+        isScale: true
+    }, function() {
+        searchval(searchvalue);
+        api.toast({
+            msg: '摇一摇关闭刷新',
+            duration: 5000,
+            location: 'bottom'
+        });
+        api.addEventListener({
+            name: 'shake'
+        }, function(ret, err) {
+            api.refreshHeaderLoadDone()
+        });
+    });
+
+}
+function Add(_wareId){
+   event.stopPropagation();
+
+   var count = $api.byId('count_' + _wareId);
+   var panel = $api.byId('panel_' + _wareId);
+
+    // 更新商品数量及显示状态
+    var countNumber = parseInt(count.innerHTML);
+    countNumber = 1;
+    count.innerHTML = countNumber;
+    api.sendEvent({
+        name: 'updateshoppingcart',
+        extra: {
+            wareId:_wareId, 
+            wareCount:countNumber
+        }
+    });
+    api.toast({
+       msg: '已加入购物车',
+       duration: 2000,
+       location: 'bottom'
+   });
+    
+}
 </script>
 </html>

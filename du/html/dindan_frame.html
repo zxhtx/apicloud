@@ -556,6 +556,7 @@ function getAddressList(_LoadMore){
  });
   }
   function updateWareList(_data,_LoadMore){
+  	_data.reverse();
   	var list=$api.byId('list');
   	var tempFn=doT.template($api.byId('template').innerHTML);
   	var resultText=tempFn(_data)
