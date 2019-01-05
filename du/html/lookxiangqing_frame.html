@@ -519,6 +519,7 @@ function wuliu(danhao){
 	});
 }
 function updatewuliu(_data){
+	_data.reverse();
 	var list=$api.byId('wuliu');
 	var tempFn=doT.template($api.byId('template').innerHTML);
 	var resultText=tempFn(_data)
