@@ -16,7 +16,7 @@
 	.input {
 		padding: 5px 0 5px 5px;
 		overflow: hidden;
-		/*border: 1px solid gray;*/
+		border: 1px solid gray;
 		/*border-radius: 30px;*/
 	}
 	.buttom {
@@ -33,6 +33,7 @@
 	.record {
 		font-size: 16px;
 		background-color: white;
+		color: black;
 		margin-left: 6px;
 		padding: 3px 8px 3px 8px;
 		border-bottom: 1px solid #eee;
@@ -129,7 +130,7 @@
 			UIInput = api.require('UIInput');
 			UIInput.open({
 				rect : {
-					x : 5,
+					x : 25,
 					y : recty,
 					w : api.winWidth - 85,//减去按钮和边距的宽度。可以自定义宽度，但不要大于win的宽度减去（按钮的宽度和header左边距的宽度）的值。
 					h : 30
@@ -227,7 +228,7 @@
 			db = api.require('db');
 			db.openDatabase({
 				name : 'record',
-				path:'history.db'
+				path:'fs://history.db'
 			}, function(ret, err) {
 				if (ret.status) {
 					initdb();
