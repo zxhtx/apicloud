@@ -50,7 +50,7 @@
 	<header id="header">
 		<div class="back" tapmode onclick="api.closeWin()"></div>
 		<h1>查看物流</h1>
-		<div class="right" tapmode onclick="jietu()">扫描</div>
+		<!-- <div class="right" tapmode onclick="jietu()">扫描</div> -->
 	</header>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
@@ -79,17 +79,17 @@
         	// bounces: true
         });
     };
-    function jietu (){
-    	var FNScanner = api.require('FNScanner');
-    	FNScanner.open({
-    		autorotation: true
-    	}, function(ret, err) {
-    		if (ret) {
-    			alert(JSON.stringify(ret));
-    		} else {
-    			alert(JSON.stringify(err));
-    		}
-    	});
-    }
+    // function jietu (){
+    // 	var FNScanner = api.require('FNScanner');
+    // 	FNScanner.open({
+    // 		autorotation: true
+    // 	}, function(ret, err) {
+    // 		if (ret) {
+    // 			alert(JSON.stringify(ret));
+    // 		} else {
+    // 			alert(JSON.stringify(err));
+    // 		}
+    // 	});
+    // }
 </script>
 </html>
