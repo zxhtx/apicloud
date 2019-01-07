@@ -322,16 +322,38 @@ api.ajax({
     addInfo.addresstype=ret[0].type;
     addInfo.mobile=ret[0].mobile; 
     if (addInfo.url!=null && addInfo.addresstype!=null) {
-        activity.closeKeyFrame();
+        if ( addInfo.warename!=null &&  addInfo.address!=null) {
+            if (addInfo.addresstype!=null && addInfo.mobile!=null) {
+              activity.closeKeyFrame();
+          }else{
+            return;
+        }
+    }else{
+        return;
     }
+
+}else{
+    return;
+}
 }); 
 }
-if (addInfo.url!=null && addInfo.addresstype!=null) {
-    activity.closeKeyFrame();
-}
-function yesadd(){
-   if (addInfo.url!=null && addInfo.addresstype!=null) {
-    activity.closeKeyFrame();
+function yesadd(){ 
+
+    if (addInfo.url!=null && addInfo.addresstype!=null) {
+         activity.closeKeyFrame();
+        if ( addInfo.warename!=null &&  addInfo.address!=null) {
+             activity.closeKeyFrame();
+            if (addInfo.addresstype!=null && addInfo.mobile!=null) {
+              activity.closeKeyFrame();
+          }else{
+            return;
+        }
+    }else{
+        return;
+    }
+
+}else{
+    return;
 }
 var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
