@@ -30,6 +30,7 @@
         background-repeat: no-repeat;
         background-image: url(../image/default_square.png);
         background-size: 100% 100%;
+        background-repeat: no-repeat;
         background-position: center center;
     }
     
@@ -252,8 +253,8 @@ function setAvatar(){
                 sourceType: sourceTypes[ret.buttonIndex-1],
                 allowEdit: true,
                 quality: 100,
-                targetWidth: 108,
-                targetHeight: 108,
+                targetWidth: 98,
+                targetHeight: 98,
                 saveToPhotoAlbum: false
             }, function(ret, err){ 
                 if(ret){
@@ -299,6 +300,7 @@ function uploadAtavar(_data){
     },
 },function(ret, err){
     if (ret) {
+
         updateUserAtavar(ret)
     } else {
         api.toast({
@@ -331,8 +333,6 @@ function updateUserAtavar(_data){
     }
 },function(ret, err){
     if (ret) {
-        // alert(JSON.stringify(ret));
-        // return;
      updateLocalAvatar(ret)
     } else {
         api.toast({
