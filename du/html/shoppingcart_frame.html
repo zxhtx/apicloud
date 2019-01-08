@@ -288,7 +288,6 @@ function fnGetWareList(wareList_) {
             "X-APICloud-AppKey": appKey
         }
     }, function(ret, err) {
-        alert(ret)
         if (ret) {
             for (var i = 0; i < ret.length; i++) {
                 for (var j = 0; j < wareList_.length; j++) {
