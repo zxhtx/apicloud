@@ -348,6 +348,9 @@
 			url: './ware.html',
 			pageParam: {
 				wareId: _wareId
+			},
+			animation: {
+				type: "fade"
 			}
 		});
 
@@ -359,6 +362,9 @@
 			url: './lookxiangqing.html',
 			pageParam: {
 				lookid:_id
+			},
+			animation: {
+				type: "fade"
 			}
 		});
 	}
@@ -369,6 +375,9 @@
 			url: './shoppingrenzheng.html',
 			pageParam: {
 				shopping:_id
+			},
+			animation: {
+				type: "fade"
 			}
 		});
 		
@@ -485,6 +494,9 @@
   		url: './pay.html',
   		pageParam: {
   			ware:ware
+  		},
+  		animation: {
+  			type: "fade"
   		}
   	});
 
@@ -531,7 +543,8 @@ function getAddressList(_LoadMore){
       		userid:userInfo.userId
       	},
       	skip:skip,
-      	limit:LIMIT
+      	limit:LIMIT,
+      	order:"createdAt DESC"
       }
       params=$api.jsonToStr(params);
       api.ajax({
@@ -556,7 +569,6 @@ function getAddressList(_LoadMore){
  });
   }
   function updateWareList(_data,_LoadMore){
-  	_data.reverse();
   	var list=$api.byId('list');
   	var tempFn=doT.template($api.byId('template').innerHTML);
   	var resultText=tempFn(_data)
@@ -612,22 +624,22 @@ function initEventListenter(){
 }
 // 下拉刷新
 function initRefresh(){
-	    api.setCustomRefreshHeaderInfo({
-        bgColor: '#C0C0C0',
-        isScale: true
-    }, function() {
-        getAddressList();
-        api.toast({
-            msg: '摇一摇关闭刷新',
-            duration: 5000,
-            location: 'bottom'
-        });
-        api.addEventListener({
-            name: 'shake'
-        }, function(ret, err) {
-            api.refreshHeaderLoadDone()
-        });
-    });
+	api.setCustomRefreshHeaderInfo({
+		bgColor: '#C0C0C0',
+		isScale: true
+	}, function() {
+		getAddressList();
+		api.toast({
+			msg: '摇一摇关闭刷新',
+			duration: 5000,
+			location: 'bottom'
+		});
+		api.addEventListener({
+			name: 'shake'
+		}, function(ret, err) {
+			api.refreshHeaderLoadDone()
+		});
+	});
 
 }
 

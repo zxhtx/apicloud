@@ -378,7 +378,8 @@ function getAddressList() {
             userId: userInfo.userId
         },
         skip: 0,
-        limit: 20
+        limit: 20,
+        order:"createdAt DESC"
     }
     params = $api.jsonToStr(params);
     api.ajax({
@@ -442,7 +443,10 @@ function fnOpenSetAddressWin(index_) {
     api.openWin({
         name: 'setaddress',
         url: './setaddress.html',
-        pageParam: data[index_]
+        pageParam: data[index_],
+        animation: {
+            type: "fade"
+        }
     });
 }
 

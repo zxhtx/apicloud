@@ -159,6 +159,11 @@
 				}, function(ret, err){ 
 					if(ret){
 						uploadAtavar(ret.data);
+						api.toast({
+							msg: '支付中 切勿退出',
+							duration: 5000,
+							location: 'bottom'
+						});
 					}else{
 						api.toast({
 							msg: err.msg,
@@ -199,6 +204,8 @@
 			},
 		},function(ret, err){
 			if (ret) {
+
+
 				updateUserAtavar(ret)
 			} else {
 				api.toast({
@@ -233,11 +240,12 @@
     	}
     },function(ret, err){
     	if (ret) {
+    		
     		if (ret.priceimg) {
     			api.sendEvent({
-    		    name: 'updatedindantype',
-    		});
-    		api.closeWin()
+    				name: 'updatedindantype',
+    			});
+    			api.closeWin()
     		}
     	} else {
     		api.toast({

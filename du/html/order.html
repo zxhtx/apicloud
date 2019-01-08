@@ -149,6 +149,9 @@
             pageParam: {
                 wareId:api.pageParam.wareId 
             },
+            animation: {
+                type: "fade"
+            },
             bounces: true
         });
         getprice();
@@ -281,7 +284,7 @@ function getware(){
             addInfo.price=ret[0].price;
             addInfo.description=ret[0].description;
             addInfo.warename=ret[0].name;
-            addInfo.url=ret[0].thumbnail.url;
+            addInfo.url=ret[0].thumbnail;
         } else {
            api.toast({
                msg: err.msg,
@@ -340,17 +343,17 @@ api.ajax({
 function yesadd(){ 
 
     if (addInfo.url!=null && addInfo.addresstype!=null) {
+     activity.closeKeyFrame();
+     if ( addInfo.warename!=null &&  addInfo.address!=null) {
          activity.closeKeyFrame();
-        if ( addInfo.warename!=null &&  addInfo.address!=null) {
-             activity.closeKeyFrame();
-            if (addInfo.addresstype!=null && addInfo.mobile!=null) {
-              activity.closeKeyFrame();
-          }else{
-            return;
-        }
-    }else{
+         if (addInfo.addresstype!=null && addInfo.mobile!=null) {
+          activity.closeKeyFrame();
+      }else{
         return;
     }
+}else{
+    return;
+}
 
 }else{
     return;
@@ -412,6 +415,9 @@ var now = Date.now();
                     url: './dindan.html',
                     pageParam: {
                         name: 'test'
+                    },
+                    animation: {
+                        type: "fade"
                     }
                 });
                 dialogBox.close(); 

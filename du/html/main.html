@@ -123,8 +123,8 @@
 
     function openFrames(){
 
-       var frames=[];
-       for (var i = 0; i <menus.length; i++) {
+     var frames=[];
+     for (var i = 0; i <menus.length; i++) {
         frames.push({
             name:'main_frame_'+i,
             url:'./main_frame.html',
@@ -138,15 +138,15 @@
         name: 'mainFrameGroup',
         scrollEnabled: true,
         rect: {
-           x: 0,
-           y: headerH+navH,
-           w: 'auto',
-           h: 'auto'
-       },
-       frames: frames
-   }, function(ret, err){
-     SetNavMenuselected(ret.index);
- });
+         x: 0,
+         y: headerH+navH,
+         w: 'auto',
+         h: 'auto'
+     },
+     frames: frames
+ }, function(ret, err){
+   SetNavMenuselected(ret.index);
+});
 
     api.openFrame({
         name: 'minicart_frame',
@@ -160,7 +160,9 @@
         pageParam: {
             name: 'test'
         },
-        bounces: false,
+        animation: {
+            type: "fade"
+        }
     });
     api.bringFrameToFront({
         from: 'minicart_frame',
@@ -195,6 +197,9 @@ var menus, headerH , navH;
                 url: './personalcenter.html',
                 pageParam: {
                     name: 'test'
+                },
+                animation: {
+                    type: "fade"
                 }
             });
         }else{
@@ -203,6 +208,9 @@ var menus, headerH , navH;
             url: './login.html',
             pageParam: {
                 name: 'test'
+            },
+            animation: {
+                type: "fade"
             }
         });
       }
@@ -244,6 +252,9 @@ var menus, headerH , navH;
                 url: './search.html',
                 pageParam: {
                     name: 'test'
+                },
+                animation: {
+                    type: "fade"
                 }
             });
         }

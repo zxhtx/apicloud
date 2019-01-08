@@ -149,10 +149,10 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
     apiready = function() {
-       var header=$api.byId('header');
-       var footer=$api.byId('footer');
-       $api.fixStatusBar(header);
-       api.setStatusBarStyle({
+     var header=$api.byId('header');
+     var footer=$api.byId('footer');
+     $api.fixStatusBar(header);
+     api.setStatusBarStyle({
         style: 'light',
         color:'#000'
     });
@@ -239,6 +239,9 @@ function oporderWin(){
                     url: './login.html',
                     pageParam: {
                         ware: api.pageParam.wareId 
+                    },
+                    animation: {
+                        type: "fade"
                     }
                 });
                 dialogBox.close();
@@ -252,6 +255,9 @@ function oporderWin(){
         url: './order.html',
         pageParam: {
             wareId:api.pageParam.wareId 
+        },
+        animation: {
+            type: "fade"
         }
     });
 }

@@ -77,7 +77,7 @@
     .option .icon-address {
         background-image: url(../image/dizhi.png);
     }
-     .option .icon-tuijian {
+    .option .icon-tuijian {
         background-image: url(../image/tuijian.png);
     }
     
@@ -125,7 +125,7 @@
         color: #888;
         text-align: left;
     }
-     .option .arrow-pane2 .text {
+    .option .arrow-pane2 .text {
         box-sizing: border-box;
         padding-right: 28px;
         width: auto;
@@ -164,7 +164,7 @@
                 <div class="text">管理我的收货地址</div>
             </div>
         </div>
-         <div class="option" tapmode onclick="OpentuijianWin()">
+        <div class="option" tapmode onclick="OpentuijianWin()">
             <div class="icon icon-tuijian"></div>
             <div class="title">推荐赚佣金</div>
             <div class="arrow-pane2">
@@ -186,57 +186,66 @@
 
     function getuserInfo(){
         var userInfo=$api.getStorage('userInfo');
-         var now = Date.now();
-  var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-       api.ajax({
-    url: 'https://d.apicloud.com/mcm/api/user/'+userInfo.userId,
-    method: 'get',
-       headers: {
-        "X-APICloud-AppId": "A6099267504667",
-        "X-APICloud-AppKey":   appKey,
-        "Authorization":userInfo.id
-    },
-   
-},function(ret, err){
-    if (ret) {
-     updateLocalAvatar(ret)
-    } else {
-        api.toast({
-            msg: err.msg,
-            duration: 2000,
-            location: 'bottom'
-        });
-    }
-});
-}   
-    function OpendindanWin(){
-          api.openWin({
-            name: 'dindan',
-            url: './dindan.html',
-            pageParam: {
-                name: 'test'
-            }
-        });
-    }
+        var now = Date.now();
+        var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+        api.ajax({
+            url: 'https://d.apicloud.com/mcm/api/user/'+userInfo.userId,
+            method: 'get',
+            headers: {
+                "X-APICloud-AppId": "A6099267504667",
+                "X-APICloud-AppKey":   appKey,
+                "Authorization":userInfo.id
+            },
 
-    function OpenAddressWin(){
-        api.openWin({
-            name: 'address',
-            url: './address.html',
-            pageParam: {
-                name: 'test'
-            }
-        });
-    }
-    function OpentuijianWin(){
-        api.openWin({
-            name: 'tuijian',
-            url: './tuijian.html',
-            pageParam: {
-                name: 'test'
-            }
-        });
-    }
+        },function(ret, err){
+            if (ret) {
+             updateLocalAvatar(ret)
+         } else {
+            api.toast({
+                msg: err.msg,
+                duration: 2000,
+                location: 'bottom'
+            });
+        }
+    });
+    }   
+    function OpendindanWin(){
+      api.openWin({
+        name: 'dindan',
+        url: './dindan.html',
+        pageParam: {
+            name: 'test'
+        },
+        animation: {
+            type: "fade"
+        }
+    });
+  }
+
+  function OpenAddressWin(){
+    api.openWin({
+        name: 'address',
+        url: './address.html',
+        pageParam: {
+            name: 'test'
+        },
+        animation: {
+            type: "fade"
+        }
+    });
+}
+function OpentuijianWin(){
+    api.openWin({
+        name: 'tuijian',
+        url: './tuijian.html',
+        pageParam: {
+            name: 'test'
+        },
+        animation: {
+            type: "fade"
+        }
+    });
+}
 // 在个人中心中显示头像
 function setAvatar(){
     api.actionSheet({
@@ -246,7 +255,7 @@ function setAvatar(){
     }, function(ret, err){
         if( ret ){
             var sourceTypes=['camera','album']
-             if (ret.buttonIndex == (sourceTypes.length + 1)) {
+            if (ret.buttonIndex == (sourceTypes.length + 1)) {
                 return;
             }
             api.getPicture({
@@ -314,27 +323,27 @@ function uploadAtavar(_data){
 // 更改头像
 function updateUserAtavar(_data){
     // alert($api.jsonToStr(_data))
-  var now = Date.now();
-  var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-  var userInfo=$api.getStorage('userInfo');
-  api.ajax({
-    url: 'https://d.apicloud.com/mcm/api/user/'+userInfo.userId,
-    method: 'put',
-       headers: {
-        "X-APICloud-AppId": "A6099267504667",
-        "X-APICloud-AppKey":   appKey,
-        "Authorization":userInfo.id
-    },
-    data: {
-        values: { 
-            avatar: _data
-        }
+    var now = Date.now();
+    var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+    var userInfo=$api.getStorage('userInfo');
+    api.ajax({
+        url: 'https://d.apicloud.com/mcm/api/user/'+userInfo.userId,
+        method: 'put',
+        headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey,
+            "Authorization":userInfo.id
+        },
+        data: {
+            values: { 
+                avatar: _data
+            }
 
-    }
-},function(ret, err){
-    if (ret) {
-     updateLocalAvatar(ret)
-    } else {
+        }
+    },function(ret, err){
+        if (ret) {
+         updateLocalAvatar(ret)
+     } else {
         api.toast({
             msg: err.msg,
             duration: 2000,
@@ -353,17 +362,17 @@ function updateLocalAvatar(_data){
         url: _data.avatar.url
     }, function(ret, err){
         if( ret ){
-             icon.style.background='url('+ret.url+')';
-        }else{
-            api.toast({
-                msg: err.msg,
-                duration: 2000,
-                location: 'bottom'
-            });
-            
-        }
-    });
-   
+         icon.style.background='url('+ret.url+')';
+     }else{
+        api.toast({
+            msg: err.msg,
+            duration: 2000,
+            location: 'bottom'
+        });
+
+    }
+});
+
 }
 // 在个人中心中显示用户名
 function getUsername(){
@@ -403,24 +412,24 @@ function getUsername(){
     });
 
 }   
- function dindantypeList(){
+function dindantypeList(){
   var dindantypeList=$api.getStorage('dindantypeList');
   if (!dindantypeList) {
    dindantypeList=[
    {
     "id": "5c2a39add37a824c5ac6cc64",
     "name": "已签收"
-  },
- 
-  {
+},
+
+{
     "id": "5c2a3991af3114d73d9ddfc2",
     "name": "待付款",
-  } ,
-  {
+} ,
+{
     "id": "5c2a39a2af3114d73d9ddfc3",
     "name": "待收货"
-  }
-  ];
+}
+];
 }
 getdindantypeList();
 }
@@ -434,20 +443,20 @@ function getdindantypeList(){
         where:{},
         skip:0,
         limit:3
-      }
-      params=$api.jsonToStr(params);
-      api.ajax({
+    }
+    params=$api.jsonToStr(params);
+    api.ajax({
         url: 'http://d.apicloud.com/mcm/api/dindantype?filter='+params,
         method: 'get',
         headers: {
           "X-APICloud-AppId": "A6099267504667",
           "X-APICloud-AppKey":   appKey
-        },
+      },
 
-      },function(ret, err){
-         $api.setStorage('dindantypeList', ret);
-    });
-    }
+  },function(ret, err){
+     $api.setStorage('dindantypeList', ret);
+ });
+}
 </script>
 
 </html>

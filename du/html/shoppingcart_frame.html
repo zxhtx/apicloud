@@ -189,7 +189,7 @@
     <div id="ware_{{=value.id}}" class="ware">
         <div class="content" tapmode onclick="fnOpenWareWin('{{=value.id}}');">
             <div id="select_{{=value.id}}" class="select" onclick="fnSetSelect('{{=value.id}}');"></div>
-            <img class="thumbnail" src="{{=value.thumbnail.url}}">
+            <img class="thumbnail" src="{{=value.thumbnail}}">
             <div class="info">
                 <div class="name">{{=value.name}}</div>
                 <div class="price-tag">
@@ -205,7 +205,9 @@
     {{~}}
 </script>
 <script type="text/javascript">
-
+     var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
     apiready = function() {
         initEventListener();
         getWareListFromDB();
@@ -282,10 +284,11 @@ function fnGetWareList(wareList_) {
         url: 'http://d.apicloud.com/mcm/api/ware?filter=' + params,
         method: 'get',
         headers: {
-            "X-APICloud-AppId": "A6921544633372",
-            "X-APICloud-AppKey": "2672b5911d8551540c1ea598e01c87fee217a1e5.1482500122476"
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey": appKey
         }
     }, function(ret, err) {
+        alert(ret)
         if (ret) {
             for (var i = 0; i < ret.length; i++) {
                 for (var j = 0; j < wareList_.length; j++) {
@@ -305,7 +308,7 @@ function fnGetWareList(wareList_) {
             // 计算购物车中的商品总数及总金额
             fnGetShoppingCartAmount(ret);
         } else {
-            //alert(JSON.stringify(err));
+            alert(JSON.stringify(err));
         }
     });
 }
