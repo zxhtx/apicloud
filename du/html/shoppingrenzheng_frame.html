@@ -402,6 +402,17 @@
 			<div class="text">购买人：</div>
 			<div class="value value-2" id="username">-&nbsp;</div>
 		</div>
+
+		<div class="row">
+			<div class="text">颜色：</div>
+			<div class="value value-2" id="color">-&nbsp;</div>
+		</div>
+
+		<div class="row">
+			<div class="text">鞋码：</div>
+			<div class="value value-2" id="size">-&nbsp;</div>
+		</div>
+
 		<div class="row">
 			<div class="value value-3" id="date">-&nbsp;</div>
 		</div>
@@ -416,7 +427,7 @@
 	apiready = function() {
 		getware();
 		initEventLisen();
-		
+
 
 	};
 	var types = ['公司', '住宅', '学校', '其它'];	
@@ -469,6 +480,10 @@
   	var date=$api.byId('date');    
   	var username=$api.byId('username');
   	var description=$api.byId('description');
+  	var color=$api.byId('color');
+  	var size=$api.byId('size');
+  	color.innerHTML=_data[0].color;
+  	size.innerHTML=_data[0].size;
   	description.innerHTML=_data[0].description;    
   	warename.innerHTML=_data[0].warename;
   	wareprice.innerHTML='￥'+_data[0].price;
