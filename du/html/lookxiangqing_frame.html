@@ -382,6 +382,15 @@
 		padding-top: 2px;
 		margin-bottom: 10px;
 	}
+	  .info .description {
+        margin-bottom: 3px;
+        overflow: hidden;
+        width: 100%;
+        height: 13px;
+        /*border: 1px solid red;*/
+        font-size: 13px;
+        color: #9d9d9d;
+    }
 </style>
 </head>
 
@@ -408,6 +417,7 @@
 			</div>
 			<div class="info">
 				<div class="top" id="warename">佳沛绿奇异果</div>
+				<div class="description" id="description"></div>
 				<div class="bottom" id="wareprice">￥19.9</div>
 			</div>
 			
@@ -488,6 +498,8 @@ function updateWare(_data){
 	var mobile=$api.byId('mobile');
 	var type=$api.byId('type');
 	var text=$api.byId('text');
+	var description=$api.byId('description');
+	description.innerHTML=_data[0].description;
 	shouhuoren.innerHTML='收货人:'+_data[0].shoppingname;
 	mobile.innerHTML=_data[0].mobile;
 	type.innerHTML='['+ types[_data[0].addresstype] +']'

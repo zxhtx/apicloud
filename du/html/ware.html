@@ -148,7 +148,9 @@
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
+    var datasize,datacolor;
     apiready = function() {
+      
      var header=$api.byId('header');
      var footer=$api.byId('footer');
      $api.fixStatusBar(header);
@@ -196,8 +198,33 @@
         from: 'minicart_frame'
     });
 };
+function addcolor(color){
+    datacolor=color;
+    
 
+
+}
+function addsize(size){
+    datasize=size;
+  
+
+}
 function oporderWin(){
+    if (!datacolor) {
+        api.toast({
+            msg: '还未选择鞋子颜色',
+            duration: 2000,
+            location: 'bottom'
+        });
+        return;
+    }else if (!datasize) {
+         api.toast({
+            msg: '还未选择鞋码',
+            duration: 2000,
+            location: 'bottom'
+        });
+         return;
+    }
     var userInfo=$api.getStorage('userInfo');
     if (userInfo==undefined && userInfo==null) {
         var dialogBox = api.require('dialogBox');
@@ -254,6 +281,8 @@ function oporderWin(){
         name: 'order',
         url: './order.html',
         pageParam: {
+            size:datasize,
+            color:datacolor,
             wareId:api.pageParam.wareId 
         },
         animation: {

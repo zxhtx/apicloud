@@ -25,6 +25,7 @@
         padding-top: 8px;
         padding-left: 8px;
         border-bottom: 1px solid #ddd;
+        position: relative;
     }
     
     .info-name .name {
@@ -43,68 +44,22 @@
         font-size: 14px;
     }
     
-    .info-price {
+    .price {
         box-sizing: border-box;
-        width: 100%;
+        width: 50px;
         height: 41px;
         padding-top: 8px;
-        text-align: right;
         padding-right: 8px;
-        border-bottom: 1px solid #ddd;
+        position: absolute;
+        right: 6px;
+        bottom: 8px;
     }
     
-    .info-price .price {
-        width: 100%;
-        height: 24px;
-        line-height: 24px;
-        color: black
-        font-size: 24px;
-        font-weight: bolder;
-    }
-    
-    .info-price .other {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-orient: horizontal;
-        -webkit-flex-flow: row;
-        flex-flow: row;
-        width: 100%;
-        height: 20px;
-    }
-    
-    .info-price .other div {
-        width: 100%;
-        height: 20px;
-        -webkit-box-flex: 1;
-        -webkit-flex: 1;
-        flex: 1;
-        line-height: 20px;
-        font-size: 14px;
-        color: #888;
-    }
-    
-    .info-price .other .origin-price {
-        box-sizing: border-box;
-        padding-left: 8px;
-        text-align: left;
-    }
-    
-    .info-price .other .unit {
-        box-sizing: border-box;
-        text-align: center;
-    }
-    
-    .info-price .other .place {
-        box-sizing: border-box;
-        padding-right: 16px;
-        text-align: right;
-    }
-    
+
     .info-discount {
         box-sizing: border-box;
         width: 100%;
-        height: 34px;
+        height: 43px;
         border-bottom: 1px solid #ddd;
     }
     
@@ -116,19 +71,26 @@
         margin-left: 8px;
         color: #444;
     }
+
+    .info-color {
+        box-sizing: border-box;
+        width: 100%;
+        height: 43px;
+        border-bottom: 1px solid #ddd;
+    }
     
-    .info-discount .value {
+    .info-color .name {
         display: inline-block;
         width: auto;
         height: 15px;
-        line-height: 15px;
-        margin-top: 3px;
-        padding: 4px;
-        border-radius: 15px;
-        box-shadow: 0 1px 1px 1px #eee;
-        color: #fff;
-        background-color: #e3007f;
+        margin-top: 8px;
+        margin-left: 8px;
+        color: #444;
     }
+    
+
+    
+
     
     .push {
         position: relative;
@@ -150,29 +112,99 @@
         height: 20px;
         line-height: 20px;
     }
+    .info-discount{
+        line-height: 20px;
+    }
+    .info-discount span{
+        padding: 5px;
+        margin:2px;
+        font-size: 12px;
+        color: white;
+        background: black;
+        border: 1px solid #ccc;
+    }
+    .info-discount span.now{
+      padding: 5px;
+      font-size: 12px;
+      color: black;
+      background: gray;
+      background: white;
+      border: 1px solid black;
+  }
+
+  .info-color{
+    line-height: 20px;
+}
+.info-color span{
+    padding: 5px;
+    margin:2px;
+    font-size: 12px;
+    color: white;
+    background: black;
+    border: 1px solid #ccc;
+}
+.info-color span.now{
+  padding: 5px;
+  font-size: 12px;
+  color: black;
+  background: white;
+  border: 1px solid black;
+  font-weight: bold;
+}
 </style>
 </head>
 
 <body>
-    <section>
-        <div id="picture" class="picture"></div>
-        <div class="info-name">
 
+    <section id="list">
+        <div id="picture" class="picture"></div>
+       <!--  <div class="info-name">
             <div id="wareName" class="name">佳沛绿奇异果</div>
             <div id="description" class="description">享受清爽汁水融入齿间感觉</div>
-        </div>
-        <div class="info-price">
             <div id="price" class="price">¥18.9</div>
         </div>
+
         <div class="info-discount">
             <div class="name">优惠活动：</div>
-        </div>
+        </div> -->
     </section>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/zepto/zepto.min.js"></script>
+<script type="text/x-dot-template" id="template">
+    {{~it:value:index}}
+
+    <div class="info-name">
+        <div id="wareName" class="name">{{=value.name}}</div>
+        <div id="description" class="description">{{=value.description}}</div>
+        <div id="price" class="price">￥{{=value.price}}</div>
+    </div>
+    <div class="info-color">
+        <div class="name">颜色</div>
+        {{ for(var key in value.color) { }}
+        <span data-color="{{=value.color[key]}}" tapmode onclick=color(this)>{{=value.color[key]}}</span>
+        {{ } }}
+    </div>
+    
+
+
+
+    <div class="info-discount">
+        <div class="name">鞋码</div>
+        {{~ value.size : value : index }}
+        <span data-value="{{=value}}" tapmode onclick=size(this)>{{=value}}</span>
+        {{~}}
+    </div>
+
+    {{~}}
+    
+</script>
 <script type="text/javascript">
-    apiready = function() {
+    var size;
+    var color;
+  apiready = function() {
     // 初始化轮播图模块
     initUIScrollPicture();
 
@@ -216,8 +248,8 @@ function initUIScrollPicture() {
             },
             indicator: {
                 align: 'center',
-                color: '#FFFFFF',
-                activeColor: '#DA70D6'
+                color: '#000',
+                activeColor: '#fff'
             }
         },
         placeholderImg:   'widget://image/default_rect.png',
@@ -228,7 +260,7 @@ function initUIScrollPicture() {
         fixed: false
     }, function(ret, err) {
         if (ret) {
-            
+
         } else {
             api.toast({
                 msg: err.msg,
@@ -282,7 +314,7 @@ var now = Date.now();
         },function(ret, err) {
             if (ret) {
             // 更新商品详情展示
-            fnUpdateWareInfo(ret[0]);
+            fnUpdateWareInfo(ret);
             // alert(JSON.stringify(ret))
         } else {
           api.toast({
@@ -296,29 +328,19 @@ var now = Date.now();
 
 // 更新商品详情展示
 function fnUpdateWareInfo(_ware) {
-
-    // 商品名称
-    var wareName = $api.byId('wareName');
-    wareName.innerHTML = _ware.name;
-    // alert(ware_.name)
-
-    // 商品描述
-    var description = $api.byId('description');
-    description.innerHTML = _ware.description;
-     // alert(ware_.description)
-
-
-    // 商品价格
-    var price = $api.byId('price');
-    price.innerHTML = '￥' + _ware.price;
-    // alert(ware_.price)
+    
+    var list=$api.byId('list');
+    var tempFn=doT.template($api.byId('template').innerHTML);
+    var resultText=tempFn(_ware)
+        // $api.html(list, resultText)
+        $api.append(list, resultText);
 
 
     // 更新轮播图中的图片
     var paths = [];
     for (var i = 0; i < 3; i++) {
-        if (_ware.wareInfo['picture' + i]) {
-            paths.push(_ware.wareInfo['picture' + i]);
+        if (_ware[0].wareInfo['picture' + i]) {
+            paths.push(_ware[0].wareInfo['picture' + i]);
         }
     }
     UIScrollPicture.reloadData({
@@ -328,6 +350,25 @@ function fnUpdateWareInfo(_ware) {
     });
     activity.closeKeyFrame();
 
+}
+function size(_this){
+    var datasize=$api.attr(_this, 'data-value');
+    $(_this).addClass('now').siblings().removeClass('now');
+    api.execScript({
+        name: 'ware',
+        // frameName: 'ware_frame',
+        script: "addsize('"+datasize+"')"
+    });
+  
+}
+function color(_this){
+    var datacolor=$api.attr(_this, 'data-color');
+    $(_this).addClass('now').siblings().removeClass('now');
+     api.execScript({
+        name: 'ware',
+        // frameName: 'ware_frame',
+        script: "addcolor('"+datacolor+"')"
+    });
 }
 </script>
 

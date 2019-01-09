@@ -361,6 +361,15 @@
     .highlight {
         opacity: 0.7;
     }
+    .info .description {
+        margin-bottom: 3px;
+        overflow: hidden;
+        width: 100%;
+        height: 13px;
+        /*border: 1px solid red;*/
+        font-size: 13px;
+        color: #9d9d9d;
+    }
 </style>
 </head>
 
@@ -387,6 +396,7 @@
             </div>
             <div class="info">
                 <div class="top" id="warename">佳沛绿奇异果</div>
+                 <div class="description" id="description"></div>
                 <div class="bottom" id="wareprice">￥19.9</div>
             </div>
         </div>
@@ -457,7 +467,9 @@ function updateWare(_data){
     var price1=$api.byId('price1');
     var price2=$api.byId('price2');
     var image=$api.byId('image');    
+    var description=$api.byId('description');
     warename.innerHTML=_data[0].name;
+    description.innerHTML=_data[0].description;
     wareprice.innerHTML='￥'+_data[0].price;
     price1.innerHTML='￥'+_data[0].price;
     price2.innerHTML='￥'+_data[0].price;
