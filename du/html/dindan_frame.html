@@ -558,6 +558,7 @@ function getAddressList(_LoadMore){
       },function(ret, err){
       	if (ret) {
          // 模板渲染
+           api.refreshHeaderLoadDone()
          updateWareList(ret,_LoadMore);
      } else {
      	api.toast({
@@ -629,16 +630,7 @@ function initRefresh(){
 		isScale: true
 	}, function() {
 		getAddressList();
-		api.toast({
-			msg: '摇一摇关闭刷新',
-			duration: 5000,
-			location: 'bottom'
-		});
-		api.addEventListener({
-			name: 'shake'
-		}, function(ret, err) {
-			api.refreshHeaderLoadDone()
-		});
+		
 	});
 
 }

@@ -158,7 +158,7 @@
 <body>
 	<section id="list">
 	</section>
-	  <div class="push-status" id="pushStatus"></div>
+ <div class="push-status" id="pushStatus"></div>
 
 </body>
 <script type="text/template" id="template">
@@ -199,46 +199,46 @@
 
     };
     var searchvalue;
-     var activity ;
+    var activity ;
     var wareTypeList;
     var skip=0;
     var LIMIT=8;
     function init(){
-       wareTypeList=$api.getStorage('WareTypeList');
-   }
-   function openWareWin(_wareId){
-     api.openWin({
-        name: 'ware',
-        url: './ware.html',
-        pageParam: {
-            wareId: _wareId
-        }
-    });
-
+     wareTypeList=$api.getStorage('WareTypeList');
  }
+ function openWareWin(_wareId){
+   api.openWin({
+    name: 'ware',
+    url: './ware.html',
+    pageParam: {
+        wareId: _wareId
+    }
+});
+
+}
 // 获取列表页数据
 function searchval(val,_LoadMore){
 	// alert($api.jsonToStr($api.getStorage('history_list')))
 	// alert(val)
 	searchvalue=val;
-     activity = api.require('UILoading');
-    activity.keyFrame({
-        rect: {
+   activity = api.require('UILoading');
+   activity.keyFrame({
+    rect: {
+        w: 80,
+        h: 100
+    },
+    styles: {
+        bg: 'rgba(0,0,0,0.5)',
+        corner: 5,
+        interval: 50,
+        frame: {
             w: 80,
-            h: 100
-        },
-        styles: {
-            bg: 'rgba(0,0,0,0.5)',
-            corner: 5,
-            interval: 50,
-            frame: {
-                w: 80,
-                h: 80
-            }
+            h: 80
         }
-    });
+    }
+});
 
-    var now = Date.now();
+   var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
       if (_LoadMore) {
@@ -270,22 +270,23 @@ function searchval(val,_LoadMore){
           // api.refreshHeaderLoadDone();
          // 模板渲染
          // alert($api.jsonToStr(ret))
+         api.refreshHeaderLoadDone()
          updateWareList(ret,_LoadMore);
      } else {
-       api.toast({
-           msg: err.msg,
-           duration: 2000,
-           location: 'bottom'
-       });
-   }
-});
+         api.toast({
+             msg: err.msg,
+             duration: 2000,
+             location: 'bottom'
+         });
+     }
+ });
 }
 function updateWareList(_data,_LoadMore){
 	var pushStatus=$api.byId('pushStatus');
 	if (_data[0]==undefined) {
-		  pushStatus.innerHTML="该商品暂未上架"
-		
-	}
+        pushStatus.innerHTML="该商品暂未上架"
+        
+    }
     var list=$api.byId('list');
     var tempFn=doT.template($api.byId('template').innerHTML);
     var resultText=tempFn(_data)
@@ -331,8 +332,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-     searchval(searchvalue,true);
- });
+       searchval(searchvalue,true);
+   });
 }
 // 下拉刷新
 function initRefresh(){
@@ -341,24 +342,15 @@ function initRefresh(){
         isScale: true
     }, function() {
         searchval(searchvalue);
-        api.toast({
-            msg: '摇一摇关闭刷新',
-            duration: 5000,
-            location: 'bottom'
-        });
-        api.addEventListener({
-            name: 'shake'
-        }, function(ret, err) {
-            api.refreshHeaderLoadDone()
-        });
+        
     });
 
 }
 function Add(_wareId){
-   event.stopPropagation();
+ event.stopPropagation();
 
-   var count = $api.byId('count_' + _wareId);
-   var panel = $api.byId('panel_' + _wareId);
+ var count = $api.byId('count_' + _wareId);
+ var panel = $api.byId('panel_' + _wareId);
 
     // 更新商品数量及显示状态
     var countNumber = parseInt(count.innerHTML);
@@ -372,10 +364,10 @@ function Add(_wareId){
         }
     });
     api.toast({
-       msg: '已加入购物车',
-       duration: 2000,
-       location: 'bottom'
-   });
+     msg: '已加入购物车',
+     duration: 2000,
+     location: 'bottom'
+ });
     
 }
 </script>
