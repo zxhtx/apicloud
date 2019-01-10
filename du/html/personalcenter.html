@@ -105,7 +105,7 @@
         </div>
 
         <div class="item item-service">
-            <div class="button service">客服</div>
+            <div class="button service" tapmode onclick="openkefu()">客服</div>
         </div>
     </footer>
 </body>
@@ -114,10 +114,10 @@
     apiready = function() {
 
        var header=$api.byId('header');
-         api.setStatusBarStyle({
-            style: 'light',
-            color:'#000'
-        });
+       api.setStatusBarStyle({
+        style: 'light',
+        color:'#000'
+    });
        var footer=$api.byId('footer');
        $api.fixStatusBar(header);
         // 获取header和nav的高
@@ -136,6 +136,7 @@
           pageParam: {
               name: 'test'
           },
+          allowEdit:true,
           bounces: true,
           bgColor: 'rgba(0,0,0,0)',
           vScrollBarEnabled: true,
@@ -151,6 +152,70 @@
             }
         });
 
+    }
+    function openkefu(){
+        var dialogBox = api.require('dialogBox');
+        dialogBox.scene({
+            rect: {
+                w: 280,
+                h: 350
+            },
+            texts: {
+                title: '时刻准备着',
+                content: '爱的火花从这里起步',
+            },
+            styles: {
+                bg: '#fff',
+                title: {
+                    bg: '#aaa',
+                    h: 44,
+                    size: 14,
+                    color: '#000'
+                },
+                sceneImg: {
+                    h: 150,
+                    path: 'widget://image/kefuqun.jpg'
+                },
+                content: {
+                    color: '#111',
+                    size: 12
+                },
+                cell: {
+                    bg: '#fff',
+                    h: 48,
+                    text: {
+                        color: '#636363',
+                        size: 13
+                    },
+                    icon: {
+                        marginL: 15,
+                        marginT: 9,
+                        w: 30,
+                        h: 30,
+                        corner: 2
+                    }
+                },
+             
+            },
+            optionDatas: [{
+                icon: 'widget://image/qq.png',
+                text: '2764832464'
+            }, {
+                icon: 'widget://image/wx.png',
+                text: 'h2764832464'
+            }, ]
+        }, function(ret, err) {
+            if (ret) {
+               if (ret.index==0) {
+                alert(1)
+               }
+                dialogBox.close({
+                    dialogName: 'scene'
+                });
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
     }
 </script>
 
