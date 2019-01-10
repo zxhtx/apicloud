@@ -113,7 +113,6 @@
 <script type="text/javascript">
     var dialogBox ;
     apiready = function() {
-        eventlister();
 
         var header=$api.byId('header');
         api.setStatusBarStyle({
@@ -258,17 +257,7 @@
   } 
 });
    }
-   function eventlister(){
-    api.addEventListener({
-        name: 'keyback'
-    }, function(ret, err){
-        if( ret ){
-           dialogBox.close({
-            dialogName: 'scene'
-        });
-       }
-   });
-}
+ 
 </script>
 
 </html>
