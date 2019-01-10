@@ -64,6 +64,21 @@
     function Register(){
         var username=$api.byId('username');
         var password=$api.byId('password');
+        if (username.value.length<5) {
+          api.toast({
+              msg: '用户名不能低于5位字符',
+              duration: 2000,
+              location: 'bottom'
+          });
+          return;
+        }else if (password.value.length<7) {
+            api.toast({
+                msg: '密码不能低于7位字符',
+                duration: 2000,
+                location: 'bottom'
+            });
+            return;
+        }
         var usernameValue=username.value;
         var passwordValue=password.value;
         var now = Date.now();
