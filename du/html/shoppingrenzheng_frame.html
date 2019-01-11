@@ -11,7 +11,7 @@
 	html,
 	body {
 		height: 100%;
-		background-color: #f0f0f0;
+		background-color: #fff;
 	}
 
 	.address {
@@ -178,9 +178,10 @@
 	.order .icon-panel .info .top {
 		position: relative;
 		box-sizing: border-box;
-		padding-top: 8px;
+		padding-top: 2px;
+		/*border: 1px solid red;*/
 		width: 100%;
-		height: 32px;
+		height: 20px;
 		font-size: 16px;
 		color: #444;
 		text-align: left;
@@ -366,13 +367,16 @@
 		font-size: 12px
 	}
 	.info .description {
-		margin-bottom: 3px;
+		margin-top: 2px;
 		overflow: hidden;
 		width: 100%;
 		height: 16px;
-		/*border: 1px solid red;*/
 		font-size: 13px;
 		color: #9d9d9d;
+	}
+	footer p{
+		text-align: center;
+
 	}
 </style>
 </head>
@@ -415,12 +419,16 @@
 		</div>
 
 		<div class="row">
+				<div class="text">兑换码：</div>
 			<div class="value value-3" id="date">-&nbsp;</div>
 		</div>
 		<div class="row-1">
 			<div class="value value-2">实付款：&nbsp;<span class="color" id="price2">￥24.9</span></div>
 		</div>
 	</section>
+	<footer>
+		<p>点击截图兑换码将失效(谨慎谨慎再谨慎)</p>
+	</footer>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
@@ -491,7 +499,13 @@
   	price1.innerHTML='￥'+_data[0].price;
   	price2.innerHTML='￥'+_data[0].price;
   	image.src=_data[0].url;
-  	date.innerHTML=times;
+  	if (_data[0].duihuanma==null) {
+  		date.innerHTML=times;
+  	}else{
+  			date.innerHTML=_data[0].duihuanma;
+
+  	}
+
   	username.innerHTML=_data[0].username;
   }
 
