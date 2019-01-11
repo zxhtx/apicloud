@@ -20,9 +20,10 @@
     
     .info-name {
         box-sizing: border-box;
+        margin-top: 20px;
         width: 100%;
         height: 61px;
-        padding-top: 8px;
+        /*padding-top: 2px;*/
         padding-left: 8px;
         border-bottom: 1px solid #ddd;
         position: relative;
@@ -37,7 +38,8 @@
     }
     
     .info-name .description {
-        width: 100%
+        margin-top: 5px;
+        width: 80%;
         height: 20px;
         line-height: 20px;
         color: #888;
@@ -51,7 +53,7 @@
         padding-top: 8px;
         padding-right: 8px;
         position: absolute;
-        right: 6px;
+        right: 8px;
         bottom: 8px;
     }
     
@@ -114,30 +116,32 @@
     }
     .info-discount{
         line-height: 20px;
+        margin-top: 20px;
     }
     .info-discount span{
-        padding: 5px;
-        margin:3px;
-        font-size: 12px;
-        color: white;
-        background: black;
-        border: 1px solid #ccc;
-         border-radius: 6px;
-    }
-    .info-discount span.now{
-      padding: 5px;
+      padding: 5px 8px 5px 8px;
+      margin:3px;
       font-size: 12px;
-      color: black;
-      background: gray;
-      background: white;
-      border: 1px solid black;
+      color: white;
+      background: black;
+      border: 1px solid #ccc;
+      border-radius: 6px;
   }
+  .info-discount span.now{
+     padding: 5px 8px 5px 8px;
+     font-size: 12px;
+     color: black;
+     background: gray;
+     background: white;
+     border: 1px solid black;
+ }
 
-  .info-color{
+ .info-color{
     line-height: 20px;
+    margin-top: 20px;
 }
 .info-color span{
-    padding: 5px;
+    padding: 5px 8px 5px 8px;
     margin:3px;
     font-size: 12px;
     color: white;
@@ -146,12 +150,12 @@
     border-radius: 6px;
 }
 .info-color span.now{
-  padding: 5px;
-  font-size: 12px;
-  color: black;
-  background: white;
-  border: 1px solid black;
-  font-weight: bold;
+    padding: 5px 8px 5px 8px;
+    font-size: 12px;
+    color: black;
+    background: white;
+    border: 1px solid black;
+    font-weight: bold;
 }
 </style>
 </head>
@@ -206,7 +210,7 @@
 <script type="text/javascript">
     var size;
     var color;
-  apiready = function() {
+    apiready = function() {
     // 初始化轮播图模块
     initUIScrollPicture();
 
@@ -330,7 +334,7 @@ var now = Date.now();
 
 // 更新商品详情展示
 function fnUpdateWareInfo(_ware) {
-    
+
     var list=$api.byId('list');
     var tempFn=doT.template($api.byId('template').innerHTML);
     var resultText=tempFn(_ware)
@@ -361,12 +365,12 @@ function size(_this){
         // frameName: 'ware_frame',
         script: "addsize('"+datasize+"')"
     });
-  
+
 }
 function color(_this){
     var datacolor=$api.attr(_this, 'data-color');
     $(_this).addClass('now').siblings().removeClass('now');
-     api.execScript({
+    api.execScript({
         name: 'ware',
         // frameName: 'ware_frame',
         script: "addcolor('"+datacolor+"')"
