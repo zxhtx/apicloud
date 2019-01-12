@@ -206,9 +206,9 @@
 <script type="text/template" id="template">
     {{~it:value:index}}
     <div class="ware ware-1" >
-        <div class="content" >
+        <div class="content" tapmode onclick="openWareWin('{{=value.id}}')" >
             <img onload="LoadImage(this)" data-url="{{=value.thumbnail}}" class="thumbnail" src="../image/default_square.png">
-            <div class="info" tapmode onclick="openWareWin('{{=value.id}}')">
+            <div class="info" >
                 <div class="name">{{=value.name}}</div>
                 <div class="description">{{=value.description}}</div>
                 <div class="price-tag">
