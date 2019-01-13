@@ -1,0 +1,238 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>首页Frame</title>
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+	<style type="text/css">
+
+	section {
+		position: relative;
+		width: 100%;
+		/*height: auto;*/
+		box-sizing: border-box;
+		/*padding: 0 8px;*/
+	}
+
+	.content {
+		width: 100%;
+		height: 100%;
+	}
+
+
+
+	.ware-1 {
+		position: relative;
+		width: 100%;
+		/*height: 66px;*/
+		box-sizing: border-box;
+		padding: 6px 8px 6px 8px;
+		/*border: 1px solid red;*/
+		border-bottom: 1px solid #d1d1d1;
+	}
+	.push-status {
+		width: 100%;
+		height: 66px;
+		font-size: 16px;
+		color: #888;
+		line-height: 40px;
+		text-align: center;
+		background-color: #fff;
+	}
+
+	.active {
+		opacity: 0.7;
+	}
+	.name{
+		font-size: 13px;
+		color: gray;
+		margin-bottom: 6px;
+	}
+	.date{
+		margin-left: 10px;
+		font-size: 12px;
+		color: gray;
+	}
+	.text{
+		font-size: 16px
+	}
+</style>
+</head>
+
+<body>
+	<section id="list">
+
+	</section>
+	<div class="push-status" id="pushStatus">我是有底线滴╭(╯^╰)╮</div>
+</body>
+<script type="text/template" id="template">
+	{{~it:value:index}}
+	<div class="ware ware-1" >
+		<span class="name">{{=value.username}}</span>
+		<span class="date">{{=value.date}}</span>
+		<p class="text">{{=value.text}}</p>
+	</div>
+	{{~}}
+
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript">
+	apiready = function() {
+		init();
+		getWareList();
+		initRefresh();
+		initEventListenter();
+
+	};
+	var activity ;
+	var speaktypeList;
+	var skip=0;
+	var LIMIT=10;
+	function init(){
+		speaktypeList=$api.getStorage('speaktypeList');
+	}
+	function openWareWin(_wareId){
+		api.openWin({
+			name: 'ware',
+			url: './ware.html',
+			pageParam: {
+				wareId: _wareId
+			},
+			animation: {
+				type: "fade"
+			}
+		});
+
+	}
+// 获取列表页数据
+function getWareList(_LoadMore){
+	activity = api.require('UILoading');
+	activity.keyFrame({
+		rect: {
+			w: 80,
+			h: 100
+		},
+		styles: {
+			bg: 'rgba(0,0,0,0.5)',
+			corner: 5,
+			interval: 50,
+			frame: {
+				w: 80,
+				h: 80
+			}
+		}
+	});
+
+	var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
+      if (_LoadMore) {
+      	skip+=LIMIT;
+      }else{
+      	skip=0;
+      }
+      var params={
+      	fields:{},
+      	fields: {},
+      	where: {
+      		wareid:api.pageParam.wareid,
+      		speaktype: speaktypeList[api.pageParam.sepaktypeIndex].id
+      	},
+      	skip:skip,
+      	limit:LIMIT,
+      	order:"createdAt DESC"
+      }
+      params=$api.jsonToStr(params);
+      api.ajax({
+      	url: 'http://d.apicloud.com/mcm/api/speak?filter='+params,
+      	method: 'get',
+      	headers: {
+      		"X-APICloud-AppId": "A6099267504667",
+      		"X-APICloud-AppKey":   appKey
+      	},
+
+      },function(ret, err){
+      	if (ret) {
+          // 隐藏下拉刷新
+          // api.refreshHeaderLoadDone();
+         // 模板渲染
+         api.refreshHeaderLoadDone()
+         updateWareList(ret,_LoadMore);
+     } else {
+     	api.toast({
+     		msg: err.msg,
+     		duration: 2000,
+     		location: 'bottom'
+     	});
+     }
+ });
+  }
+  function updateWareList(_data,_LoadMore){
+  	var list=$api.byId('list');
+  	var tempFn=doT.template($api.byId('template').innerHTML);
+  	var resultText=tempFn(_data)
+  	if (_LoadMore) {
+  		$api.append(list, resultText);
+  	}else{
+  		$api.html(list, resultText);
+  	}
+    // 优化
+    api.parseTapmode();
+    if (_LoadMore) {
+    	if (_data.length<LIMIT) {
+    		var pushStatus=$api.byId('pushStatus');
+    		pushStatus.innerHTML="我是有底线滴"
+    	}
+    }
+    activity.closeKeyFrame();
+}
+
+// 列表页图片缓存
+
+function LoadImage(_this){
+	var dataUrl=$api.attr(_this, 'data-url');
+	if (dataUrl) {
+		api.imageCache({
+			url: dataUrl
+		}, function(ret, err){
+			if( ret ){
+				_this.src=ret.url;
+				$api.attr(_this, 'data-url', '');
+			}else{
+             // alert( JSON.stringify( err ) );
+         }
+     });
+	}
+
+}
+// 监听 
+function initEventListenter(){
+	api.addEventListener({
+		name:'scrolltobottom',
+		extra:{
+			threshold:100
+		}
+	}, function(ret, err){        
+		getWareList(true);
+	});
+}
+// 下拉刷新
+function initRefresh(){
+	api.setCustomRefreshHeaderInfo({
+		bgColor: '#C0C0C0',
+		isScale: true
+	}, function() {
+		getWareList();
+
+	});
+
+}
+
+</script>
+
+</html>

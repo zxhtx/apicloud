@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+	<style>
+	body{
+		height: 100%;
+		position: relative;
+
+	}
+	.assess {
+		width: 100%;
+	}
+	.assess p {
+		width: 92%;
+		padding: 4%;
+		overflow: hidden;
+		background-color: #fff;
+	}
+	.assess p textarea {
+		float: right;
+		text-align: justify;
+		width: 100%;
+		border: none;
+		font-size: 0.9em;
+		color: #666;
+	}
+	.type{
+		width: 100px;
+		background: black;
+		color: white;
+		margin: 0 auto;
+		height: 30px;
+		line-height: 30px;
+		text-align: center;
+		margin-top: 20px;
+		border-radius: 10px;
+		border: 1px solid black;
+	}
+	.type.now{
+		width: 100px;
+		height: 30px;
+		line-height: 30px;
+		color: black;
+		background: white;
+		border: 1px solid black;
+		font-weight: bold;
+	}
+	.btn{
+		width: 90%;
+		height: 50px;
+		background: black;
+		color: white;
+		text-align: center;
+		line-height: 50px;
+		margin: 0 auto;
+		margin-top: 100px;
+		border-radius: 20px;
+		font-size: 15px;
+	}
+</style>
+</head>
+<body>
+	<section class="assess">
+		<p>
+			<textarea rows="7" id="text" placeholder="买了否冷!   现在轮到您开始表演啦#^_^#"></textarea>
+		</p>
+
+	</section>
+	<div class="type" tapmode onclick="type(this)" data-type="5c3af54042a859df03ce37b9">好评</div>
+	<div class="type" tapmode onclick="type(this)" data-type="5c3af54ec2d230f93e257bf2">一般</div>
+	<div class="type" tapmode onclick="type(this)" data-type="5c3af554612f9a7c35ae1ffb">差评</div>
+
+	<div class="btn" tapmode onclick="btn()" >发表评论</div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/zepto/zepto.min.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<script type="text/javascript">
+		var myDate = new Date();
+		var Y=myDate.getFullYear();
+		var M=myDate.getMonth()+1;
+		var D=myDate.getDate();  
+		var h=myDate.getHours();    
+		var m=myDate.getMinutes();
+		var s=myDate.getSeconds(); 
+		
+	var addspeak={
+		speaktype:'5c3af54042a859df03ce37b9',
+		date:Y+'-'+M+'-'+D+' '+h+':'+m+':'+s
+	};
+	apiready = function(){
+
+	};
+	function type(_this){
+		var types=$api.attr(_this, 'data-type');
+		$(_this).addClass('now').siblings().removeClass('now');
+		addspeak.speaktype=types;
+		var text=$api.byId('text').value;
+		
+	}
+
+	function btn(){
+		var user=$api.getStorage('user');
+		addspeak.username=user[0].username
+		var text=$api.byId('text').value;
+	
+		if (!text) {
+			api.toast({
+				msg: '请输入文本',
+				duration: 2000,
+				location: 'bottom'
+			});
+			return;
+
+		}
+		var text=$api.byId('text').value;
+		addspeak.text=text;
+		addspeak.wareid=api.pageParam.wareid;
+		addspeak.shoppinginformation=api.pageParam.shoppingid;
+		var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+      api.ajax({
+      	url: 'https://d.apicloud.com/mcm/api/speak',
+      	method: 'post',
+      	headers: {
+      		"X-APICloud-AppId": "A6099267504667",
+      		"X-APICloud-AppKey":   appKey,
+      	},
+      	data: {
+      		values: addspeak
+      	}
+      },function(ret, err){
+      	if (ret) {
+      		updatespeaktype();
+      	}
+      });
+
+  }
+
+  function updatespeaktype(){
+  	var now = Date.now();
+  	var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+  	api.ajax({
+  		url: 'https://d.apicloud.com/mcm/api/shoppinginformation/'+addspeak.shoppinginformation,
+  		method: 'put',
+  		headers: {
+  			"X-APICloud-AppId": "A6099267504667",
+  			"X-APICloud-AppKey":   appKey,
+  		},
+  		data: {
+  			values: { 
+  				speaktype:'1'
+  			}
+
+  		}
+  	},function(ret, err){
+  		if (ret) {
+  			
+  			api.sendEvent({
+  				name: 'updatedindantype',
+  			});
+  			api.closeWin()
+  		}
+  	});
+  }
+</script>
+</html>

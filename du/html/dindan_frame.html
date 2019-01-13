@@ -312,8 +312,8 @@
 					<input type="button" value="已签收">
 				</div>
 				{{?? value.dindantypeid=='5c2a39add37a824c5ac6cc64'}}
-				<div class="default" tapmode onclick="defaultbtn('{{=value.default}}','{{=value.id}}')">
-					<input type="button" value="此商品已签收">
+				<div class="default" tapmode onclick="speak('{{=value.wareid}}','{{=value.id}}','{{=value.speaktype}}')">
+					<input type="button" value="评论">
 				</div>
 				{{?}}
 			</div>
@@ -502,12 +502,25 @@
   	});
 
   }
-  function defaultbtn(){
+  function speak(_wareid,_id,_speaktype){
   	event.stopPropagation();
+  	// alert(_speaktype)
+  	if (_speaktype==1) {
   	api.toast({
-  		msg: '此商品已签收',
-  		duration: 2000,
-  		location: 'bottom'
+  		    msg: '已评论',
+  		    duration: 2000,
+  		    location: 'bottom'
+  		});
+  		return;
+  	}
+
+  	api.openWin({
+  		name: 'speak.html',
+  		url: './speak.html',
+  		pageParam: {
+  			wareId: _wareid,
+  			shoppingid:_id
+  		}
   	});
   }
 // 获取列表页数据
@@ -559,7 +572,7 @@ function getAddressList(_LoadMore){
       },function(ret, err){
       	if (ret) {
          // 模板渲染
-           api.refreshHeaderLoadDone()
+         api.refreshHeaderLoadDone()
          updateWareList(ret,_LoadMore);
      } else {
      	api.toast({
@@ -571,6 +584,7 @@ function getAddressList(_LoadMore){
  });
   }
   function updateWareList(_data,_LoadMore){
+  	
   	var list=$api.byId('list');
   	var tempFn=doT.template($api.byId('template').innerHTML);
   	var resultText=tempFn(_data)
