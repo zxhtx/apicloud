@@ -282,6 +282,7 @@ var now = Date.now();
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
 
       function getWareInfo(_wareId) {
+
         activity = api.require('UILoading');
         activity.keyFrame({
             rect: {
@@ -334,6 +335,18 @@ var now = Date.now();
 
 // 更新商品详情展示
 function fnUpdateWareInfo(_ware) {
+    if (_ware=='') {
+          api.toast({
+                msg: '改商品已下架',
+                duration: 2000,
+                location: 'bottom'
+            });
+            setTimeout(function(){
+                api.closeWin();
+            },2000)
+            return;
+
+    }
 
     var list=$api.byId('list');
     var tempFn=doT.template($api.byId('template').innerHTML);
