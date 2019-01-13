@@ -27,6 +27,12 @@
 		border: none;
 		font-size: 0.9em;
 		color: #666;
+		border:none;
+		overflow-x: scroll;
+		padding-top: 8px;
+		font-size: 16px;
+		border: 1px solid #d1d1d1;
+		border-radius:8px;
 	}
 	.type{
 		width: 100px;
@@ -110,7 +116,7 @@
 	
 		if (!text) {
 			api.toast({
-				msg: '请输入文本',
+				msg: '请输入评语',
 				duration: 2000,
 				location: 'bottom'
 			});

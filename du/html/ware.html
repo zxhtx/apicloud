@@ -146,13 +146,13 @@
     apiready = function() {
         speaktypeList();
 
-       var header=$api.byId('header');
-       var footer=$api.byId('footer');
-       $api.fixStatusBar(header);
-       api.setStatusBarStyle({
-        style: 'light',
-        color:'#000'
-    });
+        var header=$api.byId('header');
+        var footer=$api.byId('footer');
+        $api.fixStatusBar(header);
+        api.setStatusBarStyle({
+            style: 'light',
+            color:'#000'
+        });
         // 获取header和nav的高
         headerH=$api.offset(header).h
         footerH=$api.offset(footer).h;
@@ -184,6 +184,9 @@
                 y: api.winHeight - 188 - footerH,
                 w: 150,
                 h: 34
+            },
+            animation: {
+                type: "fade"
             },
         bounces: false // 关闭弹动
     });
@@ -293,8 +296,12 @@ function lookspeak(){
         url: './lookspeak.html',
         pageParam: {
          wareId:api.pageParam.wareId 
-     }
- });
+     },
+     animation: {
+        type: "fade"
+    },
+     bounces: false // 关闭弹动
+});
 
 }
 
