@@ -158,7 +158,7 @@
 	.active {
 		opacity: 0.7;
 	}
-	.default{
+	.default,.speak{
 		position: absolute;
 		right: 10px;
 		bottom: 8px;
@@ -168,11 +168,15 @@
 		border-radius: 22px;
 		padding: 5px;
 	}
-	.default input{
+	.speak input{
 		height: 16px;
 		line-height: 16px;
-
+		padding: 2px 6px 2px 6px;
 	}
+	.speak input{
+		line-height: 16px;
+	}
+
 	.no{
 		position: absolute;
 		right: 66px;
@@ -312,7 +316,7 @@
 					<input type="button" value="已签收">
 				</div>
 				{{?? value.dindantypeid=='5c2a39add37a824c5ac6cc64'}}
-				<div class="default" tapmode onclick="speak('{{=value.wareid}}','{{=value.id}}','{{=value.speaktype}}')">
+				<div class="speak" tapmode onclick="speak('{{=value.wareid}}','{{=value.id}}','{{=value.speaktype}}')">
 					<input type="button" value="评论">
 				</div>
 				{{?}}
@@ -506,10 +510,10 @@
   	event.stopPropagation();
   	// alert(_speaktype)
   	if (_speaktype==1) {
-  	api.toast({
-  		    msg: '已评论',
-  		    duration: 2000,
-  		    location: 'bottom'
+  		api.toast({
+  			msg: '已评论',
+  			duration: 2000,
+  			location: 'bottom'
   		});
   		return;
   	}
