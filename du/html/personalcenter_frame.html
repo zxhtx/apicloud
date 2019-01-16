@@ -139,6 +139,11 @@
     .highlight {
         opacity: 0.7;
     }
+    .jian{
+        text-align: center;
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
 </style>
 </head>
 
@@ -148,6 +153,7 @@
             <div id="icon" class="icon"></div>
         </div>
         <div id="username" class="username">******</div>
+         <div id="jian" class="jian">推荐人数:0</div>
     </header>
     <section>
         <div class="option" tapmode onclick="OpentuijianWin()">
@@ -378,6 +384,7 @@ function updateLocalAvatar(_data){
 // 在个人中心中显示用户名
 function getUsername(){
     var username=$api.byId('username');
+     var jian=$api.byId('jian');
     var usernameinfo=$api.getStorage('userInfo');
 
     var now = Date.now();
@@ -403,6 +410,11 @@ function getUsername(){
             // 存储用户名
             $api.setStorage('user', ret);
             username.innerHTML=ret[0].username;
+            if (ret[0].count==undefined) {
+                jian.innerHTML='推荐人数:0'
+            }else{
+                jian.innerHTML='推荐人数:'+ret[0].count;
+            }
         } else {
             api.toast({
                 msg: err.msg,
