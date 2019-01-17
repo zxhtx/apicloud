@@ -238,7 +238,7 @@
         getWareList();
         initRefresh();
         initEventListenter();
-        initspeak();
+
 
 
     };
@@ -248,6 +248,7 @@
     var LIMIT=20;
     function init(){
      wareTypeList=$api.getStorage('WareTypeList');
+     
  }
 
  function openWareWin(_wareId){
@@ -288,6 +289,7 @@ function getWareList(_LoadMore){
       if (_LoadMore) {
         skip+=LIMIT;
     }else{
+
         skip=0;
     }
     var params={
@@ -363,7 +365,7 @@ function LoadImage(_this){
          }
      });
     }else{
-     
+
     }
 
 
@@ -415,71 +417,6 @@ function Add(_wareId){
     
 }
 
-function initspeak(){
-    var dialogBox = api.require('dialogBox');
-    dialogBox.alert({
-        texts: {
-            title: '',
-            content: '有笔生意想与您谈一谈,您意下如何',
-            leftBtnTitle: '不想谈,我有钱',
-            rightBtnTitle: '谈一谈'
-        },
-        styles: {
-            bg: '#fff',
-            w: 300,
-            corner:2,
-            title: {
-                marginT: 20,
-                icon: 'widget://res/gou.png',
-                iconSize: 40,
-                titleSize: 14,
-                titleColor: '#000'
-            },
-            content: {
-                color: '#000',
-                size: 14
-            },
-            left: {
-                marginB: 7,
-                marginL: 20,
-                w: 130,
-                h: 35,
-                corner: 2,
-                bg: '#000',
-                size: 12,
-                color: '#fff',
-            },
-            right: {
-                marginB: 7,
-                marginL: 10,
-                w: 130,
-                h: 35,
-                corner: 2,
-                bg: '#000',
-                size: 12,
-                color: '#fff',
-            }
-        }
-    }, function(ret) {
-        if (ret.eventType == 'left') {
-            // var dialogBox = api.require('dialogBox');
-            dialogBox.close({
-                dialogName: 'alert'
-            });
-        }else{
-            api.openWin({
-                name: 'tuijian',
-                url: './tuijian.html',
-                pageParam: {
-                    name: 'test'
-                }
-            });
-            dialogBox.close({
-                dialogName: 'alert'
-            });
-        }
-    });
-}
 </script>
 
 </html>
