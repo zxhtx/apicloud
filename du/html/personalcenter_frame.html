@@ -349,6 +349,7 @@ function updateLocalAvatar(_data){
     }, function(ret, err){
         if( ret ){
          icon.style.background='url('+ret.url+')';
+         icon.style.backgroundSize='108px 108px';
      }else{
         api.toast({
             msg: err.msg,
