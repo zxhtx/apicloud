@@ -228,7 +228,6 @@
         </div>
     </div>
     {{~}}
-
 </script>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
@@ -240,31 +239,33 @@
         initRefresh();
         initEventListenter();
 
+
     };
     var activity ;
     var wareTypeList;
     var skip=0;
     var LIMIT=20;
     function init(){
-     wareTypeList=$api.getStorage('WareTypeList');
- }
- function openWareWin(_wareId){
-   api.openWin({
-    name: 'ware',
-    url: './ware.html',
-    pageParam: {
-        wareId: _wareId
-    },
-    animation: {
-        type: "fade"
-    }
-});
+       wareTypeList=$api.getStorage('WareTypeList');
+   }
 
-}
+   function openWareWin(_wareId){
+     api.openWin({
+        name: 'ware',
+        url: './ware.html',
+        pageParam: {
+            wareId: _wareId
+        },
+        animation: {
+            type: "fade"
+        }
+    });
+
+ }
 // 获取列表页数据
 function getWareList(_LoadMore){
-   activity = api.require('UILoading');
-   activity.keyFrame({
+ activity = api.require('UILoading');
+ activity.keyFrame({
     rect: {
         w: 80,
         h: 100
@@ -280,7 +281,7 @@ function getWareList(_LoadMore){
     }
 });
 
-   var now = Date.now();
+ var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
       if (_LoadMore) {
@@ -315,13 +316,13 @@ function getWareList(_LoadMore){
          api.refreshHeaderLoadDone()
          updateWareList(ret,_LoadMore);
      } else {
-         api.toast({
-             msg: err.msg,
-             duration: 2000,
-             location: 'bottom'
-         });
-     }
- });
+       api.toast({
+           msg: err.msg,
+           duration: 2000,
+           location: 'bottom'
+       });
+   }
+});
 }
 function updateWareList(_data,_LoadMore){
     var list=$api.byId('list');
@@ -341,6 +342,7 @@ function updateWareList(_data,_LoadMore){
         }
     }
     activity.closeKeyFrame();
+
 }
 
 // 列表页图片缓存
@@ -356,9 +358,13 @@ function LoadImage(_this){
                 $api.attr(_this, 'data-url', '');
             }else{
              // alert( JSON.stringify( err ) );
+
          }
      });
+    }else{
+        initspeak();
     }
+
 
 }
 // 监听 
@@ -369,8 +375,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-       getWareList(true);
-   });
+     getWareList(true);
+ });
 }
 // 下拉刷新
 function initRefresh(){
@@ -384,10 +390,10 @@ function initRefresh(){
 
 }
 function Add(_wareId){
- event.stopPropagation();
+   event.stopPropagation();
 
- var count = $api.byId('count_' + _wareId);
- var panel = $api.byId('panel_' + _wareId);
+   var count = $api.byId('count_' + _wareId);
+   var panel = $api.byId('panel_' + _wareId);
 
     // 更新商品数量及显示状态
     var countNumber = parseInt(count.innerHTML);
@@ -401,11 +407,77 @@ function Add(_wareId){
         }
     });
     api.toast({
-     msg: '已加入购物车',
-     duration: 2000,
-     location: 'bottom'
- });
+       msg: '已加入购物车',
+       duration: 2000,
+       location: 'bottom'
+   });
     
+}
+
+function initspeak(){
+    var dialogBox = api.require('dialogBox');
+    dialogBox.alert({
+        texts: {
+            title: '',
+            content: '有笔生意想与您谈一谈,您意下如何',
+            leftBtnTitle: '不想谈,我有钱',
+            rightBtnTitle: '谈一谈'
+        },
+        styles: {
+            bg: '#fff',
+            w: 300,
+            corner:2,
+            title: {
+                marginT: 20,
+                icon: 'widget://res/gou.png',
+                iconSize: 40,
+                titleSize: 14,
+                titleColor: '#000'
+            },
+            content: {
+                color: '#000',
+                size: 14
+            },
+            left: {
+                marginB: 7,
+                marginL: 20,
+                w: 130,
+                h: 35,
+                corner: 2,
+                bg: '#000',
+                size: 12,
+                color: '#fff',
+            },
+            right: {
+                marginB: 7,
+                marginL: 10,
+                w: 130,
+                h: 35,
+                corner: 2,
+                bg: '#000',
+                size: 12,
+                color: '#fff',
+            }
+        }
+    }, function(ret) {
+        if (ret.eventType == 'left') {
+            // var dialogBox = api.require('dialogBox');
+            dialogBox.close({
+                dialogName: 'alert'
+            });
+        }else{
+            api.openWin({
+                name: 'tuijian',
+                url: './tuijian.html',
+                pageParam: {
+                    name: 'test'
+                }
+            });
+             dialogBox.close({
+                dialogName: 'alert'
+            });
+        }
+    });
 }
 </script>
 

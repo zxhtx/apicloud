@@ -255,43 +255,22 @@ function OpentuijianWin(){
 }
 // 在个人中心中显示头像
 function setAvatar(){
-    api.actionSheet({
-        title: '选择',
-        cancelTitle: '取消',
-        buttons: ['拍照','相册']
-    }, function(ret, err){
-        if( ret ){
-            var sourceTypes=['camera','album']
-            if (ret.buttonIndex == (sourceTypes.length + 1)) {
-                return;
-            }
-            api.getPicture({
-                sourceType: sourceTypes[ret.buttonIndex-1],
-                allowEdit: true,
-                quality: 100,
-                targetWidth: 108,
-                targetHeight: 108,
-                saveToPhotoAlbum: false
-            }, function(ret, err){ 
-                if(ret){
-                    uploadAtavar(ret.data);
-                }else{
-                    api.toast({
-                        msg: err.msg,
-                        duration: 2000,
-                        location: 'bottom'
-                    });
-                }
-            });
+   api.getPicture({
+    sourceType: 'album',
+    encodingType: 'jpg',
+    mediaValue: 'pic',
+    destinationType: 'url',
+    allowEdit: true,
+    quality: 100,
+    targetWidth: 100,
+    targetHeight: 100,
+    saveToPhotoAlbum: false
+}, function(ret, err) {
+    if (ret) {
+     uploadAtavar(ret.data)
+       }
 
-        }else{
-         api.toast({
-             msg: err.msg,
-             duration: 2000,
-             location: 'bottom'
-         });
-     }
- });
+});
 
 }
 // 上传头像 
