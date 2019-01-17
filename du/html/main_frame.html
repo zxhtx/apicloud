@@ -238,6 +238,7 @@
         getWareList();
         initRefresh();
         initEventListenter();
+        initspeak();
 
 
     };
@@ -246,26 +247,26 @@
     var skip=0;
     var LIMIT=20;
     function init(){
-       wareTypeList=$api.getStorage('WareTypeList');
-   }
-
-   function openWareWin(_wareId){
-     api.openWin({
-        name: 'ware',
-        url: './ware.html',
-        pageParam: {
-            wareId: _wareId
-        },
-        animation: {
-            type: "fade"
-        }
-    });
-
+     wareTypeList=$api.getStorage('WareTypeList');
  }
+
+ function openWareWin(_wareId){
+   api.openWin({
+    name: 'ware',
+    url: './ware.html',
+    pageParam: {
+        wareId: _wareId
+    },
+    animation: {
+        type: "fade"
+    }
+});
+
+}
 // 获取列表页数据
 function getWareList(_LoadMore){
- activity = api.require('UILoading');
- activity.keyFrame({
+   activity = api.require('UILoading');
+   activity.keyFrame({
     rect: {
         w: 80,
         h: 100
@@ -281,7 +282,7 @@ function getWareList(_LoadMore){
     }
 });
 
- var now = Date.now();
+   var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
       if (_LoadMore) {
@@ -316,13 +317,13 @@ function getWareList(_LoadMore){
          api.refreshHeaderLoadDone()
          updateWareList(ret,_LoadMore);
      } else {
-       api.toast({
-           msg: err.msg,
-           duration: 2000,
-           location: 'bottom'
-       });
-   }
-});
+         api.toast({
+             msg: err.msg,
+             duration: 2000,
+             location: 'bottom'
+         });
+     }
+ });
 }
 function updateWareList(_data,_LoadMore){
     var list=$api.byId('list');
@@ -362,7 +363,7 @@ function LoadImage(_this){
          }
      });
     }else{
-        initspeak();
+     
     }
 
 
@@ -375,8 +376,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-     getWareList(true);
- });
+       getWareList(true);
+   });
 }
 // 下拉刷新
 function initRefresh(){
@@ -390,10 +391,10 @@ function initRefresh(){
 
 }
 function Add(_wareId){
-   event.stopPropagation();
+ event.stopPropagation();
 
-   var count = $api.byId('count_' + _wareId);
-   var panel = $api.byId('panel_' + _wareId);
+ var count = $api.byId('count_' + _wareId);
+ var panel = $api.byId('panel_' + _wareId);
 
     // 更新商品数量及显示状态
     var countNumber = parseInt(count.innerHTML);
@@ -407,10 +408,10 @@ function Add(_wareId){
         }
     });
     api.toast({
-       msg: '已加入购物车',
-       duration: 2000,
-       location: 'bottom'
-   });
+     msg: '已加入购物车',
+     duration: 2000,
+     location: 'bottom'
+ });
     
 }
 
@@ -473,7 +474,7 @@ function initspeak(){
                     name: 'test'
                 }
             });
-             dialogBox.close({
+            dialogBox.close({
                 dialogName: 'alert'
             });
         }
