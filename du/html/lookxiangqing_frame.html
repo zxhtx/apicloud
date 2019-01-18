@@ -442,8 +442,8 @@
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/template" id="template">
 	{{~it:value:index}}
-	<span class="text">{{=value.remark}}</span>
-	<p class="time">{{=value.datetime}}</p>
+	<span class="text">{{=value.content}}</span>
+	<p class="time">{{=value.time}}</p>
 	{{~}}
 </script>
 <script type="text/javascript">
@@ -516,24 +516,24 @@ function updateWare(_data){
 }
 function wuliu(danhao){
 	api.ajax({
-		url: "http://v.juhe.cn/exp/index?key=7b32645388324eaaba98ce93e4bf4682&com=tt&no="+danhao,
+		url: 'https://cexpress.market.alicloudapi.com/cexpress?no='+danhao,
 		method: 'get',
 		headers: {
 			"X-APICloud-AppId": "A6099267504667",
-			"X-APICloud-AppKey":   appKey
+			"X-APICloud-AppKey":   appKey,
+			"Authorization":'APPCODE 2256b318236a41d68bb5aa94ff6d6abb'
 		},
 
 	},function(ret, err){
 		if (ret) {
-			// alert($api.jsonToStr(ret))
 			var wuliugongsi=$api.byId('wuliugongsi');
-			wuliugongsi.innerHTML=ret.result.company+'快递';
-			updatewuliu(ret.result.list)
+			wuliugongsi.innerHTML=ret.name;
+			updatewuliu(ret.list)
 		} 
 	});
 }
 function updatewuliu(_data){
-	_data.reverse();
+	// _data.reverse();
 	var list=$api.byId('wuliu');
 	var tempFn=doT.template($api.byId('template').innerHTML);
 	var resultText=tempFn(_data)

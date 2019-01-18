@@ -30,7 +30,7 @@
 		border:none;
 		overflow-x: scroll;
 		padding-top: 8px;
-		font-size: 16px;
+		font-size: 15px;
 		border: 1px solid #d1d1d1;
 		border-radius:8px;
 	}
@@ -72,7 +72,7 @@
 <body>
 	<section class="assess">
 		<p>
-			<textarea rows="7" id="text" placeholder="买了否冷!   现在轮到您开始表演啦#^_^#"></textarea>
+			<textarea style='overflow:auto; background-attachment:   fixed;   background-repeat:   no-repeat;   border-style:   solid;border-color:   #FFFFFF'  rows="7" id="text" placeholder="买了否冷!   现在轮到您开始表演啦#^_^#"></textarea>
 		</p>
 
 	</section>
@@ -86,14 +86,14 @@
 <script type="text/javascript" src="../script/zepto/zepto.min.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
-		var myDate = new Date();
-		var Y=myDate.getFullYear();
-		var M=myDate.getMonth()+1;
-		var D=myDate.getDate();  
-		var h=myDate.getHours();    
-		var m=myDate.getMinutes();
-		var s=myDate.getSeconds(); 
-		
+	var myDate = new Date();
+	var Y=myDate.getFullYear();
+	var M=myDate.getMonth()+1;
+	var D=myDate.getDate();  
+	var h=myDate.getHours();    
+	var m=myDate.getMinutes();
+	var s=myDate.getSeconds(); 
+	var activity;
 	var addspeak={
 		speaktype:'5c3af54042a859df03ce37b9',
 		date:Y+'-'+M+'-'+D+' '+h+':'+m+':'+s
@@ -110,10 +110,26 @@
 	}
 
 	function btn(){
+		activity = api.require('UILoading');
+		activity.keyFrame({
+			rect: {
+				w: 80,
+				h: 100
+			},
+			styles: {
+				bg: 'rgba(0,0,0,0.5)',
+				corner: 5,
+				interval: 50,
+				frame: {
+					w: 80,
+					h: 80
+				}
+			}
+		});
 		var user=$api.getStorage('user');
 		addspeak.username=user[0].username
 		var text=$api.byId('text').value;
-	
+
 		if (!text) {
 			api.toast({
 				msg: '请输入评语',
