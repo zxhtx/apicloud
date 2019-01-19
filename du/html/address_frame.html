@@ -391,7 +391,10 @@ function getAddressList() {
            "Authorization": userInfo.id
        }
    }, function(ret, err) {
-    if (ret && ret.length > 0) {
+    if (ret=='') {
+        activity.closeKeyFrame();
+
+    }else if (ret && ret.length > 0) {
         data = ret;
             // 在界面中更新收货地址列表显示
             fnUpdateAddressList(ret);

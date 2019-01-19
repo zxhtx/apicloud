@@ -53,6 +53,14 @@
 		width: 100%;
 		height: 100px;
 	}
+	.paygengduo1{
+		margin-top: 88px;
+	}
+	.paygengduo{
+		text-align: center;
+		color: blue;
+
+	}
 </style>
 </head>
 <body>
@@ -71,6 +79,9 @@
 		<img src="../image/upload.png" alt="">
 		<p class="text">支付截图从此上传</p>
 	</div>
+	<div class="paygengduo1">
+		<p class="paygengduo" tapmode onclick="openpaygengduo()">支付详情(步骤)</p>
+	</div>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
@@ -78,6 +89,15 @@
 	apiready = function(){
 
 	};
+	function openpaygengduo(){
+		api.openWin({
+		    name: 'paygengduo',
+		    url: './paygengduo.html',
+		    pageParam: {
+		        name: 'test'
+		    }
+		});
+	}
 	function saveimg(_data){
 		if (_data==1) {
 			api.download({
