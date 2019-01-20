@@ -36,7 +36,7 @@
 </head>
 <body>
         <header id="header">
-        <div class="back" tapmode onclick="api.closeWin()"></div>
+        <div class="back" tapmode onclick="clo()"></div>
         <h1>商品支付</h1>
     </header>
 </body>
@@ -68,5 +68,13 @@
         });
     	
     };
+    function clo(){
+          api.closeWin();
+        api.sendEvent({
+            name: 'updatedindantype',
+          
+        });
+       
+    }
 </script>
 </html>

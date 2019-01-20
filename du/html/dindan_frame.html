@@ -302,7 +302,7 @@
 				<div class="no" tapmode onclick="no('{{=value.id}}')">
 					<input type="button" value="取消">
 				</div>
-				<div class="default" tapmode onclick="pay('{{=value.id}}','{{=value.wareid}}','{{=value.addressid}}')">
+				<div class="default" tapmode onclick="pay('{{=value.id}}','{{=value.wareid}}','{{=value.price}}')">
 					<input type="button" value="去支付">
 				</div>
 				{{?? value.dindantypeid=='5c2a39a2af3114d73d9ddfc3'}}
@@ -487,12 +487,12 @@
       });
 
   }
-  function pay(id,wareid,addressid){
+  function pay(id,wareid,price){
   	event.stopPropagation();
   	ware={
   		id:id,
   		wareId:wareid,
-  		addressId:addressid
+  		price:price
   	}
   	api.openWin({
   		name: 'pay',
