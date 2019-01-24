@@ -80,6 +80,9 @@
     .option .icon-tuijian {
         background-image: url(../image/tuijian.png);
     }
+    .option .icon-vip {
+        background-image: url(../image/vip.png);
+    }
     
     .option .title {
         position: relative;
@@ -141,6 +144,12 @@
     }
     .jian{
         text-align: center;
+        font-size: 12px;
+        margin-bottom: 6px;
+        margin: 0 auto;
+    }
+    .vip{
+        text-align: center;
         font-size: 13px;
         margin-bottom: 6px;
     }
@@ -153,7 +162,8 @@
             <div id="icon" class="icon"></div>
         </div>
         <div id="username" class="username">******</div>
-         <div id="jian" class="jian">推荐人数:0</div>
+        <div id="jian" class="jian">推荐人数:0</div>
+        <div id="vip" class="vip"></div>
     </header>
     <section>
         <div class="option" tapmode onclick="OpentuijianWin()">
@@ -177,20 +187,44 @@
                 <div class="text">管理我的收货地址</div>
             </div>
         </div>
-        
+        <div class="option" tapmode onclick="OpenvipWin()">
+            <div class="icon icon-vip"></div>
+            <div class="title">充值vip</div>
+            <div class="arrow-panel">
+                <div class="text">充值18元全场8折</div>
+            </div>
+        </div>
     </section>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
+    var myDate = new Date();
+    var Y=myDate.getFullYear();
+    var M=myDate.getMonth()+1;
+    var D=myDate.getDate();
+    var now = Date.now();
+    var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+
     apiready = function() {
         getUsername();
         getuserInfo();
         dindantypeList();
+        vip();
+        event();
+
 
 
     };
-
+    function event(){
+        api.addEventListener({
+            name: 'addvip'
+        }, function(ret, err){
+            if( ret ){
+               vip();
+           }
+       });
+    }
     function getuserInfo(){
         var userInfo=$api.getStorage('userInfo');
         var now = Date.now();
@@ -216,6 +250,100 @@
         }
     });
     }   
+    function vip(){
+        var usernameinfo=$api.getStorage('userInfo');
+
+
+        var params={
+            fields: {},
+            where:{
+                id:usernameinfo.userId
+            },
+            skip: 0,
+        }
+        params=$api.jsonToStr(params);
+        api.ajax({
+            url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
+            method: 'get',
+            headers: {
+                "X-APICloud-AppId": "A6099267504667",
+                "X-APICloud-AppKey":   appKey
+            },
+
+        },function(ret, err){
+            if (ret) {
+            // 存储用户名
+            var vip=$api.byId('vip');  
+            if (ret[0].vip==1) {
+                vip.innerHTML='vip用户';
+
+            }else{
+                vip.innerHTML='普通用户'
+            }
+            date(ret[0].date);
+        } else {
+            api.toast({
+                msg: err.msg,
+                duration: 2000,
+                location: 'bottom'
+            });
+        }
+    });
+
+    }
+    function date(_date){
+        var now=Y+"-"+M+"-"+D;
+        var day=datedifference(_date,now);
+        if (day>52){
+            updatevip();
+
+        }
+
+    }
+    function updatevip(){
+     var usernameinfo=$api.getStorage('userInfo');
+     api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/user/'+usernameinfo.userId,
+        method: 'put',
+        headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey,
+            "Authorization": usernameinfo.id
+        },
+        data: {
+            values:{
+                "vip":0,
+            }
+        },
+
+    },function(ret, err){
+        if (ret) {
+           var vip=$api.byId('vip');  
+           vip.innerHTML='普通用户';
+       } else {
+        api.toast({
+            msg: err.msg,
+            duration: 2000,
+            location: 'bottom'
+        });
+    }
+});
+
+ }
+      //两个时间相差天数 兼容firefox chrome
+
+    function datedifference(sDate1, sDate2) {    //sDate1和sDate2是2006-12-18格式  
+        var dateSpan,
+        tempDate,
+        iDays;
+        sDate1 = Date.parse(sDate1);
+        sDate2 = Date.parse(sDate2);
+        dateSpan = sDate2 - sDate1;
+        dateSpan = Math.abs(dateSpan);
+        iDays = Math.floor(dateSpan / (24 * 3600 * 1000));
+        return iDays
+    };
+
     function OpendindanWin(){
       api.openWin({
         name: 'dindan',
@@ -253,6 +381,20 @@ function OpentuijianWin(){
         }
     });
 }
+function OpenvipWin(){
+    api.openWin({
+        name: 'vip',
+        url: './vip.html',
+        pageParam: {
+            name: 'test'
+        },
+        animation: {
+            type: "fade"
+        }
+    });
+}
+
+
 // 在个人中心中显示头像
 function setAvatar(){
    api.getPicture({
@@ -268,7 +410,7 @@ function setAvatar(){
 }, function(ret, err) {
     if (ret) {
      uploadAtavar(ret.data)
-       }
+ }
 
 });
 
@@ -364,7 +506,7 @@ function updateLocalAvatar(_data){
 // 在个人中心中显示用户名
 function getUsername(){
     var username=$api.byId('username');
-     var jian=$api.byId('jian');
+    var jian=$api.byId('jian');
     var usernameinfo=$api.getStorage('userInfo');
 
     var now = Date.now();

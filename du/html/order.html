@@ -124,9 +124,10 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
+
     apiready = function() {
 
-        var price=$api.byId('price');
+
         var header=$api.byId('header');
         var footer=$api.byId('footer');
 
@@ -157,7 +158,7 @@
         });
         getprice();
         getuser();
-       
+
     };
     var activity;
     
@@ -207,20 +208,20 @@
             addInfo.username=ret[0].username;
             // alert($api.jsonToStr(ret))
         } else {
-         api.toast({
-             msg: err.msg,
-             duration: 2000,
-             location: 'bottom'
-         });
-     }
- });
+           api.toast({
+               msg: err.msg,
+               duration: 2000,
+               location: 'bottom'
+           });
+       }
+   });
 
 }
 
 function getprice(){
 
 
-   var now = Date.now();
+ var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
       var params={
@@ -242,20 +243,68 @@ function getprice(){
         
     },function(ret, err){
         if (ret) {
-            price.innerHTML='总金额 :￥'+ret[0].price;
+            vip(ret[0].price);
             addInfo.size=api.pageParam.size;
             addInfo.color=api.pageParam.color;
             getware();
             getaddress();
 
+
         } else {
-         api.toast({
-             msg: err.msg,
-             duration: 2000,
-             location: 'bottom'
-         });
-     }
- });
+           api.toast({
+               msg: err.msg,
+               duration: 2000,
+               location: 'bottom'
+           });
+       }
+   });
+
+}
+
+function vip(dataprice){
+    var usernameinfo=$api.getStorage('userInfo');
+
+    var now = Date.now();
+    var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+    var params={
+        fields: {},
+        where:{
+            id:usernameinfo.userId
+        },
+        skip: 0,
+    }
+    params=$api.jsonToStr(params);
+    api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
+        method: 'get',
+        headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey
+        },
+
+    },function(ret, err){
+        if (ret) {
+           var price=$api.byId('price');
+            // 存储用户名
+            if (ret[0].vip==1) {
+               var vipprice=dataprice * 0.8;
+               var ceilprice =Math.round(vipprice);
+              
+               price.innerHTML='总金额 :￥'+ceilprice;
+                addInfo.price=ceilprice;
+
+           }else{
+               price.innerHTML='总金额 :￥'+dataprice;
+                addInfo.price=dataprice;
+           }
+       } else {
+        api.toast({
+            msg: err.msg,
+            duration: 2000,
+            location: 'bottom'
+        });
+    }
+});
 
 }
 
@@ -285,19 +334,18 @@ function getware(){
     },function(ret, err){
         if (ret) {
             addInfo.wareid=ret[0].id;
-            addInfo.price=ret[0].price;
             addInfo.description=ret[0].description;
             addInfo.warename=ret[0].name;
             addInfo.url=ret[0].thumbnail;
             addInfo.shangjia=ret[0].shangjia;
         } else {
-         api.toast({
-             msg: err.msg,
-             duration: 2000,
-             location: 'bottom'
-         });
-     }
- });
+           api.toast({
+               msg: err.msg,
+               duration: 2000,
+               location: 'bottom'
+           });
+       }
+   });
 
 }
 function getaddress(){
@@ -306,22 +354,22 @@ function getaddress(){
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       var params={
-         fields: {},
-         where: {
-            default:1,
-            userId:userInfo.userId
-        },
-        skip: 0
-    }
-    params = $api.jsonToStr(params);
-    api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/address?filter='+params,
-        method: 'get',
-        headers: {
-         "X-APICloud-AppId": "A6099267504667",
-         "X-APICloud-AppKey":   appKey
-     }
- },function(ret, err){
+       fields: {},
+       where: {
+        default:1,
+        userId:userInfo.userId
+    },
+    skip: 0
+}
+params = $api.jsonToStr(params);
+api.ajax({
+    url: 'http://d.apicloud.com/mcm/api/address?filter='+params,
+    method: 'get',
+    headers: {
+       "X-APICloud-AppId": "A6099267504667",
+       "X-APICloud-AppKey":   appKey
+   }
+},function(ret, err){
     addInfo.addressid=ret[0].id;
     addInfo.address=ret[0].address;
     addInfo.shoppingname=ret[0].name;
@@ -348,17 +396,17 @@ function getaddress(){
 function yesadd(){ 
 
     if (addInfo.url!=null && addInfo.addresstype!=null) {
-       activity.closeKeyFrame();
-       if ( addInfo.warename!=null &&  addInfo.address!=null) {
-           activity.closeKeyFrame();
-           if (addInfo.addresstype!=null && addInfo.mobile!=null) {
-              activity.closeKeyFrame();
-          }else{
-            return;
-        }
-    }else{
+     activity.closeKeyFrame();
+     if ( addInfo.warename!=null &&  addInfo.address!=null) {
+         activity.closeKeyFrame();
+         if (addInfo.addresstype!=null && addInfo.mobile!=null) {
+          activity.closeKeyFrame();
+      }else{
         return;
     }
+}else{
+    return;
+}
 
 }else{
     return;
@@ -371,11 +419,11 @@ var now = Date.now();
         url: 'https://d.apicloud.com/mcm/api/shoppinginformation',
         method: 'post',
         headers: {
-           "X-APICloud-AppId": "A6099267504667",
-           "X-APICloud-AppKey":   appKey,
-           "Authorization": userInfo.id
-       },
-       data: {
+         "X-APICloud-AppId": "A6099267504667",
+         "X-APICloud-AppKey":   appKey,
+         "Authorization": userInfo.id
+     },
+     data: {
         values: addInfo
     }
 }, function(ret, err) {

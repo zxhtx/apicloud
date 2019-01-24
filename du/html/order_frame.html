@@ -411,7 +411,7 @@
         </div>
         <div class="row">
             <div class="text">优惠金额：</div>
-            <div class="value value-2">-&nbsp;￥0.0</div>
+            <div class="value value-2" id="viptext">-&nbsp;￥0.0</div>
         </div>
         <div class="row-1">
             <div class="value value-2">实付款：&nbsp;<span class="color" id="price2">￥24.9</span></div>
@@ -473,11 +473,57 @@ function updateWare(_data){
     description.innerHTML=_data[0].description;
     wareprice.innerHTML='￥'+_data[0].price;
     price1.innerHTML='￥'+_data[0].price;
-    price2.innerHTML='￥'+_data[0].price;
+    // price2.innerHTML='￥'+_data[0].price;
     image.src=_data[0].thumbnail;
+    vip(_data[0].price);
     
 }
+function vip(dataprice){
+     var usernameinfo=$api.getStorage('userInfo');
 
+    var now = Date.now();
+    var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+    var params={
+        fields: {},
+        where:{
+            id:usernameinfo.userId
+        },
+        skip: 0,
+    }
+    params=$api.jsonToStr(params);
+    api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
+        method: 'get',
+        headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey
+        },
+
+    },function(ret, err){
+        if (ret) {
+            var viptext=$api.byId('viptext');
+            // 存储用户名
+            if (ret[0].vip==1) {
+               var vipprice=dataprice * 0.8;
+               var ceilprice =Math.round(vipprice);
+                viptext.innerHTML='vip用户打8折'
+               price2.innerHTML='￥'+ceilprice;
+
+           }else{
+                viptext.innerHTML='充值vip可打8折'
+               price2.innerHTML='总金额 :￥'+dataprice;
+           }
+       } else {
+        api.toast({
+            msg: err.msg,
+            duration: 2000,
+            location: 'bottom'
+        });
+    }
+});
+
+
+}
 function getaddress(){
     var userInfo=$api.getStorage('userInfo');
     var now = Date.now();
