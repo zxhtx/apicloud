@@ -51,6 +51,13 @@
 		margin-top: 38px;
 
 	}
+	.paygengduo{
+		margin: 0 auto;
+		text-align: center;
+		margin-top: 100px;
+		color: blue;
+		width: 188px;
+	}
 </style>
 </head>
 <body>
@@ -62,7 +69,7 @@
 		<div class="div1" tapmode onclick="weixin()">微信支付</div>
 		<div class="div2" tapmode onclick="alipay()">支付宝支付</div>
 
-		
+		<div class="paygengduo" tapmode onclick="openpaygengduo()">支付步骤</div>
 	</div>
 
 </body>
@@ -88,6 +95,15 @@
 		getshoppinginformation();
 		
 	};
+	function openpaygengduo(){
+		api.openWin({
+		    name: 'paygengduo',
+		    url: './paygengduo.html',
+		    pageParam: {
+		        name: 'test'
+		    }
+		});
+	}
 	var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now

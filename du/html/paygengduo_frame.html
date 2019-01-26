@@ -1,150 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-    <title>title</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
-    <style>
-      .text{
-		font-size: 16px;
-		padding: 10px
-		
-      }
-      .img{
-		width: 188px;
-		height: 300px;
-		margin-left: 88px;
-		border: 1px solid black;
-      }
-       .img2{
-		width: 188px;
-		height: 300px;
-		margin-left: 88px;
-		border: 1px solid black;
-      }
-      .weixin{
-		width: 47%;
-		height: 220px;
-		border: 2px solid black;
-		border-radius: 5px;
-		display: inline-block;
-		float: left;
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../css/api.css"/>
+	<style>
+	.img1{
+		width: 228px;
+		height: 350px;
+		margin-left: 68px;
 	}
-	.weixin img{
-		height: 180px;
-		width: 100%
+	*,body,html{
+		padding: 8px;
 	}
-	.weixin span{
-		margin-left: 50px
-	}
-	.zhipay{
-		width: 47%;
-		height: 220px;
-		border: 2px solid black;
-		border-radius: 5px;
-		float: right;
-	}
-	.zhipay img{
-		height: 180px;
-		width: 100%
-	}
-	.zhipay span{
-		padding-left:40px; 
-	}
-	.clear{
-		clear:both;
-	}
-    </style>
+</style>
 </head>
 <body>
-	<div class="text">
-		
-	
-	1.保存商品支付页的任意一张二维码<br>
-	<div class="weixin" tapmode onclick="saveimg(1)">
-			<span>微信支付</span>
-			<img src="../image/weixin.png">
-		</div>
-		<div class="zhipay"  tapmode onclick="saveimg(2)">
-			<span>支付宝支付</span>
-			<img src="../image/zhipay.png">
-		</div>
-		<div class="clear"></div> 
-	</div>
-	<div class="text">
-	2.然后去对应的二维码支付app扫码支付<br>
-	3.支付完成后截图保存刚才所支付的金额<br>
-	<img class="img" src="../image/paygengduo.jpg" alt=""><br>
-	4.然后回到商品支付页点击支付截图上传就完成了支付(个人中心->我的订单->待付款->去支付按钮)<br>
-	<img class="img2" src="../image/payupload.jpg" alt="">
-    </div>
-</body>
-<script type="text/javascript" src="../script/api.js"></script>
-<script type="text/javascript">
-    apiready = function(){
-        
-    };
-
-    function saveimg(_data){
-		if (_data==1) {
-			api.download({
-				url : 'http://a8b2ba6ef61d32f2d7d9.test.upcdn.net/apicloud/b065a2dc1de359323fc379c29996dfd5.png',
-				savePath : 'fs://iamge/weixinpay.png'
-			}, function(ret, err) {
-				if (ret) {
-					if (ret.state == 1) {
-						api.saveMediaToAlbum({
-							path : 'fs://iamge/weixinpay.png'
-						}, function(ret, err) {
-							if (ret && ret.status) {
-								api.toast({
-									msg: '保存成功',
-									duration: 2000,
-									location: 'bottom'
-								});
-							} else {
-								api.toast({
-									msg: '保存失败',
-									duration: 2000,
-									location: 'bottom'
-								});
-							}
-						});
-					}
-				} 
-			});
-		}else{
-			api.download({
-				url : 'http://a8b2ba6ef61d32f2d7d9.test.upcdn.net/apicloud/88a0a06a2a5d02fdf061d4700c32fdad.png',
-				savePath : 'fs://iamge/zhifubaopay.png'
-			}, function(ret, err) {
-				if (ret) {
-					if (ret.state == 1) {
-						api.saveMediaToAlbum({
-							path : 'fs://iamge/zhifubaopay.png'
-						}, function(ret, err) {
-							if (ret && ret.status) {
-								api.toast({
-									msg: '保存成功',
-									duration: 2000,
-									location: 'bottom'
-								});
-							} else {
-								api.toast({
-									msg: '保存失败',
-									duration: 2000,
-									location: 'bottom'
-								});
-							}
-						});
-					}
-				} 
-			});
-
-		}
 		
 
-	}
-</script>
-</html>
+		1.如页面未跳转到微信或者支付宝就截图保存二维码<br><br>
+		2.然后去对应的二维码支付app扫码支付<br><br>
+		<img src="../image/1-1.png" class="img1" alt=""><br>
+		<img src="../image/2.png" class="img1" alt=""><br>
+		<img src="../image/3.png" class="img1" alt=""><br>
+
+
+		3.支付成功订单生成等待收货(记住找客服返红包哟#^_^#)<br>
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript">
+		apiready = function(){
+
+		};
+
+
+	</script>
+	</html>

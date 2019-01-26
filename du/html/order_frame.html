@@ -402,7 +402,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="text">商品金额：</div>
+            <div class="text">商品金额:</div>
             <div class="value value-2" id="price1">+&nbsp;￥19.9</div>
         </div>
         <div class="row">
@@ -504,13 +504,13 @@ function vip(dataprice){
             var viptext=$api.byId('viptext');
             // 存储用户名
             if (ret[0].vip==1) {
-               var vipprice=dataprice * 0.8;
+               var vipprice=dataprice * 0.85;
                var ceilprice =Math.round(vipprice);
-                viptext.innerHTML='vip用户打8折'
+                viptext.innerHTML='vip用户打8.5折'
                price2.innerHTML='￥'+ceilprice;
 
            }else{
-                viptext.innerHTML='充值vip可打8折'
+                viptext.innerHTML='充值vip可打8.5折'
                price2.innerHTML='总金额 :￥'+dataprice;
            }
        } else {

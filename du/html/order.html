@@ -287,7 +287,7 @@ function vip(dataprice){
            var price=$api.byId('price');
             // 存储用户名
             if (ret[0].vip==1) {
-               var vipprice=dataprice * 0.8;
+               var vipprice=dataprice * 0.85;
                var ceilprice =Math.round(vipprice);
               
                price.innerHTML='总金额 :￥'+ceilprice;

@@ -83,13 +83,17 @@
     .option .icon-vip {
         background-image: url(../image/vip.png);
     }
+    .option .icon-tuandui {
+        background-image: url(../image/tuandui.png);
+    }
     
+
     .option .title {
         position: relative;
         box-sizing: border-box;
         width: 100%;
         height: 60px;
-        padding-left: 40px;
+        padding-left: 45px;
         font-size: 14px;
         color: black;
         text-align: left;
@@ -192,7 +196,14 @@
             <div class="icon icon-vip"></div>
             <div class="title">充值vip</div>
             <div class="arrow-panel">
-                <div class="text">充值18元全场8折</div>
+                <div class="text">充值18元全场8.5折</div>
+            </div>
+        </div>
+        <div class="option" tapmode onclick="OpentuanduiWin()">
+            <div class="icon icon-tuandui"></div>
+            <div class="title">加入我们</div>
+            <div class="arrow-panel">
+                <div class="text">成为团队成员全场享9折</div>
             </div>
         </div>
     </section>
@@ -217,62 +228,75 @@
 
 
     };
-    function event(){
-        api.addEventListener({
-            name: 'addvip'
-        }, function(ret, err){
-            if( ret ){
-               vip();
-           }
-       });
-    }
-    function getuserInfo(){
-        var userInfo=$api.getStorage('userInfo');
-        var now = Date.now();
-        var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-        api.ajax({
-            url: 'https://d.apicloud.com/mcm/api/user/'+userInfo.userId,
-            method: 'get',
-            headers: {
-                "X-APICloud-AppId": "A6099267504667",
-                "X-APICloud-AppKey":   appKey,
-                "Authorization":userInfo.id
-            },
-
-        },function(ret, err){
-            if (ret) {
-             updateLocalAvatar(ret)
-         } else {
-            api.toast({
-                msg: err.msg,
-                duration: 2000,
-                location: 'bottom'
-            });
+    function OpentuanduiWin(){
+       api.openWin({
+        name: 'tuandui',
+        url: './tuandui.html',
+        pageParam: {
+            name: 'test'
+        },
+        animation: {
+            type: "fade"
         }
     });
-    }   
-    function vip(){
-        var usernameinfo=$api.getStorage('userInfo');
+
+   }
+   function event(){
+    api.addEventListener({
+        name: 'addvip'
+    }, function(ret, err){
+        if( ret ){
+           vip();
+       }
+   });
+}
+function getuserInfo(){
+    var userInfo=$api.getStorage('userInfo');
+    var now = Date.now();
+    var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+    api.ajax({
+        url: 'https://d.apicloud.com/mcm/api/user/'+userInfo.userId,
+        method: 'get',
+        headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey,
+            "Authorization":userInfo.id
+        },
+
+    },function(ret, err){
+        if (ret) {
+         updateLocalAvatar(ret)
+     } else {
+        api.toast({
+            msg: err.msg,
+            duration: 2000,
+            location: 'bottom'
+        });
+    }
+});
+}   
+function vip(){
+    var usernameinfo=$api.getStorage('userInfo');
 
 
-        var params={
-            fields: {},
-            where:{
-                id:usernameinfo.userId
-            },
-            skip: 0,
-        }
-        params=$api.jsonToStr(params);
-        api.ajax({
-            url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
-            method: 'get',
-            headers: {
-                "X-APICloud-AppId": "A6099267504667",
-                "X-APICloud-AppKey":   appKey
-            },
+    var params={
+        fields: {},
+        where:{
+            id:usernameinfo.userId
+        },
+        skip: 0,
+    }
+    params=$api.jsonToStr(params);
+    api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
+        method: 'get',
+        headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey
+        },
 
-        },function(ret, err){
-            if (ret) {
+    },function(ret, err){
+        if (ret) {
             // 存储用户名
             var vip=$api.byId('vip');  
             if (ret[0].vip==1) {
@@ -291,46 +315,46 @@
         }
     });
 
-    }
-    function date(_date){
-        var now=Y+"-"+M+"-"+D;
-        var day=datedifference(_date,now);
-        if (day>52){
-            updatevip();
+}
+function date(_date){
+    var now=Y+"-"+M+"-"+D;
+    var day=datedifference(_date,now);
+    if (day>52){
+        updatevip();
 
+    }
+
+}
+function updatevip(){
+ var usernameinfo=$api.getStorage('userInfo');
+ api.ajax({
+    url: 'http://d.apicloud.com/mcm/api/user/'+usernameinfo.userId,
+    method: 'put',
+    headers: {
+        "X-APICloud-AppId": "A6099267504667",
+        "X-APICloud-AppKey":   appKey,
+        "Authorization": usernameinfo.id
+    },
+    data: {
+        values:{
+            "vip":0,
         }
+    },
 
-    }
-    function updatevip(){
-     var usernameinfo=$api.getStorage('userInfo');
-     api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/user/'+usernameinfo.userId,
-        method: 'put',
-        headers: {
-            "X-APICloud-AppId": "A6099267504667",
-            "X-APICloud-AppKey":   appKey,
-            "Authorization": usernameinfo.id
-        },
-        data: {
-            values:{
-                "vip":0,
-            }
-        },
-
-    },function(ret, err){
-        if (ret) {
-           var vip=$api.byId('vip');  
-           vip.innerHTML='普通用户';
-       } else {
-        api.toast({
-            msg: err.msg,
-            duration: 2000,
-            location: 'bottom'
-        });
-    }
+},function(ret, err){
+    if (ret) {
+       var vip=$api.byId('vip');  
+       vip.innerHTML='普通用户';
+   } else {
+    api.toast({
+        msg: err.msg,
+        duration: 2000,
+        location: 'bottom'
+    });
+}
 });
 
- }
+}
       //两个时间相差天数 兼容firefox chrome
 
     function datedifference(sDate1, sDate2) {    //sDate1和sDate2是2006-12-18格式  
