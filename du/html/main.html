@@ -59,6 +59,7 @@
         width: 100%;
         height: 30px;
         background-color: white;
+        margin-top: 6px;
     }
     nav .menu{
         -webkit-box-flex: 1;
@@ -77,6 +78,9 @@
         color: black;
         font-weight: bolder;
     }
+    .gonggao{
+        font-size: 15px;
+    }
 
 </style>
 </head>
@@ -88,15 +92,20 @@
         <div class="left" tapmode onclick="openSearchWin()"></div>
         <div class="right" tapmode onclick="OpenPersonCenterWin()" ></div>
     </header>
-    <nav id="nav">
-        <div class="menu selected" tapmode="selected" onclick="setNavMenuIndex(0)">男鞋</div>
-        <div class="menu" tapmode="selected" onclick="setNavMenuIndex(1)">女鞋</div>
-        <div class="menu" tapmode="selected" onclick="setNavMenuIndex(2)">男装</div>
-        <div class="menu" tapmode="selected" onclick="setNavMenuIndex(3)">女装</div>
-        <div class="menu" tapmode="selected" onclick="setNavMenuIndex(4)">配件</div>
-    </nav>
+
+    <div class="gonggao">
+       <marquee id="marquee" scrollamount="6" direction="left" loop="-1">121212</marquee>
+   </div>
+   <nav id="nav">
+    <div class="menu selected" tapmode="selected" onclick="setNavMenuIndex(0)">男鞋</div>
+    <div class="menu" tapmode="selected" onclick="setNavMenuIndex(1)">女鞋</div>
+    <div class="menu" tapmode="selected" onclick="setNavMenuIndex(2)">男装</div>
+    <div class="menu" tapmode="selected" onclick="setNavMenuIndex(3)">女装</div>
+    <div class="menu" tapmode="selected" onclick="setNavMenuIndex(4)">配件</div>
+</nav>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
     apiready = function() {
 
@@ -118,56 +127,84 @@
         menus=$api.domAll(nav, '.menu');
 
         openFrames();
+        gonggao();
 
     };
 
-
-    function openFrames(){
-
-       var frames=[];
-       for (var i = 0; i <menus.length; i++) {
-        frames.push({
-            name:'main_frame_'+i,
-            url:'./main_frame.html',
-            pageParam:{
-                wareTypeIndex:i
-            }
-        })
+    function gonggao(){
+       var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+      var params={
+        fields:{},
+        fields: {},
+        where: {
+            id:'5c6957f1527fc2d41aefd21e'
+        },
     }
+    params=$api.jsonToStr(params);
+    api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/gonggao?filter='+params,
+        method: 'get',
+        headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey
+        },
 
-    api.openFrameGroup ({
-        name: 'mainFrameGroup',
-        scrollEnabled: true,
-        rect: {
-           x: 0,
-           y: headerH+navH,
-           w: 'auto',
-           h: 'auto'
-       },
-       frames: frames
-   }, function(ret, err){
-     SetNavMenuselected(ret.index);
+    },function(ret, err){
+        if (ret) {
+         var text=$api.byId('marquee');
+         text.innerHTML=ret[0].text;
+     } 
  });
+}
 
-    api.openFrame({
-        name: 'minicart_frame',
-        url: './minicart_frame.html',
-        rect: {
-            x: 0,
-            y: api.winHeight-88,
-            w: 150,
-            h: 34
-        },
-        pageParam: {
-            name: 'test'
-        },
-        animation: {
-            type: "fade"
+function openFrames(){
+
+ var frames=[];
+ for (var i = 0; i <menus.length; i++) {
+    frames.push({
+        name:'main_frame_'+i,
+        url:'./main_frame.html',
+        pageParam:{
+            wareTypeIndex:i
         }
-    });
-    api.bringFrameToFront({
-        from: 'minicart_frame',
-    });
+    })
+}
+
+api.openFrameGroup ({
+    name: 'mainFrameGroup',
+    scrollEnabled: true,
+    rect: {
+     x: 0,
+     y: headerH+navH+20,
+     w: 'auto',
+     h: 'auto'
+ },
+ frames: frames
+}, function(ret, err){
+   SetNavMenuselected(ret.index);
+});
+
+api.openFrame({
+    name: 'minicart_frame',
+    url: './minicart_frame.html',
+    rect: {
+        x: 0,
+        y: api.winHeight-88,
+        w: 150,
+        h: 34
+    },
+    pageParam: {
+        name: 'test'
+    },
+    animation: {
+        type: "fade"
+    }
+});
+api.bringFrameToFront({
+    from: 'minicart_frame',
+});
 }
 var menus, headerH , navH;
 
@@ -262,53 +299,53 @@ var menus, headerH , navH;
         }
 
 
-function initspeak(){
-    var dialogBox = api.require('dialogBox');
-    dialogBox.alert({
-        texts: {
-            title: '赚钱小妙招',
-            content: '有笔生意想与您谈一谈,您意下如何',
-            leftBtnTitle: '不想谈,我有钱',
-            rightBtnTitle: '谈一谈'
-        },
-        styles: {
-            bg: '#fff',
-            w: 300,
-            corner:2,
-            title: {
-                marginT: 20,
-                icon: 'widget://res/gou.png',
-                iconSize: 40,
-                titleSize: 14,
-                titleColor: '#000'
-            },
-            content: {
-                color: '#000',
-                size: 14
-            },
-            left: {
-                marginB: 7,
-                marginL: 20,
-                w: 130,
-                h: 35,
-                corner: 2,
-                bg: '#000',
-                size: 12,
-                color: '#fff',
-            },
-            right: {
-                marginB: 7,
-                marginL: 10,
-                w: 130,
-                h: 35,
-                corner: 2,
-                bg: '#000',
-                size: 12,
-                color: '#fff',
-            }
-        }
-    }, function(ret) {
-        if (ret.eventType == 'left') {
+        function initspeak(){
+            var dialogBox = api.require('dialogBox');
+            dialogBox.alert({
+                texts: {
+                    title: '赚钱小妙招',
+                    content: '有笔生意想与您谈一谈,您意下如何',
+                    leftBtnTitle: '不想谈,我有钱',
+                    rightBtnTitle: '谈一谈'
+                },
+                styles: {
+                    bg: '#fff',
+                    w: 300,
+                    corner:2,
+                    title: {
+                        marginT: 20,
+                        icon: 'widget://res/gou.png',
+                        iconSize: 40,
+                        titleSize: 14,
+                        titleColor: '#000'
+                    },
+                    content: {
+                        color: '#000',
+                        size: 14
+                    },
+                    left: {
+                        marginB: 7,
+                        marginL: 20,
+                        w: 130,
+                        h: 35,
+                        corner: 2,
+                        bg: '#000',
+                        size: 12,
+                        color: '#fff',
+                    },
+                    right: {
+                        marginB: 7,
+                        marginL: 10,
+                        w: 130,
+                        h: 35,
+                        corner: 2,
+                        bg: '#000',
+                        size: 12,
+                        color: '#fff',
+                    }
+                }
+            }, function(ret) {
+                if (ret.eventType == 'left') {
             // var dialogBox = api.require('dialogBox');
             dialogBox.close({
                 dialogName: 'alert'
@@ -326,7 +363,7 @@ function initspeak(){
             });
         }
     });
-}
+        }
     </script>
 
     </html>
