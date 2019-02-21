@@ -108,6 +108,15 @@ function WareTypeList(){
       "name": "56c80db78d04c83d3d1dedea.png",
       "id": "57f63bf39592b3fc6a341b5d"
     }
+  },
+  {
+    "id": "5c6e5cc2d772329a6f2562dd",
+    "name": "微商",
+    "banner": {
+      "url": "http://7y0hol.com1.z0.glb.clouddn.com/apicloud/be93f9fdeda576ad81d0c728528cef50.png",
+      "name": "56c80db78d04c83d3d1dedea.png",
+      "id": "57f63bf39592b3fc6a341b5d"
+    }
   }
   ];
 }
@@ -122,7 +131,7 @@ function getWareTypeList(){
         fields:{},
         where:{},
         skip:0,
-        limit:5
+        // limit:6
       }
       params=$api.jsonToStr(params);
       api.ajax({

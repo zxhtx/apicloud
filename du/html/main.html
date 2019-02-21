@@ -103,6 +103,8 @@
     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(2)">男装</div>
     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(3)">女装</div>
     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(4)">配件</div>
+    <div class="menu" tapmode="selected" onclick="setNavMenuIndex(5)">微商</div>
+
 </nav>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
@@ -164,6 +166,7 @@ function openFrames(){
 
  var frames=[];
  for (var i = 0; i <menus.length; i++) {
+    alert(i)
     frames.push({
         name:'main_frame_'+i,
         url:'./main_frame.html',
