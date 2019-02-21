@@ -163,7 +163,7 @@
     }
     .order .icon-panel .icon img{
         width: 64px;
-        height: 64px;
+        height: 100%;
         border-radius: 10px;
     }
     
@@ -392,7 +392,7 @@
     <section class="order">
         <div class="title">订单信息</div>
         <div class="icon-panel">
-            <div class="icon">
+            <div class="icon" id="icon">
                 <img src="../image/order_ware.gif" id="image" alt="">
             </div>
             <div class="info">
@@ -452,6 +452,11 @@
         if (ret) {
             // 赋值
             updateWare(ret);
+            if (ret[0].wareTypeId=='5c6e5cc2d772329a6f2562dd') {
+                var icon=$api.byId('icon');
+                icon.style.height=50+'px';
+                icon.style.marginTop=10+'px';
+            }
         } else {
            api.toast({
                msg: err.msg,

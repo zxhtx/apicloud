@@ -167,26 +167,26 @@
 	{{~it:value:index}}
 
 	<div class="ware ware-1" >
-		<div class="content" tapmode onclick="openWareWin('{{=value.id}}')">
-			<img onload="LoadImage(this)" data-url="{{=value.thumbnail}}" class="thumbnail" src="../image/default_square.png">
-			<div class="info" >
-				<div class="name">{{=value.name}}</div>
-				<div class="description">{{=value.description}}</div>
-				<div class="price-tag">
-					<span class="price">￥{{=value.price}}</span>
+		<div class="content" tapmode onclick="openWareWin('{{=value.id}}','{{=value.wareTypeId}}')">
+            <img onload="LoadImage(this,'{{=value.id}}')" data-url="{{=value.thumbnail}}"  data-wareTypeId="{{=value.wareTypeId}}" class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
+            <div class="info" >
+                <div class="name">{{=value.name}}</div>
+                <div class="description">{{=value.description}}</div>
+                <div class="price-tag">
+                 <span class="price">￥{{=value.price}}</span>
 
-				</div>
-			</div>
-			<div class="control">
-				<div class="panel" id="panel_{{=value.id}}">
-					<img class="minus" src="../image/jian.png" tapmode onclick="Minus('{{=value.id}}')">
-					<div class="count" id="count_{{=value.id}}">0</div>
-				</div>
-				<img class="add" src="../image/jia.png" tapmode onclick="Add('{{=value.id}}')">
-			</div>
-		</div>
-	</div>
-	{{~}}
+             </div>
+         </div>
+         <div class="control">
+            <div class="panel" id="panel_{{=value.id}}">
+             <img class="minus" src="../image/jian.png" tapmode onclick="Minus('{{=value.id}}')">
+             <div class="count" id="count_{{=value.id}}">0</div>
+         </div>
+         <img class="add" src="../image/jia.png" tapmode onclick="Add('{{=value.id}}')">
+     </div>
+ </div>
+</div>
+{{~}}
 
 </script>
 <script type="text/javascript" src="../script/api.js"></script>
@@ -208,12 +208,13 @@
     function init(){
        wareTypeList=$api.getStorage('WareTypeList');
    }
-   function openWareWin(_wareId){
+   function openWareWin(_wareId,_wareTypeId){
      api.openWin({
         name: 'ware',
         url: './ware.html',
         pageParam: {
-            wareId: _wareId
+            wareId: _wareId,
+            wareTypeId:_wareTypeId
         },
         animation: {
             type: "fade"
@@ -305,7 +306,7 @@ function updateWareList(_data,_LoadMore){
     api.parseTapmode();
     if (_LoadMore) {
         if (_data.length<LIMIT) {
-            
+
             pushStatus.innerHTML="我是有底线滴"
         }
     }
@@ -314,8 +315,16 @@ function updateWareList(_data,_LoadMore){
 
 // 列表页图片缓存
 
-function LoadImage(_this){
+function LoadImage(_this,_id){
     var dataUrl=$api.attr(_this, 'data-url');
+    var dataWareTypeId=$api.attr(_this, 'data-wareTypeId');
+    if (dataWareTypeId=='5c6e5cc2d772329a6f2562dd') {
+        var thumbnail=$api.byId('thumbnail_'+_id);
+        thumbnail.style.width=100+'px';
+        thumbnail.style.height=80+'px';
+        thumbnail.style.marginTop=15+'px';
+
+    }
     if (dataUrl) {
         api.imageCache({
             url: dataUrl
