@@ -338,6 +338,7 @@ function getware(){
             addInfo.warename=ret[0].name;
             addInfo.url=ret[0].thumbnail;
             addInfo.shangjia=ret[0].shangjia;
+            addInfo.wareTypeId=ret[0].wareTypeId;
         } else {
          api.toast({
              msg: err.msg,
