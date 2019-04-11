@@ -84,7 +84,7 @@
 </body>
 <script type="text/template" id="template">
  {{~ it.list:v:i}}
- <div class="card" style="width:{{= (it.frameWidth - 22) / 2}}px;height:{{=(it.frameWidth - 22) / 2 * 1.3416}}px;" data-imageurl="{{=v.image.url}}" onclick="fnOpenRoom('{{=v.video.url}}')" tapmode>
+ <div class="card" style="width:{{= (it.frameWidth - 22) / 2}}px;height:{{=(it.frameWidth - 22) / 2 * 1.3416}}px;" data-imageurl="{{=v.image.url}}" onclick="fnOpenRoom('{{=v.video.url}}','{{=v.title}}')" tapmode>
     <img src="../image/all.png" onload="fnLoadCardImage(this)">
     <div class="{{= v.isFavorite?'favorite':''}}"></div>
 </div>
@@ -118,30 +118,29 @@
         });
     }
 
-    function fnOpenRoom(element){
-        alert(element);
+    function fnOpenRoom(element,element2){
         var videoPlayer = api.require('videoPlayer');
         videoPlayer.play({
             texts: {
                 head: {
-                    title: ''
+                    title: element2
                 }
             },
             styles: {
                 head: {
                     bg: 'rgba(0.5,0.5,0.5,0.7)',
                     height: 44,
-                    titleSize: 20,
+                    titleSize: 18,
                     titleColor: '#fff',
-                    backSize: 30,
+                    backSize: 18,
                     backImg: 'widget://image/videoPlayer/back.png',
-                    setSize: 30,
+                    setSize: 18,
                     setImg: 'widget://image/videoPlayer/more.png'
                 },
                 foot: {
                     bg: 'rgba(0.5,0.5,0.5,0.7)',
                     height: 44,
-                    playSize: 30,
+                    playSize: 18,
                     playImg: 'widget://image/videoPlayer/play.png',
                     pauseImg: 'widget://image/videoPlayer/pause.png',
                     nextSize: 0,
@@ -150,13 +149,14 @@
                     timeColor: '#fff',
                     sliderImg: '',
                     progressColor: '#696969',
-                    progressSelected: '#1296db',
-                    verticalImg: "widget://image/videoPlayer/unfullscreen.png",
-                    horizontalImg: "widget://image/videoPlayer/fullscreen.png"
+                    progressSelected: '#000000',
+                    verticalImg: "",
+                    horizontalImg: ""
                 }
             },
             path: element,
-            autoPlay: true
+            autoPlay: true,
+            autorotation:false,
         }, function(ret, err) {
             if (ret) {
 
