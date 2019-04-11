@@ -74,6 +74,16 @@
         display:none;
     }
 
+    .push-status {
+        width: 100%;
+        height: 40px;
+        font-size: 16px;
+        color: #888;
+        line-height: 40px;
+        text-align: center;
+        background-color: #fff;
+    }
+
 </style>
 </head>
 
@@ -81,12 +91,13 @@
     <div id="container">
 
     </div>
+    <div class="push-status" id="pushStatus">上拉显示更多</div>
 </body>
 <script type="text/template" id="template">
  {{~ it.list:v:i}}
  <div class="card" style="width:{{= (it.frameWidth - 22) / 2}}px;height:{{=(it.frameWidth - 22) / 2 * 1.3416}}px;" data-imageurl="{{=v.image.url}}" onclick="fnOpenRoom('{{=v.video.url}}','{{=v.title}}')" tapmode>
     <img src="../image/all.png" onload="fnLoadCardImage(this)">
-    <div class="{{= v.isFavorite?'favorite':''}}"></div>
+    <div>{{=v.title}}</div>
 </div>
 {{~}}
 </script>
@@ -95,13 +106,14 @@
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript">
     var skip = 0;
-    var limit = 4;
-    var search = '.*';
+    var LIMIT = 1;
+
     var city = null;
     var favorite = false;
     apiready = function() {
         fnLoadList();
         fnPullRefresh();
+        initEventListenter();
         
     };
     function fnLoadCardImage(element){
@@ -128,7 +140,7 @@
                     height: 44,
                     titleSize: 18,
                     titleColor: '#fff',
-                    backSize: 18,
+                    backSize: 26,
                     backImg: 'widget://image/videoPlayer/back.png',
                     setSize: 18,
                     setImg: 'widget://image/videoPlayer/more.png'
@@ -145,14 +157,12 @@
                     timeColor: '#fff',
                     sliderImg: '',
                     progressColor: '#696969',
-                    progressSelected: '#000000',
-                    verticalImg: "",
-                    horizontalImg: ""
+                    progressSelected: '#000000'
                 }
             },
             path: element,
             autoPlay: true,
-            autorotation:false,
+            autorotation:true,
         }, function(ret, err) {
             if (ret) {
 
@@ -162,85 +172,51 @@
         });
 
     }
-   
+
 
     function fnPullRefresh(){
-        api.setRefreshHeaderInfo({
-            visible: true,
-            loadingImg: 'widget://image/refresh.png',
-            bgColor: '#ccc',
-            textColor: '#fff',
-            textDown: '下拉刷新...',
-            textUp: '松开刷新...',
-            showTime: true
-        }, function(ret, err){
-            fnRefreshList();
+        api.setCustomRefreshHeaderInfo({
+            bgColor: '#C0C0C0',
+            isScale: true
+        }, function() {
+            fnLoadList();
+
         });
 
     }
-    function fnRefreshList(){
-        api.execScript({
-            frameName: 'mainFooterFrame',
-            script: 'fnSetItemActive(0)'
-        });
-        city = null;
-        search = '.*';
-        favorite = false;
-        fnLoadList(false);
-    }
-    function fnLoadList(more) {
-        // if(more){
-        //     skip += limit;
-        // }
-        // else{
-        //     skip = 0;
-        // }
-        // var param = {
-        //     where: {
-        //         and:[
-        //         {category: api.pageParam.category},
-        //         {roomname:{like:search}},
-        //         {showing:true}
-        //         ]
-        //     },
-        //     skip:skip,
-        //     limit:limit
-        // }
-        // if(city){
-        //     param.where.and.push({location:city});
-        // }
-        // if(favorite === true){
-        //     var userInfo = $api.getStorage('userInfo');
-        //     userInfo.favorites = userInfo.favorites || '{}';
-        //     var favorites = $api.strToJson(userInfo.favorites);
 
-        //     var arr = [];
-        //     for(var key in favorites){
-        //         arr.push(key);
-        //     }
-        //     param.where.and.push({
-        //         id:{
-        //             inq:arr
-        //         }
-        //     })
-        // }
-        var now = Date.now();
+    function fnLoadList(_LoadMore) {
+      if (_LoadMore) {
+        skip+=LIMIT;
+    }else{
+
+        skip=0;
+    }
+    var params={
+        fields:{},
+        fields: {},
+        skip:skip,
+        limit:LIMIT
+    }
+    params=$api.jsonToStr(params);
+
+    var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       api.ajax({
-        url: 'https://d.apicloud.com/mcm/api/video1',
+        url: 'https://d.apicloud.com/mcm/api/video1?filter='+params,
         headers: {
             'X-APICloud-AppId': 'A6099267504667',
             'X-APICloud-AppKey': appKey
         },
         method: 'get'
     }, function(ret, err) {
-        alert($api.jsonToStr( ret));
-        fnRenderList(ret,!more);
+        alert($api.jsonToStr(ret))
+        fnRenderList(ret,_LoadMore);
     });
   }
 
-  function fnRenderList(ret,clear) {
+  function fnRenderList(ret,_LoadMore) {
     // var userInfo = $api.getStorage('userInfo');
 
     // userInfo = userInfo || {};
@@ -258,19 +234,33 @@
         frameWidth: api.frameWidth,
         frameHeight: api.frameHeight
     };
-    var eTemplate = $api.byId('template');
-    var strTemplate = $api.html(eTemplate);
-    var fnTemplate = doT.template(strTemplate);
-    var html = fnTemplate(param);
-    var eContainer = $api.byId('container');
-    if(clear){
-        $api.html(eContainer, html);
+  var list=$api.byId('container');
+    var tempFn=doT.template($api.byId('template').innerHTML);
+    var resultText=tempFn(param);
+    if (_LoadMore) {
+        $api.append(list, resultText);
+    }else{
+        $api.html(list, resultText);
     }
-    else{
-        $api.append(eContainer, html);
-    }
+    // 优化
     api.parseTapmode();
+    if (_LoadMore) {
+        if (ret.length<LIMIT) {
+            var pushStatus=$api.byId('pushStatus');
+            pushStatus.innerHTML="我是有底线滴"
+        }
+    }
     api.refreshHeaderLoadDone();
+}
+function initEventListenter(){
+    api.addEventListener({
+        name:'scrolltobottom',
+        extra:{
+            threshold:100
+        }
+    }, function(ret, err){        
+       fnLoadList(true);
+   });
 }
 </script>
 
