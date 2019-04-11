@@ -4,101 +4,311 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>收货地址</title>
+    <title>title</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
-    <style>    
-    header {
-        width: 100%;
-        height: 50px;
-        background-color: white;
+    <style>
+    html,
+    body {
+        background-color: transparent;
     }
-    
-    header .back {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 50px;
-        height: 50px;
-        background: url(../image/back.png);
-        background-position: 12px 16px;
-        background-size: 11px 18px;
+
+    #container {
+        padding: 11px;
+    }
+
+    #container>.card {
+        position: relative;
+        float: left;
+        padding: 4px;
+        box-sizing: border-box;
+        background-clip: content-box;
+        background-position: center;
         background-repeat: no-repeat;
+        background-size: cover;
+        border: 1px solid red;
     }
-    
-    header h1 {
-        width: 100%;
-        height: 30px;
-        line-height: 30px;
-        text-align: center;
-        color: black;
-        font-size: 16px;
-    }
-    
-    header .right {
+
+    #container>.card>.favorite {
         position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 50px;
-        height: 50px;
-        line-height: 50px;
-        color: black;
-        font-size: 15px;
-        text-align: center;
+        width: 14px;
+        height: 13px;
+        left: 15.5px;
+        top: 17px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(../image/favorite-list.png);
     }
-    header p{
-    text-align: center;
-    font-size:12px;
+
+    #container>.card>.room-name {
+        position: absolute;
+        left: 14px;
+        bottom: 13px;
+        height: 16.5px;
+        line-height: 16.5px;
+        font-size: 16.5px;
+        color: white;
     }
-    </style>
+
+    #container>.card>.gender {
+        position: absolute;
+        bottom: 15px;
+        right: 30.5px;
+        width: 13px;
+        height: 13px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(../image/male.png);
+    }
+
+    #container>.card>.age {
+        position: absolute;
+        right: 11px;
+        bottom: 13px;
+        font-size: 14px;
+        line-height: 14px;
+        color: white;
+    }
+    .card>img{
+        display:none;
+    }
+
+</style>
 </head>
 
 <body>
-    <header id="header">
-        <div class="back" tapmode onclick="api.closeWin();"></div>
-        <h1>收货地址</h1>
-        <div class="right" tapmode onclick="openSetAddressWin()">添加</div>
-        <p>必须设置一个默认地址</p>
-    </header>
+    <div id="container">
 
+    </div>
 </body>
+<script type="text/template" id="template">
+ {{~ it.list:v:i}}
+ <div class="card" style="width:{{= (it.frameWidth - 22) / 2}}px;height:{{=(it.frameWidth - 22) / 2 * 1.3416}}px;" data-imageurl="{{=v.image.url}}" onclick="fnOpenRoom('{{=v.video.url}}')" tapmode>
+    <img src="../image/all.png" onload="fnLoadCardImage(this)">
+    <div class="{{= v.isFavorite?'favorite':''}}"></div>
+</div>
+{{~}}
+</script>
 <script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript">
-apiready = function() {
-     var header=$api.byId('header');
-         api.setStatusBarStyle({
-            style: 'light',
-            color:'#000'
-        });
-       $api.fixStatusBar(header);
-        // 获取header和nav的高
-        headerH=$api.offset(header).h
-        api.openFrame({
-            name: 'address_frame',
-            url: './address_frame.html',
-            rect: {
-                x: 0,
-                y: headerH,
-                w: 'auto',
-                h: 'auto'
-            },
-            pageParam: {
-           
-            },
-            bounces: true,
-           
-        });
-    
-};
-    function openSetAddressWin(){
-        api.openWin({
-            name: 'setaddress',
-            url: './setaddress.html',
-            pageParam: {
-                  name: 'test'
-              }
+    var skip = 0;
+    var limit = 4;
+    var search = '.*';
+    var city = null;
+    var favorite = false;
+    apiready = function() {
+        fnLoadList();
+        // fnPullRefresh();
+        // fnAddScrolltobottomEventListener();
+        // fnAddSearchEventListender();
+        // fnAddAllEventListener();
+        // fnAddLocationEventListener();
+        
+    };
+    function fnLoadCardImage(element){
+        var eCard = $api.closest(element, '.card');
+        var url = eCard.dataset['imageurl'];
+        api.imageCache({
+            url: url
+        }, function(ret, err){
+            eCard.style.backgroundImage = "url(" + ret.url + ")";
         });
     }
+
+    function fnOpenRoom(element){
+        alert(element);
+        var videoPlayer = api.require('videoPlayer');
+        videoPlayer.play({
+            texts: {
+                head: {
+                    title: ''
+                }
+            },
+            styles: {
+                head: {
+                    bg: 'rgba(0.5,0.5,0.5,0.7)',
+                    height: 44,
+                    titleSize: 20,
+                    titleColor: '#fff',
+                    backSize: 30,
+                    backImg: 'widget://image/videoPlayer/back.png',
+                    setSize: 30,
+                    setImg: 'widget://image/videoPlayer/more.png'
+                },
+                foot: {
+                    bg: 'rgba(0.5,0.5,0.5,0.7)',
+                    height: 44,
+                    playSize: 30,
+                    playImg: 'widget://image/videoPlayer/play.png',
+                    pauseImg: 'widget://image/videoPlayer/pause.png',
+                    nextSize: 0,
+                    nextImg: '',
+                    timeSize: 14,
+                    timeColor: '#fff',
+                    sliderImg: '',
+                    progressColor: '#696969',
+                    progressSelected: '#1296db',
+                    verticalImg: "widget://image/videoPlayer/unfullscreen.png",
+                    horizontalImg: "widget://image/videoPlayer/fullscreen.png"
+                }
+            },
+            path: element,
+            autoPlay: true
+        }, function(ret, err) {
+            if (ret) {
+
+            } else {
+
+            }
+        });
+
+    }
+    function fnAddLocationEventListener(){
+        api.addEventListener({
+            name: 'location'
+        }, function(ret, err){
+            search = '.*';
+            city = ret.value.location;
+            favorite = false;
+            fnLoadList(false);
+        });
+    }
+    function fnAddAllEventListener(){
+        api.addEventListener({
+            name: 'all'
+        }, function(ret, err){
+            fnRefreshList();
+        });
+    }
+    function fnAddSearchEventListender(){
+        api.addEventListener({
+            name: 'search'
+        }, function(ret, err){
+            search = ret.value.key;
+            city = null;
+            favorite = false;
+            fnLoadList(false);
+        });
+    }
+    function fnAddScrolltobottomEventListener(){
+        api.addEventListener({
+            name: 'scrolltobottom'
+        }, function(ret, err){
+            fnLoadList(true);
+        });
+    }
+
+    function fnPullRefresh(){
+        api.setRefreshHeaderInfo({
+            visible: true,
+            loadingImg: 'widget://image/refresh.png',
+            bgColor: '#ccc',
+            textColor: '#fff',
+            textDown: '下拉刷新...',
+            textUp: '松开刷新...',
+            showTime: true
+        }, function(ret, err){
+            fnRefreshList();
+        });
+
+    }
+    function fnRefreshList(){
+        api.execScript({
+            frameName: 'mainFooterFrame',
+            script: 'fnSetItemActive(0)'
+        });
+        city = null;
+        search = '.*';
+        favorite = false;
+        fnLoadList(false);
+    }
+    function fnLoadList(more) {
+        // if(more){
+        //     skip += limit;
+        // }
+        // else{
+        //     skip = 0;
+        // }
+        // var param = {
+        //     where: {
+        //         and:[
+        //         {category: api.pageParam.category},
+        //         {roomname:{like:search}},
+        //         {showing:true}
+        //         ]
+        //     },
+        //     skip:skip,
+        //     limit:limit
+        // }
+        // if(city){
+        //     param.where.and.push({location:city});
+        // }
+        // if(favorite === true){
+        //     var userInfo = $api.getStorage('userInfo');
+        //     userInfo.favorites = userInfo.favorites || '{}';
+        //     var favorites = $api.strToJson(userInfo.favorites);
+
+        //     var arr = [];
+        //     for(var key in favorites){
+        //         arr.push(key);
+        //     }
+        //     param.where.and.push({
+        //         id:{
+        //             inq:arr
+        //         }
+        //     })
+        // }
+        var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+      api.ajax({
+        url: 'https://d.apicloud.com/mcm/api/video1',
+        headers: {
+            'X-APICloud-AppId': 'A6099267504667',
+            'X-APICloud-AppKey': appKey
+        },
+        method: 'get'
+    }, function(ret, err) {
+        alert($api.jsonToStr( ret));
+        fnRenderList(ret,!more);
+    });
+  }
+
+  function fnRenderList(ret,clear) {
+    // var userInfo = $api.getStorage('userInfo');
+
+    // userInfo = userInfo || {};
+    // userInfo.favorites = userInfo.favorites || '{}';
+    // var favorites = $api.strToJson(userInfo.favorites);
+    // alert(favorites)
+    // for(var i = 0; i < ret.length; i++){
+    //     if(favorites[ret[i].id] === true){
+    //         ret[i].isFavorite = true;
+    //     }
+    // }
+
+    var param = {
+        list: ret,
+        frameWidth: api.frameWidth,
+        frameHeight: api.frameHeight
+    };
+    var eTemplate = $api.byId('template');
+    var strTemplate = $api.html(eTemplate);
+    var fnTemplate = doT.template(strTemplate);
+    var html = fnTemplate(param);
+    var eContainer = $api.byId('container');
+    if(clear){
+        $api.html(eContainer, html);
+    }
+    else{
+        $api.append(eContainer, html);
+    }
+    api.parseTapmode();
+    api.refreshHeaderLoadDone();
+}
 </script>
 
 </html>
