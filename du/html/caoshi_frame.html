@@ -101,11 +101,7 @@
     var favorite = false;
     apiready = function() {
         fnLoadList();
-        // fnPullRefresh();
-        // fnAddScrolltobottomEventListener();
-        // fnAddSearchEventListender();
-        // fnAddAllEventListener();
-        // fnAddLocationEventListener();
+        fnPullRefresh();
         
     };
     function fnLoadCardImage(element){
@@ -166,40 +162,7 @@
         });
 
     }
-    function fnAddLocationEventListener(){
-        api.addEventListener({
-            name: 'location'
-        }, function(ret, err){
-            search = '.*';
-            city = ret.value.location;
-            favorite = false;
-            fnLoadList(false);
-        });
-    }
-    function fnAddAllEventListener(){
-        api.addEventListener({
-            name: 'all'
-        }, function(ret, err){
-            fnRefreshList();
-        });
-    }
-    function fnAddSearchEventListender(){
-        api.addEventListener({
-            name: 'search'
-        }, function(ret, err){
-            search = ret.value.key;
-            city = null;
-            favorite = false;
-            fnLoadList(false);
-        });
-    }
-    function fnAddScrolltobottomEventListener(){
-        api.addEventListener({
-            name: 'scrolltobottom'
-        }, function(ret, err){
-            fnLoadList(true);
-        });
-    }
+   
 
     function fnPullRefresh(){
         api.setRefreshHeaderInfo({
