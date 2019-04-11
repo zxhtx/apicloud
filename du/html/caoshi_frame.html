@@ -25,7 +25,6 @@
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        border: 1px solid red;
     }
 
     #container>.card>.favorite {
@@ -106,7 +105,7 @@
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript">
     var skip = 0;
-    var LIMIT = 1;
+    var LIMIT = 8;
 
     var city = null;
     var favorite = false;
@@ -211,23 +210,13 @@
         },
         method: 'get'
     }, function(ret, err) {
-        alert($api.jsonToStr(ret))
+        // alert($api.jsonToStr(ret))
         fnRenderList(ret,_LoadMore);
     });
   }
 
   function fnRenderList(ret,_LoadMore) {
-    // var userInfo = $api.getStorage('userInfo');
-
-    // userInfo = userInfo || {};
-    // userInfo.favorites = userInfo.favorites || '{}';
-    // var favorites = $api.strToJson(userInfo.favorites);
-    // alert(favorites)
-    // for(var i = 0; i < ret.length; i++){
-    //     if(favorites[ret[i].id] === true){
-    //         ret[i].isFavorite = true;
-    //     }
-    // }
+  
 
     var param = {
         list: ret,
