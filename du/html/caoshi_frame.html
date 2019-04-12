@@ -100,8 +100,8 @@
     <div class="push-status" id="pushStatus">上拉显示更多</div>
 </body>
 <script type="text/template" id="template">
- {{~ it.list:v:i}}
- <div class="card" style="width:{{= (it.frameWidth - 22) / 2}}px;height:{{=(it.frameWidth - 22) / 2 * 1.3416}}px;" data-imageurl="{{=v.image.url}}" onclick="fnOpenRoom('{{=v.video.url}}','{{=v.title}}')" tapmode>
+   {{~ it.list:v:i}}
+   <div class="card" style="width:{{= (it.frameWidth - 22) / 2}}px;height:{{=(it.frameWidth - 22) / 2 * 1.3416}}px;" data-imageurl="{{=v.image.url}}" onclick="fnOpenRoom('{{=v.video.url}}','{{=v.title}}')" tapmode>
     <img src="../image/all.png" onload="fnLoadCardImage(this)">
     <p tapmode onclick="opensearch('{{=v.title}}')">{{=v.title}}</p> 
 </div>
@@ -192,70 +192,70 @@
           },
           texts:{
             title:element2
-          },
-          styles:{
-              head:{
-                  bg: 'rgba(161,161,161,0.5)',
+        },
+        styles:{
+          head:{
+              bg: 'rgba(161,161,161,0.5)',
+              height: 44,
+              y:20,
+              title:{
+                  size:20,
+                  color:'#fff',
+                  width:40,
+                  leftMargin:10
+              },
+              backSize: 30,
+              backImg:'widget://image/back.png',
+              customButtons:[{
+                  w:30,
+                  h:30,
+                  rightMagin:10,
+                  img:'widget://image/image/collect.png',
+                  imgSelected:'fs://image/collectSelected.png',
+              }]},
+              foot:{  
+                  bg: 'rgba(0,0,0,0.5)',
                   height: 44,
-                  y:20,
-                  title:{
-                      size:20,
-                      color:'#fff',
-                      width:40,
-                      leftMargin:10
+                  palyBtn:{
+                      size: 20,
+                      playImg:'widget://image/play.png',
+                      pauseImg:'widget://image/pause.png',
+                      marginLeft:5
                   },
-                  backSize: 30,
-                  backImg:'widget://image/back.png',
-                  customButtons:[{
-                      w:30,
-                      h:30,
-                      rightMagin:10,
-                      img:'widget://image/image/collect.png',
-                      imgSelected:'fs://image/collectSelected.png',
-                  }]},
-                  foot:{  
-                      bg: 'rgba(0,0,0,0.5)',
-                      height: 44,
-                      palyBtn:{
-                          size: 20,
-                          playImg:'widget://image/play.png',
-                          pauseImg:'widget://image/pause.png',
-                          marginLeft:5
-                      },
-                      currentTimeLabel:{
-                          textSize:14,
-                          textColor:"#FFF",
-                          textWidth: 43,
-                          marginLeft:5
-                      },
-                      seekBar:{
-                          sliderImg:'widget://image/circle.png',
-                          sliderW : 20,
-                          sliderH : 20,
-                          progressColor: '#696969',
-                          progressSelected: '#76EE00',
-                          marginLeft:10,
-                          marginRight:10
-                      },
-                      totalTimeLabel:{
-                          textSize:14,
-                          textColor:"#FFF",
-                          textWidth: 43,
-                          marginRight:5
-                      },
-                      fullscreenBtn:{
-                          size:20,
-                          verticalImg:'widget://image/vertical.png',
-                          horizontalImg:'widget://image/horizontal.png',
-                      }
-                  } },
-                  path:element,
-                  showBack:false,
-                  autoPlay: true,
-                  autorotation:false,
-                  videoDirection:portrait,
-                  isShowStatusBar:false
-              },function(ret, err){
+                  currentTimeLabel:{
+                      textSize:14,
+                      textColor:"#FFF",
+                      textWidth: 43,
+                      marginLeft:5
+                  },
+                  seekBar:{
+                      sliderImg:'widget://image/circle.png',
+                      sliderW : 20,
+                      sliderH : 20,
+                      progressColor: '#696969',
+                      progressSelected: '#76EE00',
+                      marginLeft:10,
+                      marginRight:10
+                  },
+                  totalTimeLabel:{
+                      textSize:14,
+                      textColor:"#FFF",
+                      textWidth: 43,
+                      marginRight:5
+                  },
+                  fullscreenBtn:{
+                      size:20,
+                      verticalImg:'widget://image/vertical.png',
+                      horizontalImg:'widget://image/horizontal.png',
+                  }
+              } },
+              path:element,
+              videoDirection:portrait,
+              showBack:false,
+              autoPlay: true,
+              autorotation:false,
+              isShowStatusBar:false
+          },function(ret, err){
                 // if(ret){
                     // alert(JSON.stringify(ret));
                 // } else {
@@ -342,8 +342,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-       fnLoadList(true);
-   });
+     fnLoadList(true);
+ });
 }
 </script>
 
