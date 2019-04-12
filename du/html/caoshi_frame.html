@@ -18,7 +18,7 @@
     }
 
     #container>.card {
-        margin-bottom: 22px;        
+        margin-bottom: 39px;        
         position: relative;
         float: left;
         padding: 4px;
@@ -75,20 +75,10 @@
         display:none;
     }
 
-    .push-status {
-        width: 100%;
-        height: 40px;
-        font-size: 16px;
-        color: #888;
-        line-height: 40px;
-        text-align: center;
-        background-color: #fff;
-        position: fixed; 
-        bottom: 10px;
-    }
+
     .card>p{
         position: absolute;
-        bottom: -20px;  
+        bottom: -30px;  
         font-size: 16px;
     }
 </style>
@@ -98,11 +88,11 @@
     <div id="container">
 
     </div>
-    <div class="push-status" id="pushStatus">上拉显示更多</div>
+    <!-- <div class="push-status" id="pushStatus">上拉显示更多</div> -->
 </body>
 <script type="text/template" id="template">
-   {{~ it.list:v:i}}
-   <div class="card" style="width:{{= (it.frameWidth - 22) / 2}}px;height:{{=(it.frameWidth - 22) / 2 * 1.3416}}px;" data-imageurl="{{=v.image.url}}" onclick="fnOpenRoom('{{=v.video.url}}','{{=v.title}}')" tapmode>
+ {{~ it.list:v:i}}
+ <div class="card" style="width:{{= (it.frameWidth - 22) / 2}}px;height:{{=(it.frameWidth - 22) / 2 * 1.3416}}px;" data-imageurl="{{=v.image.url}}" onclick="fnOpenRoom('{{=v.video.url}}','{{=v.title}}')" tapmode>
     <img src="../image/all.png" onload="fnLoadCardImage(this,'{{=v.id}}','{{=v.title}}')">
     <p id="zishu_{{=v.id}}"  tapmode onclick="opensearch('{{=v.title}}')">{{=v.title}}</p> 
 </div>
@@ -122,10 +112,19 @@
         fnLoadList();
         fnPullRefresh();
         initEventListenter();
+        window.setInterval(tishi,20000)
+
         
     };
-    
+    function tishi(){
+        api.toast({
+            msg: '点击视频下方关键字即可搜索',
+            duration: 3000,
+            location: 'bottom'
+        });
+    }
     function fnLoadCardImage(element,videoid,videotitle){
+
         // alert(videotitle)
         var text=videotitle,
         text=text.substr(0,9)+'...';
@@ -133,9 +132,9 @@
         var zishu=$api.byId('zishu_'+videoid);
         zishu.innerHTML=text;
         var eCard = $api.closest(element, '.card');
-        var url = eCard.dataset['imageurl'];
+        var imageurl = eCard.dataset['imageurl'];
         api.imageCache({
-            url: url
+            url: imageurl
         }, function(ret, err){
             eCard.style.backgroundImage = "url(" + ret.url + ")";
         });
@@ -198,7 +197,7 @@
             }
         });
 
-  
+
     };
 
     
@@ -265,12 +264,7 @@
     }
     // 优化
     api.parseTapmode();
-    if (_LoadMore) {
-        if (ret.length<LIMIT) {
-            var pushStatus=$api.byId('pushStatus');
-            pushStatus.innerHTML="我是有底线滴"
-        }
-    }
+
     api.refreshHeaderLoadDone();
 }
 function initEventListenter(){
@@ -280,8 +274,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-     fnLoadList(true);
- });
+       fnLoadList(true);
+   });
 }
 </script>
 
