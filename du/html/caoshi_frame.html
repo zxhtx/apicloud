@@ -139,138 +139,51 @@
 
     };
     function fnOpenRoom(element,element2){
-        // var videoPlayer = api.require('videoPlayer');
-        // videoPlayer.play({
-        //     texts: {
-        //         head: {
-        //             title: element2
-        //         }
-        //     },
-        //     styles: {
-        //         head: {
-        //             bg: 'rgba(0.5,0.5,0.5,0.7)',
-        //             height: 44,
-        //             titleSize: 18,
-        //             titleColor: '#fff',
-        //             backSize: 26,
-        //             backImg: 'widget://image/videoPlayer/back.png',
-        //             setSize: 18,
-        //             setImg: 'widget://image/videoPlayer/more.png'
-        //         },
-        //         foot: {
-        //             bg: 'rgba(0.5,0.5,0.5,0.7)',
-        //             height: 44,
-        //             playSize: 18,
-        //             playImg: 'widget://image/videoPlayer/play.png',
-        //             pauseImg: 'widget://image/videoPlayer/pause.png',
-        //             nextSize: 0,
-        //             nextImg: '',
-        //             timeSize: 14,
-        //             timeColor: '#fff',
-        //             sliderImg: '',
-        //             progressColor: '#696969',
-        //             progressSelected: '#000000'
-        //         }
-        //     },
-        //     path: element,
-        //     autoPlay: true,
-        //     autorotation:true,
-        // }, function(ret, err) {
-        //     if (ret) {
-
-        //     } else {
-
-        //     }
-        // });
-
-      var moviePlayer = api.require('moviePlayer');
-        moviePlayer.open({
-            rect: {
-                x: 0,
-                y: 0,
-                w: api.frameWidth,
-                h: 300
-            },
-            texts:{
-              title:'宇文玥'
+        var videoPlayer = api.require('videoPlayer');
+        videoPlayer.play({
+            texts: {
+                head: {
+                    title: element2
+                }
             },
             styles: {
                 head: {
-                    bg: 'rgba(233,118,149,0.3)',
+                    bg: 'rgba(0.5,0.5,0.5,0.7)',
                     height: 44,
-                    y: 20,
-
-                    title: {
-                        size: 20,
-                        color: '#0f0',
-                        width: 40,
-                        leftMargin: 20
-                    },
-                    backSize: 20,
-                    backImg: 'widget://image/back.png',
-                    customButtons: [{
-                        w: 20,
-                        h: 20,
-                        rightMagin: 10,
-                        img: 'widget://image/more.png',
-                        imgSelected: 'fs://image/collectSelected.png',
-
-                    }]
+                    titleSize: 18,
+                    titleColor: '#fff',
+                    backSize: 26,
+                    backImg: 'widget://image/videoPlayer/back.png',
+                    setSize: 18,
+                    setImg: 'widget://image/videoPlayer/more.png'
                 },
                 foot: {
-                    bg: 'rgba(233,118,149,0.3)',
+                    bg: 'rgba(0.5,0.5,0.5,0.7)',
                     height: 44,
-                    palyBtn: {
-                        size: 20,
-                        playImg: 'widget://image/play.png',
-                        pauseImg: 'widget://image/pause.png',
-                        marginLeft: 5
-                    },
-                    currentTimeLabel: {
-                        textSize: 12,
-                        textColor: "#FFF",
-                        textWidth: 43,
-                        marginLeft: 5
-                    },
-                    seekBar: {
-                        sliderImg: 'widget://image/slder.png',
-                        sliderW: 15,
-                        sliderH: 8,
-                        progressColor: '#696969',
-                        progressSelected: '#76EE00',
-                        marginLeft: 10,
-                        marginRight: 10
-                    },
-                    totalTimeLabel: {
-                        textSize: 12,
-                        textColor: "#FFF",
-                        textWidth: 43,
-                        marginRight: 5
-                    },
-                    fullscreenBtn: {
-                        size: 20,
-                        verticalImg: 'widget://image/fullscreen.png',
-                        horizontalImg: 'widget://image/unfullscreen.png',
-                    }
+                    playSize: 18,
+                    playImg: 'widget://image/videoPlayer/play.png',
+                    pauseImg: 'widget://image/videoPlayer/pause.png',
+                    nextSize: 0,
+                    nextImg: '',
+                    timeSize: 14,
+                    timeColor: '#fff',
+                    sliderImg: '',
+                    progressColor: '#696969',
+                    progressSelected: '#696969'
                 }
             },
-            // path: 'http://haokan.baidu.com/v?pd=wisenatural&vid=6569257479234811442',
             path: element,
-            // videoDirection:portrait,
-            // showBack:false,
-            // autorotation:false,
-            // isShowStatusBar:false,
             autoPlay: true,
-            // coverlmg:'widget://yue.png'
-
+            autorotation:false,
         }, function(ret, err) {
             if (ret) {
-                // alert(JSON.stringify(ret));
-                // } else {
-                // alert(JSON.stringify(err));
-            }
 
+            } else {
+
+            }
         });
+
+  
     };
 
     
