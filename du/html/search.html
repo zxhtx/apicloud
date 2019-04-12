@@ -116,14 +116,27 @@
         		h: 'auto'
         	},
         	pageParam: {
-        		ware: api.pageParam.ware
+        		searchtitle: api.pageParam.searchtitle
         	},
         	bounces: true
         });
         openUIInput();
         opendb();
+        // videosearch();
+
     };
 		//打开表单
+		// function videosearch(){
+		// 	if (api.pageParam.searchtitle!=undefined) {
+		// 		// alert(1)
+		// 		api.execScript({
+		// 			name: 'search2',
+		// 			frameName: 'search_frame',
+		// 			script: "searchval('"+ api.pageParam.searchtitle +"')"
+		// 		});
+
+		// 	}
+		// } 
 		function openUIInput() {
 			var recty = 10;//div的高度减去模块的高度除以2
 			//如果页面开启了沉浸式，请加上沉浸式的高度。Android 25px,ios 20px

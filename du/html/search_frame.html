@@ -198,6 +198,7 @@
         // getWareList();
         initRefresh();
         initEventListenter();
+        videosearch();
 
     };
     var searchvalue;
@@ -207,6 +208,11 @@
     var LIMIT=8;
     function init(){
        wareTypeList=$api.getStorage('WareTypeList');
+   }
+   function videosearch(){
+    if (api.pageParam.searchtitle!=undefined) {
+        searchval(api.pageParam.searchtitle);
+    }
    }
    function openWareWin(_wareId,_wareTypeId){
      api.openWin({

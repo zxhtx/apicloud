@@ -18,7 +18,7 @@
     }
 
     #container>.card {
-        margin-bottom: 18px;        
+        margin-bottom: 28px;        
         position: relative;
         float: left;
         padding: 4px;
@@ -83,12 +83,13 @@
         line-height: 40px;
         text-align: center;
         background-color: #fff;
-        position: absolute; 
+        position: fixed; 
         bottom: 10px;
     }
     .card>p{
         position: absolute;
         bottom: -20px;  
+        font-size: 16px;
     }
 </style>
 </head>
@@ -102,8 +103,8 @@
 <script type="text/template" id="template">
    {{~ it.list:v:i}}
    <div class="card" style="width:{{= (it.frameWidth - 22) / 2}}px;height:{{=(it.frameWidth - 22) / 2 * 1.3416}}px;" data-imageurl="{{=v.image.url}}" onclick="fnOpenRoom('{{=v.video.url}}','{{=v.title}}')" tapmode>
-    <img src="../image/all.png" onload="fnLoadCardImage(this)">
-    <p tapmode onclick="opensearch('{{=v.title}}')">{{=v.title}}</p> 
+    <img src="../image/all.png" onload="fnLoadCardImage(this,'{{=v.id}}','{{=v.title}}')">
+    <p id="zishu_{{=v.id}}"  tapmode onclick="opensearch('{{=v.title}}')">{{=v.title}}</p> 
 </div>
 
 {{~}}
@@ -123,7 +124,14 @@
         initEventListenter();
         
     };
-    function fnLoadCardImage(element){
+    
+    function fnLoadCardImage(element,videoid,videotitle){
+        // alert(videotitle)
+        var text=videotitle,
+        text=text.substr(0,9)+'...';
+        // alert(text)
+        var zishu=$api.byId('zishu_'+videoid);
+        zishu.innerHTML=text;
         var eCard = $api.closest(element, '.card');
         var url = eCard.dataset['imageurl'];
         api.imageCache({
@@ -135,6 +143,13 @@
     function opensearch(title) {
 
         event.stopPropagation();
+        api.openWin({
+            name: 'search.html',
+            url: './search.html',
+            pageParam: {
+                searchtitle: title
+            }
+        });
         
 
     };
@@ -228,6 +243,7 @@
     }, function(ret, err) {
         // alert($api.jsonToStr(ret))
         fnRenderList(ret,_LoadMore);
+        // alert(ret.length)
     });
   }
 
