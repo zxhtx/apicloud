@@ -137,7 +137,7 @@
         event.stopPropagation();
         
 
-    }
+    };
     function fnOpenRoom(element,element2){
         // var videoPlayer = api.require('videoPlayer');
         // videoPlayer.play({
@@ -255,10 +255,14 @@
                 }
             },
             // path: 'http://haokan.baidu.com/v?pd=wisenatural&vid=6569257479234811442',
-            path: 'http://7o50kb.com2.z0.glb.qiniucdn.com/c1.1.mp4',
-
+            path: element,
+            // videoDirection:portrait,
+            // showBack:false,
+            // autorotation:false,
+            // isShowStatusBar:false,
             autoPlay: true,
             // coverlmg:'widget://yue.png'
+
         }, function(ret, err) {
             if (ret) {
                 // alert(JSON.stringify(ret));
