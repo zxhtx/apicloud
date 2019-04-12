@@ -13,10 +13,12 @@
     }
 
     #container {
-        padding: 11px;
+        padding: 11px;  
+        /*padding-bottom:11px;       */
     }
 
     #container>.card {
+        margin-bottom: 18px;        
         position: relative;
         float: left;
         padding: 4px;
@@ -81,8 +83,13 @@
         line-height: 40px;
         text-align: center;
         background-color: #fff;
+        position: absolute; 
+        bottom: 10px;
     }
-
+    .card>p{
+        position: absolute;
+        bottom: -16px;  
+    }
 </style>
 </head>
 
@@ -96,8 +103,9 @@
  {{~ it.list:v:i}}
  <div class="card" style="width:{{= (it.frameWidth - 22) / 2}}px;height:{{=(it.frameWidth - 22) / 2 * 1.3416}}px;" data-imageurl="{{=v.image.url}}" onclick="fnOpenRoom('{{=v.video.url}}','{{=v.title}}')" tapmode>
     <img src="../image/all.png" onload="fnLoadCardImage(this)">
-    <div>{{=v.title}}</div>
+    <p tapmode onclick="opensearch('{{=v.title}}')">{{=v.title}}</p> 
 </div>
+
 {{~}}
 </script>
 <script type="text/javascript" src="../script/api.js"></script>
@@ -124,51 +132,134 @@
             eCard.style.backgroundImage = "url(" + ret.url + ")";
         });
     }
+    function opensearch(title) {
 
+        event.stopPropagation();
+        
+
+    }
     function fnOpenRoom(element,element2){
-        var videoPlayer = api.require('videoPlayer');
-        videoPlayer.play({
-            texts: {
-                head: {
-                    title: element2
-                }
-            },
-            styles: {
-                head: {
-                    bg: 'rgba(0.5,0.5,0.5,0.7)',
-                    height: 44,
-                    titleSize: 18,
-                    titleColor: '#fff',
-                    backSize: 26,
-                    backImg: 'widget://image/videoPlayer/back.png',
-                    setSize: 18,
-                    setImg: 'widget://image/videoPlayer/more.png'
-                },
-                foot: {
-                    bg: 'rgba(0.5,0.5,0.5,0.7)',
-                    height: 44,
-                    playSize: 18,
-                    playImg: 'widget://image/videoPlayer/play.png',
-                    pauseImg: 'widget://image/videoPlayer/pause.png',
-                    nextSize: 0,
-                    nextImg: '',
-                    timeSize: 14,
-                    timeColor: '#fff',
-                    sliderImg: '',
-                    progressColor: '#696969',
-                    progressSelected: '#000000'
-                }
-            },
-            path: element,
-            autoPlay: true,
-            autorotation:true,
-        }, function(ret, err) {
-            if (ret) {
+        // var videoPlayer = api.require('videoPlayer');
+        // videoPlayer.play({
+        //     texts: {
+        //         head: {
+        //             title: element2
+        //         }
+        //     },
+        //     styles: {
+        //         head: {
+        //             bg: 'rgba(0.5,0.5,0.5,0.7)',
+        //             height: 44,
+        //             titleSize: 18,
+        //             titleColor: '#fff',
+        //             backSize: 26,
+        //             backImg: 'widget://image/videoPlayer/back.png',
+        //             setSize: 18,
+        //             setImg: 'widget://image/videoPlayer/more.png'
+        //         },
+        //         foot: {
+        //             bg: 'rgba(0.5,0.5,0.5,0.7)',
+        //             height: 44,
+        //             playSize: 18,
+        //             playImg: 'widget://image/videoPlayer/play.png',
+        //             pauseImg: 'widget://image/videoPlayer/pause.png',
+        //             nextSize: 0,
+        //             nextImg: '',
+        //             timeSize: 14,
+        //             timeColor: '#fff',
+        //             sliderImg: '',
+        //             progressColor: '#696969',
+        //             progressSelected: '#000000'
+        //         }
+        //     },
+        //     path: element,
+        //     autoPlay: true,
+        //     autorotation:true,
+        // }, function(ret, err) {
+        //     if (ret) {
 
-            } else {
+        //     } else {
 
-            }
-        });
+        //     }
+        // });
+        var moviePlayer = api.require('moviePlayer');
+        moviePlayer.open({
+          rect:{
+              x: 0,
+              y: 0,
+              w:api.frameWidth,
+              h:300
+          },
+          styles:{
+              head:{
+                  bg: 'rgba(161,161,161,0.5)',
+                  height: 44,
+                  y:20,
+                  title:{
+                      size:20,
+                      color:'#fff',
+                      width:40,
+                      leftMargin:10
+                  },
+                  backSize: 30,
+                  backImg:'widget://image/back.png',
+                  customButtons:[{
+                      w:30,
+                      h:30,
+                      rightMagin:10,
+                      img:'widget://image/image/collect.png',
+                      imgSelected:'fs://image/collectSelected.png',
+                  }]},
+                  foot:{  
+                      bg: 'rgba(0,0,0,0.5)',
+                      height: 44,
+                      palyBtn:{
+                          size: 20,
+                          playImg:'widget://image/play.png',
+                          pauseImg:'widget://image/pause.png',
+                          marginLeft:5
+                      },
+                      currentTimeLabel:{
+                          textSize:14,
+                          textColor:"#FFF",
+                          textWidth: 43,
+                          marginLeft:5
+                      },
+                      seekBar:{
+                          sliderImg:'widget://image/circle.png',
+                          sliderW : 20,
+                          sliderH : 20,
+                          progressColor: '#696969',
+                          progressSelected: '#76EE00',
+                          marginLeft:10,
+                          marginRight:10
+                      },
+                      totalTimeLabel:{
+                          textSize:14,
+                          textColor:"#FFF",
+                          textWidth: 43,
+                          marginRight:5
+                      },
+                      fullscreenBtn:{
+                          size:20,
+                          verticalImg:'widget://image/vertical.png',
+                          horizontalImg:'widget://image/horizontal.png',
+                      }
+                  } },
+                  path:element,
+                  showBack:false,
+                  autoPlay: true,
+                  autorotation:false,
+                  videoDirection:portrait,
+                  isShowStatusBar:false,
+              },function(ret, err){
+                if(ret){
+                    // alert(JSON.stringify(ret));
+                // } else {
+                    // alert(JSON.stringify(err));
+                }
+
+            });
 
     }
 
@@ -216,14 +307,14 @@
   }
 
   function fnRenderList(ret,_LoadMore) {
-  
+
 
     var param = {
         list: ret,
         frameWidth: api.frameWidth,
         frameHeight: api.frameHeight
     };
-  var list=$api.byId('container');
+    var list=$api.byId('container');
     var tempFn=doT.template($api.byId('template').innerHTML);
     var resultText=tempFn(param);
     if (_LoadMore) {
