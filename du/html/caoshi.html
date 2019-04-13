@@ -62,6 +62,8 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
 apiready = function() {
+    // alert(api.winHeight)
+
      var header=$api.byId('header');
          api.setStatusBarStyle({
             style: 'light',
@@ -70,6 +72,7 @@ apiready = function() {
        $api.fixStatusBar(header);
         // 获取header和nav的高
         headerH=$api.offset(header).h
+        // alert(headerH)
         api.openFrame({
             name: 'caoshi_frame',
             url: './caoshi_frame.html',
@@ -80,6 +83,7 @@ apiready = function() {
                 h: 'auto'
             },
             pageParam: {
+                winh:api.WinHeight
            
             },
             bounces: true,

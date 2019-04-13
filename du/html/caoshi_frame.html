@@ -114,6 +114,8 @@
         initEventListenter();
         window.setInterval(tishi,20000);
         keybackeventer();
+        // alert(api.pageParam.Winh)
+        // alert(api.frameHeight)
 
         
     };
@@ -178,94 +180,102 @@
 
     };
     function fnOpenRoom(element,element2){
-     var moviePlayer = api.require('moviePlayer');
-     moviePlayer.open({
-      rect: {
-        x: 0,
-        y: 0,
-        w: api.frameWidth,
-        h: api.frameHeight+50
-    },
-    texts:{
-        title:element2
-    },
-    styles: {
-        head: {
-          bg: '#000000',
-          height: 44,
-          y: 20,
-
-          title: {
-            size: 20,
-            color: '#0f0',
-            width: 40,
-            leftMargin: 20
-        },
-        backSize: 20,
-        backImg: 'widget://image/back.png',
-        customButtons: [{
-            w: 20,
-            h: 20,
-            rightMagin: 10,
-            img: 'widget://image/more.png',
-            imgSelected: 'fs://image/collectSelected.png',
-
-        }]
-    },
-    foot: {
-      bg: '#000000',
-      height: 44,
-      palyBtn: {
-        size: 20,
-        playImg: 'widget://image/play.png',
-        pauseImg: 'widget://image/pause.png',
-        marginLeft: 5
-    },
-    currentTimeLabel: {
-        textSize: 12,
-        textColor: "#FFF",
-        textWidth: 43,
-        marginLeft: 5
-    },
-    seekBar: {
-        sliderImg: 'widget://image/slder.png',
-        sliderW: 15,
-        sliderH: 8,
-        progressColor: '#696969',
-        progressSelected: '#76EE00',
-        marginLeft: 10,
-        marginRight: 10
-    },
-    totalTimeLabel: {
-        textSize: 12,
-        textColor: "#FFF",
-        textWidth: 43,
-        marginRight: 5
-    },
-    fullscreenBtn: {
-        size: 20,
-        verticalImg: 'widget://image/fullscreen.png',
-        horizontalImg: 'widget://image/unfullscreen.png',
-    }
-}
-},
-            // path: 'http://haokan.baidu.com/v?pd=wisenatural&vid=6569257479234811442',
-
-            path: element,
-            // videoDirection:portrait,
-            showBack:false,
-            autorotation:false,
-            isShowStatusBar:false,
-            autoPlay: true,
-            // coverlmg:'widget://yue.png'
-        }, function(ret, err) {
-            if (ret) {
-                // alert(JSON.stringify(ret));
-                // } else {
-                // alert(JSON.stringify(err));
+        api.openWin({
+            name: 'video',
+            url: './video.html',
+            pageParam: {
+                videourl: element,
+                videotitle:element2
             }
-
         });
+//      var moviePlayer = api.require('moviePlayer');
+//      moviePlayer.open({
+//       rect: {
+//         x: 0,
+//         y: 0,
+//         w: api.frameWidth,
+//         h: api.frameHeight+50
+//     },
+//     texts:{
+//         title:element2
+//     },
+//     styles: {
+//         head: {
+//           bg: '#000000',
+//           height: 44,
+//           y: 20,
+
+//           title: {
+//             size: 20,
+//             color: '#0f0',
+//             width: 40,
+//             leftMargin: 20
+//         },
+//         backSize: 20,
+//         backImg: 'widget://image/back.png',
+//         customButtons: [{
+//             w: 20,
+//             h: 20,
+//             rightMagin: 10,
+//             img: 'widget://image/more.png',
+//             imgSelected: 'fs://image/collectSelected.png',
+
+//         }]
+//     },
+//     foot: {
+//       bg: '#000000',
+//       height: 44,
+//       palyBtn: {
+//         size: 20,
+//         playImg: 'widget://image/play.png',
+//         pauseImg: 'widget://image/pause.png',
+//         marginLeft: 5
+//     },
+//     currentTimeLabel: {
+//         textSize: 12,
+//         textColor: "#FFF",
+//         textWidth: 43,
+//         marginLeft: 5
+//     },
+//     seekBar: {
+//         sliderImg: 'widget://image/slder.png',
+//         sliderW: 15,
+//         sliderH: 8,
+//         progressColor: '#FEFEFF',
+//         progressSelected: '#C1C1C1',
+//         marginLeft: 10,
+//         marginRight: 10
+//     },
+//     totalTimeLabel: {
+//         textSize: 12,
+//         textColor: "#FFF",
+//         textWidth: 43,
+//         marginRight: 5
+//     },
+//     fullscreenBtn: {
+//         size: 20,
+//         verticalImg: 'widget://image/fullscreen.png',
+//         horizontalImg: 'widget://image/unfullscreen.png',
+//     }
+// }
+// },
+//             // path: 'http://haokan.baidu.com/v?pd=wisenatural&vid=6569257479234811442',
+
+//             path: element,
+//             // videoDirection:portrait,
+//             showBack:false,
+//             autorotation:false,
+//             isShowStatusBar:false,
+//             autoPlay: true,
+//             // coverlmg:'widget://yue.png'
+//         }, function(ret, err) {
+//             if (ret) {
+//                 // alert(JSON.stringify(ret));
+//                 // } else {
+//                 // alert(JSON.stringify(err));
+//             }
+
+//         });
 
 
  };
