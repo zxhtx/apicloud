@@ -615,13 +615,13 @@ function getAddressList(_LoadMore){
 function LoadImage(_this,_id){
 	var dataUrl=$api.attr(_this, 'data-url');
 	var dataWareTypeId=$api.attr(_this, 'data-wareTypeId');
-	if (dataWareTypeId=='5c6e5cc2d772329a6f2562dd') {
-		var thumbnail=$api.byId('thumbnail_'+_id);
-		thumbnail.style.width=50+'px';
-		thumbnail.style.height=40+'px';
-		thumbnail.style.marginTop=5+'px';
+	// if (dataWareTypeId=='5c6e5cc2d772329a6f2562dd') {
+	// 	var thumbnail=$api.byId('thumbnail_'+_id);
+	// 	thumbnail.style.width=50+'px';
+	// 	thumbnail.style.height=40+'px';
+	// 	thumbnail.style.marginTop=5+'px';
 
-	}
+	// }
 
 	if (dataUrl) {
 		api.imageCache({

@@ -357,13 +357,13 @@ function updateWareList(_data,_LoadMore){
 function LoadImage(_this,_id){
     var dataUrl=$api.attr(_this, 'data-url');
     var dataWareTypeId=$api.attr(_this, 'data-wareTypeId');
-    if (dataWareTypeId=='5c6e5cc2d772329a6f2562dd') {
-        var thumbnail=$api.byId('thumbnail_'+_id);
-        thumbnail.style.width=100+'px';
-        thumbnail.style.height=70+'px';
-        thumbnail.style.marginTop=13+'px';
+    // if (dataWareTypeId=='5c6e5cc2d772329a6f2562dd') {
+    //     var thumbnail=$api.byId('thumbnail_'+_id);
+    //     thumbnail.style.width=100+'px';
+    //     thumbnail.style.height=70+'px';
+    //     thumbnail.style.marginTop=13+'px';
 
-    }
+    // }
 
     if (dataUrl) {
         api.imageCache({

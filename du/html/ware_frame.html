@@ -232,11 +232,11 @@ function initUIScrollPicture() {
     // 获取占位的div元素，并设置元素的宽高
     var picture = $api.byId('picture');
     picture.style.width = api.winWidth + 'px';
-    if (api.pageParam.wareTypeId=='5c6e5cc2d772329a6f2562dd') {
-         picture.style.height = api.winWidth-120+ 'px';
-    }else{
+    // if (api.pageParam.wareTypeId=='5c6e5cc2d772329a6f2562dd') {
+    //      picture.style.height = api.winWidth-120+ 'px';
+    // }else{
          picture.style.height = api.winWidth + 'px';
-    }
+    // }
    
     var rect = $api.offset(picture);
 
