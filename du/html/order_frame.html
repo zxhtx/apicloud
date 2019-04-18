@@ -414,7 +414,7 @@
             <div class="value value-2" id="viptext">-&nbsp;￥0.0</div>
         </div>
         <div class="row">
-            <div class="text">下单返现金:</div>
+            <div class="text">返现金(联系客服):</div>
             <div class="value value-2" id="fanqian">&nbsp;￥0.0</div>
         </div>
         <div class="row-1">
@@ -428,11 +428,12 @@
     apiready = function() {
         getware();
         getaddress();
+        var jiage;
 
 
     };  var types = ['公司', '住宅', '学校', '其它'];
     function getware(){
-     var now = Date.now();
+       var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
       var params={
@@ -455,20 +456,17 @@
     },function(ret, err){
         if (ret) {
             // 赋值
+            jiage=ret[0].price;
             updateWare(ret);
-            if (ret[0].wareTypeId=='5c6e5cc2d772329a6f2562dd') {
-                var icon=$api.byId('icon');
-                icon.style.height=50+'px';
-                icon.style.marginTop=10+'px';
-            }
+            
         } else {
-         api.toast({
-             msg: err.msg,
-             duration: 2000,
-             location: 'bottom'
-         });
-     }
- });
+           api.toast({
+               msg: err.msg,
+               duration: 2000,
+               location: 'bottom'
+           });
+       }
+   });
 
 }
 function updateWare(_data){
@@ -488,11 +486,11 @@ function updateWare(_data){
     
 }
 function vip(dataprice){
-   var usernameinfo=$api.getStorage('userInfo');
+ var usernameinfo=$api.getStorage('userInfo');
 
-   var now = Date.now();
-   var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-   var params={
+ var now = Date.now();
+ var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+ var params={
     fields: {},
     where:{
         id:usernameinfo.userId
@@ -515,18 +513,28 @@ api.ajax({
         var vipprice=dataprice * 0.9;
         var ceilprice =Math.round(vipprice);
             // 存储用户名
-            if (ret[0].vip==1) {
+            // alert($api.jsonToStr(ret))
+            if (jiage>50) {
 
-             viptext.innerHTML='您是vip打9折'
-             price2.innerHTML='￥'+ceilprice;
-             fanqian.innerHTML=Math.round(ceilprice*0.06);
 
-         }else{
-            viptext.innerHTML='充值vip可打9折'
-            price2.innerHTML='总金额 :￥'+dataprice;
-            fanqian.innerHTML=Math.round(ceilprice*0.08);
-        }
-    } else {
+                if (ret[0].vip==1) {
+
+                   viptext.innerHTML='您是vip打9折'
+                   price2.innerHTML='￥'+ceilprice;
+                   fanqian.innerHTML=Math.round(ceilprice*0.06);
+               } else{
+                  viptext.innerHTML='充值vip可打9折'
+                  price2.innerHTML='￥'+dataprice;
+                  fanqian.innerHTML=Math.round(ceilprice*0.08);
+              }
+
+          }else{
+              viptext.innerHTML='商品价格大于50元即可打折'
+              price2.innerHTML='￥'+dataprice;
+              fanqian.innerHTML=Math.round(ceilprice*0.08);
+
+          }
+      } else {
         api.toast({
             msg: err.msg,
             duration: 2000,
@@ -543,22 +551,22 @@ function getaddress(){
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       var params={
-         fields: {},
-         where: {
-            default:1,
-            userId:userInfo.userId
-        },
-        skip: 0
-    }
-    params = $api.jsonToStr(params);
-    api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/address?filter='+params,
-        method: 'get',
-        headers: {
-         "X-APICloud-AppId": "A6099267504667",
-         "X-APICloud-AppKey":   appKey
-     }
- },function(ret, err){
+       fields: {},
+       where: {
+        default:1,
+        userId:userInfo.userId
+    },
+    skip: 0
+}
+params = $api.jsonToStr(params);
+api.ajax({
+    url: 'http://d.apicloud.com/mcm/api/address?filter='+params,
+    method: 'get',
+    headers: {
+       "X-APICloud-AppId": "A6099267504667",
+       "X-APICloud-AppKey":   appKey
+   }
+},function(ret, err){
     if (ret) {
         updateaddress(ret);
 
@@ -569,8 +577,8 @@ function updateaddress(_data){
 
     var data=$api.jsonToStr(_data);
     if (_data[0]==undefined) {
-     var dialogBox = api.require('dialogBox');
-     dialogBox.alert({
+       var dialogBox = api.require('dialogBox');
+       dialogBox.alert({
         texts: {
             title: '收货地址',
             content: '去设置收货地址',
@@ -615,11 +623,11 @@ function updateaddress(_data){
         }
     });  
 
- }else{
-     var shouhuoren=$api.byId('shouhuoren');
-     var mobile=$api.byId('mobile');
-     var type=$api.byId('type');
-     var text=$api.byId('text');
+   }else{
+       var shouhuoren=$api.byId('shouhuoren');
+       var mobile=$api.byId('mobile');
+       var type=$api.byId('type');
+       var text=$api.byId('text');
         // alert($api.jsonToStr(_data))
         shouhuoren.innerHTML='收货人:'+_data[0].name;
         mobile.innerHTML=_data[0].mobile;

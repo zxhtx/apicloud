@@ -126,6 +126,7 @@
 <script type="text/javascript">
 
     apiready = function() {
+        var jiage;
 
 
         var header=$api.byId('header');
@@ -248,7 +249,7 @@ function getprice(){
             addInfo.color=api.pageParam.color;
             getware();
             getaddress();
-
+            jiage=ret[0].price;
 
         } else {
          api.toast({
@@ -286,24 +287,32 @@ function vip(dataprice){
         if (ret) {
          var price=$api.byId('price');
             // 存储用户名
-            if (ret[0].vip==1) {
-             var vipprice=dataprice * 0.9;
-             var ceilprice =Math.round(vipprice);
-             
-             price.innerHTML='总金额 :￥'+ceilprice;
-             addInfo.price=ceilprice;
+            if (jiage>50) {
 
+
+                if (ret[0].vip==1) {
+                 var vipprice=dataprice * 0.9;
+                 var ceilprice =Math.round(vipprice);
+
+                 price.innerHTML='总金额 :￥'+ceilprice;
+                 addInfo.price=ceilprice;
+
+             }else{
+                 price.innerHTML='总金额 :￥'+dataprice;
+                 addInfo.price=dataprice;
+             }
          }else{
-             price.innerHTML='总金额 :￥'+dataprice;
-             addInfo.price=dataprice;
-         }
-     } else {
-        api.toast({
-            msg: err.msg,
-            duration: 2000,
-            location: 'bottom'
-        });
-    }
+          price.innerHTML='总金额 :￥'+dataprice;
+          addInfo.price=dataprice;
+
+      }
+  } else {
+    api.toast({
+        msg: err.msg,
+        duration: 2000,
+        location: 'bottom'
+    });
+}
 });
 
 }
@@ -383,11 +392,11 @@ function getaddress(){
             if (addInfo.addresstype!=null && addInfo.mobile!=null) {
               activity.closeKeyFrame();
           }else{
-               activity.closeKeyFrame();
-          }
-      }else{
-        return;
-    }
+           activity.closeKeyFrame();
+       }
+   }else{
+    return;
+}
 
 }else{
     return;
