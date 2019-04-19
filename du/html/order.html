@@ -406,20 +406,20 @@ function getaddress(){
 function yesadd(){ 
 
     if (addInfo.url!=null && addInfo.addresstype!=null) {
-       activity.closeKeyFrame();
+       // activity.closeKeyFrame();
        if ( addInfo.warename!=null &&  addInfo.address!=null) {
-           activity.closeKeyFrame();
+           // activity.closeKeyFrame();
            if (addInfo.addresstype!=null && addInfo.mobile!=null) {
               activity.closeKeyFrame();
           }else{
-            return;
+            yesadd();
         }
     }else{
-        return;
+        yesadd();
     }
 
 }else{
-    return;
+    yesadd();
 }
 var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
