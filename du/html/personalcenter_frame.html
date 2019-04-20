@@ -86,6 +86,9 @@
     .option .icon-tuandui {
         background-image: url(../image/tuandui.png);
     }
+    .option .icon-share {
+        background-image: url(../image/share.png);
+    }
     
 
     .option .title {
@@ -206,6 +209,13 @@
                 <div class="text">成为团队成员全场享9.5折</div>
             </div>
         </div>
+        <div class="option" tapmode onclick="share()">
+            <div class="icon icon-share"></div>
+            <div class="title">分享应用</div>
+            <div class="arrow-panel">
+                <div class="text">分享成功获取3个月vip</div>
+            </div>
+        </div>
     </section>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
@@ -228,8 +238,16 @@
 
 
     };
-    function OpentuanduiWin(){
-       api.openWin({
+    function share(){
+       var sharedModule = api.require('shareAction');
+       sharedModule.share({
+        path: 'http://www.zxh.yueaa.com/',
+        type: 'url'
+    });
+
+   }
+   function OpentuanduiWin(){
+     api.openWin({
         name: 'tuandui',
         url: './tuandui.html',
         pageParam: {
@@ -240,15 +258,15 @@
         }
     });
 
-   }
-   function event(){
+ }
+ function event(){
     api.addEventListener({
         name: 'addvip'
     }, function(ret, err){
         if( ret ){
-           vip();
-       }
-   });
+         vip();
+     }
+ });
 }
 function getuserInfo(){
     var userInfo=$api.getStorage('userInfo');
@@ -265,8 +283,8 @@ function getuserInfo(){
 
     },function(ret, err){
         if (ret) {
-         updateLocalAvatar(ret)
-     } else {
+           updateLocalAvatar(ret)
+       } else {
         api.toast({
             msg: err.msg,
             duration: 2000,
@@ -326,8 +344,8 @@ function date(_date){
 
 }
 function updatevip(){
- var usernameinfo=$api.getStorage('userInfo');
- api.ajax({
+   var usernameinfo=$api.getStorage('userInfo');
+   api.ajax({
     url: 'http://d.apicloud.com/mcm/api/user/'+usernameinfo.userId,
     method: 'put',
     headers: {
@@ -343,9 +361,9 @@ function updatevip(){
 
 },function(ret, err){
     if (ret) {
-       var vip=$api.byId('vip');  
-       vip.innerHTML='普通用户';
-   } else {
+     var vip=$api.byId('vip');  
+     vip.innerHTML='普通用户';
+ } else {
     api.toast({
         msg: err.msg,
         duration: 2000,
@@ -422,7 +440,7 @@ function OpenvipWin(){
 
 // 在个人中心中显示头像
 function setAvatar(){
-   api.getPicture({
+ api.getPicture({
     sourceType: 'album',
     encodingType: 'jpg',
     mediaValue: 'pic',
@@ -434,8 +452,8 @@ function setAvatar(){
     saveToPhotoAlbum: false
 }, function(ret, err) {
     if (ret) {
-     uploadAtavar(ret.data)
- }
+       uploadAtavar(ret.data)
+   }
 
 });
 
@@ -495,8 +513,8 @@ function updateUserAtavar(_data){
         }
     },function(ret, err){
         if (ret) {
-         updateLocalAvatar(ret)
-     } else {
+           updateLocalAvatar(ret)
+       } else {
         api.toast({
             msg: err.msg,
             duration: 2000,
@@ -515,9 +533,9 @@ function updateLocalAvatar(_data){
         url: _data.avatar.url
     }, function(ret, err){
         if( ret ){
-         icon.style.background='url('+ret.url+')';
-         icon.style.backgroundSize='108px 108px';
-     }else{
+           icon.style.background='url('+ret.url+')';
+           icon.style.backgroundSize='108px 108px';
+       }else{
         api.toast({
             msg: err.msg,
             duration: 2000,
@@ -575,26 +593,26 @@ function getUsername(){
 function dindantypeList(){
   var dindantypeList=$api.getStorage('dindantypeList');
   if (!dindantypeList) {
-   dindantypeList=[
-   {
-    "id": "5c2a39add37a824c5ac6cc64",
-    "name": "已签收"
-},
+     dindantypeList=[
+     {
+        "id": "5c2a39add37a824c5ac6cc64",
+        "name": "已签收"
+    },
 
-{
-    "id": "5c2a3991af3114d73d9ddfc2",
-    "name": "待付款",
-} ,
-{
-    "id": "5c2a39a2af3114d73d9ddfc3",
-    "name": "待收货"
-}
-];
+    {
+        "id": "5c2a3991af3114d73d9ddfc2",
+        "name": "待付款",
+    } ,
+    {
+        "id": "5c2a39a2af3114d73d9ddfc3",
+        "name": "待收货"
+    }
+    ];
 }
 getdindantypeList();
 }
 function getdindantypeList(){
- var now = Date.now();
+   var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
 
@@ -614,8 +632,8 @@ function getdindantypeList(){
       },
 
   },function(ret, err){
-     $api.setStorage('dindantypeList', ret);
- });
+   $api.setStorage('dindantypeList', ret);
+});
 }
 </script>
 
