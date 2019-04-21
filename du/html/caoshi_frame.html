@@ -106,9 +106,10 @@
   var city = null;
   var favorite = false;
   var UIScrollPlayer; 
+  var video;
   apiready = function() {
     UIScrollPlayer = api.require('UIScrollPlayer');
-    var video=[];
+    video=[];
     fnLoadList();
     fnPullRefresh();
     initEventListenter();
@@ -122,8 +123,19 @@
       };
 
 
+      function  eventlister(element){
 
-   
+        UIScrollPlayer.addEventListener(function(ret, err){
+
+          if (ret.evenType=='onBufferingStart') {
+           alert(ret.index)
+         }
+
+
+       });
+      }
+
+
       // function fnLoadCardImage(element,videoid,videotitle){
 
       //   // alert(videotitle)
@@ -150,7 +162,7 @@
       //       searchtitle: title
       //     }
       //   });
-        
+
 
       // };
       function fnOpenRoom(ret,_LoadMore){
@@ -185,8 +197,7 @@
           rect : {
             x : 0,
             y : 0,
-            w : api.frameWidth,
-            h : 400,
+            h: api.winHeight
           },
           videos : video,
           // fixed:false
@@ -263,22 +274,7 @@
 
    });
     }
-    function  eventlister(element){
 
-      UIScrollPlayer.addEventListener(function(ret, err){
-        // api.toast({
-        //   msg: $api.jsonToStr(ret),
-        //   duration: 2000,
-        //   location: 'bottom'
-        // });
-       
-        if (ret.evenType=='onBufferingStart') {
-         alert(ret.index)
-       }
-       
-
-     });
-    }
 
 
     function fnRenderList(ret,_LoadMore) {
