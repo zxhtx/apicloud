@@ -197,13 +197,28 @@
           rect : {
             x : 0,
             y : 0,
-            h: api.winHeight
+            // w : api.frameWidth,
+            h : 400,
           },
           videos : video,
           // fixed:false
         },function(ret, err){
             // alert(JSON.stringify(ret));
           });
+        var winH=api.winHeight-100;
+        api.openFrame({
+          name: 'video',
+          url: './video.html',
+          rect: {
+            x: 0,
+            y: api.winHeight-winH,
+            w: api.winWidth,
+            h: 150
+          },
+          pageParam: {
+            name: 'test'
+          }
+        });
         
 
 
