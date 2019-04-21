@@ -18,21 +18,21 @@
     }
 
     #container>.card {
-     background-image: url("../image/jiazai.gif");
-     margin-bottom: 39px;        
-     position: relative;
-     float: left;
-     padding: 4px;
-     border-radius: 8%;
-     box-sizing: border-box;
-     background-clip: content-box;
-     background-position: center;
-     background-repeat: no-repeat;
-     background-size: cover;
+       background-image: url("../image/jiazai.gif");
+       margin-bottom: 39px;        
+       position: relative;
+       float: left;
+       padding: 4px;
+       border-radius: 8%;
+       box-sizing: border-box;
+       background-clip: content-box;
+       background-position: center;
+       background-repeat: no-repeat;
+       background-size: cover;
 
- }
+   }
 
- #container>.card>.favorite {
+   #container>.card>.favorite {
     position: absolute;
     width: 14px;
     height: 13px;
@@ -156,28 +156,32 @@
 
     };
     function fnOpenRoom(ret){
-        var array;
-
-        array+=i;
-
-        alert(array)
-        var UIScrollPlayer = api.require('UIScrollPlayer');
+        // var array;
+        var video=[];
         for (var i = 0; i <ret.length; i++) {
-            UIScrollPlayer.open({
-                rect : {
-                    x : 0,
-                    y : 0,
-                    w : api.frameWidth,
-                    h : api.winHeight,
-                },
-                videos : [{
-                    imageUrl:ret[i].video.url,
-                    videoUrl:ret[i].image.url
-                }],
-            },function(ret, err){
-                alert(JSON.stringify(ret));
-            });
-        }
+            video.push({
+               imageUrl:ret[i].image.url,
+               videoUrl:ret[i].video.url
+           })
+          
+
+       }
+
+        // alert(array)
+        var UIScrollPlayer = api.require('UIScrollPlayer');
+
+        UIScrollPlayer.open({
+            rect : {
+                x : 0,
+                y : 0,
+                w : api.frameWidth,
+                h : api.winHeight,
+            },
+            videos : video,
+        },function(ret, err){
+            alert(JSON.stringify(ret));
+        });
+        
         // alert(element)
         // alert()
         // api.openWin({
@@ -372,8 +376,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-     fnLoadList(true);
- });
+       fnLoadList(true);
+   });
 }
 </script>
 
