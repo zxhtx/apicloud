@@ -144,15 +144,32 @@
 
     };
     function opencaoshi() {
-        api.openWin({
+        // api.openWin({
+        //     name: 'caoshi_frame',
+        //     url: './caoshi_frame.html',
+        //     pageParam: {
+        //         name: 'test'
+        //     },
+        //     animation: {
+        //         type: "fade"
+        //     }
+        // });
+        api.openFrame({
             name: 'caoshi_frame',
             url: './caoshi_frame.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: auto,
+                h: auto
+            },
             pageParam: {
                 name: 'test'
             },
-            animation: {
-                type: "fade"
-            }
+            // bounces: true,
+            bgColor: 'rgba(0,0,0,0)',
+            // vScrollBarEnabled: true,
+            // hScrollBarEnabled: true
         });
         
     }
