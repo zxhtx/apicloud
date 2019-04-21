@@ -275,9 +275,12 @@
           duration: 2000,
           location: 'bottom'
         });
-        alert(ret[index])
+        if (ret.evenType=='onPlaying') {
+         alert(ret.index)
+       }
+       
 
-      });
+     });
     }
 
 
