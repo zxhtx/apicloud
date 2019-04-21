@@ -155,22 +155,29 @@
         
 
     };
-    function fnOpenRoom(element,element2){
+    function fnOpenRoom(ret){
+        var array;
+
+        array+=i;
+
+        alert(array)
         var UIScrollPlayer = api.require('UIScrollPlayer');
-        UIScrollPlayer.open({
-            rect : {
-                x : 0,
-                y : 0,
-                w : api.frameWidth,
-                h : api.winHeight,
-            },
-            videos : [{
-                imageUrl:element,
-                videoUrl:element2,
-            }],
-        },function(ret, err){
-            alert(JSON.stringify(ret));
-        });
+        for (var i = 0; i <ret.length; i++) {
+            UIScrollPlayer.open({
+                rect : {
+                    x : 0,
+                    y : 0,
+                    w : api.frameWidth,
+                    h : api.winHeight,
+                },
+                videos : [{
+                    imageUrl:ret[i].video.url,
+                    videoUrl:ret[i].image.url
+                }],
+            },function(ret, err){
+                alert(JSON.stringify(ret));
+            });
+        }
         // alert(element)
         // alert()
         // api.openWin({
@@ -317,17 +324,18 @@ var now = Date.now();
         // alert($api.jsonToStr(ret))
         // fnRenderList(ret,_LoadMore);
         // alert($api.jsonToStr(ret))
-        var videourl='';
-        var imageurl='';
-        for (var i =0; i < ret.length; i++) {
-           videourl+=ret[i].video.url
+       //  var videourl='';
+       //  var imageurl='';
+       //  for (var i =0; i < ret.length; i++) {
+       //     videourl+=ret[i].video.url
 
-           for (var j =0; j < ret.length; j++) {
-               imageurl+=ret[j].image.url
-               fnOpenRoom(videourl,imageurl)
+       //     for (var j =0; j < ret.length; j++) {
+       //         imageurl+=ret[j].image.url
+       //         fnOpenRoom(videourl,imageurl)
 
-           }
-       }
+       //     }
+       // }
+       fnOpenRoom(ret);
      // alert(videourl)
 
      // alert(videourl)
