@@ -113,6 +113,7 @@
     fnPullRefresh();
     initEventListenter();
     window.setInterval(tishi,15000);
+    eventlister();
         // keybackeventer();
         // alert(api.pageParam.Winh)
         // alert(api.frameHeight)
@@ -122,42 +123,36 @@
 
 
 
-      function tishi(){
-        api.toast({
-          msg: '点击视频下方关键字即可搜索',
-          duration: 3000,
-          location: 'bottom'
-        });
-      }
-      function fnLoadCardImage(element,videoid,videotitle){
+   
+      // function fnLoadCardImage(element,videoid,videotitle){
 
-        // alert(videotitle)
-        var text=videotitle,
-        text=text.substr(0,9)+'...';
-        // alert(text)
-        var zishu=$api.byId('zishu_'+videoid);
-        zishu.innerHTML=text;
-        var eCard = $api.closest(element, '.card');
-        var imageurl = eCard.dataset['imageurl'];
-        api.imageCache({
-          url: imageurl
-        }, function(ret, err){
-          eCard.style.backgroundImage = "url(" + ret.url + ")";
-        });
-      }
-      function opensearch(title) {
+      //   // alert(videotitle)
+      //   var text=videotitle,
+      //   text=text.substr(0,9)+'...';
+      //   // alert(text)
+      //   var zishu=$api.byId('zishu_'+videoid);
+      //   zishu.innerHTML=text;
+      //   var eCard = $api.closest(element, '.card');
+      //   var imageurl = eCard.dataset['imageurl'];
+      //   api.imageCache({
+      //     url: imageurl
+      //   }, function(ret, err){
+      //     eCard.style.backgroundImage = "url(" + ret.url + ")";
+      //   });
+      // }
+      // function opensearch(title) {
 
-        event.stopPropagation();
-        api.openWin({
-          name: 'search.html',
-          url: './search.html',
-          pageParam: {
-            searchtitle: title
-          }
-        });
+      //   event.stopPropagation();
+      //   api.openWin({
+      //     name: 'search.html',
+      //     url: './search.html',
+      //     pageParam: {
+      //       searchtitle: title
+      //     }
+      //   });
         
 
-      };
+      // };
       function fnOpenRoom(ret,_LoadMore){
         // var array;
         // alert(1)
@@ -268,7 +263,7 @@
 
    });
     }
-    function  eventlister(ret){
+    function  eventlister(element){
 
       UIScrollPlayer.addEventListener(function(ret, err){
         // api.toast({
