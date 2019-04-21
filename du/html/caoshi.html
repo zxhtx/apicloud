@@ -2,96 +2,96 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-    <title>title</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css" />
-    <style>
-    html,
-    body {
-        background-color: transparent;
-    }
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <title>title</title>
+  <link rel="stylesheet" type="text/css" href="../css/api.css" />
+  <style>
+  html,
+  body {
+    background-color: transparent;
+  }
 
-    #container {
-        padding: 11px;  
-        /*padding-bottom:11px;       */
-    }
+  #container {
+    padding: 11px;  
+    /*padding-bottom:11px;       */
+  }
 
-    #container>.card {
-       background-image: url("../image/jiazai.gif");
-       margin-bottom: 39px;        
-       position: relative;
-       float: left;
-       padding: 4px;
-       border-radius: 8%;
-       box-sizing: border-box;
-       background-clip: content-box;
-       background-position: center;
-       background-repeat: no-repeat;
-       background-size: cover;
+  #container>.card {
+   background-image: url("../image/jiazai.gif");
+   margin-bottom: 39px;        
+   position: relative;
+   float: left;
+   padding: 4px;
+   border-radius: 8%;
+   box-sizing: border-box;
+   background-clip: content-box;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
 
-   }
+ }
 
-   #container>.card>.favorite {
-    position: absolute;
-    width: 14px;
-    height: 13px;
-    left: 15.5px;
-    top: 17px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-image: url(../image/favorite-list.png);
+ #container>.card>.favorite {
+  position: absolute;
+  width: 14px;
+  height: 13px;
+  left: 15.5px;
+  top: 17px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url(../image/favorite-list.png);
 }
 
 #container>.card>.room-name {
-    position: absolute;
-    left: 14px;
-    bottom: 13px;
-    height: 16.5px;
-    line-height: 16.5px;
-    font-size: 16.5px;
-    color: white;
+  position: absolute;
+  left: 14px;
+  bottom: 13px;
+  height: 16.5px;
+  line-height: 16.5px;
+  font-size: 16.5px;
+  color: white;
 }
 
 #container>.card>.gender {
-    position: absolute;
-    bottom: 15px;
-    right: 30.5px;
-    width: 13px;
-    height: 13px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-image: url(../image/male.png);
+  position: absolute;
+  bottom: 15px;
+  right: 30.5px;
+  width: 13px;
+  height: 13px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url(../image/male.png);
 }
 
 #container>.card>.age {
-    position: absolute;
-    right: 11px;
-    bottom: 13px;
-    font-size: 14px;
-    line-height: 14px;
-    color: white;
+  position: absolute;
+  right: 11px;
+  bottom: 13px;
+  font-size: 14px;
+  line-height: 14px;
+  color: white;
 }
 .card>img{
-    display:none;
+  display:none;
 }
 
 
 .card>p{
-    position: absolute;
-    bottom: -30px;  
-    font-size: 16px;
+  position: absolute;
+  bottom: -30px;  
+  font-size: 16px;
 }
 </style>
 </head>
 
 <body>
-    <div id="container">
+  <div id="container">
 
-    </div>
-    <!-- <div class="push-status" id="pushStatus">上拉显示更多</div> -->
+  </div>
+  <!-- <div class="push-status" id="pushStatus">上拉显示更多</div> -->
 </body>
 <script type="text/template" id="template">
 
@@ -100,34 +100,35 @@
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript">
-    var skip = 0;
-    var LIMIT = 8;
+  var skip = 0;
+  var LIMIT = 8;
 
-    var city = null;
-    var favorite = false;
-    apiready = function() {
-     var video=[];
-     fnLoadList();
-     fnPullRefresh();
-     initEventListenter();
-     window.setInterval(tishi,15000);
+  var city = null;
+  var favorite = false;
+  apiready = function() {
+   var UIScrollPlayer = api.require('UIScrollPlayer');
+   var video=[];
+   fnLoadList();
+   fnPullRefresh();
+   initEventListenter();
+   window.setInterval(tishi,15000);
         // keybackeventer();
         // alert(api.pageParam.Winh)
         // alert(api.frameHeight)
 
         
-    };
+      };
 
 
 
-    function tishi(){
+      function tishi(){
         api.toast({
-            msg: '点击视频下方关键字即可搜索',
-            duration: 3000,
-            location: 'bottom'
+          msg: '点击视频下方关键字即可搜索',
+          duration: 3000,
+          location: 'bottom'
         });
-    }
-    function fnLoadCardImage(element,videoid,videotitle){
+      }
+      function fnLoadCardImage(element,videoid,videotitle){
 
         // alert(videotitle)
         var text=videotitle,
@@ -138,111 +139,110 @@
         var eCard = $api.closest(element, '.card');
         var imageurl = eCard.dataset['imageurl'];
         api.imageCache({
-            url: imageurl
+          url: imageurl
         }, function(ret, err){
-            eCard.style.backgroundImage = "url(" + ret.url + ")";
+          eCard.style.backgroundImage = "url(" + ret.url + ")";
         });
-    }
-    function opensearch(title) {
+      }
+      function opensearch(title) {
 
         event.stopPropagation();
         api.openWin({
-            name: 'search.html',
-            url: './search.html',
-            pageParam: {
-                searchtitle: title
-            }
+          name: 'search.html',
+          url: './search.html',
+          pageParam: {
+            searchtitle: title
+          }
         });
         
 
-    };
-    function fnOpenRoom(ret,_LoadMore){
+      };
+      function fnOpenRoom(ret,_LoadMore){
         // var array;
         if (_LoadMore) {
 
-            for (var i = 0; i <ret.length; i++) {
-                video.push({
-                   imageUrl:ret[i].image.url,
-                   videoUrl:ret[i].video.url
-               })
-            }
+          for (var i = 0; i <ret.length; i++) {
+            video.push({
+             imageUrl:ret[i].image.url,
+             videoUrl:ret[i].video.url
+           })
+          }
         }else{
-            video=[];
-            for (var i = 0; i <ret.length; i++) {
-                video.push({
-                   imageUrl:ret[i].image.url,
-                   videoUrl:ret[i].video.url
-               })
+          video=[];
+          for (var i = 0; i <ret.length; i++) {
+            video.push({
+             imageUrl:ret[i].image.url,
+             videoUrl:ret[i].video.url
+           })
 
 
-            }
+          }
 
         }
 
 
 
-        // alert(array)
-        var UIScrollPlayer = api.require('UIScrollPlayer');
+        
 
         UIScrollPlayer.open({
-            rect : {
-                x : 0,
-                y : 0,
-                w : api.frameWidth,
-                h : auto,
-            },
-            videos : video,
-            fixed:false
+          rect : {
+            x : 0,
+            y : 0,
+            w : api.frameWidth,
+            h : 400,
+          },
+          videos : video,
+          fixed:false
         },function(ret, err){
             // alert(JSON.stringify(ret));
-        });
+          });
         
 
 
 
-    };
+      };
 
 
 
 
-    function fnPullRefresh(){
+      function fnPullRefresh(){
         api.setCustomRefreshHeaderInfo({
-            bgColor: '#C0C0C0',
-            isScale: true
+          bgColor: '#C0C0C0',
+          isScale: true
         }, function() {
-            fnLoadList();
+          fnLoadList();
 
         });
 
-    }
+      }
 
-    function fnLoadList(_LoadMore) {
-      if (_LoadMore) {
-        skip+=LIMIT;
-    }else{
+      function fnLoadList(_LoadMore) {
+        if (_LoadMore) {
+          skip+=LIMIT;
+        }else{
 
-        skip=0;
-    }
-    var params={
-        fields:{},
-        fields: {},
-        skip:skip,
-        limit:LIMIT,
-        order:"createdAt DESC"
-    }
-    params=$api.jsonToStr(params);
+          skip=0;
+        }
+        var params={
+          fields:{},
+          fields: {},
+          skip:skip,
+          limit:LIMIT,
+          order:"createdAt DESC"
+        }
+        params=$api.jsonToStr(params);
 
-    var now = Date.now();
+        var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       api.ajax({
         url: 'https://d.apicloud.com/mcm/api/video1?filter='+params,
         headers: {
-            'X-APICloud-AppId': 'A6099267504667',
-            'X-APICloud-AppKey': appKey
+          'X-APICloud-AppId': 'A6099267504667',
+          'X-APICloud-AppKey': appKey
         },
         method: 'get'
-    }, function(ret, err) {
+      }, function(ret, err) {
         // alert($api.jsonToStr(ret))
         // fnRenderList(ret,_LoadMore);
         // alert($api.jsonToStr(ret))
@@ -264,41 +264,41 @@
      // alert(videourl)
 
 
- });
-  }
-  function  eventlister(){
-    var UIScrollPlayer = api.require('UIScrollPlayer');
-    UIScrollPlayer.addEventListener(function(ret, err){
+   });
+    }
+    function  eventlister(){
+
+      UIScrollPlayer.addEventListener(function(ret, err){
         api.toast({
-            msg: $api.jsonToStr(ret); ,
-            duration: 2000,
-            location: 'bottom'
+          msg: $api.jsonToStr(ret); ,
+          duration: 2000,
+          location: 'bottom'
         });
 
-    });
-}
-
-
-function fnRenderList(ret,_LoadMore) {
-
-    if (_LoadMore) {
-        fnOpenRoom(ret,_LoadMore)
+      });
     }
+
+
+    function fnRenderList(ret,_LoadMore) {
+
+      if (_LoadMore) {
+        fnOpenRoom(ret,_LoadMore)
+      }
     // 优化
     api.parseTapmode();
 
     api.refreshHeaderLoadDone();
-}
-function initEventListenter(){
+  }
+  function initEventListenter(){
     api.addEventListener({
-        name:'scrolltobottom',
-        extra:{
-            threshold:100
-        }
+      name:'scrolltobottom',
+      extra:{
+        threshold:100
+      }
     }, function(ret, err){        
-       fnLoadList(true);
+     fnLoadList(true);
    });
-}
+  }
 </script>
 
 </html>
