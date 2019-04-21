@@ -259,7 +259,7 @@
        //     }
        // }
        fnOpenRoom(ret);
-       eventlister();
+       eventlister(ret);
      // alert(videourl)
 
      // alert(videourl)
@@ -267,7 +267,7 @@
 
    });
     }
-    function  eventlister(){
+    function  eventlister(ret){
 
       UIScrollPlayer.addEventListener(function(ret, err){
         api.toast({
@@ -275,6 +275,7 @@
           duration: 2000,
           location: 'bottom'
         });
+        alert(ret[index])
 
       });
     }
