@@ -105,13 +105,14 @@
 
   var city = null;
   var favorite = false;
+  var UIScrollPlayer; 
   apiready = function() {
-   var UIScrollPlayer = api.require('UIScrollPlayer');
-   var video=[];
-   fnLoadList();
-   fnPullRefresh();
-   initEventListenter();
-   window.setInterval(tishi,15000);
+    UIScrollPlayer = api.require('UIScrollPlayer');
+    var video=[];
+    fnLoadList();
+    fnPullRefresh();
+    initEventListenter();
+    window.setInterval(tishi,15000);
         // keybackeventer();
         // alert(api.pageParam.Winh)
         // alert(api.frameHeight)
