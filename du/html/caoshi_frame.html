@@ -106,10 +106,11 @@
     var city = null;
     var favorite = false;
     apiready = function() {
-        fnLoadList();
-        fnPullRefresh();
-        initEventListenter();
-        window.setInterval(tishi,15000);
+     var video=[];
+     fnLoadList();
+     fnPullRefresh();
+     initEventListenter();
+     window.setInterval(tishi,15000);
         // keybackeventer();
         // alert(api.pageParam.Winh)
         // alert(api.frameHeight)
@@ -155,17 +156,30 @@
         
 
     };
-    function fnOpenRoom(ret){
+    function fnOpenRoom(ret,_LoadMore){
         // var array;
-        var video=[];
-        for (var i = 0; i <ret.length; i++) {
-            video.push({
-               imageUrl:ret[i].image.url,
-               videoUrl:ret[i].video.url
-           })
-          
+        if (_LoadMore) {
 
-       }
+            for (var i = 0; i <ret.length; i++) {
+                video.push({
+                   imageUrl:ret[i].image.url,
+                   videoUrl:ret[i].video.url
+               })
+            }
+        }else{
+            video=[];
+            for (var i = 0; i <ret.length; i++) {
+                video.push({
+                   imageUrl:ret[i].image.url,
+                   videoUrl:ret[i].video.url
+               })
+
+
+            }
+
+        }
+
+
 
         // alert(array)
         var UIScrollPlayer = api.require('UIScrollPlayer');
@@ -175,146 +189,49 @@
                 x : 0,
                 y : 0,
                 w : api.frameWidth,
-                h : api.winHeight,
+                // h : auto,
             },
             videos : video,
         },function(ret, err){
-            alert(JSON.stringify(ret));
+            // alert(JSON.stringify(ret));
         });
         
-        // alert(element)
-        // alert()
-        // api.openWin({
-        //     name: 'video',
-        //     url: './video.html',
-        //     pageParam: {
-        //         videourl: element,
-        //         videotitle:element2
-        //     }
-        // });
-//      var moviePlayer = api.require('moviePlayer');
-//      moviePlayer.open({
-//       rect: {
-//         x: 0,
-//         y: 0,
-//         w: api.frameWidth,
-//         h: api.frameHeight+50
-//     },
-//     texts:{
-//         title:element2
-//     },
-//     styles: {
-//         head: {
-//           bg: '#000000',
-//           height: 44,
-//           y: 20,
-
-//           title: {
-//             size: 20,
-//             color: '#0f0',
-//             width: 40,
-//             leftMargin: 20
-//         },
-//         backSize: 20,
-//         backImg: 'widget://image/back.png',
-//         customButtons: [{
-//             w: 20,
-//             h: 20,
-//             rightMagin: 10,
-//             img: 'widget://image/more.png',
-//             imgSelected: 'fs://image/collectSelected.png',
-
-//         }]
-//     },
-//     foot: {
-//       bg: '#000000',
-//       height: 44,
-//       palyBtn: {
-//         size: 20,
-//         playImg: 'widget://image/play.png',
-//         pauseImg: 'widget://image/pause.png',
-//         marginLeft: 5
-//     },
-//     currentTimeLabel: {
-//         textSize: 12,
-//         textColor: "#FFF",
-//         textWidth: 43,
-//         marginLeft: 5
-//     },
-//     seekBar: {
-//         sliderImg: 'widget://image/slder.png',
-//         sliderW: 15,
-//         sliderH: 8,
-//         progressColor: '#FEFEFF',
-//         progressSelected: '#C1C1C1',
-//         marginLeft: 10,
-//         marginRight: 10
-//     },
-//     totalTimeLabel: {
-//         textSize: 12,
-//         textColor: "#FFF",
-//         textWidth: 43,
-//         marginRight: 5
-//     },
-//     fullscreenBtn: {
-//         size: 20,
-//         verticalImg: 'widget://image/fullscreen.png',
-//         horizontalImg: 'widget://image/unfullscreen.png',
-//     }
-// }
-// },
-//             // path: 'http://haokan.baidu.com/v?pd=wisenatural&vid=6569257479234811442',
-
-//             path: element,
-//             // videoDirection:portrait,
-//             showBack:false,
-//             autorotation:false,
-//             isShowStatusBar:false,
-//             autoPlay: true,
-//             // coverlmg:'widget://yue.png'
-//         }, function(ret, err) {
-//             if (ret) {
-//                 // alert(JSON.stringify(ret));
-//                 // } else {
-//                 // alert(JSON.stringify(err));
-//             }
-
-//         });
 
 
-};
+
+    };
 
 
 
 
-function fnPullRefresh(){
-    api.setCustomRefreshHeaderInfo({
-        bgColor: '#C0C0C0',
-        isScale: true
-    }, function() {
-        fnLoadList();
+    function fnPullRefresh(){
+        api.setCustomRefreshHeaderInfo({
+            bgColor: '#C0C0C0',
+            isScale: true
+        }, function() {
+            fnLoadList();
 
-    });
+        });
 
-}
+    }
 
-function fnLoadList(_LoadMore) {
-  if (_LoadMore) {
-    skip+=LIMIT;
-}else{
+    function fnLoadList(_LoadMore) {
+      if (_LoadMore) {
+        skip+=LIMIT;
+    }else{
 
-    skip=0;
-}
-var params={
-    fields:{},
-    fields: {},
-    skip:skip,
-    limit:LIMIT,
-    order:"createdAt DESC"
-}
-params=$api.jsonToStr(params);
+        skip=0;
+    }
+    var params={
+        fields:{},
+        fields: {},
+        skip:skip,
+        limit:LIMIT,
+        order:"createdAt DESC"
+    }
+    params=$api.jsonToStr(params);
 
-var now = Date.now();
+    var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       api.ajax({
@@ -340,6 +257,7 @@ var now = Date.now();
        //     }
        // }
        fnOpenRoom(ret);
+       eventlister();
      // alert(videourl)
 
      // alert(videourl)
@@ -347,22 +265,18 @@ var now = Date.now();
 
  });
   }
+  function  eventlister(){
+    var UIScrollPlayer = api.require('UIScrollPlayer');
+    UIScrollPlayer.addEventListener(function(ret, err){
+        alert(JSON.stringify(ret));
+    });
+}
 
-  function fnRenderList(ret,_LoadMore) {
 
+function fnRenderList(ret,_LoadMore) {
 
-    var param = {
-        list: ret,
-        frameWidth: api.frameWidth,
-        frameHeight: api.frameHeight
-    };
-    var list=$api.byId('container');
-    var tempFn=doT.template($api.byId('template').innerHTML);
-    var resultText=tempFn(param);
     if (_LoadMore) {
-        $api.append(list, resultText);
-    }else{
-        $api.html(list, resultText);
+        fnOpenRoom(ret,_LoadMore)
     }
     // 优化
     api.parseTapmode();
