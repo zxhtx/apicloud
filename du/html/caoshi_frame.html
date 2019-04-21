@@ -18,21 +18,21 @@
     }
 
     #container>.card {
-       background-image: url("../image/jiazai.gif");
-       margin-bottom: 39px;        
-       position: relative;
-       float: left;
-       padding: 4px;
-       border-radius: 8%;
-       box-sizing: border-box;
-       background-clip: content-box;
-       background-position: center;
-       background-repeat: no-repeat;
-       background-size: cover;
+     background-image: url("../image/jiazai.gif");
+     margin-bottom: 39px;        
+     position: relative;
+     float: left;
+     padding: 4px;
+     border-radius: 8%;
+     box-sizing: border-box;
+     background-clip: content-box;
+     background-position: center;
+     background-repeat: no-repeat;
+     background-size: cover;
 
-   }
+ }
 
-   #container>.card>.favorite {
+ #container>.card>.favorite {
     position: absolute;
     width: 14px;
     height: 13px;
@@ -94,13 +94,7 @@
     <!-- <div class="push-status" id="pushStatus">上拉显示更多</div> -->
 </body>
 <script type="text/template" id="template">
- {{~ it.list:v:i}}
- <div class="card" style="width:{{= (it.frameWidth - 22) / 2}}px;height:{{=(it.frameWidth - 22) / 2 * 1.3416}}px;" data-imageurl="{{=v.image.url}}" onclick="fnOpenRoom('{{=v.video.url}}','{{=v.title}}')" tapmode>
-    <img src="../image/all.png" onload="fnLoadCardImage(this,'{{=v.id}}','{{=v.title}}')">
-    <p id="zishu_{{=v.id}}"  tapmode onclick="opensearch('{{=v.title}}')">{{=v.title}}</p> 
-</div>
 
-{{~}}
 </script>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
@@ -116,34 +110,13 @@
         fnPullRefresh();
         initEventListenter();
         window.setInterval(tishi,15000);
-        keybackeventer();
+        // keybackeventer();
         // alert(api.pageParam.Winh)
         // alert(api.frameHeight)
 
         
     };
-    function keybackeventer(){
-        api.addEventListener({
-            name: 'keyback'
-        }, function(ret, err){
-            api.toast({
-                msg: '双击退出视频',
-                duration:2000,
-                location: 'bottom'
-            });
 
-            api.addEventListener({
-                name: 'keyback'
-            }, function(ret, err){
-             api.closeFrame();
-         });
-
-            setTimeout(function(){
-                keybackeventer();
-            },3000)
-        });
-
-    }
 
 
     function tishi(){
@@ -183,14 +156,37 @@
 
     };
     function fnOpenRoom(element,element2){
-        api.openWin({
-            name: 'video',
-            url: './video.html',
-            pageParam: {
-                videourl: element,
-                videotitle:element2
-            }
+        var UIScrollPlayer = api.require('UIScrollPlayer');
+        UIScrollPlayer.open({
+            rect : {
+                x : 0,
+                y : 0,
+                w : api.frameWidth,
+                h : api.winHeight,
+            },
+            videos : [{
+                imageUrl:'',
+                videoUrl:'',
+            },{
+                imageUrl:'',
+                videoUrl:'',
+            },{
+                imageUrl:'',
+                videoUrl:'',
+            }],
+        },function(ret, err){
+            alert(JSON.stringify(ret));
         });
+        // alert(element)
+        // alert()
+        // api.openWin({
+        //     name: 'video',
+        //     url: './video.html',
+        //     pageParam: {
+        //         videourl: element,
+        //         videotitle:element2
+        //     }
+        // });
 //      var moviePlayer = api.require('moviePlayer');
 //      moviePlayer.open({
 //       rect: {
@@ -325,9 +321,25 @@ var now = Date.now();
         method: 'get'
     }, function(ret, err) {
         // alert($api.jsonToStr(ret))
-        fnRenderList(ret,_LoadMore);
-        // alert(ret.length)
-    });
+        // fnRenderList(ret,_LoadMore);
+        // alert($api.jsonToStr(ret))
+        var videourl='';
+        var imageurl='';
+        for (var i =0; i < ret.length; i++) {
+           videourl+=ret[i].video.url
+
+           for (var j =0; j < ret.length; j++) {
+               imageurl+=ret[j].image.url
+               fnOpenRoom(videourl,imageurl)
+
+           }
+       }
+     // alert(videourl)
+
+     // alert(videourl)
+
+
+ });
   }
 
   function fnRenderList(ret,_LoadMore) {
@@ -358,8 +370,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-       fnLoadList(true);
-   });
+     fnLoadList(true);
+ });
 }
 </script>
 
