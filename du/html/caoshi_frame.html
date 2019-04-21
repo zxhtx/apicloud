@@ -160,7 +160,7 @@
       };
       function fnOpenRoom(ret,_LoadMore){
         // var array;
-        alert(1)
+        // alert(1)
         if (_LoadMore) {
 
           for (var i = 0; i <ret.length; i++) {
@@ -271,11 +271,12 @@
     function  eventlister(ret){
 
       UIScrollPlayer.addEventListener(function(ret, err){
-        api.toast({
-          msg: $api.jsonToStr(ret),
-          duration: 2000,
-          location: 'bottom'
-        });
+        // api.toast({
+        //   msg: $api.jsonToStr(ret),
+        //   duration: 2000,
+        //   location: 'bottom'
+        // });
+        alert(ret.evenType)
         if (ret.evenType=='onPlaying') {
          alert(ret.index)
        }
