@@ -198,7 +198,7 @@
             x : 0,
             y : 0,
             w : api.frameWidth,
-            h : 400,
+            h : api.frameHeight,
           },
           videos : video,
           // fixed:false
@@ -206,20 +206,20 @@
             // alert(JSON.stringify(ret));
           });
         // var winH=api.winHeight-100;
-        // setTimeout(function() {
-        //   // 你有几个显示的你就对应打开几个按钮   x  y是定义这个坐标的位置
-        //   api.openFrame({
-        //     name: 'video',
-        //     url: './video.html',
-        //     rect: {
-        //       x: 0,
-        //       y: 0,
-        //       h: 50,
-        //       w: 50
-        //     },
-        //     bgColor: 'rgba(0,0,0,0)',
-        //   });
-        // }, 300)
+        setTimeout(function() {
+          // 你有几个显示的你就对应打开几个按钮   x  y是定义这个坐标的位置
+          api.openFrame({
+            name: 'video',
+            url: './video.html',
+            rect: {
+              x: 0,
+              y: 0,
+              h: 50,
+              w: 50
+            },
+            bgColor: 'rgba(0,0,0,0)',
+          });
+        }, 300)
         
 
 
