@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <title>title</title>
+  <link rel="stylesheet" type="text/css" href="../css/api.css" />
+  <style>
+  html ,body{
+    background-color: transparent;
+    /*border: 1px solid red;*/
+  }
+  #list>.img{
+    margin: 8px 8px 8px 8px;
+    /*border: 1px solid red;*/
+  }
+/*#list>#icon{
+  margin-bottom:20px;
+  border-radius: 50%;
+  border-color: black; 
+  }  */
+  
+</style>
+</head>
+
+<body>
+  <div id="list">
+    <img class="img" tapmode onclick="puaseandplay()" id="puase" src="../image/puase.png" alt="" width="30px" height="30px">
+  </div>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+  var play=0;
+  apiready = function() {
+
+    // imgsrc();
+
+  };
+  // function imgsrc(){
+  //   var imagesrc=$api.getStorage('imgsrc');
+  //   var puaseandplay=$api.byId('puase');
+  //   puaseandplay.src=imagesrc
+  // }
+  function puaseandplay(){
+   var puaseandplay=$api.byId('puase');
+   if (play==0) {
+
+    api.execScript({
+      // name: 'caoshi',
+      frameName: 'caoshi_frame',
+      script: 'puase()'
+    });
+    play=1;
+    puaseandplay.src='../image/play.png'
+    // $api.setStorage('imgsrc', '../image/play.png');
+  }else{
+   api.execScript({
+    // name: 'caoshi',
+    frameName: 'caoshi_frame',
+    script: 'play()'
+  });
+   play=0;
+   puaseandplay.src='../image/puase.png'
+   // $api.setStorage('imgsrc', '../image/puase.png');
+
+ }
+}
+// function fuyuan(){
+//  var puaseandplay=$api.byId('puase');
+//   puaseandplay.src='../image/puase.png'
+
+// }
+
+</script>
+
+</html>

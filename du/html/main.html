@@ -154,24 +154,22 @@
         //         type: "fade"
         //     }
         // });
+        
         api.openFrame({
             name: 'caoshi_frame',
             url: './caoshi_frame.html',
             rect: {
                 x: 0,
                 y: 0,
-                w: auto,
-                h: auto
+                w: api.winWidth,
+                h: api.winHeight
             },
             pageParam: {
                 name: 'test'
             },
             // bounces: true,
             bgColor: 'rgba(0,0,0,0)',
-            // vScrollBarEnabled: true,
-            // hScrollBarEnabled: true
         });
-        
     }
 
     function gonggao(){
