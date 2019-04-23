@@ -111,12 +111,13 @@
   apiready = function() {
     UIScrollPlayer = api.require('UIScrollPlayer');
     eventlister();
+    backimg();
     video=[];
     fnLoadList();
     fnPullRefresh();
     initEventListenter();
     window.setInterval(tishi,15000);
-    backimg();
+
 
         // keybackeventer();
         // alert(api.pageParam.Winh)
@@ -127,19 +128,19 @@
       function backimg(){
         alert(1)
         setTimeout(function() {
-        api.openFrame({
-          name: 'backimg_frame',
-          url: './backimg_frame.html',
-          rect: {
-            x: 0,
-            y: 0,
-            w: 100,
-            h: 100
-          },
-          bgColor: 'rgba(0,0,0,0)',
+          api.openFrame({
+            name: 'backimg_frame',
+            url: './backimg_frame.html',
+            rect: {
+              x: 0,
+              y: 0,
+              w: 100,
+              h: 100
+            },
+            bgColor: 'rgba(0,0,0,0)',
 
-        });
-      },200);
+          });
+        },200)
       }
       function fnLoadList(_LoadMore) {
         if (_LoadMore) {
@@ -260,7 +261,7 @@
         },function(ret, err){
             // alert(JSON.stringify(ret));
           });
-        // var winH=api.winHeight-100;
+        
         setTimeout(function() {
           // 你有几个显示的你就对应打开几个按钮   x  y是定义这个坐标的位置
           api.openFrame({
