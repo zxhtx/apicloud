@@ -111,7 +111,6 @@
   apiready = function() {
     UIScrollPlayer = api.require('UIScrollPlayer');
     eventlister();
-    backimg();
     video=[];
     fnLoadList();
     fnPullRefresh();
@@ -125,40 +124,27 @@
 
         
       };
-      function backimg(){
-        alert(1)
-        setTimeout(function() {
-          api.openFrame({
-            name: 'backimg_frame',
-            url: './backimg_frame.html',
-            rect: {
-              x: 0,
-              y: 0,
-              w: 100,
-              h: 100
-            },
-            bgColor: 'rgba(0,0,0,0)',
 
-          });
-        },200)
-      }
-      function fnLoadList(_LoadMore) {
-        if (_LoadMore) {
-          skip+=LIMIT;
-        }else{
+        // alert(1)
 
-          skip=0;
-        }
-        var params={
-          fields:{},
-          fields: {},
-          skip:skip,
-          limit:LIMIT,
-          order:"createdAt DESC"
-        }
-        params=$api.jsonToStr(params);
 
-        var now = Date.now();
+        function fnLoadList(_LoadMore) {
+          if (_LoadMore) {
+            skip+=LIMIT;
+          }else{
+
+            skip=0;
+          }
+          var params={
+            fields:{},
+            fields: {},
+            skip:skip,
+            limit:LIMIT,
+            order:"createdAt DESC"
+          }
+          params=$api.jsonToStr(params);
+
+          var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       api.ajax({
@@ -275,7 +261,35 @@
             },
             bgColor: 'rgba(0,0,0,0)',
           });
-        }, 300)
+
+
+          api.openFrame({
+            name: 'backimg_frame',
+            url: './backimg_frame.html',
+            rect: {
+              x: 8,
+              y: 28,
+              w: 50,
+              h: 50
+            },
+            bgColor: 'rgba(0,0,0,0)',
+
+          });
+
+
+          api.openFrame({
+            name: 'xiangji_frame',
+            url: './xiangji_frame.html',
+            rect: {
+              x: api.winWidth-38,
+              y: 28,
+              w: 50,
+              h: 50
+            },
+            bgColor: 'rgba(0,0,0,0)',
+
+          });
+        }, 200)
         
 
 

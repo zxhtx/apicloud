@@ -25,7 +25,7 @@
 
 <body>
   <div id="list">
-    <img class="img" id="zan" tapmode onclick="back()" src="../image/backimg.png" alt="" width="25px" height="25px"> 
+    <img class="img" id="zan" tapmode onclick="xiangji()" src="../image/xiangji.png" alt="" width="28px" height="28px"> 
   </div>
 
 </body>
@@ -37,18 +37,12 @@
 
 
   };
-  function back(){
-    api.closeFrame({
-      name: 'caoshi_frame'
-    });
-    api.closeFrame({
-      name: 'video'
-    });
-    api.closeFrame({
-      name: 'backimg_frame'
-    });
-    api.closeFrame({
-      name: 'xiangji_frame'
+ 
+  function xiangji(){
+    api.toast({
+        msg: '程序正在开发中',
+        duration: 2000,
+        location: 'bottom'
     });
   }
 
