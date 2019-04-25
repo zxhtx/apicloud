@@ -33,11 +33,11 @@
 <script type="text/javascript">
  var dialogBox;
  var recordVideo;
- var UIAlbumBrowser;
+  var UIMediaScanner;
  apiready = function() {
   dialogBox = api.require('dialogBox');
   recordVideo = api.require('weChatVideo');
-  UIAlbumBrowser = api.require('UIAlbumBrowser');
+  UIMediaScanner = api.require('UIMediaScanner');
 
 
 };
@@ -52,8 +52,8 @@ function xiangji(){
 
   dialogBox.alert({
     texts: {
-      title: '选择拍摄',
-      content: '',
+      title: '拍摄',
+      content: '选择拍摄方式',
       leftBtnTitle: '相机',
       rightBtnTitle: '相册'
     },
@@ -107,32 +107,51 @@ function xiangji(){
       });
     }else{
 
-      UIAlbumBrowser.open({
-        max: 9,
-        styles: {
-          bg: '#fff',
-          mark: {
+   
+UIMediaScanner.open({
+    type: 'picture',
+    column: 4,
+    classify: true,
+    max: 4,
+    sort: {
+        key: 'time',
+        order: 'desc'
+    },
+    texts: {
+        stateText: '已选择*项',
+        cancelText: '取消',
+        finishText: '完成'
+    },
+    styles: {
+        bg: '#fff',
+        mark: {
             icon: '',
             position: 'bottom_left',
             size: 20
-          },
-          nav: {
-            bg: 'rgba(0,0,0,0.6)',
-            titleColor: '#fff',
-            titleSize: 18,
-            cancelColor: '#fff',
-            cancelSize: 16,
-            finishColor: '#fff',
-            finishSize: 16
-          }
         },
-        rotation: true,
-        type:'video'
-      }, function(ret) {
-        if (ret) {
-          alert(JSON.stringify(ret));
+        nav: {
+            bg: '#eee',
+            stateColor: '#000',
+            stateSize: 18,
+            cancelBg: 'rgba(0,0,0,0)',
+            cancelColor: '#000',
+            cancelSize: 18,
+            finishBg: 'rgba(0,0,0,0)',
+            finishColor: '#000',
+            finishSize: 18
         }
-      });
+    },
+    scrollToBottom: {
+        intervalTime: 3,
+        anim: true
+    },
+    exchange: true,
+    rotation: true
+}, function(ret) {
+    if (ret) {
+        alert(JSON.stringify(ret));
+    }
+});
       dialogBox.close({
         dialogName: 'alert'
       });
