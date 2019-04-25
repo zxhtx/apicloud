@@ -336,6 +336,12 @@ function xiangji(){
 
 function addtext(texts){
   var userInfo=$api.getStorage('user');
+  var addinfo={
+    title:texts,
+    userid:userInfo[0].id,
+    username:userInfo[0].username
+
+  }
   var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
@@ -349,13 +355,8 @@ function addtext(texts){
          "Authorization": userInfo.id
        },
        data: {
-        values: {
-          title:texts,
-          userid:userInfo[0].id,
-          username:userInfo[0].username
-
-        },
-      },
+        values: addinfo
+      }
     }, function(ret, err) {
       videoid=ret.id;
 
