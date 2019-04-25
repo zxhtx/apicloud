@@ -32,10 +32,11 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
  var dialogBox;
- var camera;
+ var meisheVideo;
  apiready = function() {
   dialogBox = api.require('dialogBox');
-  camera = api.require('zxycamera');
+  meisheVideo = api.require('meisheVideo');
+  
 
 
 
@@ -95,19 +96,30 @@ function xiangji(){
   }, function(ret) {
     if (ret.eventType == 'left') {
 
-      camera.ttakeVideoClick({
-        albumName:'潮袭',
-        voideLength:'60'
-      },function(ret,err){
-        alert(JSON.stringify(ret));  
-      });
+     
+      meisheVideo.open({
+        rect:{
+          x:0,
+          y:0,
+          w:api.winWidth,
+          h:api.winHeight
+        },
+        // fixedOn:api.frameName,
+        // fixed:true        
+      },function(ret){
+       if (ret.status) {
+        api.alert(ret.eventType);
+      } else {
+        api.alert({ msg:JSON.stringify(err)});
+      }
+    })
 
       dialogBox.close({
         dialogName: 'alert'
       });
     }else{
 
-    api.getPicture({
+      api.getPicture({
         sourceType: 'library',
         encodingType: 'jpg',
         mediaValue: 'video',
@@ -117,18 +129,18 @@ function xiangji(){
         targetWidth: 100,
         targetHeight: 100,
         saveToPhotoAlbum: false
-    }, function(ret, err){ 
+      }, function(ret, err){ 
         if(ret){
-             alert(JSON.stringify(ret));
-        }else{
-             alert(JSON.stringify(err));
-        }
-    });
-     dialogBox.close({
-      dialogName: 'alert'
-    });
-   }
- });
+         alert(JSON.stringify(ret));
+       }else{
+         alert(JSON.stringify(err));
+       }
+     });
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+    }
+  });
 
 
 }
