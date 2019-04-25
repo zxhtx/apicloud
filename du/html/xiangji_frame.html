@@ -32,12 +32,11 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
  var dialogBox;
- var recordVideo;
- // var UIAlbumBrowser;
+ var camera;
  apiready = function() {
   dialogBox = api.require('dialogBox');
-  recordVideo = api.require('weChatVideo');
-  // UIAlbumBrowser = api.require('UIAlbumBrowser');
+  camera = api.require('zxycamera');
+
 
 
 };
@@ -95,25 +94,35 @@ function xiangji(){
     }
   }, function(ret) {
     if (ret.eventType == 'left') {
-      recordVideo.open({
-        maxTime: 60,
-        isEditVideo:true
-      }, function(data){
 
-      })
+      camera.ttakeVideoClick({
+        albumName:'潮袭',
+        voideLength:'60'
+      },function(ret,err){
+        alert(JSON.stringify(ret));  
+      });
 
       dialogBox.close({
         dialogName: 'alert'
       });
     }else{
 
-     var mediaScanner = api.require('mediaScanner');
-     mediaScanner.open(function(ret, err) {
-      if (ret) {
-        alert(JSON.stringify(ret));
-      } else {
-        alert(JSON.stringify(err));
-      }
+    api.getPicture({
+        sourceType: 'library',
+        encodingType: 'jpg',
+        mediaValue: 'video',
+        destinationType: 'url',
+        allowEdit: true,
+        quality: 50,
+        targetWidth: 100,
+        targetHeight: 100,
+        saveToPhotoAlbum: false
+    }, function(ret, err){ 
+        if(ret){
+             alert(JSON.stringify(ret));
+        }else{
+             alert(JSON.stringify(err));
+        }
     });
      dialogBox.close({
       dialogName: 'alert'
