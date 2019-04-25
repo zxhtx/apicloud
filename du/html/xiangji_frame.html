@@ -35,6 +35,7 @@
  var recordVideo;
  var texts;
  var videourl;
+ var videoid;
  apiready = function() {
   dialogBox = api.require('dialogBox');
   recordVideo = api.require('weChatVideo');
@@ -51,7 +52,7 @@ function xiangji(){
         frameName: 'caoshi_frame',
         script: 'videopuase();'
       });
-  var userInfo=$api.getStorage('userInfo');
+  var userInfo=$api.getStorage('user');
   if (userInfo==undefined && userInfo==null) {
     var dialogBox = api.require('dialogBox');
     dialogBox.alert({
@@ -155,6 +156,7 @@ function xiangji(){
       }, function(data){
         if (data.status==true) {
           videourl=data.videourl;
+          addvideourl(videourl)
           dialogBox.input({
             keyboardType: 'default',
             texts: {
@@ -203,9 +205,9 @@ function xiangji(){
 
             if (ret.eventType == 'left') {
               api.toast({
-                  msg: '视频上传失败',
-                  duration: 2000,
-                  location: 'bottom'
+                msg: '视频上传失败',
+                duration: 2000,
+                location: 'bottom'
               });
               dialogBox.close({
                 dialogName: 'input'
@@ -216,7 +218,7 @@ function xiangji(){
               }else{
                 texts=ret.text;
               }
-
+              addtext(texts)
 
               dialogBox.close({
                 dialogName: 'input'
@@ -244,6 +246,7 @@ function xiangji(){
         if(ret){
           if (ret.data!='') {
             videourl=ret.data;
+            addvideourl(videourl)
             dialogBox.input({
               keyboardType: 'default',
               texts: {
@@ -292,9 +295,9 @@ function xiangji(){
 
               if (ret.eventType == 'left') {
                 api.toast({
-                    msg: '视频上传失败',
-                    duration: 2000,
-                    location: 'bottom'
+                  msg: '视频上传失败',
+                  duration: 2000,
+                  location: 'bottom'
                 });
                 dialogBox.close({
                   dialogName: 'input'
@@ -306,7 +309,7 @@ function xiangji(){
                   texts=ret.text;
                 }
 
-
+                addtext(texts)
                 dialogBox.close({
                   dialogName: 'input'
                 });
@@ -327,8 +330,101 @@ function xiangji(){
 
 }
 
+function addtext(texts){
+  var userInfo=$api.getStorage('user');
+  var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+      var userInfo=$api.getStorage('userInfo');
+      api.ajax({
+        url: 'https://d.apicloud.com/mcm/api/video1',
+        method: 'post',
+        headers: {
+         "X-APICloud-AppId": "A6099267504667",
+         "X-APICloud-AppKey":   appKey,
+         "Authorization": userInfo.id
+       },
+       data: {
+        values: {
+          title:texts,
+          userid:userInfo[0].id,
+          username:userInfo[0].username
 
+        }
+      }
+    }, function(ret, err) {
+      videoid=ret.id;
 
+    };
+  }
+
+  function addvideourl(videourl){
+    var now = Date.now();
+    var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+    api.ajax({
+      url: 'https://d.apicloud.com/mcm/api/file',
+      method: 'post',
+      data: {
+        values: { 
+          filename: 'video'
+        },
+        files: { 
+          file: videourl
+        }
+      },
+      headers: {
+        "X-APICloud-AppId": "A6099267504667",
+        "X-APICloud-AppKey":   appKey
+      },
+    },function(ret, err){
+      if (ret) {
+
+        updatevideourl(ret)
+      } else {
+        api.toast({
+          msg: err.msg,
+          duration: 2000,
+          location: 'bottom'
+        });
+      }
+    });
+
+  }
+
+  function updatevideourl(videourl){
+   var now = Date.now();
+   var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+   var userInfo=$api.getStorage('userInfo');
+   api.ajax({
+    url: 'https://d.apicloud.com/mcm/api/video1/'+videoid,
+    method: 'put',
+    headers: {
+      "X-APICloud-AppId": "A6099267504667",
+      "X-APICloud-AppKey":   appKey,
+      "Authorization":userInfo.id
+    },
+    data: {
+      values: { 
+        video: videourl
+      }
+
+    }
+  },function(ret, err){
+    if (ret) {
+    api.toast({
+        msg: '视频上传成功',
+        duration: 2000,
+        location: 'bottom'
+    });
+   } else {
+    api.toast({
+      msg: err.msg,
+      duration: 2000,
+      location: 'bottom'
+    });
+  }
+});
+ }
 </script>
 
 </html>
