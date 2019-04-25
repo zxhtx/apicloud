@@ -205,10 +205,12 @@ function xiangji(){
 
             if (ret.eventType == 'left') {
               api.toast({
-                msg: '视频上传失败',
+                msg: '取消视频上传',
                 duration: 2000,
                 location: 'bottom'
               });
+              texts='';
+              videourl='';
               dialogBox.close({
                 dialogName: 'input'
               });
@@ -295,10 +297,12 @@ function xiangji(){
 
               if (ret.eventType == 'left') {
                 api.toast({
-                  msg: '视频上传失败',
+                  msg: '取消视频上传',
                   duration: 2000,
                   location: 'bottom'
                 });
+                texts='';
+                videourl='';
                 dialogBox.close({
                   dialogName: 'input'
                 });
@@ -350,8 +354,8 @@ function addtext(texts){
           userid:userInfo[0].id,
           username:userInfo[0].username
 
-        }
-      }
+        },
+      },
     }, function(ret, err) {
       videoid=ret.id;
 
@@ -411,19 +415,19 @@ function addtext(texts){
     }
   },function(ret, err){
     if (ret) {
-    api.toast({
+      api.toast({
         msg: '视频上传成功',
         duration: 2000,
         location: 'bottom'
-    });
-   } else {
-    api.toast({
-      msg: err.msg,
-      duration: 2000,
-      location: 'bottom'
-    });
-  }
-});
+      });
+    } else {
+      api.toast({
+        msg: err.msg,
+        duration: 2000,
+        location: 'bottom'
+      });
+    }
+  });
  }
 </script>
 
