@@ -94,14 +94,75 @@ function xiangji(){
       }
     }
   }, function(ret) {
-    if (ret.eventType == 'left') {
-
-
-   
+    if (ret.eventType == 'left') {   
      recordVideo.open({
-      maxTime: 60
+      maxTime: 60,
+      isEditVideo:true
     }, function(data){
-      alert(JSON.stringify(data))
+      if (status==true) {
+        dialogBox.input({
+          keyboardType: 'default',
+          texts: {
+            title: '发表视频',
+            placeholder: '说两句吧',
+            leftBtnTitle: '取消',
+            rightBtnTitle: '确定'
+          },
+          styles: {
+            bg: '#fff',
+            corner: 2,
+            w: 300,
+            h: 240,
+            title: {
+              h: 60,
+              alignment: 'center',
+              size: 14,
+              color: '#000',
+              marginT:30,
+            },
+            input: {
+              h: 60,
+              y:30,
+              marginT:15,
+              marginLeft: 10,
+              marginRight:10,
+              textSize: 14,
+              textColor: '#000'
+            },
+            dividingLine: {
+              width: 0.5,
+              color: '#696969'
+            },
+            left: {
+              bg: 'rgba(0,0,0,0)',
+              color: '#007FFF',
+              size: 12
+            },
+            right: {
+              bg: 'rgba(0,0,0,0)',
+              color: '#007FFF',
+              size: 12
+            }
+          }
+        }, function(ret) {
+         
+          if (ret.eventType == 'left') {
+
+            dialogBox.close({
+              dialogName: 'input'
+            });
+          }else{ api.alert({
+            msg: JSON.stringify(ret)
+          });
+          
+          dialogBox.close({
+            dialogName: 'input'
+          });
+
+        }
+      });
+
+      }
     })
      dialogBox.close({
       dialogName: 'alert'
@@ -119,8 +180,6 @@ function xiangji(){
     }, function(ret, err){ 
       if(ret){
        alert(JSON.stringify(ret));
-     }else{
-       alert(JSON.stringify(err));
      }
    });
     dialogBox.close({
