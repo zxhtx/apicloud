@@ -207,7 +207,12 @@ function xiangji(){
                 dialogName: 'input'
               });
             }else{ 
-              texts=ret.text;
+              if (ret.text=='') {
+                texts='我...话太多...还是视频表达!!!'
+              }else{
+                texts=ret.text;
+              }
+
 
               dialogBox.close({
                 dialogName: 'input'
@@ -287,8 +292,12 @@ function xiangji(){
                   dialogName: 'input'
                 });
               }else{ 
+                if (ret.text=='') {
+                  texts='我...话太多...还是视频表达!!!'
+                }else{
+                  texts=ret.text;
+                }
 
-                texts=ret.texts;
 
                 dialogBox.close({
                   dialogName: 'input'
