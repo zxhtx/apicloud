@@ -25,7 +25,7 @@
 
 <body>
   <div id="list">
-    <img class="img"  tapmode onclick="xiangji()" src="../image/photo.png" alt="" width="28px" height="28px"> 
+    <img class="img" id="zan" tapmode onclick="xiangji()" src="../image/photo.png" alt="" width="28px" height="28px"> 
   </div>
 
 </body>
@@ -46,293 +46,247 @@
 };
 
 function xiangji(){
-
   api.execScript({
         // name: 'winName',
         frameName: 'caoshi_frame',
         script: 'videopuase();'
       });
-  var userInfo=$api.getStorage('user');
+  var userInfo=$api.getStorage('userInfo');
   if (userInfo==undefined && userInfo==null) {
-    var dialogBox = api.require('dialogBox');
-    dialogBox.alert({
-      texts: {
-        title: '未登录',
-        content: '您还没登录啦[○･｀Д´･ ○]',
-        leftBtnTitle: '确认',
-      },
-      styles: {
-        bg: '#fff',
-        w: 300,
-        corner:2,
-        title: {
-          marginT: 18,
-          titleSize: 14,
-          titleColor: '#000'
-        },
-        content: {
-          color: '#000',
-          size: 14
-        },
-        left: {
-          marginB: 7,
-          marginL: 88,
-          w: 130,
-          h: 35,
-          corner: 8,
-          bg: '#000',
-          size: 12,
-          color: '#fff',
-        },
+   api.openWin({
+    name: 'login',
+    url: './login.html',
+    animation: {
+      type: "fade"
+    }
+  });
+   return;
+ }
 
-      }
-    },function(ret) {
-      if (ret.eventType == 'left') {
-        api.openWin({
-          name: 'login',
-          url: './login.html',
-          pageParam: {
-            ware: api.pageParam.wareId 
+ dialogBox.alert({
+  texts: {
+    title: '拍摄',
+    content: '选择拍摄方式',
+    leftBtnTitle: '相机',
+    rightBtnTitle: '相册'
+  },
+  styles: {
+    bg: '#fff',
+    w: 300,
+    corner:2,
+    title: {
+      marginT: 20,
+      icon: 'widget://res/gou.png',
+      iconSize: 40,
+      titleSize: 14,
+      titleColor: '#000'
+    },
+    content: {
+      color: '#000',
+      size: 14
+    },
+    left: {
+      marginB: 7,
+      marginL: 20,
+      w: 130,
+      h: 35,
+      corner: 2,
+      bg: '#000000',
+      color:'#ffffff',
+      size: 12
+    },
+    right: {
+      marginB: 7,
+      marginL: 10,
+      w: 130,
+      h: 35,
+      corner: 2,
+      bg: '#000000',
+      color:'#ffffff',
+      size: 12
+    }
+  }
+}, function(ret) {
+  if (ret.eventType == 'left') {   
+   recordVideo.open({
+    maxTime: 60,
+    isEditVideo:true
+  }, function(data){
+    if (data.status==true) {
+      videourl=data.videourl;
+      dialogBox.input({
+        keyboardType: 'default',
+        texts: {
+          title: '发表视频',
+          placeholder: '说说你想说的吧',
+          leftBtnTitle: '取消',
+          rightBtnTitle: '确定'
+        },
+        styles: {
+          bg: '#fff',
+          corner: 2,
+          w: 300,
+          h: 240,
+          title: {
+            h: 60,
+            alignment: 'center',
+            size: 14,
+            color: '#000',
+            marginT:30,
           },
-          animation: {
-            type: "fade"
+          input: {
+            h: 60,
+            y:30,
+            marginT:15,
+            marginLeft: 10,
+            marginRight:10,
+            textSize: 14,
+            textColor: '#000'
+          },
+          dividingLine: {
+            width: 0.5,
+            color: '#696969'
+          },
+          left: {
+            bg: 'rgba(0,0,0,0)',
+            color: '#007FFF',
+            size: 12
+          },
+          right: {
+            bg: 'rgba(0,0,0,0)',
+            color: '#007FFF',
+            size: 12
           }
-        });
-        dialogBox.close();
-      }
-    });  
-
-    return;
-  }else{
-
-    dialogBox.alert({
-      texts: {
-        title: '拍摄',
-        content: '选择拍摄方式',
-        leftBtnTitle: '相机',
-        rightBtnTitle: '相册'
-      },
-      styles: {
-        bg: '#fff',
-        w: 300,
-        corner:2,
-        title: {
-          marginT: 20,
-          icon: 'widget://res/gou.png',
-          iconSize: 40,
-          titleSize: 14,
-          titleColor: '#000'
-        },
-        content: {
-          color: '#000',
-          size: 14
-        },
-        left: {
-          marginB: 7,
-          marginL: 20,
-          w: 130,
-          h: 35,
-          corner: 2,
-          bg: '#000000',
-          color:'#ffffff',
-          size: 12
-        },
-        right: {
-          marginB: 7,
-          marginL: 10,
-          w: 130,
-          h: 35,
-          corner: 2,
-          bg: '#000000',
-          color:'#ffffff',
-          size: 12
         }
+      }, function(ret) {
+
+        if (ret.eventType == 'left') {
+          api.toast({
+            msg: '取消视频上传',
+            duration: 2000,
+            location: 'bottom'
+          });
+          dialogBox.close({
+            dialogName: 'input'
+          });
+        }else{ 
+         if (ret.text=='') {
+          texts='话太多...视频表达'
+        }else{
+          texts=ret.text;
+        }
+        addtext(texts)
+
+        dialogBox.close({
+          dialogName: 'input'
+        });
+
       }
-    }, function(ret) {
-      if (ret.eventType == 'left') {   
-       recordVideo.open({
-        maxTime: 60,
-        isEditVideo:true
-      }, function(data){
-        if (data.status==true) {
-          videourl=data.videourl;
-          addvideourl(videourl)
-          dialogBox.input({
-            keyboardType: 'default',
-            texts: {
-              title: '发表视频',
-              placeholder: '我...话太多...还是视频表达!!!',
-              leftBtnTitle: '取消',
-              rightBtnTitle: '确定'
+    });
+
+    }
+  })
+   dialogBox.close({
+    dialogName: 'alert'
+  });
+ }else{
+
+  api.getPicture({
+    sourceType: 'library',
+    encodingType: 'jpg',
+    mediaValue: 'video',
+    destinationType: 'url',
+    allowEdit: true,
+    quality: 50,
+    saveToPhotoAlbum: false
+  }, function(ret, err){ 
+    if(ret){
+      if (ret.data!='') {
+        videourl=ret.data;
+        dialogBox.input({
+          keyboardType: 'default',
+          texts: {
+            title: '发表视频',
+            placeholder: '说说你想说的吧',
+            leftBtnTitle: '取消',
+            rightBtnTitle: '确定'
+          },
+          styles: {
+            bg: '#fff',
+            corner: 2,
+            w: 300,
+            h: 240,
+            title: {
+              h: 60,
+              alignment: 'center',
+              size: 14,
+              color: '#000',
+              marginT:30,
             },
-            styles: {
-              bg: '#fff',
-              corner: 2,
-              w: 300,
-              h: 240,
-              title: {
-                h: 60,
-                alignment: 'center',
-                size: 14,
-                color: '#000',
-                marginT:30,
-              },
-              input: {
-                h: 60,
-                y:30,
-                marginT:15,
-                marginLeft: 10,
-                marginRight:10,
-                textSize: 14,
-                textColor: '#000'
-              },
-              dividingLine: {
-                width: 0.5,
-                color: '#696969'
-              },
-              left: {
-                bg: 'rgba(0,0,0,0)',
-                color: '#007FFF',
-                size: 12
-              },
-              right: {
-                bg: 'rgba(0,0,0,0)',
-                color: '#007FFF',
-                size: 12
-              }
+            input: {
+              h: 60,
+              y:30,
+              marginT:15,
+              marginLeft: 10,
+              marginRight:10,
+              textSize: 14,
+              textColor: '#000'
+            },
+            dividingLine: {
+              width: 0.5,
+              color: '#696969'
+            },
+            left: {
+              bg: 'rgba(0,0,0,0)',
+              color: '#007FFF',
+              size: 12
+            },
+            right: {
+              bg: 'rgba(0,0,0,0)',
+              color: '#007FFF',
+              size: 12
             }
-          }, function(ret) {
+          }
+        }, function(ret) {
 
-            if (ret.eventType == 'left') {
-              api.toast({
-                msg: '取消视频上传',
-                duration: 2000,
-                location: 'bottom'
-              });
-              texts='';
-              videourl='';
-              dialogBox.close({
-                dialogName: 'input'
-              });
-            }else{ 
-              if (ret.text=='') {
-                texts='我...话太多...还是视频表达!!!'
-              }else{
-                texts=ret.text;
-              }
-              addtext(texts)
+          if (ret.eventType == 'left') {
+            api.toast({
+              msg: '取消视频上传',
+              duration: 2000,
+              location: 'bottom'
+            });
+            dialogBox.close({
+              dialogName: 'input'
+            });
+          }else{ 
+           if (ret.text=='') {
+            texts='话太多...视频表达'
+          }else{
+            texts=ret.text;
+          }
+          addtext(texts)
 
-              dialogBox.close({
-                dialogName: 'input'
-              });
-
-            }
+          dialogBox.close({
+            dialogName: 'input'
           });
 
         }
-      })
-       dialogBox.close({
-        dialogName: 'alert'
       });
-     }else{
-
-      api.getPicture({
-        sourceType: 'library',
-        encodingType: 'jpg',
-        mediaValue: 'video',
-        destinationType: 'url',
-        allowEdit: true,
-        quality: 50,
-        saveToPhotoAlbum: false
-      }, function(ret, err){ 
-        if(ret){
-          if (ret.data!='') {
-            videourl=ret.data;
-            addvideourl(videourl)
-            dialogBox.input({
-              keyboardType: 'default',
-              texts: {
-                title: '发表视频',
-                placeholder: '我...话太多...还是视频表达!!!',
-                leftBtnTitle: '取消',
-                rightBtnTitle: '确定'
-              },
-              styles: {
-                bg: '#fff',
-                corner: 2,
-                w: 300,
-                h: 240,
-                title: {
-                  h: 60,
-                  alignment: 'center',
-                  size: 14,
-                  color: '#000',
-                  marginT:30,
-                },
-                input: {
-                  h: 60,
-                  y:30,
-                  marginT:15,
-                  marginLeft: 10,
-                  marginRight:10,
-                  textSize: 14,
-                  textColor: '#000'
-                },
-                dividingLine: {
-                  width: 0.5,
-                  color: '#696969'
-                },
-                left: {
-                  bg: 'rgba(0,0,0,0)',
-                  color: '#007FFF',
-                  size: 12
-                },
-                right: {
-                  bg: 'rgba(0,0,0,0)',
-                  color: '#007FFF',
-                  size: 12
-                }
-              }
-            }, function(ret) {
-
-              if (ret.eventType == 'left') {
-                api.toast({
-                  msg: '取消视频上传',
-                  duration: 2000,
-                  location: 'bottom'
-                });
-                texts='';
-                videourl='';
-                dialogBox.close({
-                  dialogName: 'input'
-                });
-              }else{ 
-                if (ret.text=='') {
-                  texts='我...话太多...还是视频表达!!!'
-                }else{
-                  texts=ret.text;
-                }
-
-                addtext(texts)
-                dialogBox.close({
-                  dialogName: 'input'
-                });
-
-              }
-            });
 
 
-          }
-        }
-      });
-      dialogBox.close({
-        dialogName: 'alert'
-      });
+      }
     }
   });
+  dialogBox.close({
+    dialogName: 'alert'
+  });
+}
+});
 
 
 }
+
+
 
 function addtext(texts){
   var userInfo=$api.getStorage('user');
@@ -359,7 +313,7 @@ function addtext(texts){
       }
     }, function(ret, err) {
       videoid=ret.id;
-
+      addvideourl(videourl);
     };
   }
 
@@ -430,6 +384,8 @@ function addtext(texts){
     }
   });
  }
+
+
 </script>
 
 </html>
