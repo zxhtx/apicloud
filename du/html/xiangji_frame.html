@@ -99,7 +99,7 @@ function xiangji(){
       maxTime: 60,
       isEditVideo:true
     }, function(data){
-      if (status==true) {
+      if (data.status==true) {
         dialogBox.input({
           keyboardType: 'default',
           texts: {
@@ -145,16 +145,17 @@ function xiangji(){
             }
           }
         }, function(ret) {
-         
+
           if (ret.eventType == 'left') {
 
             dialogBox.close({
               dialogName: 'input'
             });
-          }else{ api.alert({
+          }else{ 
+            api.alert({
             msg: JSON.stringify(ret)
           });
-          
+
           dialogBox.close({
             dialogName: 'input'
           });
