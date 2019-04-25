@@ -113,33 +113,33 @@
     eventlister();
     video=[];
     fnLoadList();
- 
+    
     window.setInterval(tishi,15000);
 
 
 
-        
-      };
+    
+  };
 
 
 
-        function fnLoadList(_LoadMore) {
-          if (_LoadMore) {
-            skip+=LIMIT;
-          }else{
+  function fnLoadList(_LoadMore) {
+    if (_LoadMore) {
+      skip+=LIMIT;
+    }else{
 
-            skip=0;
-          }
-          var params={
-            fields:{},
-            fields: {},
-            skip:skip,
-            limit:LIMIT,
-            order:"createdAt DESC"
-          }
-          params=$api.jsonToStr(params);
+      skip=0;
+    }
+    var params={
+      fields:{},
+      fields: {},
+      skip:skip,
+      limit:LIMIT,
+      order:"createdAt DESC"
+    }
+    params=$api.jsonToStr(params);
 
-          var now = Date.now();
+    var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       api.ajax({
@@ -208,12 +208,12 @@
       // };
       function fnOpenRoom(ret){
         
-          for (var i = 0; i <ret.length; i++) {
-            video.push({
-             imageUrl:'',
-             videoUrl:ret[i].video.url
-           })
-          }
+        for (var i = 0; i <ret.length; i++) {
+          video.push({
+           imageUrl:'',
+           videoUrl:ret[i].video.url
+         })
+        }
         
 
         UIScrollPlayer.open({
@@ -277,7 +277,10 @@
 
       };
 
+      function videopuase(){
+        UIScrollPlayer.pause();
 
+      }
 
 
       // function fnPullRefresh(){

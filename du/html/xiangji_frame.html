@@ -37,18 +37,27 @@
 
 
   };
-  
+
   function xiangji(){
-    api.openWin({
-      name: 'meishe',
-      url: './meishe.html',
-      pageParam: {
-        name: 'test'
-      },
-      animation: {
-        type: "fade"
-      }
+    api.execScript({
+        // name: 'winName',
+        frameName: 'caoshi_frame',
+        script: 'videopuase();'
     });
+   api.openFrame({
+       name: 'meishe_frame',
+       url: './meishe_frame.html',
+       rect: {
+           x: 0,
+           y: 0,
+           w: api.winWidth,
+           h: api.winHeight
+       },
+       pageParam: {
+           name: 'test'
+       },
+       bgColor: 'rgba(0,0,0,0)',
+   });
   }
 
 
