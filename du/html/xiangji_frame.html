@@ -31,46 +31,86 @@
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
+ var dialogBox;
+ apiready = function() {
+  dialogBox = api.require('dialogBox');
 
-  apiready = function() {
 
+};
 
-
-  };
-
-  function xiangji(){
-    api.execScript({
+function xiangji(){
+  api.execScript({
         // name: 'winName',
         frameName: 'caoshi_frame',
         script: 'videopuase();'
       });
-    var recordVideo = api.require('weChatVideo');
-    recordVideo.open({
-      maxTime: 60,
-      isEditVideo:true
-    }, function(data){
 
-    })
-       setTimeout(function() {
-        api.openFrame({
-            name: 'xiangce_frame',
-            url: './xiangce_frame.html',
-            rect: {
-                x: api.winWidth/2-28,
-                y: 50,
-                w: 50,
-                h: 50
-            },
-            pageParam: {
-                name: 'test'
-            },
-            bounces: true,
-            bgColor: 'rgba(0,0,0,0)',
-            vScrollBarEnabled: true,
-            hScrollBarEnabled: true
-        });
-       },200)
-  }
+
+  dialogBox.alert({
+    texts: {
+      title: '选择拍摄',
+      content: '',
+      leftBtnTitle: '相机',
+      rightBtnTitle: '相册'
+    },
+    styles: {
+      bg: '#fff',
+      w: 300,
+      corner:2,
+      title: {
+        marginT: 20,
+        icon: 'widget://res/gou.png',
+        iconSize: 40,
+        titleSize: 14,
+        titleColor: '#000'
+      },
+      content: {
+        color: '#000',
+        size: 14
+      },
+      left: {
+        marginB: 7,
+        marginL: 20,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#e0e',
+        size: 12
+      },
+      right: {
+        marginB: 7,
+        marginL: 10,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#e0e',
+        size: 12
+      }
+    }
+  }, function(ret) {
+    if (ret.eventType == 'left') {
+      alert(1)
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+    }else{
+      alert(2);
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+    }
+  });
+
+
+  var recordVideo = api.require('weChatVideo');
+  recordVideo.open({
+    maxTime: 60,
+    isEditVideo:true
+  }, function(data){
+
+  })
+
+}
 
 
 
