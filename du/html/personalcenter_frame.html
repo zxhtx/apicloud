@@ -202,13 +202,6 @@
                 <div class="text">敢充吗？你敢充,我敢打折</div>
             </div>
         </div>
-        <div class="option" tapmode onclick="OpentuanduiWin()">
-            <div class="icon icon-tuandui"></div>
-            <div class="title">加入我们</div>
-            <div class="arrow-panel">
-                <div class="text">成为团队成员全场享9.5折</div>
-            </div>
-        </div>
         <div class="option" tapmode onclick="share()">
             <div class="icon icon-share"></div>
             <div class="title">分享应用</div>
@@ -314,19 +307,7 @@ function sharevip(){
     }
 });
 }
-function OpentuanduiWin(){
- api.openWin({
-    name: 'tuandui',
-    url: './tuandui.html',
-    pageParam: {
-        name: 'test'
-    },
-    animation: {
-        type: "fade"
-    }
-});
 
-}
 function event(){
     api.addEventListener({
         name: 'addvip'

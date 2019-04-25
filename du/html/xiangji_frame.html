@@ -37,12 +37,17 @@
 
 
   };
- 
+  
   function xiangji(){
-    api.toast({
-        msg: '程序正在开发中',
-        duration: 2000,
-        location: 'bottom'
+    api.openWin({
+      name: 'meishe',
+      url: './meishe.html',
+      pageParam: {
+        name: 'test'
+      },
+      animation: {
+        type: "fade"
+      }
     });
   }
 

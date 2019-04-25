@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <title>title</title>
+  <link rel="stylesheet" type="text/css" href="../css/api.css" />
+  <style>
+  html,
+  body {
+    background-color: transparent;
+  }
+
+  #container {
+    padding: 11px;  
+    /*padding-bottom:11px;       */
+  }
+
+  #container>.card {
+   background-image: url("../image/jiazai.gif");
+   margin-bottom: 39px;        
+   position: relative;
+   float: left;
+   padding: 4px;
+   border-radius: 8%;
+   box-sizing: border-box;
+   background-clip: content-box;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+
+ }
+
+ #container>.card>.favorite {
+  position: absolute;
+  width: 14px;
+  height: 13px;
+  left: 15.5px;
+  top: 17px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url(../image/favorite-list.png);
+}
+
+#container>.card>.room-name {
+  position: absolute;
+  left: 14px;
+  bottom: 13px;
+  height: 16.5px;
+  line-height: 16.5px;
+  font-size: 16.5px;
+  color: white;
+}
+
+#container>.card>.gender {
+  position: absolute;
+  bottom: 15px;
+  right: 30.5px;
+  width: 13px;
+  height: 13px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url(../image/male.png);
+}
+
+#container>.card>.age {
+  position: absolute;
+  right: 11px;
+  bottom: 13px;
+  font-size: 14px;
+  line-height: 14px;
+  color: white;
+}
+.card>img{
+  display:none;
+}
+
+
+.card>p{
+  position: absolute;
+  bottom: -30px;  
+  font-size: 16px;
+}
+</style>
+</head>
+
+<body>
+  <div id="container">
+
+  </div>
+  <!-- <div class="push-status" id="pushStatus">上拉显示更多</div> -->
+</body>
+<script type="text/template" id="template">
+
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript">
+  var meisheVideo;
+  apiready = function() {
+   meisheVideo = api.require('meisheVideo');
+   meishe();
+
+
+ };
+
+ function meishe(){
+
+  meisheVideo.open({
+    rect:{
+      x:0,
+      y:0,
+      w:api.winWidth,
+      h:api.winHeight
+    },
+    fixedOn:api.frameName,
+    fixed:true        
+  },function(ret){
+   if (ret.status) {
+    api.alert(ret.eventType);
+  } else {
+    api.alert({ msg:JSON.stringify(err)});
+  }
+})
+}
+
+
+
+
+</script>
+
+</html>

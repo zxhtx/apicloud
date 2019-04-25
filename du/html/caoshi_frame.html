@@ -113,7 +113,7 @@
     eventlister();
     video=[];
     fnLoadList();
-    fnPullRefresh();
+    // fnPullRefresh();
     initEventListenter();
     window.setInterval(tishi,15000);
 
@@ -211,10 +211,10 @@
 
 
       // };
-      function fnOpenRoom(ret,_LoadMore){
+      function fnOpenRoom(ret){
         // var array;
         // alert(1)
-        if (_LoadMore) {
+        // if (_LoadMore) {
 
           for (var i = 0; i <ret.length; i++) {
             video.push({
@@ -222,18 +222,18 @@
              videoUrl:ret[i].video.url
            })
           }
-        }else{
-          video=[];
-          for (var i = 0; i <ret.length; i++) {
-            video.push({
-             imageUrl:'',
-             videoUrl:ret[i].video.url
-           })
+        // }else{
+          // video=[];
+          // for (var i = 0; i <ret.length; i++) {
+          //   video.push({
+          //    imageUrl:'',
+          //    videoUrl:ret[i].video.url
+          //  })
 
 
-          }
+          // }
 
-        }
+        // }
 
         UIScrollPlayer.open({
           rect : {
@@ -289,7 +289,7 @@
             bgColor: 'rgba(0,0,0,0)',
 
           });
-        }, 200)
+        }, 200);
         
 
 
@@ -299,42 +299,42 @@
 
 
 
-      function fnPullRefresh(){
-        api.setCustomRefreshHeaderInfo({
-          bgColor: '#C0C0C0',
-          isScale: true
-        }, function() {
-          fnLoadList();
+      // function fnPullRefresh(){
+      //   api.setCustomRefreshHeaderInfo({
+      //     bgColor: '#C0C0C0',
+      //     isScale: true
+      //   }, function() {
+      //     fnLoadList();
 
-        });
+      //   });
 
-      }
-
-
+      // }
 
 
 
-      function fnRenderList(ret,_LoadMore) {
 
-        if (_LoadMore) {
-          fnOpenRoom(ret,_LoadMore)
-        }
-    // 优化
-    api.parseTapmode();
 
-    api.refreshHeaderLoadDone();
-  }
-  function initEventListenter(){
-    api.addEventListener({
-      name:'scrolltobottom',
-      extra:{
-        threshold:100
-      }
-    }, function(ret, err){        
-     // fnLoadList(true);
-     alert(到底了)
-   });
-  }
+  //     function fnRenderList(ret,_LoadMore) {
+
+  //       if (_LoadMore) {
+  //         fnOpenRoom(ret,_LoadMore)
+  //       }
+  //   // 优化
+  //   api.parseTapmode();
+
+  //   api.refreshHeaderLoadDone();
+  // }
+  // function initEventListenter(){
+  //   api.addEventListener({
+  //     name:'scrolltobottom',
+  //     extra:{
+  //       threshold:100
+  //     }
+  //   }, function(ret, err){        
+  //    // fnLoadList(true);
+  //    alert(到底了)
+  //  });
+  // }
 </script>
 
 </html>
