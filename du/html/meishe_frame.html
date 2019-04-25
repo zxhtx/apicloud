@@ -100,35 +100,22 @@
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript">
-  var meisheVideo;
-  apiready = function() {
-   meisheVideo = api.require('meisheVideo');
-   meishe();
 
+  apiready = function() {
+
+   wechatVideo();
 
  };
 
- function meishe(){
-
-  meisheVideo.open({
-    rect:{
-      x:0,
-      y:0,
-      w:api.winWidth,
-      h:api.winHeight
-    },
-    fixedOn:api.frameName,
-    fixed:true        
-  },function(ret){
-   if (ret.status) {
-    api.alert(ret.eventType);
-  } else {
-    api.alert({ msg:JSON.stringify(err)});
-  }
-})
+ function wechatVideo(){
+  var recordVideo = api.require('weChatVideo');
+  recordVideo.open({
+    maxTime: 60,
+    isEditVideo:true
+  }, function(data){
+    console.log(JSON.stringify(data))
+  })
 }
-
-
 
 
 </script>
