@@ -43,21 +43,14 @@
         // name: 'winName',
         frameName: 'caoshi_frame',
         script: 'videopuase();'
-    });
-   api.openFrame({
-       name: 'meishe_frame',
-       url: './meishe_frame.html',
-       rect: {
-           x: 0,
-           y: 0,
-           w: api.winWidth,
-           h: api.winHeight
-       },
-       pageParam: {
-           name: 'test'
-       },
-       bgColor: 'rgba(0,0,0,0)',
-   });
+      });
+    var recordVideo = api.require('weChatVideo');
+    recordVideo.open({
+      maxTime: 60,
+      isEditVideo:true
+    }, function(data){
+      alert(JSON.stringify(data))
+    })
   }
 
 
