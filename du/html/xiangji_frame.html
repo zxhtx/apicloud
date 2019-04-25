@@ -32,10 +32,10 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
  var dialogBox;
- var meisheVideo;
+ var recordVideo;
  apiready = function() {
   dialogBox = api.require('dialogBox');
-  meisheVideo = api.require('meisheVideo');
+  recordVideo = api.require('weChatVideo');
   
 
 
@@ -96,51 +96,38 @@ function xiangji(){
   }, function(ret) {
     if (ret.eventType == 'left') {
 
-     
-      meisheVideo.open({
-        rect:{
-          x:0,
-          y:0,
-          w:api.winWidth,
-          h:api.winHeight
-        },
-        // fixedOn:api.frameName,
-        // fixed:true        
-      },function(ret){
-       if (ret.status) {
-        api.alert(ret.eventType);
-      } else {
-        api.alert({ msg:JSON.stringify(err)});
-      }
+
+   
+     recordVideo.open({
+      maxTime: 60
+    }, function(data){
+      alert(JSON.stringify(data))
     })
+     dialogBox.close({
+      dialogName: 'alert'
+    });
+   }else{
 
-      dialogBox.close({
-        dialogName: 'alert'
-      });
-    }else{
-
-      api.getPicture({
-        sourceType: 'library',
-        encodingType: 'jpg',
-        mediaValue: 'video',
-        destinationType: 'url',
-        allowEdit: true,
-        quality: 50,
-        targetWidth: 100,
-        targetHeight: 100,
-        saveToPhotoAlbum: false
-      }, function(ret, err){ 
-        if(ret){
-         alert(JSON.stringify(ret));
-       }else{
-         alert(JSON.stringify(err));
-       }
-     });
-      dialogBox.close({
-        dialogName: 'alert'
-      });
-    }
-  });
+    api.getPicture({
+      sourceType: 'library',
+      encodingType: 'jpg',
+      mediaValue: 'video',
+      destinationType: 'url',
+      allowEdit: true,
+      quality: 50,
+      saveToPhotoAlbum: false
+    }, function(ret, err){ 
+      if(ret){
+       alert(JSON.stringify(ret));
+     }else{
+       alert(JSON.stringify(err));
+     }
+   });
+    dialogBox.close({
+      dialogName: 'alert'
+    });
+  }
+});
 
 
 }
