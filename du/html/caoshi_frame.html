@@ -107,6 +107,7 @@
   var favorite = false;
   var UIScrollPlayer; 
   var video;
+  var videonull;
   var play=0;
   apiready = function() {
     UIScrollPlayer = api.require('UIScrollPlayer');
@@ -114,7 +115,7 @@
     video=[];
     fnLoadList();
 
-  
+
 
 
 
@@ -209,27 +210,35 @@
       function fnOpenRoom(ret){
 
         for (var i = 0; i <ret.length; i++) {
-          video.push({
-           imageUrl:'',
-           videoUrl:ret[i].video.url
-         })
-        }
-        
+          if (ret[i].video.url=='' || ret[i].video.url==null || ret[i].video.url==undefined) {
+            videonull.push({
+              imageUrl:'',
+              videoUrl:ret[i].video.url
+            })
+          }else{
+           video.push({
+             imageUrl:'',
+             videoUrl:ret[i].video.url
+           })
+         }
+         
+       }
 
-        UIScrollPlayer.open({
-          rect : {
-            x : 0,
-            y : 0,
-            w : api.frameWidth,
-            h : api.frameHeight,
-          },
-          videos : video,
-          fixed:true,
-        },function(ret, err){
+
+       UIScrollPlayer.open({
+        rect : {
+          x : 0,
+          y : 0,
+          w : api.frameWidth,
+          h : api.frameHeight,
+        },
+        videos : video,
+        fixed:true,
+      },function(ret, err){
             // alert(JSON.stringify(ret));
           });
-        
-        setTimeout(function() {
+
+       setTimeout(function() {
           // 你有几个显示的你就对应打开几个按钮   x  y是定义这个坐标的位置
           api.openFrame({
             name: 'video',
@@ -271,28 +280,17 @@
 
           });
         }, 200);
-        
 
 
 
-      };
 
-      function videopuase(){
-        UIScrollPlayer.pause();
+     };
 
-      }
+     function videopuase(){
+      UIScrollPlayer.pause();
+      play=1;
 
-
-      // function fnPullRefresh(){
-      //   api.setCustomRefreshHeaderInfo({
-      //     bgColor: '#C0C0C0',
-      //     isScale: true
-      //   }, function() {
-      //     fnLoadList();
-
-      //   });
-
-      // }
+    }
 
 
 
