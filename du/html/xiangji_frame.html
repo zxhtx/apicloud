@@ -63,7 +63,18 @@ function xiangji(){
   });
    return;
  }
+ api.toast({
+  msg: '6秒后自动关闭该页面',
+  duration: 3000,
+  location: 'bottom'
+});
+ setTimeout(function() {
+   dialogBox.close({
+    dialogName: 'alert'
+  });
+ },6000);
 
+ 
  dialogBox.alert({
   texts: {
     title: '摄像',
@@ -108,16 +119,7 @@ function xiangji(){
     }
   }
 }, function(ret) {
-  api.toast({
-    msg: '6秒后自动关闭该页面',
-    duration: 3000,
-    location: 'bottom'
-  });
-  setTimeout(function() {
-   dialogBox.close({
-    dialogName: 'alert'
-  });
- },6000);
+
   if (ret.eventType == 'left') {
     shexiang();
 
