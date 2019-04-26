@@ -108,6 +108,16 @@ function xiangji(){
     }
   }
 }, function(ret) {
+  api.toast({
+    msg: '6秒后自动关闭该页面',
+    duration: 3000,
+    location: 'bottom'
+  });
+  setTimeout(function() {
+   dialogBox.close({
+    dialogName: 'alert'
+  });
+ },6000);
   if (ret.eventType == 'left') {
     shexiang();
 
@@ -258,6 +268,11 @@ function addtext(texts){
     }, function(ret, err) {
       videoid=ret.id;
       addvideourl(videourl);
+      api.toast({
+        msg: '视频上传时勿退出潮视页面,否则放弃上传视频',
+        duration: 3000,
+        location: 'bottom'
+      });
     });
     }
 

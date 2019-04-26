@@ -207,9 +207,9 @@
       }
 
 
-      // };
+      
       function fnOpenRoom(ret){
-        alert($api.jsonToStr(ret))
+        
 
         for (var i = 0; i <ret.length; i++) {
           if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
@@ -219,11 +219,6 @@
               videoUrl:ret[i].video
             })
           }else{
-            api.toast({
-              msg: '1',
-              duration: 2000,
-              location: 'bottom'
-            });
             video.push({
              imageUrl:'',
              videoUrl:ret[i].video.url
@@ -232,7 +227,6 @@
 
         }
 
-        alert($api.jsonToStr(videonull))
        UIScrollPlayer.open({
         rect : {
           x : 0,
