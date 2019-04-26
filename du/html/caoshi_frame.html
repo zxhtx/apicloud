@@ -113,6 +113,7 @@
     UIScrollPlayer = api.require('UIScrollPlayer');
     eventlister();
     video=[];
+    videonull=[];
     fnLoadList();
 
 
@@ -208,23 +209,30 @@
 
       // };
       function fnOpenRoom(ret){
+        alert($api.jsonToStr(ret))
 
         for (var i = 0; i <ret.length; i++) {
-          if (ret[i].video.url=='' || ret[i].video.url==null || ret[i].video.url==undefined) {
+          if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
+            ret[i].video=new Date;
             videonull.push({
               imageUrl:'',
-              videoUrl:ret[i].video.url
+              videoUrl:ret[i].video
             })
           }else{
-           video.push({
+            api.toast({
+              msg: '1',
+              duration: 2000,
+              location: 'bottom'
+            });
+            video.push({
              imageUrl:'',
              videoUrl:ret[i].video.url
            })
-         }
-         
-       }
+          }
 
+        }
 
+        alert($api.jsonToStr(videonull))
        UIScrollPlayer.open({
         rect : {
           x : 0,
@@ -284,9 +292,9 @@
 
 
 
-     };
+    };
 
-     function videopuase(){
+    function videopuase(){
       UIScrollPlayer.pause();
       play=1;
 
