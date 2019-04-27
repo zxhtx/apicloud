@@ -63,11 +63,7 @@ function xiangji(){
   });
    return;
  }
- api.toast({
-  msg: '6秒后自动关闭该页面',
-  duration: 3000,
-  location: 'bottom'
-});
+
  setTimeout(function() {
    dialogBox.close({
     dialogName: 'alert'
@@ -126,6 +122,11 @@ function xiangji(){
   }else{
     videoku();
   }
+});
+  api.toast({
+  msg: '6秒后自动关闭该页面',
+  duration: 3000,
+  location: 'bottom'
 });
 
 
