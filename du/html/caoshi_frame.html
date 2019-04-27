@@ -111,7 +111,7 @@
   var play=0;
   apiready = function() {
     UIScrollPlayer = api.require('UIScrollPlayer');
-    eventlister();
+    // eventlister();
     video=[];
     videonull=[];
     fnLoadList();
@@ -154,7 +154,7 @@
       }, function(ret, err) {
 
        fnOpenRoom(ret);
-       eventlister(ret);
+       // eventlister(ret);
      // alert(videourl)
 
      // alert(videourl)
@@ -211,34 +211,34 @@
       function fnOpenRoom(ret){
         
 
-        for (var i = 0; i <ret.length; i++) {
-          if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
-            ret[i].video=new Date;
-            videonull.push({
-              imageUrl:'',
-              videoUrl:ret[i].video
-            })
-          }else{
-            video.push({
-             imageUrl:'',
-             videoUrl:ret[i].video.url
-           })
-          }
+      //   for (var i = 0; i <ret.length; i++) {
+      //     if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
+      //       ret[i].video=new Date;
+      //       videonull.push({
+      //         imageUrl:'',
+      //         videoUrl:ret[i].video
+      //       })
+      //     }else{
+      //       video.push({
+      //        imageUrl:'',
+      //        videoUrl:ret[i].video.url
+      //      })
+      //     }
 
-        }
+      //   }
 
-       UIScrollPlayer.open({
-        rect : {
-          x : 0,
-          y : 0,
-          w : api.frameWidth,
-          h : api.frameHeight,
-        },
-        videos : video,
-        fixed:true,
-      },function(ret, err){
-            // alert(JSON.stringify(ret));
-          });
+      //  UIScrollPlayer.open({
+      //   rect : {
+      //     x : 0,
+      //     y : 0,
+      //     w : api.frameWidth,
+      //     h : api.frameHeight,
+      //   },
+      //   videos : video,
+      //   fixed:true,
+      // },function(ret, err){
+      //       // alert(JSON.stringify(ret));
+      //     });
 
        setTimeout(function() {
           // 你有几个显示的你就对应打开几个按钮   x  y是定义这个坐标的位置
@@ -247,7 +247,7 @@
             url: './video.html',
             rect: {
               x: api.winWidth-50,
-              y: api.winHeight/2+38,
+              y: api.winHeight/2+52,
               h: api.winHeight/2,
               w: 68
             },
