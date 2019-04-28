@@ -102,7 +102,7 @@
 <script type="text/javascript">
   var skip = 0;
   var LIMIT = 200;
-
+  var activity ;
   var city = null;
   var favorite = false;
   var UIScrollPlayer; 
@@ -126,22 +126,39 @@
 
 
   function fnLoadList(_LoadMore) {
-    if (_LoadMore) {
-      skip+=LIMIT;
-    }else{
-
-      skip=0;
+   activity = api.require('UILoading');
+   activity.keyFrame({
+    rect: {
+      w: 80,
+      h: 100
+    },
+    styles: {
+      bg: 'rgba(0,0,0,0.5)',
+      corner: 5,
+      interval: 50,
+      frame: {
+        w: 80,
+        h: 80
+      }
     }
-    var params={
-      fields:{},
-      fields: {},
-      skip:skip,
-      limit:LIMIT,
-      order:"createdAt DESC"
-    }
-    params=$api.jsonToStr(params);
+  });
 
-    var now = Date.now();
+   if (_LoadMore) {
+    skip+=LIMIT;
+  }else{
+
+    skip=0;
+  }
+  var params={
+    fields:{},
+    fields: {},
+    skip:skip,
+    limit:LIMIT,
+    order:"createdAt DESC"
+  }
+  params=$api.jsonToStr(params);
+
+  var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       api.ajax({
@@ -156,7 +173,7 @@
        fnOpenRoom(ret);
        eventlister(ret);
      // alert(videourl)
-
+     activity.closeKeyFrame();
      // alert(videourl)
 
 
@@ -227,20 +244,20 @@
 
         }
 
-       UIScrollPlayer.open({
-        rect : {
-          x : 0,
-          y : 0,
-          w : api.frameWidth,
-          h : api.frameHeight,
-        },
-        videos : video,
-        fixed:true,
-      },function(ret, err){
+        UIScrollPlayer.open({
+          rect : {
+            x : 0,
+            y : 0,
+            w : api.frameWidth,
+            h : api.frameHeight,
+          },
+          videos : video,
+          fixed:true,
+        },function(ret, err){
             // alert(JSON.stringify(ret));
           });
 
-       setTimeout(function() {
+        setTimeout(function() {
           // 你有几个显示的你就对应打开几个按钮   x  y是定义这个坐标的位置
           api.openFrame({
             name: 'video',
@@ -286,13 +303,13 @@
 
 
 
-    };
+      };
 
-    function videopuase(){
-      UIScrollPlayer.pause();
-      play=1;
+      function videopuase(){
+        UIScrollPlayer.pause();
+        play=1;
 
-    }
+      }
 
 
 

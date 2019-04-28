@@ -64,19 +64,15 @@ function xiangji(){
    return;
  }
 
- setTimeout(function() {
-   dialogBox.close({
-    dialogName: 'alert'
-  });
- },6000);
+
 
  
  dialogBox.alert({
   texts: {
     title: '摄像',
     content: '选择摄像',
-    leftBtnTitle: '相机',
-    rightBtnTitle: '视频库'
+    leftBtnTitle: '视频库',
+    rightBtnTitle: '取消'
   },
   styles: {
     bg: '#fff',
@@ -117,32 +113,22 @@ function xiangji(){
 }, function(ret) {
 
   if (ret.eventType == 'left') {
-    shexiang();
+    videoku();
+    dialogBox.close({
+      dialogName: 'alert'
+    });
+
 
   }else{
-    videoku();
+    close();
+    
   }
-});
-  api.toast({
-  msg: '6秒后自动关闭该页面',
-  duration: 3000,
-  location: 'bottom'
 });
 
 
 }
 
-function shexiang(){
-  var recordVideo = api.require('weChatVideo');
-  recordVideo.open({
-    maxTime: 58
-  }, function(data){
-    if (data.status==true) {
-     videourl=data.videourl;
-     input();
-   }
- })
-
+function close(){
   dialogBox.close({
     dialogName: 'alert'
   });
