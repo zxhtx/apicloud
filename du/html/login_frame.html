@@ -109,6 +109,7 @@
         }
     },function(ret, err){
         if (ret) {
+            // alert($api.jsonToStr(ret))
            $api.setStorage('userInfo', ret);
                 api.toast({
                     msg: '登录成功',
