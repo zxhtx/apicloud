@@ -54,12 +54,10 @@ function xiangji(){
       });
   var userInfo=$api.getStorage('userInfo');
   if (userInfo==undefined && userInfo==null) {
-   api.openWin({
-    name: 'personalcenter',
-    url: './personalcenter.html',
-    animation: {
-      type: "fade"
-    }
+  api.toast({
+      msg: '您还未登录，请登录后再操作',
+      duration: 3000,
+      location: 'bottom'
   });
    return;
  }
