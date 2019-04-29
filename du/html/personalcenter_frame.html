@@ -77,8 +77,8 @@
     .option .icon-address {
         background-image: url(../image/dizhi.png);
     }
-    .option .icon-tuijian {
-        background-image: url(../image/tuijian.png);
+    .option .icon-money {
+        background-image: url(../image/money.png);
     }
     .option .icon-vip {
         background-image: url(../image/huiyuan.png);
@@ -174,8 +174,8 @@
         <div id="vip" class="vip"></div>
     </header>
     <section>
-        <div class="option" tapmode onclick="OpentuijianWin()">
-            <div class="icon icon-tuijian"></div>
+        <div class="option" tapmode onclick="Openmoney()">
+            <div class="icon icon-money"></div>
             <div class="title">我的账户</div>
             <div class="arrow-pane2">
                 <div class="text">查看打赏记录</div>
@@ -465,10 +465,10 @@ function updatevip(){
         }
     });
 }
-function OpentuijianWin(){
+function Openmoney(){
     api.openWin({
-        name: 'tuijian',
-        url: './tuijian.html',
+        name: 'money',
+        url: './money.html',
         pageParam: {
             name: 'test'
         },
