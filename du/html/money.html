@@ -142,7 +142,7 @@
         <div class="back" tapmode onclick="api.closeWin();">
             <img src="../image/back.png">
         </div>
-        <div class="right" tapmode onclick="fnOpenBalanceHelpWin();">
+        <div class="right" tapmode onclick="Openjilu();">
             <div class="accounthelp">记录</div>
         </div>
         <div class="top">潮袭余额</div>
@@ -164,8 +164,8 @@
 
         <div class="tixian">
 
-            <div id="tixian">
-                余额提现
+            <div id="tixian" tapmode onclick="tixian()">
+                全部提现
             </div>
         </div>
         <p class="text">注:余额提现官方会扣取10%的金额</p>
@@ -189,6 +189,7 @@
    var userid;
    var value;
    var pay_type;
+   var tixianprice;
    apiready = function() {
 
     var header = $api.byId('header');
@@ -203,8 +204,68 @@
 
 
 }
-function getusermoney(){
- var now = Date.now();
+function tixian(){
+    if (tixianprice<1) {
+        api.toast({
+            msg: '账户余额不足',
+            duration: 3000,
+            location: 'bottom'
+        });
+    }else{
+       var FNScanner = api.require('FNScanner');
+       FNScanner.encodeImg({
+        content: order_id+'/'+tixianprice,
+        saveToAlbum: true,
+        saveImg: {
+            path: 'fs://tixian.png',
+            w: 200,
+            h: 200
+        }
+    }, function(ret, err) {
+        if (ret.status) {
+           api.toast({
+               msg: '提现成功(本机手机相册生成一张二维码,请加客服微信,把二维码发给客服进行提现)',
+               duration: 10000,
+               location: 'bottom'
+           });
+           var price=$api.byId('price');
+           price.innerHTML='￥0.00';
+           tixianok();
+
+       }
+   });
+   }
+
+}
+function tixianok(){
+   var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+
+
+      api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/user/'+userid,
+        method: 'put',
+        headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey
+        },
+        data: {
+            values:{
+                money:0.00
+            }
+        },
+
+    },function(ret, err){
+        if (ret) {
+
+
+        } 
+    });
+
+  }
+  function getusermoney(){
+     var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       var params={
@@ -225,15 +286,16 @@ function getusermoney(){
 
     },function(ret, err){
         if (ret) {
-            var price=$api.byId('price');
-            if (ret[0].money) {
+         tixianprice=ret[0].money;
+         var price=$api.byId('price');
+         if (ret[0].money) {
 
-              price.innerHTML='￥'+ret[0].money;
-          }else{
-            price.innerHTML='￥0.00';
-        }
+          price.innerHTML='￥'+ret[0].money;
+      }else{
+        price.innerHTML='￥0.00';
+    }
 
-    } 
+} 
 });
 }
 function pay(money){
@@ -319,6 +381,13 @@ function alipay(money){
 
 
 
+}
+function Openjilu(){
+    api.toast({
+        msg: '程序开发中',
+        duration: 2000,
+        location: 'bottom'
+    });
 }
 </script>
 

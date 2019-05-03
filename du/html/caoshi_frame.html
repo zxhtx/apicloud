@@ -142,23 +142,38 @@
       }
     }
   });
-
    if (_LoadMore) {
     skip+=LIMIT;
   }else{
 
     skip=0;
   }
-  var params={
+
+
+  if (api.pageParam.name=='mevideo') {
+   var userInfo=$api.getStorage('user');
+   var params={
     fields:{},
     fields: {},
     skip:skip,
     limit:LIMIT,
+    where:{userid:userInfo[0].id},
     order:"createdAt DESC"
   }
-  params=$api.jsonToStr(params);
+}else{
+ var params={
+  fields:{},
+  fields: {},
+  skip:skip,
+  limit:LIMIT,
+  order:"createdAt DESC"
+}
+}
 
-  var now = Date.now();
+
+params=$api.jsonToStr(params);
+
+var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       api.ajax({
@@ -226,7 +241,7 @@
 
       
       function fnOpenRoom(ret){
-        
+
 
         for (var i = 0; i <ret.length; i++) {
           if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
@@ -294,6 +309,10 @@
               y: 28,
               w: 50,
               h: 50
+            }, 
+
+             pageParam: {
+              name: api.pageParam.name
             },
             bgColor: 'rgba(0,0,0,0)',
 

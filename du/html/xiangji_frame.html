@@ -25,7 +25,7 @@
 
 <body>
   <div id="list">
-    <img class="img" id="zan" tapmode onclick="xiangji()" src="../image/photo.png" alt="" width="28px" height="28px"> 
+    <img class="img" id="shexiang" tapmode onclick="xiangji()" src="../image/photo.png" alt="" width="28px" height="28px"> 
   </div>
 
 </body>
@@ -39,12 +39,20 @@
  var videoid;
  apiready = function() {
   dialogBox = api.require('dialogBox');
- 
-  
+
+  img();
 
 
 
 };
+function img(){
+  var shexiang=$api.byId('shexiang');
+  if (api.pageParam.name=='mevideo') {
+    shexiang.src='../image/gengduo.png';
+  // shexiang.onclick='gengduo()';
+}
+}
+
 
 function xiangji(){
   api.execScript({
@@ -54,75 +62,138 @@ function xiangji(){
       });
   var userInfo=$api.getStorage('userInfo');
   if (userInfo==undefined && userInfo==null) {
-  api.toast({
+    api.toast({
       msg: '您还未登录，请登录后再操作',
       duration: 3000,
       location: 'bottom'
+    });
+    return;
+  }
+
+  if (api.pageParam.name=='mevideo') {
+
+   dialogBox.alert({
+    texts: {
+      title: '删除',
+      content: '是否删除该视频',
+      leftBtnTitle: '确定',
+      rightBtnTitle: '取消'
+    },
+    styles: {
+      bg: '#fff',
+      w: 300,
+      corner:2,
+      title: {
+        marginT: 20,
+        icon: 'widget://res/gou.png',
+        iconSize: 40,
+        titleSize: 14,
+        titleColor: '#000'
+      },
+      content: {
+        color: '#000',
+        size: 14
+      },
+      left: {
+        marginB: 7,
+        marginL: 20,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#000000',
+        color:'#ffffff',
+        size: 12
+      },
+      right: {
+        marginB: 7,
+        marginL: 10,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#000000',
+        color:'#ffffff',
+        size: 12
+      }
+    }
+  }, function(ret) {
+
+    if (ret.eventType == 'left') {
+
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+
+
+    }else{
+      close();
+
+    }
   });
-   return;
+
+
+ }else{
+
+   dialogBox.alert({
+    texts: {
+      title: '摄像',
+      content: '选择摄像',
+      leftBtnTitle: '视频库',
+      rightBtnTitle: '取消'
+    },
+    styles: {
+      bg: '#fff',
+      w: 300,
+      corner:2,
+      title: {
+        marginT: 20,
+        icon: 'widget://res/gou.png',
+        iconSize: 40,
+        titleSize: 14,
+        titleColor: '#000'
+      },
+      content: {
+        color: '#000',
+        size: 14
+      },
+      left: {
+        marginB: 7,
+        marginL: 20,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#000000',
+        color:'#ffffff',
+        size: 12
+      },
+      right: {
+        marginB: 7,
+        marginL: 10,
+        w: 130,
+        h: 35,
+        corner: 2,
+        bg: '#000000',
+        color:'#ffffff',
+        size: 12
+      }
+    }
+  }, function(ret) {
+
+    if (ret.eventType == 'left') {
+      videoku();
+      dialogBox.close({
+        dialogName: 'alert'
+      });
+
+
+    }else{
+      close();
+
+    }
+  });
+
  }
 
-
-
  
- dialogBox.alert({
-  texts: {
-    title: '摄像',
-    content: '选择摄像',
-    leftBtnTitle: '视频库',
-    rightBtnTitle: '取消'
-  },
-  styles: {
-    bg: '#fff',
-    w: 300,
-    corner:2,
-    title: {
-      marginT: 20,
-      icon: 'widget://res/gou.png',
-      iconSize: 40,
-      titleSize: 14,
-      titleColor: '#000'
-    },
-    content: {
-      color: '#000',
-      size: 14
-    },
-    left: {
-      marginB: 7,
-      marginL: 20,
-      w: 130,
-      h: 35,
-      corner: 2,
-      bg: '#000000',
-      color:'#ffffff',
-      size: 12
-    },
-    right: {
-      marginB: 7,
-      marginL: 10,
-      w: 130,
-      h: 35,
-      corner: 2,
-      bg: '#000000',
-      color:'#ffffff',
-      size: 12
-    }
-  }
-}, function(ret) {
-
-  if (ret.eventType == 'left') {
-    videoku();
-    dialogBox.close({
-      dialogName: 'alert'
-    });
-
-
-  }else{
-    close();
-
-  }
-});
-
 
 }
 
@@ -257,7 +328,7 @@ function addtext(texts){
       addvideourl(videourl);
       api.toast({
         msg: '视频上传时勿退出潮视页面,否则放弃上传视频',
-        duration: 3000,
+        duration: 5000,
         location: 'bottom'
       });
     });

@@ -83,8 +83,8 @@
     .option .icon-vip {
         background-image: url(../image/huiyuan.png);
     }
-    .option .icon-tuandui {
-        background-image: url(../image/tuandui.png);
+    .option .icon-mevideo {
+        background-image: url(../image/video.png);
     }
     .option .icon-share {
         background-image: url(../image/share.png);
@@ -174,42 +174,49 @@
         <div id="vip" class="vip"></div>
     </header>
     <section>
-        <div class="option" tapmode onclick="Openmoney()">
-            <div class="icon icon-money"></div>
-            <div class="title">我的账户</div>
-            <div class="arrow-pane2">
-                <div class="text">查看打赏记录</div>
-            </div>
+       <div class="option" tapmode onclick="Openvideo()">
+        <div class="icon icon-mevideo"></div>
+        <div class="title">我的视频</div>
+        <div class="arrow-panel">
+            <div class="text">我发布的视频</div>
         </div>
-        <div class="option" tapmode onclick="OpendindanWin()">
-            <div class="icon icon-myorder"></div>
-            <div class="title">我的订单</div>
-            <div class="arrow-panel">
-                <div class="text">查看所有订单详情</div>
-            </div>
+    </div>
+    <div class="option" tapmode onclick="Openmoney()">
+        <div class="icon icon-money"></div>
+        <div class="title">我的账户</div>
+        <div class="arrow-pane2">
+            <div class="text">查看打赏记录</div>
         </div>
-        <div class="option" tapmode onclick="OpenAddressWin()">
-            <div class="icon icon-address"></div>
-            <div class="title">收货地址</div>
-            <div class="arrow-panel">
-                <div class="text">管理我的收货地址</div>
-            </div>
+    </div>
+    <div class="option" tapmode onclick="OpendindanWin()">
+        <div class="icon icon-myorder"></div>
+        <div class="title">我的订单</div>
+        <div class="arrow-panel">
+            <div class="text">查看所有订单详情</div>
         </div>
-        <div class="option" tapmode onclick="OpenvipWin()">
-            <div class="icon icon-vip"></div>
-            <div class="title">充值vip</div>
-            <div class="arrow-panel">
-                <div class="text">敢充吗？你敢充,我敢打折</div>
-            </div>
+    </div>
+    <div class="option" tapmode onclick="OpenAddressWin()">
+        <div class="icon icon-address"></div>
+        <div class="title">收货地址</div>
+        <div class="arrow-panel">
+            <div class="text">管理我的收货地址</div>
         </div>
-        <div class="option" tapmode onclick="share()">
-            <div class="icon icon-share"></div>
-            <div class="title">分享应用</div>
-            <div class="arrow-panel">
-                <div class="text">分享成功获取3个月vip</div>
-            </div>
+    </div>
+    <div class="option" tapmode onclick="OpenvipWin()">
+        <div class="icon icon-vip"></div>
+        <div class="title">充值vip</div>
+        <div class="arrow-panel">
+            <div class="text">敢充吗？你敢充,我敢打折</div>
         </div>
-    </section>
+    </div>
+    <div class="option" tapmode onclick="share()">
+        <div class="icon icon-share"></div>
+        <div class="title">分享应用</div>
+        <div class="arrow-panel">
+            <div class="text">分享成功获取3个月vip</div>
+        </div>
+    </div>
+</section>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
@@ -234,12 +241,12 @@
     };
     function share(){
 
-     var sharedModule = api.require('shareAction');
-     sharedModule.share({
+       var sharedModule = api.require('shareAction');
+       sharedModule.share({
         text: '【你要的潮装都在这里】 http://www.zxh.yueaa.com/ 点击链接 有你想不到的低价潮装 分享应用领取3个月vip',
         type: 'text'
     });
-     var userInfo=$api.getStorage('userInfo');
+       var userInfo=$api.getStorage('userInfo');
        // alert(userInfo.userId)
        var params={
         fields:{},
@@ -276,16 +283,16 @@
 
 }
 function sharevip(){
-   var myDate = new Date();
-   var Y=myDate.getFullYear();
-   var M=myDate.getMonth()+1;
-   var D=myDate.getDate();  
-   var shijian=Y+'-'+M+'-'+D;
+ var myDate = new Date();
+ var Y=myDate.getFullYear();
+ var M=myDate.getMonth()+1;
+ var D=myDate.getDate();  
+ var shijian=Y+'-'+M+'-'+D;
 
-   var userInfo=$api.getStorage('userInfo');
-   var now = Date.now();
-   var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-   api.ajax({
+ var userInfo=$api.getStorage('userInfo');
+ var now = Date.now();
+ var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+ api.ajax({
     url: 'https://d.apicloud.com/mcm/api/user/'+userInfo.userId,
     method: 'put',
     headers: {
@@ -313,9 +320,9 @@ function event(){
         name: 'addvip'
     }, function(ret, err){
         if( ret ){
-         vip();
-     }
- });
+           vip();
+       }
+   });
 }
 function getuserInfo(){
     var userInfo=$api.getStorage('userInfo');
@@ -332,8 +339,8 @@ function getuserInfo(){
 
     },function(ret, err){
         if (ret) {
-           updateLocalAvatar(ret)
-       } else {
+         updateLocalAvatar(ret)
+     } else {
         api.toast({
             msg: err.msg,
             duration: 2000,
@@ -365,7 +372,7 @@ function vip(){
     },function(ret, err){
         if (ret) {
             // 存储用户名
-             var now=Y+"-"+M+"-"+D;
+            var now=Y+"-"+M+"-"+D;
             var vipday=datedifference(ret[0].date,now)
             vipday=99-vipday;
             var vip=$api.byId('vip');  
@@ -396,8 +403,8 @@ function date(_date){
 
 }
 function updatevip(){
-   var usernameinfo=$api.getStorage('userInfo');
-   api.ajax({
+ var usernameinfo=$api.getStorage('userInfo');
+ api.ajax({
     url: 'http://d.apicloud.com/mcm/api/user/'+usernameinfo.userId,
     method: 'put',
     headers: {
@@ -414,9 +421,9 @@ function updatevip(){
 
 },function(ret, err){
     if (ret) {
-     var vip=$api.byId('vip');  
-     vip.innerHTML='普通用户';
- } else {
+       var vip=$api.byId('vip');  
+       vip.innerHTML='普通用户';
+   } else {
     api.toast({
         msg: err.msg,
         duration: 2000,
@@ -489,11 +496,29 @@ function OpenvipWin(){
         }
     });
 }
+function Openvideo(){
+
+    api.openFrame({
+        name: 'caoshi_frame',
+        url: './caoshi_frame.html',
+        rect: {
+            x: 0,
+            y: 0,
+            w: api.winWidth,
+            h: api.winHeight
+        },
+        pageParam: {
+            name: 'mevideo'
+        },
+            // bounces: true,
+            bgColor: 'rgba(0,0,0,0)',
+        });
+}
 
 
 // 在个人中心中显示头像
 function setAvatar(){
- api.getPicture({
+   api.getPicture({
     sourceType: 'album',
     encodingType: 'jpg',
     mediaValue: 'pic',
@@ -505,8 +530,8 @@ function setAvatar(){
     saveToPhotoAlbum: false
 }, function(ret, err) {
     if (ret) {
-       uploadAtavar(ret.data)
-   }
+     uploadAtavar(ret.data)
+ }
 
 });
 
@@ -566,8 +591,8 @@ function updateUserAtavar(_data){
         }
     },function(ret, err){
         if (ret) {
-           updateLocalAvatar(ret)
-       } else {
+         updateLocalAvatar(ret)
+     } else {
         api.toast({
             msg: err.msg,
             duration: 2000,
@@ -586,9 +611,9 @@ function updateLocalAvatar(_data){
         url: _data.avatar.url
     }, function(ret, err){
         if( ret ){
-           icon.style.background='url('+ret.url+')';
-           icon.style.backgroundSize='108px 108px';
-       }else{
+         icon.style.background='url('+ret.url+')';
+         icon.style.backgroundSize='108px 108px';
+     }else{
         api.toast({
             msg: err.msg,
             duration: 2000,
@@ -646,26 +671,26 @@ function getUsername(){
 function dindantypeList(){
   var dindantypeList=$api.getStorage('dindantypeList');
   if (!dindantypeList) {
-     dindantypeList=[
-     {
-        "id": "5c2a39add37a824c5ac6cc64",
-        "name": "已签收"
-    },
+   dindantypeList=[
+   {
+    "id": "5c2a39add37a824c5ac6cc64",
+    "name": "已签收"
+},
 
-    {
-        "id": "5c2a3991af3114d73d9ddfc2",
-        "name": "待付款",
-    } ,
-    {
-        "id": "5c2a39a2af3114d73d9ddfc3",
-        "name": "待收货"
-    }
-    ];
+{
+    "id": "5c2a3991af3114d73d9ddfc2",
+    "name": "待付款",
+} ,
+{
+    "id": "5c2a39a2af3114d73d9ddfc3",
+    "name": "待收货"
+}
+];
 }
 getdindantypeList();
 }
 function getdindantypeList(){
-   var now = Date.now();
+ var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
 
@@ -685,8 +710,8 @@ function getdindantypeList(){
       },
 
   },function(ret, err){
-   $api.setStorage('dindantypeList', ret);
-});
+     $api.setStorage('dindantypeList', ret);
+ });
 }
 </script>
 
