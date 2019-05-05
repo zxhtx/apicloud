@@ -184,9 +184,22 @@ var now = Date.now();
         },
         method: 'get'
       }, function(ret, err) {
+        if (api.pageParam.name=='mevideo') {
+          if (ret==null || ret==undefined || ret=='') {
+            activity.closeKeyFrame();
+            api.execScript({
+              name: 'personalcenter',
+              frameName: 'personalcenter_frame',
+              script: 'nullvideo();'
+            });
 
-       fnOpenRoom(ret);
-       eventlister(ret);
+            api.closeFrame({
+              name: 'caoshi_frame'
+            });
+          }
+        }
+        fnOpenRoom(ret);
+        eventlister(ret);
      // alert(videourl)
      activity.closeKeyFrame();
      // alert(videourl)
@@ -311,7 +324,7 @@ var now = Date.now();
               h: 50
             }, 
 
-             pageParam: {
+            pageParam: {
               name: api.pageParam.name
             },
             bgColor: 'rgba(0,0,0,0)',

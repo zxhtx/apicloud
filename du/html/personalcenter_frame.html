@@ -239,14 +239,23 @@
 
 
     };
-    function share(){
-
-       var sharedModule = api.require('shareAction');
-       sharedModule.share({
-        text: '【你要的潮装都在这里】 http://www.zxh.yueaa.com/ 点击链接 有你想不到的低价潮装 分享应用领取3个月vip',
-        type: 'text'
+    function nullvideo(){
+      var activity = api.require('UILoading');
+      activity.closeKeyFrame();
+      api.toast({
+        msg: '没有视频哟',
+        duration: 3000,
+        location: 'bottom'
     });
-       var userInfo=$api.getStorage('userInfo');
+  }
+  function share(){
+
+   var sharedModule = api.require('shareAction');
+   sharedModule.share({
+    text: '【你要的潮装都在这里】 http://www.zxh.yueaa.com/ 点击链接 有你想不到的低价潮装 分享应用领取3个月vip',
+    type: 'text'
+});
+   var userInfo=$api.getStorage('userInfo');
        // alert(userInfo.userId)
        var params={
         fields:{},
@@ -530,7 +539,16 @@ function setAvatar(){
     saveToPhotoAlbum: false
 }, function(ret, err) {
     if (ret) {
-     uploadAtavar(ret.data)
+        if (ret.data=='') {
+            api.toast({
+                msg: '未选择图片',
+                duration: 2000,
+                location: 'bottom'
+            });
+        }else{
+         uploadAtavar(ret.data)
+     }
+
  }
 
 });
