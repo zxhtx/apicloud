@@ -213,7 +213,7 @@ var now = Date.now();
 
       var UIScrollPlayer = api.require('UIScrollPlayer');
       UIScrollPlayer.addEventListener(function(ret, err){
-
+        alert(ret.index);
         if (ret.evenType=='onSingleTapUp') {
          onSingleTapUp();
 

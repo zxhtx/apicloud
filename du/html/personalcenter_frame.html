@@ -73,7 +73,9 @@
     .option .icon-myorder {
         background-image: url(../image/dindan.png);
     }
-    
+    .option .icon-chaoshiuser {
+        background-image: url(../image/chaoshiuser.png);
+    }
     .option .icon-address {
         background-image: url(../image/dizhi.png);
     }
@@ -89,6 +91,7 @@
     .option .icon-share {
         background-image: url(../image/share.png);
     }
+
     
 
     .option .title {
@@ -174,11 +177,19 @@
         <div id="vip" class="vip"></div>
     </header>
     <section>
-       <div class="option" tapmode onclick="Openvideo()">
+     <div class="option" tapmode onclick="Openvideo()">
         <div class="icon icon-mevideo"></div>
         <div class="title">我的视频</div>
         <div class="arrow-panel">
             <div class="text">我发布的视频</div>
+        </div>
+    </div>
+    <section>
+     <div class="option" tapmode onclick="updateuser()">
+        <div class="icon icon-chaoshiuser"></div>
+        <div class="title">潮视用户名</div>
+        <div class="arrow-panel">
+            <div class="text" id="chaoshiuser">发布视频显示此用户名</div>
         </div>
     </div>
     <div class="option" tapmode onclick="Openmoney()">
@@ -227,8 +238,9 @@
     var D=myDate.getDate();
     var now = Date.now();
     var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-
+    var dialogBox;
     apiready = function() {
+        dialogBox = api.require('dialogBox');
         getUsername();
         getuserInfo();
         dindantypeList();
@@ -248,14 +260,115 @@
         location: 'bottom'
     });
   }
-  function share(){
+  function updateuser(){
+   dialogBox.input({
+    keyboardType: 'default',
+    texts: {
+      title: '潮视',
+      placeholder: '修改潮视用户名',
+      leftBtnTitle: '取消',
+      rightBtnTitle: '确定'
+  },
+  styles: {
+      bg: '#fff',
+      corner: 2,
+      w: 300,
+      h: 240,
+      title: {
+        h: 60,
+        alignment: 'center',
+        size: 14,
+        color: '#000',
+        marginT:30,
+    },
+    input: {
+        h: 60,
+        y:30,
+        marginT:15,
+        marginLeft: 10,
+        marginRight:10,
+        textSize: 14,
+        textColor: '#000'
+    },
+    dividingLine: {
+        width: 0.5,
+        color: '#696969'
+    },
+    left: {
+        bg: 'rgba(0,0,0,0)',
+        color: '#000',
+        size: 12
+    },
+    right: {
+        bg: 'rgba(0,0,0,0)',
+        color: '#000',
+        size: 12
+    }
+}
+}, function(ret) {
 
-   var sharedModule = api.require('shareAction');
-   sharedModule.share({
-    text: '【你要的潮装都在这里】 http://www.zxh.yueaa.com/ 点击链接 有你想不到的低价潮装 分享应用领取3个月vip',
+    if (ret.eventType == 'left') {
+        dialogBox.close({
+            dialogName: 'input'
+        });
+
+    }else{
+        if (ret.text!='') {
+            updateusers(ret.text);
+        }
+        dialogBox.close({
+            dialogName: 'input'
+        });
+    }
+});
+
+
+}
+function updateusers(user){
+   var csuser=$api.byId('chaoshiuser');
+   var now = Date.now();
+   var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+   var userInfo=$api.getStorage('userInfo');
+   api.ajax({
+      url: 'https://d.apicloud.com/mcm/api/user/'+userInfo.userId,
+      method: 'put',
+      headers: {
+        "X-APICloud-AppId": "A6099267504667",
+        "X-APICloud-AppKey":   appKey,
+    },
+    data: {
+        values: { 
+          chaoshiuser: user
+      }
+
+  }
+},function(ret, err){
+ 
+    csuser.innerHTML=user;
+    if (ret) {
+        api.toast({
+          msg: '修改成功',
+          duration: 2000,
+          location: 'bottom'
+      });
+    } else {
+        api.toast({
+          msg: err.msg,
+          duration: 2000,
+          location: 'bottom'
+      });
+    }
+});
+
+}
+function share(){
+
+ var sharedModule = api.require('shareAction');
+ sharedModule.share({
+    text: '【你要的潮装都在这里】 http://www.zxh.yueaa.com/ 点击链接 有你想不到的低价潮装 分享应用领取3个月vip 第一单返8元',
     type: 'text'
 });
-   var userInfo=$api.getStorage('userInfo');
+ var userInfo=$api.getStorage('userInfo');
        // alert(userInfo.userId)
        var params={
         fields:{},
@@ -292,16 +405,16 @@
 
 }
 function sharevip(){
- var myDate = new Date();
- var Y=myDate.getFullYear();
- var M=myDate.getMonth()+1;
- var D=myDate.getDate();  
- var shijian=Y+'-'+M+'-'+D;
+   var myDate = new Date();
+   var Y=myDate.getFullYear();
+   var M=myDate.getMonth()+1;
+   var D=myDate.getDate();  
+   var shijian=Y+'-'+M+'-'+D;
 
- var userInfo=$api.getStorage('userInfo');
- var now = Date.now();
- var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
- api.ajax({
+   var userInfo=$api.getStorage('userInfo');
+   var now = Date.now();
+   var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+   api.ajax({
     url: 'https://d.apicloud.com/mcm/api/user/'+userInfo.userId,
     method: 'put',
     headers: {
@@ -329,9 +442,9 @@ function event(){
         name: 'addvip'
     }, function(ret, err){
         if( ret ){
-           vip();
-       }
-   });
+         vip();
+     }
+ });
 }
 function getuserInfo(){
     var userInfo=$api.getStorage('userInfo');
@@ -348,8 +461,8 @@ function getuserInfo(){
 
     },function(ret, err){
         if (ret) {
-         updateLocalAvatar(ret)
-     } else {
+           updateLocalAvatar(ret)
+       } else {
         api.toast({
             msg: err.msg,
             duration: 2000,
@@ -412,8 +525,8 @@ function date(_date){
 
 }
 function updatevip(){
- var usernameinfo=$api.getStorage('userInfo');
- api.ajax({
+   var usernameinfo=$api.getStorage('userInfo');
+   api.ajax({
     url: 'http://d.apicloud.com/mcm/api/user/'+usernameinfo.userId,
     method: 'put',
     headers: {
@@ -430,9 +543,9 @@ function updatevip(){
 
 },function(ret, err){
     if (ret) {
-       var vip=$api.byId('vip');  
-       vip.innerHTML='普通用户';
-   } else {
+     var vip=$api.byId('vip');  
+     vip.innerHTML='普通用户';
+ } else {
     api.toast({
         msg: err.msg,
         duration: 2000,
@@ -527,7 +640,7 @@ function Openvideo(){
 
 // 在个人中心中显示头像
 function setAvatar(){
-   api.getPicture({
+ api.getPicture({
     sourceType: 'album',
     encodingType: 'jpg',
     mediaValue: 'pic',
@@ -546,10 +659,10 @@ function setAvatar(){
                 location: 'bottom'
             });
         }else{
-         uploadAtavar(ret.data)
-     }
+           uploadAtavar(ret.data)
+       }
 
- }
+   }
 
 });
 
@@ -609,8 +722,8 @@ function updateUserAtavar(_data){
         }
     },function(ret, err){
         if (ret) {
-         updateLocalAvatar(ret)
-     } else {
+           updateLocalAvatar(ret)
+       } else {
         api.toast({
             msg: err.msg,
             duration: 2000,
@@ -629,9 +742,9 @@ function updateLocalAvatar(_data){
         url: _data.avatar.url
     }, function(ret, err){
         if( ret ){
-         icon.style.background='url('+ret.url+')';
-         icon.style.backgroundSize='108px 108px';
-     }else{
+           icon.style.background='url('+ret.url+')';
+           icon.style.backgroundSize='108px 108px';
+       }else{
         api.toast({
             msg: err.msg,
             duration: 2000,
@@ -646,6 +759,7 @@ function updateLocalAvatar(_data){
 function getUsername(){
     var username=$api.byId('username');
     var jian=$api.byId('jian');
+    var csuser=$api.byId('chaoshiuser');
     var usernameinfo=$api.getStorage('userInfo');
 
     var now = Date.now();
@@ -671,6 +785,7 @@ function getUsername(){
             // 存储用户名
             $api.setStorage('user', ret);
             username.innerHTML=ret[0].username;
+            csuser.innerHTML=ret[0].chaoshiuser;
             if (ret[0].count==undefined) {
                 // jian.innerHTML='推荐人数:0'
             }else{
@@ -689,26 +804,26 @@ function getUsername(){
 function dindantypeList(){
   var dindantypeList=$api.getStorage('dindantypeList');
   if (!dindantypeList) {
-   dindantypeList=[
-   {
-    "id": "5c2a39add37a824c5ac6cc64",
-    "name": "已签收"
-},
+     dindantypeList=[
+     {
+        "id": "5c2a39add37a824c5ac6cc64",
+        "name": "已签收"
+    },
 
-{
-    "id": "5c2a3991af3114d73d9ddfc2",
-    "name": "待付款",
-} ,
-{
-    "id": "5c2a39a2af3114d73d9ddfc3",
-    "name": "待收货"
-}
-];
+    {
+        "id": "5c2a3991af3114d73d9ddfc2",
+        "name": "待付款",
+    } ,
+    {
+        "id": "5c2a39a2af3114d73d9ddfc3",
+        "name": "待收货"
+    }
+    ];
 }
 getdindantypeList();
 }
 function getdindantypeList(){
- var now = Date.now();
+   var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
 
@@ -728,8 +843,8 @@ function getdindantypeList(){
       },
 
   },function(ret, err){
-     $api.setStorage('dindantypeList', ret);
- });
+   $api.setStorage('dindantypeList', ret);
+});
 }
 </script>
 
