@@ -109,23 +109,28 @@
   var video;
   var videonull;
   var play=0;
+  var retele;
+  var nullretele;
   apiready = function() {
     UIScrollPlayer = api.require('UIScrollPlayer');
-    eventlister();
     video=[];
     videonull=[];
+    retele=[];
+    nullretele=[];
     fnLoadList();
-
-
+    eventlister();
+    setInterval(addEventListenerplay,1000)
 
 
 
 
   };
+  function addEventListenerplay(){
+   UIScrollPlayer.play();
+ }
 
 
-
-  function fnLoadList(_LoadMore) {
+ function fnLoadList(_LoadMore) {
    activity = api.require('UILoading');
    activity.keyFrame({
     rect: {
@@ -199,37 +204,62 @@ var now = Date.now();
           }
         }
         fnOpenRoom(ret);
-        eventlister(ret);
-     // alert(videourl)
-     activity.closeKeyFrame();
-     // alert(videourl)
+        for (var i = 0; i <ret.length; i++) {
+          if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
+            ret[i].video=new Date;
+            nullretele.push({
+              imageUrl:'',
+              videoUrl:ret[i].video
+            })
+          }else{
+            retele.push({
+             id:ret[i].id,
+             video:ret[i].video.url,
+             title:ret[i].title,
+             userid:ret[i].userid,
+             username:ret[i].username,
+             like:ret[i].like
+           })
+          }
+
+        }
+
+        activity.closeKeyFrame();
 
 
-   });
+
+      });
     }
 
 
     function  eventlister(element){
+     UIScrollPlayer.addEventListener(function(ret, err){
+      api.execScript({
+          // name: '',
+          frameName: 'userandtext_frame',
+          script: 'getuser('+retele[ret.index]+')'
+      });
+      api.toast({
+          msg: retele[ret.index],
+          duration: 2000,
+          location: 'bottom'
+      });
+      if (ret.evenType=='onSingleTapUp') {
+       onSingleTapUp();
 
-      var UIScrollPlayer = api.require('UIScrollPlayer');
-      UIScrollPlayer.addEventListener(function(ret, err){
-        alert(ret.index);
-        if (ret.evenType=='onSingleTapUp') {
-         onSingleTapUp();
+     }else if (ret.evenType=='onDoubleTap') {
 
-       }else if (ret.evenType=='onDoubleTap') {
-
-        api.execScript({
+      api.execScript({
             // name: 'video',
             frameName: 'video',
             script: 'zan();'
           });
 
-      }
-
-
-    });
     }
+
+
+  });
+   }
       // 监听单击暂停or播放
       function onSingleTapUp(){
         if (play==0) {
@@ -255,37 +285,36 @@ var now = Date.now();
       
       function fnOpenRoom(ret){
 
-
-        for (var i = 0; i <ret.length; i++) {
-          if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
-            ret[i].video=new Date;
-            videonull.push({
-              imageUrl:'',
-              videoUrl:ret[i].video
-            })
-          }else{
-            video.push({
-             imageUrl:'',
-             videoUrl:ret[i].video.url
-           })
-          }
-
+       for (var i = 0; i <ret.length; i++) {
+        if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
+          ret[i].video=new Date;
+          videonull.push({
+            imageUrl:'',
+            videoUrl:ret[i].video
+          })
+        }else{
+          video.push({
+           imageUrl:'',
+           videoUrl:ret[i].video.url
+         })
         }
 
-        UIScrollPlayer.open({
-          rect : {
-            x : 0,
-            y : 0,
-            w : api.frameWidth,
-            h : api.frameHeight,
-          },
-          videos : video,
-          fixed:true,
-        },function(ret, err){
-            // alert(JSON.stringify(ret));
-          });
+      }
 
-        setTimeout(function() {
+      UIScrollPlayer.open({
+        rect : {
+          x : 0,
+          y : 0,
+          w : api.frameWidth,
+          h : api.frameHeight,
+        },
+        videos : video,
+        fixed:true,
+      },function(ret, err){
+
+      });
+
+      setTimeout(function() {
           // 你有几个显示的你就对应打开几个按钮   x  y是定义这个坐标的位置
           api.openFrame({
             name: 'video',
@@ -313,6 +342,19 @@ var now = Date.now();
 
           });
 
+          api.openFrame({
+            name: 'videouser_frame',
+            url: './videouser_frame.html',
+            rect: {
+              x: 10,
+              y: api.winHeight/2+250,
+              h: api.winHeight/2-240,
+              w: api.winWidth-100
+            },
+            bgColor: 'rgba(0,0,0,0)',
+
+          });
+
 
           api.openFrame({
             name: 'xiangji_frame',
@@ -335,13 +377,13 @@ var now = Date.now();
 
 
 
-      };
+    };
 
-      function videopuase(){
-        UIScrollPlayer.pause();
-        play=1;
+    function videopuase(){
+      UIScrollPlayer.pause();
+      play=1;
 
-      }
+    }
 
 
 
