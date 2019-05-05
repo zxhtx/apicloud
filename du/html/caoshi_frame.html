@@ -101,24 +101,26 @@
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript">
   var skip = 0;
-  var LIMIT = 200;
-  var activity ;
+  var LIMIT = 31;
   var city = null;
   var favorite = false;
   var UIScrollPlayer; 
   var video;
   var videonull;
-  var play=0;
+  var addvideo;
+  var addvideonull;
   var retele;
   var nullretele;
   apiready = function() {
     UIScrollPlayer = api.require('UIScrollPlayer');
     video=[];
     videonull=[];
+    addvideo=[];
+    addvideonull=[];
     retele=[];
     nullretele=[];
     fnLoadList();
-    eventlister();
+
     setInterval(addEventListenerplay,1000)
 
 
@@ -131,25 +133,14 @@
 
 
  function fnLoadList(_LoadMore) {
-   activity = api.require('UILoading');
-   activity.keyFrame({
-    rect: {
-      w: 80,
-      h: 100
-    },
-    styles: {
-      bg: 'rgba(0,0,0,0.5)',
-      corner: 5,
-      interval: 50,
-      frame: {
-        w: 80,
-        h: 80
-      }
-    }
-  });
-   if (_LoadMore) {
+  // var jishu;
+  if (_LoadMore) {
+    // jishu=skip;
     skip+=LIMIT;
-  }else{
+     // alert(skip)
+     // alert(jishu)
+
+   }else{
 
     skip=0;
   }
@@ -203,13 +194,18 @@ var now = Date.now();
             });
           }
         }
-        fnOpenRoom(ret);
+        if (_LoadMore) {
+          addRoom(ret);
+        }else{
+          fnOpenRoom(ret);
+        }
+
         for (var i = 0; i <ret.length; i++) {
           if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
             ret[i].video=new Date;
             nullretele.push({
               imageUrl:'',
-              videoUrl:ret[i].video
+              videoUrl:ret[i].video+ret[i].id+ret[i].title+ret[i].userid+ret[i].username+ret[i].like
             })
           }else{
             retele.push({
@@ -224,8 +220,6 @@ var now = Date.now();
 
         }
 
-        activity.closeKeyFrame();
-
 
 
       });
@@ -234,18 +228,27 @@ var now = Date.now();
 
     function  eventlister(element){
      UIScrollPlayer.addEventListener(function(ret, err){
-      api.execScript({
-          // name: '',
-          frameName: 'userandtext_frame',
-          script: 'getuser('+retele[ret.index]+')'
-      });
       api.toast({
-          msg: retele[ret.index],
-          duration: 2000,
-          location: 'bottom'
+        msg: ret.index,
+        duration: 2000,
+        location: 'bottom'
       });
+      api.sendEvent({
+        name: 'userandtext',
+        extra: {
+          key1: retele[ret.index], 
+        }
+      });
+      if (ret.index>=30) {
+        if (ret.index%30==0) {
+          fnLoadList(true)
+          
+        }
+        
+      }
+
       if (ret.evenType=='onSingleTapUp') {
-       onSingleTapUp();
+       // onSingleTapUp();
 
      }else if (ret.evenType=='onDoubleTap') {
 
@@ -261,60 +264,63 @@ var now = Date.now();
   });
    }
       // 监听单击暂停or播放
-      function onSingleTapUp(){
-        if (play==0) {
-          UIScrollPlayer.pause();
-          play=1;
-          api.toast({
-            msg: '已暂停',
-            duration: 2000,
-            location: 'bottom'
-          });
-        }else{
-          UIScrollPlayer.play();
-          play=0;
-          api.toast({
-            msg: '继续播放',
-            duration: 2000,
-            location: 'bottom'
-          });
-        }
-      }
-
-
       
-      function fnOpenRoom(ret){
-
+      function addRoom(ret){
+       eventlister();
        for (var i = 0; i <ret.length; i++) {
         if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
           ret[i].video=new Date;
-          videonull.push({
+          addvideonull.push({
             imageUrl:'',
             videoUrl:ret[i].video
           })
         }else{
-          video.push({
+          addvideo.push({
            imageUrl:'',
            videoUrl:ret[i].video.url
          })
         }
 
       }
-
-      UIScrollPlayer.open({
-        rect : {
-          x : 0,
-          y : 0,
-          w : api.frameWidth,
-          h : api.frameHeight,
-        },
-        videos : video,
-        fixed:true,
-      },function(ret, err){
-
+      UIScrollPlayer.add({
+        videos :addvideo
       });
+      addvideo=[];
+    }
 
-      setTimeout(function() {
+    function fnOpenRoom(ret){
+     eventlister();
+
+     for (var i = 0; i <ret.length; i++) {
+      if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
+        ret[i].video=new Date;
+        videonull.push({
+          imageUrl:'',
+          videoUrl:ret[i].video
+        })
+      }else{
+        video.push({
+         imageUrl:'',
+         videoUrl:ret[i].video.url
+       })
+      }
+
+    }
+
+    UIScrollPlayer.open({
+      rect : {
+        x : 0,
+        y : 0,
+        w : api.frameWidth,
+        h : api.frameHeight,
+      },
+      videos : video,
+      fixed:true,
+    },function(ret, err){
+
+    });
+
+    setTimeout(function() {
           // 你有几个显示的你就对应打开几个按钮   x  y是定义这个坐标的位置
           api.openFrame({
             name: 'video',
@@ -343,13 +349,25 @@ var now = Date.now();
           });
 
           api.openFrame({
-            name: 'videouser_frame',
-            url: './videouser_frame.html',
+            name: 'videotitle_frame',
+            url: './videotitle_frame.html.html',
             rect: {
               x: 10,
-              y: api.winHeight/2+250,
+              y: api.winHeight/2+270,
               h: api.winHeight/2-240,
               w: api.winWidth-100
+            },
+            bgColor: 'rgba(0,0,0,0)',
+
+          });
+          api.openFrame({
+            name: 'videotitle_frame',
+            url: './videotitle_frame.html.html',
+            rect: {
+              x: 10,
+              y: api.winHeight/2+270,
+              h: api.winHeight/2-250,
+              w: api.winWidth/3
             },
             bgColor: 'rgba(0,0,0,0)',
 
@@ -377,39 +395,17 @@ var now = Date.now();
 
 
 
-    };
+  };
 
-    function videopuase(){
-      UIScrollPlayer.pause();
-      play=1;
+  function videopuase(){
+    UIScrollPlayer.pause();
+    play=1;
 
-    }
-
-
+  }
 
 
 
-  //     function fnRenderList(ret,_LoadMore) {
 
-  //       if (_LoadMore) {
-  //         fnOpenRoom(ret,_LoadMore)
-  //       }
-  //   // 优化
-  //   api.parseTapmode();
-
-  //   api.refreshHeaderLoadDone();
-  // }
-  // function initEventListenter(){
-  //   api.addEventListener({
-  //     name:'scrolltobottom',
-  //     extra:{
-  //       threshold:100
-  //     }
-  //   }, function(ret, err){        
-  //    // fnLoadList(true);
-  //    alert(到底了)
-  //  });
-  // }
 </script>
 
 </html>

@@ -12,34 +12,20 @@
     /*border: 1px solid red;*/
   }
   #list{
-    height: 60px;
+    height: 20px;
     width: 100%;
   }
   #user{
     color: white;
     font-size: 22px;
   }
-  #text{
-    height:35px;
-    color: white;
-    font-size: 15px;
-    overflow: hidden;
-    white-space:normal;
-    overflow-y:scroll;
-  }
-  .text{
-    /*border: 1px solid red;*/
-    height: 35px;
-  }
 </style>
 </head>
 
 <body>
   <div id="list">
-    <p id="user">121212</p>
-    <div class="text">
-     <div id="text">卡俄方拉开思念加入来看水分流失了菲尼克斯了你 卡拉什尼科利福尼看了开始开发商的快乐</div>
-   </div>
+    
+     <div id="user"></div>
    
  </div>
 
@@ -49,16 +35,21 @@
 
   apiready = function() {
 
-
+    getuser();
 
   };
   function getuser(ret){
-    alert(ret.username)
-    var user=$api.byId('user');
-    var text=$api.byId('text');
-    user.innerHTML=ret.username;
-    text.innerHTML=ret.title
 
+    var user=$api.byId('user');
+    
+
+    api.addEventListener({
+      name: 'userandtext'
+    }, function(ret, err){
+      if( ret ){
+        user.innerHTML=ret.value.key1.username;
+  }
+});
   }
 
 

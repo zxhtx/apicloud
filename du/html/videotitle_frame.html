@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <title>title</title>
+  <link rel="stylesheet" type="text/css" href="../css/api.css" />
+  <style>
+  html ,body{
+    background-color: transparent;
+    /*border: 1px solid red;*/
+  }
+  #list{
+    height: 40px;
+    width: 100%;
+  }
+  #text{
+    height:35px;
+    color: white;
+    font-size: 15px;
+    overflow: hidden;
+    white-space:normal;
+    overflow-y:scroll;
+  }
+  .text{
+    /*border: 1px solid red;*/
+    height: 35px;
+  }
+</style>
+</head>
+
+<body>
+  <div id="list">
+    
+     <div id="text"></div>
+   
+ </div>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+
+  apiready = function() {
+
+    getuser();
+
+  };
+  function getuser(ret){
+
+    var text=$api.byId('text');
+
+    api.addEventListener({
+      name: 'userandtext'
+    }, function(ret, err){
+      if( ret ){
+       text.innerHTML=ret.value.key1.title
+  }
+});
+  }
+
+
+
+</script>
+
+</html>
