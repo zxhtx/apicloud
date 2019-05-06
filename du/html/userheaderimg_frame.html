@@ -178,13 +178,12 @@ function getguanzhu(ele){
   var guanzhu=$api.byId('guanzhu');   
   if (ele==userInfo[0].id) {
 
-    guanzhu.style.visibility="hidden";
+    guanzhu.style.display="none";
     return;
   }
-  if (count1==ele) {
-    return;
-  }
-  count1=ele;
+  // if (count1==ele) {
+  //   return;
+  // }
 
 
 
@@ -209,25 +208,25 @@ function getguanzhu(ele){
   },function(ret, err){
     if (ret) {
       if (ret.length!=0) {
-        for (var i =0 ; i <ret.length; i++) {
-        // alert(ele)
-        // alert(ret[i].bewatched)
-        if (ret[i].bewatched===ele) {
+        for (var i =0 ; i<ret.length; i++) {
+          if (ret[i].bewatched===ele) {
+            // count1=ele;
 
-         guanzhu.style.visibility="hidden";
-       }else{
-        // count1=ele;
-        guanzhu.style.visibility="visible";
+            guanzhu.style.display="none";
+            break;
+          }else{
+            
+            guanzhu.style.display="";
+          }
+        }   
+      }else{
+        
+        guanzhu.style.display="";
       }
-    }   
-  }else{
-    
-    guanzhu.style.visibility="visible";
-  }
-  
+      
 
-}
-});
+    }
+  });
 
 }
 

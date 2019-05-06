@@ -43,7 +43,7 @@
         text-align: center;
         border-radius: 8px;
     }
-   
+
     
     .highlight {
         opacity: 0.7;
@@ -83,55 +83,59 @@
         });
         return;
         
-      }else if(passwordValue==''){
-          api.toast({
-            msg:'密码不能为空',
-            duration: 2000,
-            location: 'bottom'
-        });
-           return;
-      }else{
-        
-      }
-      api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/user/login',
-        method: 'post',
-        headers: {
-            "X-APICloud-AppId": "A6099267504667",
-            "X-APICloud-AppKey":   appKey
-        },
-        data: {
-            values: { 
-                'username': usernameValue,
-                'password':passwordValue
-            },
+    }else if(passwordValue==''){
+      api.toast({
+        msg:'密码不能为空',
+        duration: 2000,
+        location: 'bottom'
+    });
+      return;
+  }else{
 
-        }
-    },function(ret, err){
-        if (ret) {
+  }
+  api.ajax({
+    url: 'http://d.apicloud.com/mcm/api/user/login',
+    method: 'post',
+    headers: {
+        "X-APICloud-AppId": "A6099267504667",
+        "X-APICloud-AppKey":   appKey
+    },
+    data: {
+        values: { 
+            'username': usernameValue,
+            'password':passwordValue
+        },
+
+    }
+},function(ret, err){
+    if (ret) {
             // alert($api.jsonToStr(ret))
-           $api.setStorage('userInfo', ret);
-                api.toast({
-                    msg: '登录成功',
-                    duration: 2000,
-                    location: 'bottom'
+            $api.setStorage('userInfo', ret);
+            api.toast({
+                msg: '登录成功',
+                duration: 2000,
+                location: 'bottom'
+            });
+            if (api.pageParam.ware) {
+                api.openWin({
+                    name: 'ware',
+                    url: './ware.html',
+                    pageParam: {
+                        wareId: api.pageParam.ware
+                    }
                 });
-                if (api.pageParam.ware) {
-                    api.openWin({
-                        name: 'ware',
-                        url: './ware.html',
-                        pageParam: {
-                            wareId: api.pageParam.ware
-                        }
-                    });
-                    api.closeWin();
-                }else{
-                    api.closeToWin({
-                    name: 'main'
-                });
-                }
-                
-       } else {
+                api.closeWin();
+            }else{
+             api.openWin({
+                name: 'personalcenter',
+                url: './personalcenter.html',
+            });
+             api.closeWin({
+                 name: 'login.html'
+             });
+         }
+
+     } else {
         api.toast({
             msg: '账号或密码错误',
             duration: 2000,
@@ -139,8 +143,8 @@
         });
     }
 });
-  }
-  function setUserName(_username){
+}
+function setUserName(_username){
     var username=$api.byId('username');
         // username.value=_username
         $api.val(username,_username);

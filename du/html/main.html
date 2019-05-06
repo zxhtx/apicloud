@@ -154,22 +154,32 @@
         //         type: "fade"
         //     }
         // });
-        
-        api.openFrame({
-            name: 'caoshi_frame',
-            url: './caoshi_frame.html',
-            rect: {
-                x: 0,
-                y: 0,
-                w: api.winWidth,
-                h: api.winHeight
-            },
-            pageParam: {
-                name: 'test'
-            },
+        var userInfo=$api.getStorage('userInfo');
+        if (userInfo==undefined && userInfo==null) {
+            api.toast({
+              msg: '您还未登录，请登录后再操作',
+              duration: 3000,
+              location: 'bottom'
+          });
+        }else{
+            api.openFrame({
+                name: 'caoshi_frame',
+                url: './caoshi_frame.html',
+                rect: {
+                    x: 0,
+                    y: 0,
+                    w: api.winWidth,
+                    h: api.winHeight
+                },
+                pageParam: {
+                    name: 'test'
+                },
             // bounces: true,
             bgColor: 'rgba(0,0,0,0)',
         });
+
+        }
+        
     }
 
     function gonggao(){
