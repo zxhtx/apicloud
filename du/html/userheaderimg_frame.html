@@ -176,6 +176,7 @@ function getuserheader(ele){
 function getguanzhu(ele){
   var userInfo=$api.getStorage('user');
   var guanzhu=$api.byId('guanzhu');   
+  alert(userInfo[0].id);
   if (ele==userInfo[0].id) {
 
     guanzhu.style.visibility="hidden";
