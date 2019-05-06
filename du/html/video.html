@@ -32,7 +32,7 @@
   color: white;
 }
 
- .count{
+.count{
   width: 49px;
   height: 20px;
   /*border: 1px solid red;*/
@@ -52,7 +52,7 @@
     <div class="count">0</div>
     <img class="img" src="../image/xiazai.png" alt="" width="30px" height="30px">
     <div class="count">0</div> 
-    <img class="img" src="../image/redbao.png" alt="" width="26px" height="30px">
+    <img class="img" src="../image/redbao.png" tapmode onclick="down()" alt="" width="26px" height="30px">
     <div class="count">￥0</div> 
   </div>
 
@@ -60,9 +60,12 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
   var redzan=0;
+  var downloadManager;
+  var videourl;
   apiready = function() {
+    downloadManager = api.require('downloadManager');
 
-
+    event();
 
   };
   function zan(){
@@ -84,10 +87,37 @@
 
    }
 
+ }
+
+ function event(){
+   api.addEventListener({
+    name: 'userandtext'
+  }, function(ret, err){
+    if( ret ){
+
+      videourl=ret.value.key1.video;
+
+   }
+ });
 
  }
 
-
+ function down(){
+  downloadManager.enqueue({
+    url: 'videourl',
+    savePath: 'fs://chaoxi',
+    cache: true,
+    allowResume:false,
+    title: '潮视',
+    networkTypes: 'all'
+  }, function(ret, err) {
+    if (ret) {
+      alert(JSON.stringify(ret));
+    } else {
+      alert(JSON.stringify(err));
+    }
+  });
+}
 </script>
 
 </html>
