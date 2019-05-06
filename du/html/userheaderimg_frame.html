@@ -41,7 +41,7 @@
   <div id="list">
 
    <div id="userheaderimg"></div>
-   <div id="guanzhu" tapmode onclick="focus()">+关注</div>
+   <div id="guanzhu" tapmode onclick="gz()">+关注</div>
    
  </div>
 
@@ -72,7 +72,7 @@
    }
 
  }
- function focus(){
+ function gz(){
    var guanzhu=$api.byId('guanzhu');    
    guanzhu.style.display="none";
    addfocus();
@@ -176,7 +176,6 @@ function getuserheader(ele){
 function getguanzhu(ele){
   var userInfo=$api.getStorage('user');
   var guanzhu=$api.byId('guanzhu');   
-  alert(userInfo[0].id);
   if (ele==userInfo[0].id) {
 
     guanzhu.style.visibility="hidden";
@@ -214,18 +213,16 @@ function getguanzhu(ele){
         // alert(ele)
         // alert(ret[i].bewatched)
         if (ret[i].bewatched===ele) {
+
          guanzhu.style.visibility="hidden";
-         guanzhu.style.display="none"
        }else{
         // count1=ele;
         guanzhu.style.visibility="visible";
-        guanzhu.style.display="";
       }
     }   
   }else{
     
     guanzhu.style.visibility="visible";
-    guanzhu.style.display="";
   }
   
 
