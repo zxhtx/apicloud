@@ -50,9 +50,9 @@
     <div class="zancount">0</div>
     <img class="img" src="../image/say.png" alt="" width="30px" height="30px"> 
     <div class="count">0</div>
-    <img class="img" src="../image/xiazai.png" alt="" width="30px" height="30px">
+    <img class="img" src="../image/xiazai.png"  tapmode onclick="down()" alt="" width="30px" height="30px">
     <div class="count">0</div> 
-    <img class="img" src="../image/redbao.png" tapmode onclick="down()" alt="" width="26px" height="30px">
+    <img class="img" src="../image/redbao.png" alt="" width="26px" height="30px">
     <div class="count">￥0</div> 
   </div>
 
@@ -97,24 +97,36 @@
 
       videourl=ret.value.key1.video;
 
-   }
- });
+    }
+  });
 
  }
 
  function down(){
+  var myDate=new Date;
+  var Y=myDate.getFullYear();
+  var M=myDate.getMonth()+1;
+  var D=myDate.getDate();  
+  var h=myDate.getHours();    
+  var m=myDate.getMinutes();
+  var date=Y+M+D+h+m+s;
+  var fs='fs://Download/'+date+'.mp4';
+  api.toast({
+    msg: fs,
+    duration: 2000,
+    location: 'bottom'
+  });
   downloadManager.enqueue({
-    url: 'videourl',
-    savePath: 'fs://chaoxi',
+    url: videourl,
+    savePath: fs,
     cache: true,
-    allowResume:false,
-    title: '潮视',
     networkTypes: 'all'
   }, function(ret, err) {
     if (ret) {
-      alert(JSON.stringify(ret));
-    } else {
-      alert(JSON.stringify(err));
+      if (ret.id!=-1) {
+
+      }
+      
     }
   });
 }
