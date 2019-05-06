@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <title>title</title>
+  <link rel="stylesheet" type="text/css" href="../css/api.css" />
+  <style>
+  html ,body{
+    background-color: transparent;
+    /*border: 1px solid red;*/
+  }
+  #list{
+  }
+  #userheaderimg{
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background-image: url('../image/default_square.png');
+    background-size: 50px 50px;
+    border: 1px solid black;
+  }
+  #guanzhu{
+    margin-right:8px;
+    margin-top: 3px; 
+    height: 22px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 22px
+    width: 50px;
+    border-radius: 6px;
+    background-color: black;
+    color: white;
+  }
+</style>
+</head>
+
+<body>
+  <div id="list">
+
+   <div id="userheaderimg"></div>
+   <div id="guanzhu" tapmode onclick="focus()">+关注</div>
+   
+ </div>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<script type="text/javascript">
+  var count;
+  var count1;
+  var count2;
+  var bewatched;
+  apiready = function() {
+    count=0;
+    count1=0;
+    count2=0;
+    getuser();
+    // mevideo();
+
+  };
+  function mevideo(){
+    if (bewatched==count2) {
+      return
+    }
+    count2=bewatched;
+    var guanzhu=$api.byId('guanzhu');   
+    if (api.pageParam.mevideo=='mevideo') {
+     guanzhu.style.display="none";
+   }
+
+ }
+ function focus(){
+   var guanzhu=$api.byId('guanzhu');    
+   guanzhu.style.display="none";
+   addfocus();
+ }
+
+
+ function addfocus(){
+   var userInfo=$api.getStorage('user');
+   var now = Date.now();
+   var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+   api.ajax({
+    url: 'https://d.apicloud.com/mcm/api/guanzhu',
+    method: 'post',
+    data: {
+      values: { 
+        focus:userInfo[0].id,
+        bewatched:bewatched
+      }
+    },
+    headers: {
+      "X-APICloud-AppId": "A6099267504667",
+      "X-APICloud-AppKey":   appKey,
+    },
+  },function(ret, err){
+    if (ret) {
+      api.toast({
+        msg: '关注成功',
+        duration: 3000,
+        location: 'bottom'
+      });
+    } 
+  });
+
+ }
+
+ function getuser(ret){
+
+
+  api.addEventListener({
+    name: 'userandtext'
+  }, function(ret, err){
+    if( ret ){
+
+      getuserheader(ret.value.key1.userid);
+      getguanzhu(ret.value.key1.userid);
+      // var userInfo=$api.getStorage('user');
+      // var guanzhu=$api.byId('guanzhu');    
+     //  if (ret.value.key1.userid==userInfo[0].id) {
+     //   guanzhu.style.display="none";
+     // }else{
+     //   guanzhu.style.display="";
+     // }
+     bewatched=ret.value.key1.userid;
+
+   }
+ });
+}
+
+function getuserheader(ele){
+  if (count==ele) {
+    return;
+  }
+  count=ele;
+  var now = Date.now();
+  var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+  var params={
+    fields: {},
+    where:{
+      id:ele
+    },
+    skip: 0,
+  }
+  params=$api.jsonToStr(params);
+  api.ajax({
+    url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
+    method: 'get',
+    headers: {
+      "X-APICloud-AppId": "A6099267504667",
+      "X-APICloud-AppKey":   appKey
+    },
+
+  },function(ret, err){
+    if (ret) {
+
+      var userheaderimg=$api.byId('userheaderimg');
+      if (ret[0].avatar==null) {
+       userheaderimg.style.background="url(../image/default_square.png)"
+       userheaderimg.style.backgroundSize='50px 50px';
+     }else{
+
+      userheaderimg.style.background="url("+ret[0].avatar.url+")"
+      userheaderimg.style.backgroundSize='50px 50px';
+    }
+
+
+  }
+});
+
+}
+
+function getguanzhu(ele){
+  var userInfo=$api.getStorage('user');
+  var guanzhu=$api.byId('guanzhu');   
+  if (ele==userInfo[0].id) {
+
+    guanzhu.style.visibility="hidden";
+    return;
+  }
+  if (count1==ele) {
+    return;
+  }
+  count1=ele;
+
+
+
+  var now = Date.now();
+  var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+  var params={
+    fields: {},
+    where:{
+      focus:userInfo[0].id,
+    },
+    skip: 0,
+  }
+  params=$api.jsonToStr(params);
+  api.ajax({
+    url: 'http://d.apicloud.com/mcm/api/guanzhu?filter='+params,
+    method: 'get',
+    headers: {
+      "X-APICloud-AppId": "A6099267504667",
+      "X-APICloud-AppKey":   appKey
+    },
+
+  },function(ret, err){
+    if (ret) {
+      if (ret.length!=0) {
+        for (var i =0 ; i <ret.length; i++) {
+        // alert(ele)
+        // alert(ret[i].bewatched)
+        if (ret[i].bewatched===ele) {
+         guanzhu.style.visibility="hidden";
+         guanzhu.style.display="none"
+       }else{
+        // count1=ele;
+        guanzhu.style.visibility="visible";
+        guanzhu.style.display="";
+      }
+    }   
+  }else{
+    
+    guanzhu.style.visibility="visible";
+    guanzhu.style.display="";
+  }
+  
+
+}
+});
+
+}
+
+</script>
+
+</html>

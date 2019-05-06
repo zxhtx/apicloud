@@ -261,12 +261,12 @@ function input(){
       },
       left: {
         bg: 'rgba(0,0,0,0)',
-        color: '#007FFF',
+        color: '#000',
         size: 12
       },
       right: {
         bg: 'rgba(0,0,0,0)',
-        color: '#007FFF',
+        color: '#000',
         size: 12
       }
     }
@@ -305,7 +305,8 @@ function addtext(texts){
   var addinfo={
     title:texts,
     userid:userInfo[0].id,
-    username:userInfo[0].username
+    username:userInfo[0].username,
+    like:'0'
 
   }
   var now = Date.now();

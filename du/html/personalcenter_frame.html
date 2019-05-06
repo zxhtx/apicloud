@@ -164,6 +164,9 @@
         margin-bottom: 6px;
         font-weight:bold;
     }
+    #chaoshiuser{
+        font-size: 10px;
+    }
 </style>
 </head>
 
@@ -189,7 +192,7 @@
         <div class="icon icon-chaoshiuser"></div>
         <div class="title">潮视用户名</div>
         <div class="arrow-panel">
-            <div class="text" id="chaoshiuser">发布视频显示此用户名</div>
+            <div class="text" id="chaoshiuser">发布视频显示此用户名,不修改显示账号</div>
         </div>
     </div>
     <div class="option" tapmode onclick="Openmoney()">
@@ -785,7 +788,12 @@ function getUsername(){
             // 存储用户名
             $api.setStorage('user', ret);
             username.innerHTML=ret[0].username;
-            csuser.innerHTML=ret[0].chaoshiuser;
+            if (ret[0].chaoshiuser==undefined) {
+                 csuser.innerHTML='发布视频显示此用户名,不修改显示账号';
+            }else{
+                  csuser.innerHTML=ret[0].chaoshiuser;
+            }
+          
             if (ret[0].count==undefined) {
                 // jian.innerHTML='推荐人数:0'
             }else{

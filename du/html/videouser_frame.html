@@ -17,41 +17,81 @@
   }
   #user{
     color: white;
-    font-size: 22px;
+    font-size: 16px;
   }
 </style>
 </head>
 
 <body>
   <div id="list">
-    
-     <div id="user"></div>
+
+   <div id="user"></div>
    
  </div>
 
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
-
+  var count;
   apiready = function() {
-
+    count=0;
     getuser();
 
   };
   function getuser(ret){
 
-    var user=$api.byId('user');
+  
     
 
     api.addEventListener({
       name: 'userandtext'
     }, function(ret, err){
       if( ret ){
-        user.innerHTML=ret.value.key1.username;
-  }
-});
+       getusername(ret.value.key1.userid)
+     }
+   });
   }
 
+  function getusername(ele){
+   if (count==ele) {
+    return;
+  }
+  count=ele;
+  var now = Date.now();
+  var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+  var params={
+    fields: {},
+    where:{
+      id:ele
+    },
+    skip: 0,
+  }
+  params=$api.jsonToStr(params);
+  api.ajax({
+    url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
+    method: 'get',
+    headers: {
+      "X-APICloud-AppId": "A6099267504667",
+      "X-APICloud-AppKey":   appKey
+    },
+
+  },function(ret, err){
+    if (ret) {
+       var user=$api.byId('user');
+       // alert(ret[0])
+      if (ret[0].chaoshiuser==null) {
+        user.innerHTML='@'+ret[0].username;
+     }else{
+      var username='@'+ret[0].chaoshiuser;
+      user.innerHTML=username.substr(0,8)+'...';
+
+    }
+
+
+  }
+});
+}
 
 
 </script>
