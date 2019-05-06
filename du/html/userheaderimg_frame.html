@@ -20,7 +20,7 @@
     border-radius: 25px;
     background-image: url('../image/default_square.png');
     background-size: 50px 50px;
-    border: 1px solid black;
+    border: 2px solid black;
   }
   #guanzhu{
     margin-right:8px;
@@ -210,17 +210,17 @@ function getguanzhu(ele){
       if (ret.length!=0) {
         for (var i =0 ; i<ret.length; i++) {
           if (ret[i].bewatched===ele) {
-            // count1=ele;
+            count1=ele;
 
             guanzhu.style.display="none";
             break;
           }else{
-            
+            count1=ele;
             guanzhu.style.display="";
           }
         }   
       }else{
-        
+        count1=ele;
         guanzhu.style.display="";
       }
       

@@ -12,7 +12,7 @@
     /*border: 1px solid red;*/
   }
   #list>.img{
-    margin: 16px 0px 0px 10px;
+    margin: 8px 0px 0px 10px;
   }
 /*#list>#icon{
   margin-bottom:20px;
@@ -23,6 +23,23 @@
    margin: 6px 3px 8px 0px;
 
  }
+ .zancount{
+  width: 49px;
+  height: 20px;
+  /*border: 1px solid red;*/
+  text-align: center;
+  margin-left: 2px;
+  color: white;
+}
+
+ .count{
+  width: 49px;
+  height: 20px;
+  /*border: 1px solid red;*/
+  text-align: center;
+  /*margin-left: 3px;*/
+  color: white;
+}
 </style>
 </head>
 
@@ -30,9 +47,13 @@
   <div id="list">
 
     <img class="img" id="zan" tapmode onclick="zanandzan2()" src="../image/zan.png" alt="" width="35px" height="30px">
+    <div class="zancount">0</div>
     <img class="img" src="../image/say.png" alt="" width="30px" height="30px"> 
-    <img class="img" src="../image/xiazai.png" alt="" width="30px" height="30px"> 
-    <img class="img" src="../image/redbao.png" alt="" width="26px" height="30px"> 
+    <div class="count">0</div>
+    <img class="img" src="../image/xiazai.png" alt="" width="30px" height="30px">
+    <div class="count">0</div> 
+    <img class="img" src="../image/redbao.png" alt="" width="26px" height="30px">
+    <div class="count">￥0</div> 
   </div>
 
 </body>

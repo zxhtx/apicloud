@@ -16,9 +16,10 @@
     width: 100%;
   }
   #user{
-    color: white;
-    font-size: 16px;
-  }
+   font-weight: bold;
+   color: white;
+   font-size: 16px;
+ }
 </style>
 </head>
 
@@ -41,7 +42,7 @@
   };
   function getuser(ret){
 
-  
+    
     
 
     api.addEventListener({
@@ -78,19 +79,19 @@
 
   },function(ret, err){
     if (ret) {
-       var user=$api.byId('user');
+     var user=$api.byId('user');
        // alert(ret[0])
-      if (ret[0].chaoshiuser==null) {
+       if (ret[0].chaoshiuser==null) {
         user.innerHTML='@'+ret[0].username;
-     }else{
-      var username='@'+ret[0].chaoshiuser;
-      user.innerHTML=username.substr(0,8)+'...';
+      }else{
+        var username='@'+ret[0].chaoshiuser;
+        user.innerHTML=username.substr(0,8)+'...';
+
+      }
+
 
     }
-
-
-  }
-});
+  });
 }
 
 
