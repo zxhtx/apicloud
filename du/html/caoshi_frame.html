@@ -106,20 +106,16 @@
   var favorite = false;
   var UIScrollPlayer; 
   var video;
-  var videonull;
   var addvideo;
-  var addvideonull;
   var retele;
-  var nullretele;
   var mevideo;
+  var play;
   apiready = function() {
     UIScrollPlayer = api.require('UIScrollPlayer');
     video=[];
-    videonull=[];
     addvideo=[];
-    addvideonull=[];
     retele=[];
-    nullretele=[];
+    play=0;
     fnLoadList();
 
     
@@ -201,22 +197,10 @@ var now = Date.now();
         }else{
           fnOpenRoom(ret);
         }
-        alert($api.jsonToStr(ret))
+        // alert($api.jsonToStr(ret))
         for (var i = 0; i <ret.length; i++) {
-          if (ret[i].video==null ) {
+          if (ret[i].video==null || ret[i].video==undefined || ret[i].video=='' ) {
             continue;
-            ret[i].video=new Date;
-            nullretele.push({
-              id:ret[i].id,
-             video:ret[i].video,
-             title:ret[i].title,
-             userid:ret[i].userid,
-             like:ret[i].like,
-             money:ret[i].money,
-             down:ret[i].down,
-
-            })
-            container;
           }else{
             retele.push({
              id:ret[i].id,
@@ -240,17 +224,16 @@ var now = Date.now();
 
     function  eventlister(element){
      UIScrollPlayer.addEventListener(function(ret, err){
-      api.toast({
-          msg: ret.index,
-          duration: 2000,
-          location: 'bottom'
-      });
-      api.sendEvent({
-        name: 'userandtext',
-        extra: {
-          key1: retele[ret.index], 
-        }
-      });
+      if (ret.evenType=='onPlaying') {
+        api.sendEvent({
+          name: 'userandtext',
+          extra: {
+            key1: retele[ret.index], 
+          }
+        });
+
+      }
+
       if (ret.index>=30) {
         if (ret.index%30==0) {
           fnLoadList(true)
@@ -260,7 +243,7 @@ var now = Date.now();
       }
 
       if (ret.evenType=='onSingleTapUp') {
-       // onSingleTapUp();
+       onSingleTapUp();
 
      }else if (ret.evenType=='onDoubleTap') {
 
@@ -281,11 +264,8 @@ var now = Date.now();
        eventlister();
        for (var i = 0; i <ret.length; i++) {
         if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
-          ret[i].video=new Date;
-          addvideonull.push({
-            imageUrl:'',
-            videoUrl:ret[i].video
-          })
+          continue;
+
         }else{
           addvideo.push({
            imageUrl:'',
@@ -305,11 +285,7 @@ var now = Date.now();
 
      for (var i = 0; i <ret.length; i++) {
       if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
-        ret[i].video=new Date;
-        videonull.push({
-          imageUrl:'',
-          videoUrl:ret[i].video
-        })
+        continue;
       }else{
         video.push({
          imageUrl:'',
@@ -318,7 +294,6 @@ var now = Date.now();
       }
 
     }
-    alert($api.jsonToStr( videonull))
     UIScrollPlayer.open({
       rect : {
         x : 0,
@@ -364,7 +339,7 @@ var now = Date.now();
             url: './userheaderimg_frame.html',
             rect: {
               x: api.winWidth-55,
-              y: api.winHeight/2-20,
+              y: api.winHeight/2-38,
               h: api.winHeight/8,
               w: 60
             },
@@ -430,7 +405,27 @@ var now = Date.now();
 
   }
 
+  function  onSingleTapUp(){
+    if (play==0) {
+      UIScrollPlayer.pause();
+      play=1
+      api.toast({
+        msg: '已暂停',
+        duration: 2000,
+        location: 'bottom'
+      });
 
+    }else{
+     UIScrollPlayer.play();
+     play=0
+     api.toast({
+       msg: '继续播放',
+       duration: 2000,
+       location: 'bottom'
+     });
+
+   }
+ }
 
 
 </script>

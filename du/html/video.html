@@ -19,34 +19,34 @@
   border-radius: 50%;
   border-color: black; 
   }  */
-  .music{
-   margin: 6px 3px 8px 0px;
+  
+  .zancount{
+    width: 49px;
+    height: 20px;
+    /*border: 1px solid red;*/
+    text-align: center;
+    margin-left: 2px;
+    color: white;
+  }
+  #zan{
+    margin: 8px 0px 0px 8px;
+  }
 
- }
- .zancount{
-  width: 49px;
-  height: 20px;
-  /*border: 1px solid red;*/
-  text-align: center;
-  margin-left: 2px;
-  color: white;
-}
-
-.count{
-  width: 49px;
-  height: 20px;
-  /*border: 1px solid red;*/
-  text-align: center;
-  /*margin-left: 3px;*/
-  color: white;
-}
+  .count{
+    width: 49px;
+    height: 20px;
+    /*border: 1px solid red;*/
+    text-align: center;
+    /*margin-left: 3px;*/
+    color: white;
+  }
 </style>
 </head>
 
 <body>
   <div id="list">
 
-    <img class="img" id="zan" tapmode onclick="zanandzan2()" src="../image/zan.png" alt="" width="35px" height="30px">
+    <img  id="zan" tapmode onclick="zanandzan2()" src="../image/zan.png" alt="" width="35px" height="30px">
     <div class="zancount" id="likecount">0</div>
     <img class="img" src="../image/say.png" alt="" width="30px" height="30px"> 
     <div class="count" >0</div>
@@ -58,62 +58,178 @@
 
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
-  var redzan=0.1;
+  var redzan=0;
   var videourl;
   var count1;
-
+  var likeelent;
+  var videoid;
+  var now;
+  var appKey;
   apiready = function() {
-    count1=0;
-    event();
-    getuser();
-  };
-  function zan(){
-    var zan=$api.byId('zan');
-    zan.src='../image/zan2.png';
-    redzan=1;
+   now = Date.now();
+   appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+   count1=0;
+   likeelent=0;
+   event();
+   getuser();
 
-  }
-  function getuser(ret){
+ };
 
 
-    api.addEventListener({
-      name: 'userandtext'
-    }, function(ret, err){
-      if( ret ){
 
-        getlike(ret.value.key1.like);
-        getdown(ret.value.key1.down);
-
-      }
-    });
-  }
-
-  function getlike(ele){
-   
-     var likecount=$api.byId('likecount');
-     likecount.innerHTML=ele;
- }
-
- function getdown(ele){
-  var downcount=$api.byId('downcount');
-  downcount.innerHTML=ele;
-}
-function zanandzan2(){
-
+ function zanandzan2(){
+  var likecount=$api.byId('likecount');
   if (redzan==0) {
     var zan=$api.byId('zan');
     zan.src='../image/zan2.png';
-    redzan=1;
-  }else{
-   var zan=$api.byId('zan');
-   zan.src='../image/zan.png';
-   redzan=0;
+      // like=likeelent;
+      likecount.innerHTML=++likeelent;
+      redzan=1;
+      addlike();
+      addlikeuser();
 
+    }else{
+     var zan=$api.byId('zan');
+     zan.src='../image/zan.png';
+     // like=likeelent;
+     likecount.innerHTML=--likeelent;
+     redzan=0;
+     jianlike();
+     // jianlikeuser();
+
+   }
 
  }
+ function addlike(){
+   var userInfo = $api.getStorage('userInfo');
+
+   api.ajax({
+    url: 'https://d.apicloud.com/mcm/api/video1/'+videoid,
+    method: 'put',
+    data: {
+      values:{
+        "like":likeelent++,
+      }
+    },
+    headers: {
+     "X-APICloud-AppId": "A6099267504667",
+     "X-APICloud-AppKey":   appKey,
+     "Authorization": userInfo.id
+   }
+ },function(ret, err){
+  if (ret) {
+    // alert($api.jsonToStr(ret))
+
+  }
+});
+ }
+
+
+ function addlikeuser(){
+   var userInfo=$api.getStorage('user');
+   api.ajax({
+    url: 'https://d.apicloud.com/mcm/api/likevideo',
+    method: 'post',
+    data: {
+      values: { 
+        likeuserid:userInfo[0].id,
+        belikeuserid:videoid
+      }
+    },
+    headers: {
+      "X-APICloud-AppId": "A6099267504667",
+      "X-APICloud-AppKey":   appKey,
+    },
+  },function(ret, err){
+
+  });
+ }
+
+ 
+ function jianlike(){
+   var userInfo = $api.getStorage('userInfo');
+
+   api.ajax({
+    url: 'https://d.apicloud.com/mcm/api/video1/'+videoid,
+    method: 'put',
+    data: {
+      values:{
+        "like":likeelent--,
+      }
+    },
+    headers: {
+     "X-APICloud-AppId": "A6099267504667",
+     "X-APICloud-AppKey":   appKey,
+     "Authorization": userInfo.id
+   }
+ },function(ret, err){
+  if (ret) {
+
+
+  }
 
 }
+
+
+
+function getlikecount(){
+ var likecount=$api.byId('likecount');
+ var params={
+  fields: {},
+  where:{
+    id:videoid,
+  },
+  skip: 0,
+}
+params=$api.jsonToStr(params);
+api.ajax({
+  url: 'http://d.apicloud.com/mcm/api/video1?filter='+params,
+  method: 'get',
+  headers: {
+    "X-APICloud-AppId": "A6099267504667",
+    "X-APICloud-AppKey":   appKey
+  },
+
+},function(ret, err){
+  if (ret) {
+      // alert($api.jsonToStr(ret))
+
+      likecount.innerHTML=ret[0].like;
+      likeelent=ret[0].like;
+    }
+  });
+
+}
+function getuser(ret){
+
+
+  api.addEventListener({
+    name: 'userandtext'
+  }, function(ret, err){
+    if( ret ){
+      videoid=ret.value.key1.id;
+      getlikecount()
+      getlike(ret.value.key1.like);
+      getdown(ret.value.key1.down);
+
+    }
+  });
+}
+
+// function getlike(ele){
+
+//  var likecount=$api.byId('likecount');
+//  // likecount.innerHTML=ele;
+//  likeelent=ele;
+// }
+
+// function getdown(ele){
+//   var downcount=$api.byId('downcount');
+//   downcount.innerHTML=ele;
+
+// }
 
 function event(){
  api.addEventListener({
