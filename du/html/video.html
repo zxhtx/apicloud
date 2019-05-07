@@ -75,6 +75,7 @@
    event();
    getuser();
 
+
  };
 
 
@@ -88,7 +89,7 @@
       likecount.innerHTML=++likeelent;
       redzan=1;
       addlike();
-      addlikeuser();
+
 
     }else{
      var zan=$api.byId('zan');
@@ -97,7 +98,7 @@
      likecount.innerHTML=--likeelent;
      redzan=0;
      jianlike();
-     // jianlikeuser();
+
 
    }
 
@@ -121,6 +122,7 @@
  },function(ret, err){
   if (ret) {
     // alert($api.jsonToStr(ret))
+    addlikeuser();
 
   }
 });
@@ -167,25 +169,40 @@
  },function(ret, err){
   if (ret) {
 
-
-  }
+   jianlikeuser();
+ }
 });
+ }
+
+ function jianlikeuser(){
+  api.ajax({
+    url: 'https://d.apicloud.com/mcm/api/likevideo/'+,
+    method: 'delete',
+    headers: {
+      "X-APICloud-AppId": "A6099267504667",
+      "X-APICloud-AppKey":   appKey,
+      "Authorization": userInfo.id
+    }
+  }, function(ret, err) {
+    if (ret) {
+
+    }
+  });
 }
 
 
-
-function getlikecount(){
- var likecount=$api.byId('likecount');
- var params={
+  function getdeletevideoid(videoid){
+     var params={
   fields: {},
   where:{
-    id:videoid,
+    belikeuserid:videoid,
   },
   skip: 0,
+  // include: ['belikeuseridPointer']
 }
 params=$api.jsonToStr(params);
 api.ajax({
-  url: 'http://d.apicloud.com/mcm/api/video1?filter='+params,
+  url: 'http://d.apicloud.com/mcm/api/likevideo?filter='+params,
   method: 'get',
   headers: {
     "X-APICloud-AppId": "A6099267504667",
@@ -194,14 +211,57 @@ api.ajax({
 
 },function(ret, err){
   if (ret) {
-      // alert($api.jsonToStr(ret))
+   alert($api.jsonToStr(ret))
+  }
+});
 
-      likecount.innerHTML=ret[0].like;
-      likeelent=ret[0].like;
+
+
+  }
+
+function getlikevideo(videoid){
+ var userInfo=$api.getStorage('user');
+ var params={
+  fields: {},
+  where:{
+    likeuserid:userInfo[0].id,
+  },
+  skip: 0,
+  // include: ['belikeuseridPointer']
+}
+params=$api.jsonToStr(params);
+api.ajax({
+  url: 'http://d.apicloud.com/mcm/api/likevideo?filter='+params,
+  method: 'get',
+  headers: {
+    "X-APICloud-AppId": "A6099267504667",
+    "X-APICloud-AppKey":   appKey
+  },
+
+},function(ret, err){
+  if (ret) {
+    var zan=$api.byId('zan');
+    if (ret.length!=0) {
+      for (var i =0 ; i<ret.length; i++) {
+        if (ret[i].belikeuserid===videoid) {
+          zan.src='../image/zan2.png'
+          redzan=1;
+          break;
+        }else{
+          zan.src='../image/zan.png'
+          redzan=0;
+        }
+      }   
+    }else{
+      zan.src='../image/zan.png'
+      redzan=0;
     }
-  });
+  }
+});
+
 
 }
+
 function getuser(ret){
 
 
@@ -210,9 +270,13 @@ function getuser(ret){
   }, function(ret, err){
     if( ret ){
       videoid=ret.value.key1.id;
-      getlikecount()
-      getlike(ret.value.key1.like);
-      getdown(ret.value.key1.down);
+
+      getlikevideo(videoid);
+      getdeletevideoid(videoid);
+      var likecount=$api.byId('likecount');
+      likecount.innerHTML=ret.value.key1.like;
+      likeelent=ret.value.key1.like;
+      
 
     }
   });
@@ -220,9 +284,7 @@ function getuser(ret){
 
 // function getlike(ele){
 
-//  var likecount=$api.byId('likecount');
-//  // likecount.innerHTML=ele;
-//  likeelent=ele;
+// 
 // }
 
 // function getdown(ele){
