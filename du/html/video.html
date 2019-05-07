@@ -47,11 +47,11 @@
   <div id="list">
 
     <img class="img" id="zan" tapmode onclick="zanandzan2()" src="../image/zan.png" alt="" width="35px" height="30px">
-    <div class="zancount">0</div>
+    <div class="zancount" id="likecount">0</div>
     <img class="img" src="../image/say.png" alt="" width="30px" height="30px"> 
-    <div class="count">0</div>
-    <img class="img" src="../image/xiazai.png"  tapmode onclick="down()" alt="" width="30px" height="30px">
-    <div class="count">0</div> 
+    <div class="count" >0</div>
+    <img class="img" src="../image/xiazai.png"  tapmode onclick="xiazai()" alt="" width="30px" height="30px">
+    <div class="count" id="downcount">0</div> 
     <img class="img" src="../image/redbao.png" alt="" width="26px" height="30px">
     <div class="count">￥0</div> 
   </div>
@@ -59,76 +59,112 @@
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
-  var redzan=0;
-  var downloadManager;
+  var redzan=0.1;
   var videourl;
+  var count1;
+
   apiready = function() {
-    downloadManager = api.require('downloadManager');
-
+    count1=0;
     event();
-
+    getuser();
   };
   function zan(){
     var zan=$api.byId('zan');
     zan.src='../image/zan2.png';
+    redzan=1;
 
   }
-  function zanandzan2(){
-
-    if (redzan==0) {
-      var zan=$api.byId('zan');
-      zan.src='../image/zan2.png';
-      redzan=1;
-    }else{
-     var zan=$api.byId('zan');
-     zan.src='../image/zan.png';
-     redzan=0;
+  function getuser(ret){
 
 
-   }
+    api.addEventListener({
+      name: 'userandtext'
+    }, function(ret, err){
+      if( ret ){
+
+        getlike(ret.value.key1.like);
+        getdown(ret.value.key1.down);
+
+      }
+    });
+  }
+
+  function getlike(ele){
+   
+     var likecount=$api.byId('likecount');
+     likecount.innerHTML=ele;
+ }
+
+ function getdown(ele){
+  var downcount=$api.byId('downcount');
+  downcount.innerHTML=ele;
+}
+function zanandzan2(){
+
+  if (redzan==0) {
+    var zan=$api.byId('zan');
+    zan.src='../image/zan2.png';
+    redzan=1;
+  }else{
+   var zan=$api.byId('zan');
+   zan.src='../image/zan.png';
+   redzan=0;
+
 
  }
 
- function event(){
-   api.addEventListener({
-    name: 'userandtext'
-  }, function(ret, err){
-    if( ret ){
+}
 
-      videourl=ret.value.key1.video;
+function event(){
+ api.addEventListener({
+  name: 'userandtext'
+}, function(ret, err){
+  if( ret ){
+    videourl=ret.value.key1.video;
 
-    }
-  });
+  }
+});
 
- }
+}
 
- function down(){
-  var myDate=new Date;
-  var Y=myDate.getFullYear();
-  var M=myDate.getMonth()+1;
-  var D=myDate.getDate();  
-  var h=myDate.getHours();    
-  var m=myDate.getMinutes();
-  var date=Y+M+D+h+m+s;
-  var fs='fs://Download/'+date+'.mp4';
+function xiazai(){
   api.toast({
-    msg: fs,
+    msg: '正在下载',
     duration: 2000,
     location: 'bottom'
   });
-  downloadManager.enqueue({
+  var myDate=new Date;
+  // var Y=myDate.getFullYear();
+  // var M=myDate.getMonth()+1;
+  // var D=myDate.getDate();  
+  var h=myDate.getTime(); 
+  // var date=Y+M+D+h+m+s;
+  // alert(m)
+  var fs='fs://'+h+'.mp4';
+  api.download({
     url: videourl,
     savePath: fs,
-    cache: true,
-    networkTypes: 'all'
+    report: true,
+    cache: false,
+    allowResume: false,
   }, function(ret, err) {
-    if (ret) {
-      if (ret.id!=-1) {
-
-      }
-      
-    }
+    if (ret.state == 1) {
+      api.saveMediaToAlbum({
+        path: ret.savePath
+      }, function(ret, err) {
+        if (ret && ret.status) {
+          api.toast({
+            msg: '下载成功',
+            duration: 2000,
+            location: 'bottom'
+          });
+          保存成功;
+        } 
+      });
+    } 
   });
+
+
 }
 </script>
 

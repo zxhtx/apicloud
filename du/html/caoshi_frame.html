@@ -122,7 +122,7 @@
     nullretele=[];
     fnLoadList();
 
-    setInterval(addEventListenerplay,1000)
+    // setInterval(addEventListenerplay,1500)
     mevideo=api.pageParam.name
 
 
@@ -163,7 +163,8 @@
   fields: {},
   skip:skip,
   limit:LIMIT,
-  order:"createdAt DESC"
+  order:"createdAt DESC",
+  include: ['useridPointer']
 }
 }
 
@@ -200,7 +201,6 @@ var now = Date.now();
         }else{
           fnOpenRoom(ret);
         }
-
         for (var i = 0; i <ret.length; i++) {
           if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
             ret[i].video=new Date;
@@ -214,10 +214,10 @@ var now = Date.now();
              video:ret[i].video.url,
              title:ret[i].title,
              userid:ret[i].userid,
-             username:ret[i].username,
              like:ret[i].like,
              money:ret[i].money,
-             down:ret[i].down
+             down:ret[i].down,
+
            })
           }
 
@@ -230,6 +230,7 @@ var now = Date.now();
 
 
     function  eventlister(element){
+      alert(ret.index)
      UIScrollPlayer.addEventListener(function(ret, err){
       api.sendEvent({
         name: 'userandtext',
@@ -337,7 +338,7 @@ var now = Date.now();
             name: 'backimg_frame',
             url: './backimg_frame.html',
             rect: {
-              x: 8,
+              x: 10,
               y: 28,
               w: 50,
               h: 50
@@ -349,7 +350,7 @@ var now = Date.now();
             name: 'userheaderimg_frame',
             url: './userheaderimg_frame.html',
             rect: {
-              x: api.winWidth-52,
+              x: api.winWidth-55,
               y: api.winHeight/2-20,
               h: api.winHeight/8,
               w: 60
@@ -380,7 +381,7 @@ var now = Date.now();
               x: 10,
               y: api.winHeight/2+250,
               h: api.winHeight/2-250,
-              w: api.winWidth/3+30
+              w: api.winWidth/3+60
             },
             bgColor: 'rgba(0,0,0,0)',
 

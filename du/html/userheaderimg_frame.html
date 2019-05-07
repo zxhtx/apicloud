@@ -117,59 +117,24 @@
     if( ret ){
 
       getuserheader(ret.value.key1.userid);
-      getguanzhu(ret.value.key1.userid);
-      // var userInfo=$api.getStorage('user');
-      // var guanzhu=$api.byId('guanzhu');    
-     //  if (ret.value.key1.userid==userInfo[0].id) {
-     //   guanzhu.style.display="none";
-     // }else{
-     //   guanzhu.style.display="";
-     // }
-     bewatched=ret.value.key1.userid;
+      getguanzhu(ret.value.key1.userid.id);
+      bewatched=ret.value.key1.userid.id;
 
-   }
- });
+    }
+  });
 }
 
-function getuserheader(ele){
-  if (count==ele) {
-    return;
-  }
-  count=ele;
-  var now = Date.now();
-  var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-  var params={
-    fields: {},
-    where:{
-      id:ele
-    },
-    skip: 0,
-  }
-  params=$api.jsonToStr(params);
-  api.ajax({
-    url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
-    method: 'get',
-    headers: {
-      "X-APICloud-AppId": "A6099267504667",
-      "X-APICloud-AppKey":   appKey
-    },
-
-  },function(ret, err){
-    if (ret) {
-
+function getuserheader(ele){  
       var userheaderimg=$api.byId('userheaderimg');
-      if (ret[0].avatar==null) {
+
+      if (ele.avatar==null) {
        userheaderimg.style.background="url(../image/default_square.png)"
        userheaderimg.style.backgroundSize='50px 50px';
      }else{
 
-      userheaderimg.style.background="url("+ret[0].avatar.url+")"
+      userheaderimg.style.background="url("+ele.avatar.url+")"
       userheaderimg.style.backgroundSize='50px 50px';
     }
-
-
-  }
-});
 
 }
 
@@ -181,11 +146,9 @@ function getguanzhu(ele){
     guanzhu.style.display="none";
     return;
   }
-  // if (count1==ele) {
-  //   return;
-  // }
-
-
+ // if (ele==count1) {
+ //  return;
+ // }
 
   var now = Date.now();
   var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
@@ -210,17 +173,17 @@ function getguanzhu(ele){
       if (ret.length!=0) {
         for (var i =0 ; i<ret.length; i++) {
           if (ret[i].bewatched===ele) {
-            count1=ele;
+            // count1=ele;
 
             guanzhu.style.display="none";
             break;
           }else{
-            count1=ele;
+            // count1=ele;
             guanzhu.style.display="";
           }
         }   
       }else{
-        count1=ele;
+        // count1=ele;
         guanzhu.style.display="";
       }
       
