@@ -122,7 +122,7 @@
     nullretele=[];
     fnLoadList();
 
-    // setInterval(addEventListenerplay,1500)
+    
     mevideo=api.pageParam.name
 
 
@@ -201,13 +201,22 @@ var now = Date.now();
         }else{
           fnOpenRoom(ret);
         }
+        alert($api.jsonToStr(ret))
         for (var i = 0; i <ret.length; i++) {
-          if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
+          if (ret[i].video==null ) {
+            continue;
             ret[i].video=new Date;
             nullretele.push({
-              imageUrl:'',
-              videoUrl:ret[i].video+ret[i].id+ret[i].title+ret[i].userid+ret[i].username+ret[i].like
+              id:ret[i].id,
+             video:ret[i].video,
+             title:ret[i].title,
+             userid:ret[i].userid,
+             like:ret[i].like,
+             money:ret[i].money,
+             down:ret[i].down,
+
             })
+            container;
           }else{
             retele.push({
              id:ret[i].id,
@@ -222,7 +231,7 @@ var now = Date.now();
           }
 
         }
-
+        alert($api.jsonToStr(nullretele))
 
 
       });
@@ -230,8 +239,12 @@ var now = Date.now();
 
 
     function  eventlister(element){
-      alert(ret.index)
      UIScrollPlayer.addEventListener(function(ret, err){
+      api.toast({
+          msg: ret.index,
+          duration: 2000,
+          location: 'bottom'
+      });
       api.sendEvent({
         name: 'userandtext',
         extra: {
@@ -305,7 +318,7 @@ var now = Date.now();
       }
 
     }
-
+    alert($api.jsonToStr( videonull))
     UIScrollPlayer.open({
       rect : {
         x : 0,
@@ -316,7 +329,7 @@ var now = Date.now();
       videos : video,
       fixed:true,
     },function(ret, err){
-
+      setTimeout(addEventListenerplay,1000)
     });
 
     setTimeout(function() {
