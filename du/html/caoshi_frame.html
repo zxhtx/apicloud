@@ -110,13 +110,16 @@
   var retele;
   var mevideo;
   var play;
+  var activity ;
   apiready = function() {
     UIScrollPlayer = api.require('UIScrollPlayer');
     video=[];
     addvideo=[];
     retele=[];
     play=0;
+    load();
     fnLoadList();
+    
 
     
     mevideo=api.pageParam.name
@@ -124,6 +127,25 @@
 
 
   };
+  function load(){
+    activity = api.require('UILoading');
+    activity.keyFrame({
+      rect: {
+        w: 80,
+        h: 100
+      },
+      styles: {
+        bg: 'rgba(0,0,0,0.5)',
+        corner: 5,
+        interval: 50,
+        frame: {
+          w: 80,
+          h: 80
+        }
+      }
+    });
+
+  }
   function addEventListenerplay(){
    UIScrollPlayer.play();
  }
@@ -134,10 +156,9 @@
   if (_LoadMore) {
     // jishu=skip;
     skip+=LIMIT;
-     // alert(skip)
-     // alert(jishu)
 
-   }else{
+
+  }else{
 
     skip=0;
   }
@@ -151,7 +172,8 @@
     skip:skip,
     limit:LIMIT,
     where:{userid:userInfo[0].id},
-    order:"createdAt DESC"
+    order:"createdAt DESC",
+    include: ['useridPointer']
   }
 }else{
  var params={
@@ -215,8 +237,8 @@ var now = Date.now();
           }
 
         }
-       
 
+         activity.closeKeyFrame();
 
       });
     }
