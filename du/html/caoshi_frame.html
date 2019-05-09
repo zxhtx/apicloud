@@ -152,38 +152,117 @@
 
 
  function fnLoadList(_LoadMore) {
-  // var jishu;
-  if (_LoadMore) {
-    // jishu=skip;
-    skip+=LIMIT;
 
+  if (_LoadMore) {
+    skip+=LIMIT;
 
   }else{
 
     skip=0;
   }
-
-
-  if (api.pageParam.name=='mevideo') {
+  if (api.pageParam.like=='likevideo') {
    var userInfo=$api.getStorage('user');
    var params={
     fields:{},
     fields: {},
     skip:skip,
     limit:LIMIT,
-    where:{userid:userInfo[0].id},
+    where:{likeuserid:userInfo[0].id},
+    order:"createdAt DESC",
+    include: ['belikeuseridPointer','useridPointer']
+  }
+
+
+  params=$api.jsonToStr(params);
+
+  var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+      api.ajax({
+        url: 'https://d.apicloud.com/mcm/api/likevideo?filter='+params,
+        headers: {
+          'X-APICloud-AppId': 'A6099267504667',
+          'X-APICloud-AppKey': appKey
+        },
+        method: 'get'
+      }, function(ret, err) {
+        alert($api.jsonToStr(ret))
+        if (api.pageParam.name=='likevideo') {
+          if (ret==null || ret==undefined || ret=='') {
+            activity.closeKeyFrame();
+            api.execScript({
+              name: 'personalcenter',
+              frameName: 'personalcenter_frame',
+              script: 'nullvideo();'
+            });
+
+            api.closeFrame({
+              name: 'caoshi_frame'
+            });
+          }
+        }
+            alert($api.jsonToStr(ret))
+        if (_LoadMore) {
+          addRoom(ret);
+        }else{
+          fnOpenRoom(ret);
+        }
+    
+        for (var i = 0; i <ret.length; i++) {
+          if (ret[i].belikeuserid.video==null || ret[i].belikeuserid.video==undefined || ret[i].belikeuserid.video=='' ) {
+            continue;
+          }else{
+            retele.push({
+             id:ret[i]belikeuserid.id,
+             video:ret[i].belikeuserid.video.url,
+             title:ret[i].belikeuserid.title,
+             userid:ret[i].userid,
+             like:ret[i].belikeuserid.like,
+             money:ret[i].belikeuserid.money,
+             down:ret[i].belikeuserid.down,
+
+           })
+          }
+
+        }
+
+        activity.closeKeyFrame();
+
+      });
+
+
+
+    }else{
+
+     if (_LoadMore) {
+      skip+=LIMIT;
+
+    }else{
+
+      skip=0;
+    }
+
+
+    if (api.pageParam.name=='mevideo') {
+     var userInfo=$api.getStorage('user');
+     var params={
+      fields:{},
+      fields: {},
+      skip:skip,
+      limit:LIMIT,
+      where:{userid:userInfo[0].id},
+      order:"createdAt DESC",
+      include: ['useridPointer']
+    }
+  }else{
+   var params={
+    fields:{},
+    fields: {},
+    skip:skip,
+    limit:LIMIT,
     order:"createdAt DESC",
     include: ['useridPointer']
   }
-}else{
- var params={
-  fields:{},
-  fields: {},
-  skip:skip,
-  limit:LIMIT,
-  order:"createdAt DESC",
-  include: ['useridPointer']
-}
 }
 
 
@@ -238,64 +317,84 @@ var now = Date.now();
 
         }
 
-         activity.closeKeyFrame();
+        activity.closeKeyFrame();
 
       });
+
+    }
+  // var jishu;
+
+}
+
+
+function  eventlister(element){
+ UIScrollPlayer.addEventListener(function(ret, err){
+  if (ret.evenType=='onPlaying') {
+    api.sendEvent({
+      name: 'userandtext',
+      extra: {
+        key1: retele[ret.index], 
+      }
+    });
+
+  }
+
+  if (ret.index>=30) {
+    if (ret.index%30==0) {
+      fnLoadList(true)
+
     }
 
+  }
 
-    function  eventlister(element){
-     UIScrollPlayer.addEventListener(function(ret, err){
-      if (ret.evenType=='onPlaying') {
-        api.sendEvent({
-          name: 'userandtext',
-          extra: {
-            key1: retele[ret.index], 
-          }
-        });
+  if (ret.evenType=='onSingleTapUp') {
+   onSingleTapUp();
 
-      }
+ }else if (ret.evenType=='onDoubleTap') {
 
-      if (ret.index>=30) {
-        if (ret.index%30==0) {
-          fnLoadList(true)
-          
-        }
-        
-      }
-
-      if (ret.evenType=='onSingleTapUp') {
-       onSingleTapUp();
-
-     }else if (ret.evenType=='onDoubleTap') {
-
-      api.execScript({
+  api.execScript({
             // name: 'video',
             frameName: 'video',
             script: 'zan();'
           });
 
-    }
+}
 
 
-  });
-   }
+});
+}
       // 监听单击暂停or播放
       
       function addRoom(ret){
        eventlister();
-       for (var i = 0; i <ret.length; i++) {
-        if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
-          continue;
+       if (api.pageParam.likevideo=='likevideo') {
+        for (var i = 0; i <ret.length; i++) {
+          if (ret[i].belikeuserid.video==null  ||  ret[i].belikeuserid.video==''  || ret[i].belikeuserid.video==undefined) {
+            continue;
 
-        }else{
-          addvideo.push({
-           imageUrl:'',
-           videoUrl:ret[i].video.url
-         })
+          }else{
+            addvideo.push({
+             imageUrl:'',
+             videoUrl:ret[i].video.url
+           })
+          }
+
         }
+      }else{
+        for (var i = 0; i <ret.length; i++) {
+          if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
+            continue;
 
+          }else{
+            addvideo.push({
+             imageUrl:'',
+             videoUrl:ret[i].video.url
+           })
+          }
+
+        }
       }
+
       UIScrollPlayer.add({
         videos :addvideo
       });
@@ -304,18 +403,34 @@ var now = Date.now();
 
     function fnOpenRoom(ret){
      eventlister();
+     alert(1)
+     if (api.pageParam.like=='likevideo') {
+      for (var i = 0; i <ret.length; i++) {
+        if (ret[i].belikeuserid.video==null  ||  ret[i].belikeuserid.video==''  || ret[i].belikeuserid.video==undefined) {
+          continue;
+        }else{
+          video.push({
+           imageUrl:'',
+           videoUrl:ret[i].video.url
+         })
+        }
 
-     for (var i = 0; i <ret.length; i++) {
-      if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
-        continue;
-      }else{
-        video.push({
-         imageUrl:'',
-         videoUrl:ret[i].video.url
-       })
       }
 
+    }else{
+      for (var i = 0; i <ret.length; i++) {
+        if (ret[i].video==null  ||  ret[i].video==''  || ret[i].video==undefined) {
+          continue;
+        }else{
+          video.push({
+           imageUrl:'',
+           videoUrl:ret[i].video.url
+         })
+        }
+
+      }
     }
+
     UIScrollPlayer.open({
       rect : {
         x : 0,

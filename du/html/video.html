@@ -175,16 +175,17 @@ api.ajax({
 
 },function(ret, err){
   if (ret) {
-    var zan=$api.byId('zan');
-    if (ret.length!=0) {
-      for (var i =0 ; i<ret.length; i++) {
-        if (ret[i].belikeuserid==id) {
-          zan.src='../image/zan2.png'
-          redzan=1;
-
-          break;
-        }else{
-          zan.src='../image/zan.png'
+   var likecount=$api.byId('likecount');
+   var zan=$api.byId('zan');
+   if (ret.length!=0) {
+    for (var i =0 ; i<ret.length; i++) {
+      if (ret[i].belikeuserid==id) {
+        zan.src='../image/zan2.png'
+        redzan=1;
+        likecount.innerHTML=parseInt(likecount.innerHTML)+1;
+        break;
+      }else{
+        zan.src='../image/zan.png'
           // redzan=0;
         }
       }   
@@ -273,12 +274,12 @@ function xiazai(){
     allowResume: false,
   }, function(ret, err) {
     if (ret.state == 1) {
-  
+
       api.saveMediaToAlbum({
         path: ret.savePath
       }, function(ret, err) {
         if (ret && ret.status) {
-          
+
           api.toast({
             msg: '下载成功',
             duration: 2000,
@@ -310,7 +311,7 @@ function adddown(){
    }
  },function(ret, err){
   if (ret) {
-   
+
   }
 });
 
