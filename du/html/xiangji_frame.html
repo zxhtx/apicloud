@@ -11,7 +11,9 @@
     background-color: transparent;
     /*border: 1px solid red;*/
   }
-  #list>.img{
+  #list>{
+    width: 50px;
+    height: 50px;
     /*border:1px solid red;*/
   }
 /*#list>#icon{
@@ -24,8 +26,8 @@
 </head>
 
 <body>
-  <div id="list">
-    <img class="img" id="shexiang" tapmode onclick="xiangji()" src="../image/photo.png" alt="" width="28px" height="28px"> 
+  <div id="list" tapmode onclick="xiangji()" >
+    <img class="img" id="shexiang" src="../image/photo.png" alt="" width="28px" height="28px"> 
   </div>
 
 </body>
@@ -288,7 +290,7 @@ function input(){
         texts=ret.text;
       }
 
-      addtext(texts);
+      addvideourl(texts);
 
       dialogBox.close({
         dialogName: 'input'
@@ -300,12 +302,13 @@ function input(){
 
 }
 
-function addtext(texts){
+function addtext(texts,video){
   var userInfo=$api.getStorage('user');
   var addinfo={
     title:texts,
     userid:userInfo[0].id,
     username:userInfo[0].username,
+    video:video,
     like:'0',
     money:'0',
     down:'0'
@@ -327,8 +330,7 @@ function addtext(texts){
         values: addinfo
       }
     }, function(ret, err) {
-      videoid=ret.id;
-      addvideourl(videourl);
+      // videoid=ret.id;
       api.toast({
         msg: '视频上传时勿退出潮视页面,否则放弃上传视频',
         duration: 5000,
@@ -337,7 +339,7 @@ function addtext(texts){
     });
     }
 
-    function addvideourl(videourl){
+    function addvideourl(text){
       var now = Date.now();
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       api.ajax({
@@ -357,8 +359,7 @@ function addtext(texts){
         },
       },function(ret, err){
         if (ret) {
-
-          updatevideourl(ret)
+          addtext(text,ret)
         } else {
           api.toast({
             msg: err.msg,
@@ -370,40 +371,40 @@ function addtext(texts){
 
     }
 
-    function updatevideourl(videourlH){
-     var now = Date.now();
-     var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-     var userInfo=$api.getStorage('userInfo');
-     api.ajax({
-      url: 'https://d.apicloud.com/mcm/api/video1/'+videoid,
-      method: 'put',
-      headers: {
-        "X-APICloud-AppId": "A6099267504667",
-        "X-APICloud-AppKey":   appKey,
-        "Authorization":userInfo.id
-      },
-      data: {
-        values: { 
-          video: videourlH
-        }
+   //  function updatevideourl(videourlH){
+   //   var now = Date.now();
+   //   var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+   //   var userInfo=$api.getStorage('userInfo');
+   //   api.ajax({
+   //    url: 'https://d.apicloud.com/mcm/api/video1/'+videoid,
+   //    method: 'put',
+   //    headers: {
+   //      "X-APICloud-AppId": "A6099267504667",
+   //      "X-APICloud-AppKey":   appKey,
+   //      "Authorization":userInfo.id
+   //    },
+   //    data: {
+   //      values: { 
+   //        video: videourlH
+   //      }
 
-      }
-    },function(ret, err){
-      if (ret) {
-        api.toast({
-          msg: '视频上传成功',
-          duration: 2000,
-          location: 'bottom'
-        });
-      } else {
-        api.toast({
-          msg: err.msg,
-          duration: 2000,
-          location: 'bottom'
-        });
-      }
-    });
-   }
+   //    }
+   //  },function(ret, err){
+   //    if (ret) {
+   //      api.toast({
+   //        msg: '视频上传成功',
+   //        duration: 2000,
+   //        location: 'bottom'
+   //      });
+   //    } else {
+   //      api.toast({
+   //        msg: err.msg,
+   //        duration: 2000,
+   //        location: 'bottom'
+   //      });
+   //    }
+   //  });
+   // }
 
 
  </script>

@@ -68,6 +68,7 @@
   var now;
   var appKey;
   var deletevideo;
+  var belike;
   apiready = function() {
    now = Date.now();
    appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
@@ -141,7 +142,8 @@ function addlikeuser(){
   data: {
     values: { 
       likeuserid:userInfo[0].id,
-      belikeuserid:videoid
+      belikeuserid:videoid,
+      userid:belike
     }
   },
   headers: {
@@ -239,6 +241,7 @@ function getuser(ret){
       var downcount=$api.byId('downcount');
       downcount.innerHTML=ret.value.key1.down;
       likecount.innerHTML=ret.value.key1.like;
+      belike=ret.value.key1.userid.id;
       videoid=ret.value.key1.id;
       videourl=ret.value.key1.video;
       getlikevideo(videoid);

@@ -112,6 +112,7 @@
   var play;
   var activity ;
   apiready = function() {
+
     UIScrollPlayer = api.require('UIScrollPlayer');
     video=[];
     addvideo=[];
@@ -153,29 +154,30 @@
 
  function fnLoadList(_LoadMore) {
 
-  if (_LoadMore) {
-    skip+=LIMIT;
 
-  }else{
-
-    skip=0;
-  }
   if (api.pageParam.like=='likevideo') {
-   var userInfo=$api.getStorage('user');
-   var params={
-    fields:{},
-    fields: {},
-    skip:skip,
-    limit:LIMIT,
-    where:{likeuserid:userInfo[0].id},
-    order:"createdAt DESC",
-    include: ['belikeuseridPointer','useridPointer']
-  }
+    if (_LoadMore) {
+      skip+=LIMIT;
+
+    }else{
+
+      skip=0;
+    }
+    var userInfo=$api.getStorage('user');
+    var params={
+      fields:{},
+      fields: {},
+      skip:skip,
+      limit:LIMIT,
+      where:{likeuserid:userInfo[0].id},
+      order:"createdAt DESC",
+      include: ['belikeuseridPointer','useridPointer']
+    }
 
 
-  params=$api.jsonToStr(params);
+    params=$api.jsonToStr(params);
 
-  var now = Date.now();
+    var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       api.ajax({
@@ -186,10 +188,11 @@
         },
         method: 'get'
       }, function(ret, err) {
-        alert($api.jsonToStr(ret))
-        if (api.pageParam.name=='likevideo') {
+        if (api.pageParam.like=='likevideo') {
           if (ret==null || ret==undefined || ret=='') {
             activity.closeKeyFrame();
+
+            
             api.execScript({
               name: 'personalcenter',
               frameName: 'personalcenter_frame',
@@ -197,23 +200,43 @@
             });
 
             api.closeFrame({
+              name: 'video'
+            });
+            api.closeFrame({
+              name: 'xiangji_frame'
+            });
+            api.closeFrame({
+              name: 'videotitle_frame'
+            });
+            api.closeFrame({
+              name: 'videouser_frame'
+            });
+            api.closeFrame({
+              name: 'userheaderimg_frame'
+            });
+            api.closeFrame({
+              name: 'backimg_frame'
+            });
+            api.closeFrame({
               name: 'caoshi_frame'
             });
+
+
           }
         }
-            alert($api.jsonToStr(ret))
+        // alert($api.jsonToStr(ret))
         if (_LoadMore) {
           addRoom(ret);
         }else{
           fnOpenRoom(ret);
         }
-    
+
         for (var i = 0; i <ret.length; i++) {
           if (ret[i].belikeuserid.video==null || ret[i].belikeuserid.video==undefined || ret[i].belikeuserid.video=='' ) {
             continue;
           }else{
             retele.push({
-             id:ret[i]belikeuserid.id,
+             id:ret[i].belikeuserid.id,
              video:ret[i].belikeuserid.video.url,
              title:ret[i].belikeuserid.title,
              userid:ret[i].userid,
@@ -225,7 +248,7 @@
           }
 
         }
-
+        // alert($api.jsonToStr(retele))
         activity.closeKeyFrame();
 
       });
@@ -254,15 +277,19 @@
       order:"createdAt DESC",
       include: ['useridPointer']
     }
-  }else{
+  }else if(api.pageParam.gz='gz'){
    var params={
     fields:{},
     fields: {},
     skip:skip,
     limit:LIMIT,
+    where:api.pageParam.bewatchedid,
     order:"createdAt DESC",
     include: ['useridPointer']
-  }
+    
+  }else{
+   where:{userid:userInfo[0].id},
+ }
 }
 
 
@@ -287,10 +314,28 @@ var now = Date.now();
               frameName: 'personalcenter_frame',
               script: 'nullvideo();'
             });
-
+            api.closeFrame({
+              name: 'video'
+            });
+            api.closeFrame({
+              name: 'xiangji_frame'
+            });
+            api.closeFrame({
+              name: 'videotitle_frame'
+            });
+            api.closeFrame({
+              name: 'videouser_frame'
+            });
+            api.closeFrame({
+              name: 'userheaderimg_frame'
+            });
+            api.closeFrame({
+              name: 'backimg_frame'
+            });
             api.closeFrame({
               name: 'caoshi_frame'
             });
+            
           }
         }
         if (_LoadMore) {
@@ -337,16 +382,19 @@ function  eventlister(element){
       }
     });
 
-  }
+    if (ret.index>=30) {
+      // alert(2)
+      if (ret.index%30==0) {
+        // alert(1)
+        fnLoadList(true)
 
-  if (ret.index>=30) {
-    if (ret.index%30==0) {
-      fnLoadList(true)
+      }
 
     }
 
   }
 
+  
   if (ret.evenType=='onSingleTapUp') {
    onSingleTapUp();
 
@@ -375,7 +423,7 @@ function  eventlister(element){
           }else{
             addvideo.push({
              imageUrl:'',
-             videoUrl:ret[i].video.url
+             videoUrl:ret[i].belikeuserid.video.url
            })
           }
 
@@ -403,19 +451,22 @@ function  eventlister(element){
 
     function fnOpenRoom(ret){
      eventlister();
-     alert(1)
+     // alert(1)
      if (api.pageParam.like=='likevideo') {
       for (var i = 0; i <ret.length; i++) {
         if (ret[i].belikeuserid.video==null  ||  ret[i].belikeuserid.video==''  || ret[i].belikeuserid.video==undefined) {
           continue;
+          
         }else{
+
           video.push({
            imageUrl:'',
-           videoUrl:ret[i].video.url
+           videoUrl:ret[i].belikeuserid.video.url
          })
         }
 
       }
+      // alert($api.jsonToStr(video))
 
     }else{
       for (var i = 0; i <ret.length; i++) {
