@@ -156,14 +156,12 @@
 <script type="text/template" id="template">
     {{~it:value:index}}
     <div class="ware ware-1" >
-        <div class="content" tapmode onclick="openchaoshi('{{=value.id}}','{{=value.bewatched.id}}')" >
-            <img onload="LoadImage(this,'{{=value.id}}')" data-url="{{=value.bewatched.avatar.url}}"  data-wareTypeId="{{=value.wareTypeId}}" class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
+        <div class="content" tapmode onclick="openchaoshi('{{=value.id}}','{{=value.focus.id}}')" >
+            <img onload="LoadImage(this,'{{=value.id}}')" data-url="{{=value.focus.avatar.url}}"  data-wareTypeId="{{=value.wareTypeId}}" class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
             <div class="info" >
-                <div class="name">账号:{{=value.bewatched.username}}</div>
-                <div class="description">潮视用户名:{{=value.bewatched.chaoshiuser}}</div>
-                <div class="dingyue" tapmode onclick="quxiaodingyue('{{=value.id}}')">
-                    <div class="text">取消订阅</div>
-                </div>
+                <div class="name">账号:{{=value.focus.username}}</div>
+                <div class="description">潮视用户名:{{=value.focus.chaoshiuser}}</div>
+              
             </div>
 
 
@@ -268,12 +266,12 @@ var params={
     fields:{},
     fields: {},
     where: {
-        focus:userInfo.userId
+        bewatched:userInfo.userId
     },
     skip:skip,
     limit:LIMIT,
     order:"createdAt DESC",
-    include: ['bewatchedPointer']
+    include: ['focusPointer']
 }
 params=$api.jsonToStr(params);
 api.ajax({

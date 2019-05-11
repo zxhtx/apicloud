@@ -277,19 +277,26 @@
       order:"createdAt DESC",
       include: ['useridPointer']
     }
-  }else if(api.pageParam.gz='gz'){
+  }else if(api.pageParam.gz=='gz'){
    var params={
     fields:{},
     fields: {},
     skip:skip,
     limit:LIMIT,
-    where:api.pageParam.bewatchedid,
+    where:{userid:api.pageParam.bewatchedid},
     order:"createdAt DESC",
     include: ['useridPointer']
-    
+  }
+
   }else{
-   where:{userid:userInfo[0].id},
- }
+   var params={
+    fields:{},
+    fields: {},
+    skip:skip,
+    limit:LIMIT,
+    order:"createdAt DESC",
+    include: ['useridPointer']
+  }
 }
 
 
@@ -335,7 +342,7 @@ var now = Date.now();
             api.closeFrame({
               name: 'caoshi_frame'
             });
-            
+
           }
         }
         if (_LoadMore) {
