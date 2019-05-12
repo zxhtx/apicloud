@@ -332,79 +332,51 @@ function addtext(texts,video){
     }, function(ret, err) {
       // videoid=ret.id;
       api.toast({
-        msg: '视频上传时勿退出潮视页面,否则放弃上传视频',
+        msg: '视频上传成功',
         duration: 5000,
         location: 'bottom'
       });
+
     });
     }
 
     function addvideourl(text){
-      var now = Date.now();
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-      api.ajax({
-        url: 'https://d.apicloud.com/mcm/api/file',
-        method: 'post',
-        data: {
-          values: { 
-            filename: 'video'
-          },
-          files: { 
-            file: videourl
-          }
+     api.toast({
+      msg: '视频上传时勿退出潮视页面,否则放弃上传视频',
+      duration: 10000,
+      location: 'bottom'
+    });
+     var now = Date.now();
+     var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+     api.ajax({
+      url: 'https://d.apicloud.com/mcm/api/file',
+      method: 'post',
+      data: {
+        values: { 
+          filename: 'video'
         },
-        headers: {
-          "X-APICloud-AppId": "A6099267504667",
-          "X-APICloud-AppKey":   appKey
-        },
-      },function(ret, err){
-        if (ret) {
-          addtext(text,ret)
-        } else {
-          api.toast({
-            msg: err.msg,
-            duration: 2000,
-            location: 'bottom'
-          });
+        files: { 
+          file: videourl
         }
-      });
+      },
+      headers: {
+        "X-APICloud-AppId": "A6099267504667",
+        "X-APICloud-AppKey":   appKey
+      },
+    },function(ret, err){
+      if (ret) {
+        addtext(text,ret);
+        
+      } else {
+        api.toast({
+          msg: err.msg,
+          duration: 2000,
+          location: 'bottom'
+        });
+      }
+    });
 
-    }
-
-   //  function updatevideourl(videourlH){
-   //   var now = Date.now();
-   //   var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-   //   var userInfo=$api.getStorage('userInfo');
-   //   api.ajax({
-   //    url: 'https://d.apicloud.com/mcm/api/video1/'+videoid,
-   //    method: 'put',
-   //    headers: {
-   //      "X-APICloud-AppId": "A6099267504667",
-   //      "X-APICloud-AppKey":   appKey,
-   //      "Authorization":userInfo.id
-   //    },
-   //    data: {
-   //      values: { 
-   //        video: videourlH
-   //      }
-
-   //    }
-   //  },function(ret, err){
-   //    if (ret) {
-   //      api.toast({
-   //        msg: '视频上传成功',
-   //        duration: 2000,
-   //        location: 'bottom'
-   //      });
-   //    } else {
-   //      api.toast({
-   //        msg: err.msg,
-   //        duration: 2000,
-   //        location: 'bottom'
-   //      });
-   //    }
-   //  });
-   // }
+   }
 
 
  </script>

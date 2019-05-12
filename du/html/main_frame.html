@@ -209,7 +209,7 @@
     {{~it:value:index}}
     <div class="ware ware-1" >
         <div class="content" tapmode onclick="openWareWin('{{=value.id}}','{{=value.wareTypeId}}')" >
-            <img onload="LoadImage(this,'{{=value.id}}')" data-url="{{=value.thumbnail}}"  data-wareTypeId="{{=value.wareTypeId}}" class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
+            <img onload="LoadImage(this,'{{=value.id}}')" data-url="{{=value.thumbnail}}"  data-wareTypeId="{{=value.wareTypeId}}" class="thumbnail" id="thumbnail_{{=value.id}}" src="{{=value.thumbnail}}">
             <div class="info" >
                 <div class="name">{{=value.name}}</div>
                 <div class="description">{{=value.description}}</div>

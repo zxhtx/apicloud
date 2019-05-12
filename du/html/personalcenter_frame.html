@@ -201,7 +201,7 @@
         </div>
         <div id="username" class="username">******</div>
         <div>
-            <div id="guanzhu" class="guanzhu" tapmode onclick="guanzhu()">关注</div>
+            <div id="guanzhu" class="guanzhu" tapmode onclick="guanzhu()">订阅</div>
             <div id="fensi" class="fensi"  tapmode onclick="fensi()">粉丝</div>
             <div id="vip" class="vip"></div>
         </div>
@@ -350,7 +350,7 @@ function guanzhucount(){
         },
     },function(ret, err){
         if (ret) {
-            guanzhucount.innerHTML='关注/'+ret.count;
+            guanzhucount.innerHTML='订阅/'+ret.count;
         }
     });
 }

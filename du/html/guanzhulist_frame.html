@@ -57,7 +57,7 @@
         height: 10px;
         color: #555555;
         line-height: 10px;
-         margin-top: 6px;
+        margin-top: 6px;
         /*margin-top: 14px;*/
         font-size: 13px;
     }
@@ -99,12 +99,12 @@
         top: 15px;
     }
     .dingyue .text{
-       font-size: 13px;
-       line-height: 25px;
-       text-align: center;
-       color: white;
+     font-size: 13px;
+     line-height: 25px;
+     text-align: center;
+     color: white;
 
-   }
+ }
 </style>
 </head>
 
@@ -175,7 +175,7 @@
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript">
- var now;
+   var now;
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey;
       apiready = function() {
@@ -195,12 +195,12 @@
   var skip=0;
   var LIMIT=9;
   function init(){
-     wareTypeList=$api.getStorage('WareTypeList');
+   wareTypeList=$api.getStorage('WareTypeList');
 
- }
- function quxiaodingyue(id){
-   event.stopPropagation();
-   api.ajax({
+}
+function quxiaodingyue(id){
+ event.stopPropagation();
+ api.ajax({
     url: 'https://d.apicloud.com/mcm/api/guanzhu/' + id,
     method: 'delete',
     headers: {
@@ -215,6 +215,11 @@
             location: 'bottom'
         });
         getWareList();
+        api.execScript({
+            name: 'personalcenter',
+            frameName: 'personalcenter_frame',
+            script: 'guanzhucount();'
+        });
 
     }
 });
@@ -293,13 +298,13 @@ api.ajax({
          updateWareList(ret,_LoadMore);
 
      } else {
-         api.toast({
-             msg: err.msg,
-             duration: 2000,
-             location: 'bottom'
-         });
-     }
- });
+       api.toast({
+           msg: err.msg,
+           duration: 2000,
+           location: 'bottom'
+       });
+   }
+});
 }
 function updateWareList(_data,_LoadMore){
     var list=$api.byId('list');
@@ -344,8 +349,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-       getWareList(true);
-   });
+     getWareList(true);
+ });
 }
 // 下拉刷新
 function initRefresh(){
