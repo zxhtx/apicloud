@@ -68,6 +68,7 @@
   var appKey;
   var deletevideo;
   var belike;
+  var videouserprice;
   apiready = function() {
    now = Date.now();
    appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
@@ -241,6 +242,7 @@ function getuser(ret){
       downcount.innerHTML=ret.value.key1.down;
       likecount.innerHTML=ret.value.key1.like;
       belike=ret.value.key1.userid.id;
+      videouserprice=ret.value.key1.userid.money;
       videoid=ret.value.key1.id;
       videourl=ret.value.key1.video;
       getlikevideo(videoid);
@@ -321,18 +323,22 @@ function adddown(){
 
 function  redmoney(){
   api.openFrame({
-      name: 'redmoney_frame',
-      url: './redmoney_frame.html',
-      rect: {
-          x: 0,
-          y: api.winHeight/2,
-          w: api.winWidth,
-          h: api.winHeight/2
-      },
-      pageParam: {
-          name: 'test'
-      },
-      bgColor: 'rgba(0,0,0,0)',
+    name: 'redmoney_frame',
+    url: './redmoney_frame.html',
+    rect: {
+      x: 0,
+      y: api.winHeight/2,
+      w: api.winWidth,
+      h: api.winHeight/2
+    },
+    pageParam: {
+      videouserid:belike,
+      videouserprice:videouserprice
+    },
+    animation: {
+      type: "fade"
+    },
+    bgColor: 'rgba(0,0,0,0)',
   });
 }
 </script>

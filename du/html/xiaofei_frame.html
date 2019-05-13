@@ -1,0 +1,329 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>首页Frame</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style type="text/css">
+    
+    section {
+        position: relative;
+        width: 100%;
+        height: auto;
+        box-sizing: border-box;
+        padding: 0 8px;
+    }
+
+    .content {
+        width: 100%;
+        height: 100%;
+    }
+
+
+
+    .ware-1 {
+        position: relative;
+        width: 100%;
+        height: 88px;
+        box-sizing: border-box;
+        padding-top: 15px;
+        /*border: 1px solid red;*/
+        padding-bottom: 15px;
+        border-bottom: 1px solid #d1d1d1;
+    }
+
+    .ware-1 .thumbnail {
+        position: absolute;
+        top: 6px;
+        left: 0px;
+        height: 66px;
+        width: 66px;
+        border-radius: 50px;
+    }
+
+    .ware-1 .info {
+        width: 100%;
+        height: 88px;
+        box-sizing: border-box;
+        padding-left: 88px;
+        padding-right: 28px;
+    }
+
+    .ware-1 .info .name {
+        width: 100%;
+        height: 10px;
+        color: #555555;
+        line-height: 10px;
+        /*margin-top: 6px;*/
+        /*margin-top: 14px;*/
+        font-size: 13px;
+    }
+
+    .ware-1 .info .description {
+        margin-top: 18px;
+        width: 100%;
+        height: 36px;
+        overflow: hidden;
+        font-size: 15px;
+        color: black;
+    }
+
+
+
+
+
+    .push-status {
+        width: 100%;
+        height: 40px;
+        font-size: 16px;
+        color: #888;
+        line-height: 40px;
+        text-align: center;
+        background-color: #fff;
+    }
+
+    .active {
+        opacity: 0.7;
+    }
+    .dingyue{
+        margin-top: 20px;
+        width: 58px;
+        height: 25px;
+        position: absolute;
+        right: 0px;
+        top: 15px;
+    }
+    .dingyue .text{
+     font-size: 15px;
+     line-height: 25px;
+     text-align: center;
+     color: black;
+
+ }
+ em{
+    font-size: 16px;
+ }
+</style>
+</head>
+
+<body>
+    <section id="list">
+     <!--    <div class="ware ware-0">
+            <div class="content">
+                <img class="thumbnail" src="../image/default_rect.png">
+                <div class="info">
+                    <span class="price">RMB14.9</span>
+                    <span class="unit">/4盒</span>
+                    <span class="origin-price">&nbsp;超市:<del>19.9元</del></span>
+                </div>
+                <div class="control">
+                    <div class="panel">
+                        <img class="minus" src="../image/minus.png">
+                        <div class="count">0</div>
+                    </div>
+                    <img class="add" src="../image/add.png">
+                </div>
+            </div>
+        </div>
+        <div class="ware ware-1" >
+            <div class="content" >
+                <img class="thumbnail" src="../image/default_square.png">
+                <div class="info" tapmode onclick="openWareWin()">
+                    <div class="name">牛奶巧克力</div>
+                    <div class="description">下雨天更配哦</div>
+                    <div class="price-tag">
+                        <span class="price">￥28.9</span>
+                        <span class="unit">/1盒</span>
+                    </div>
+                    <div class="origin-price">超市:
+                        <del>59.9元</del>
+                    </div>
+                </div>
+                <div class="control">
+                    <div class="panel">
+                        <img class="minus" src="../image/minus.png">
+                        <div class="count">0</div>
+                    </div>
+                    <img class="add" src="../image/add.png ">
+                </div>
+            </div>
+        </div> -->
+    </section>
+    <div class="push-status" id="pushStatus">上拉显示更多</div>
+</body>
+<script type="text/template" id="template">
+    {{~it:value:index}}
+    <div class="ware ware-1" >
+        <div class="content" >
+            <img onload="LoadImage(this,'{{=value.id}}')" data-url="{{=value.receivemoney.avatar.url}}"  data-wareTypeId="{{=value.wareTypeId}}" class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
+            <div class="info" >
+                <div class="name">{{=value.date}}</div>
+                <div class="description">你给<em>"{{=value.receivemoney.chaoshiuser}}"</em>打赏了{{=value.money}}元</div>
+                <div class="dingyue" >
+                    <div class="text">-{{=value.money}}</div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    {{~}}
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript">
+   var now;
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey;
+      apiready = function() {
+          now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+      init();
+      getWareList();
+      initRefresh();
+      initEventListenter();
+
+
+
+  };
+  var activity ;
+  var wareTypeList;
+  var skip=0;
+  var LIMIT=9;
+  function init(){
+   wareTypeList=$api.getStorage('WareTypeList');
+
+}
+
+// 获取列表页数据
+function getWareList(_LoadMore){
+  var userInfo=$api.getStorage('userInfo');
+  activity = api.require('UILoading');
+  activity.keyFrame({
+    rect: {
+        w: 80,
+        h: 100
+    },
+    styles: {
+        bg: 'rgba(0,0,0,0.5)',
+        corner: 5,
+        interval: 50,
+        frame: {
+            w: 80,
+            h: 80
+        }
+    }
+});
+
+
+  if (_LoadMore) {
+    skip+=LIMIT;
+}else{
+
+    skip=0;
+}
+var params={
+    fields:{},
+    fields: {},
+    where: {
+        givemoney:userInfo.userId
+    },
+    skip:skip,
+    limit:LIMIT,
+    order:"createdAt DESC",
+    include: ['receivemoneyPointer']
+}
+params=$api.jsonToStr(params);
+api.ajax({
+    url: 'http://d.apicloud.com/mcm/api/redmoney?filter='+params,
+    method: 'get',
+    headers: {
+        "X-APICloud-AppId": "A6099267504667",
+        "X-APICloud-AppKey":   appKey
+    },
+
+},function(ret, err){
+    if (ret) {
+          // 隐藏下拉刷新
+          // api.refreshHeaderLoadDone();
+         // 模板渲染
+        
+         api.refreshHeaderLoadDone()
+         updateWareList(ret,_LoadMore);
+
+     } else {
+       api.toast({
+           msg: err.msg,
+           duration: 2000,
+           location: 'bottom'
+       });
+   }
+});
+}
+function updateWareList(_data,_LoadMore){
+    var list=$api.byId('list');
+    var tempFn=doT.template($api.byId('template').innerHTML);
+    var resultText=tempFn(_data)
+    if (_LoadMore) {
+        $api.append(list, resultText);
+    }else{
+        $api.html(list, resultText);
+    }
+    // 优化
+    api.parseTapmode();
+    if (_LoadMore) {
+        if (_data.length<LIMIT) {
+            var pushStatus=$api.byId('pushStatus');
+            pushStatus.innerHTML="我是有底线滴"
+        }
+    }
+    activity.closeKeyFrame();
+
+}
+
+// 列表页图片缓存
+
+function LoadImage(_this,_id){
+    var dataUrl=$api.attr(_this, 'data-url');
+    var dataWareTypeId=$api.attr(_this, 'data-wareTypeId');
+
+    if (dataUrl) {
+        _this.src=dataUrl;
+
+
+    }
+
+
+}
+// 监听 
+function initEventListenter(){
+    api.addEventListener({
+        name:'scrolltobottom',
+        extra:{
+            threshold:100
+        }
+    }, function(ret, err){        
+     getWareList(true);
+ });
+}
+// 下拉刷新
+function initRefresh(){
+    api.setCustomRefreshHeaderInfo({
+        bgColor: '#C0C0C0',
+        isScale: true
+    }, function() {
+        getWareList();
+        
+    });
+
+}
+
+
+</script>
+
+</html>

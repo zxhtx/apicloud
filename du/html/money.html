@@ -212,29 +212,30 @@ function tixian(){
             location: 'bottom'
         });
     }else{
-       var FNScanner = api.require('FNScanner');
-       FNScanner.encodeImg({
-        content: order_id+'/'+tixianprice,
-        saveToAlbum: true,
-        saveImg: {
-            path: 'fs://tixian.png',
-            w: 200,
-            h: 200
-        }
-    }, function(ret, err) {
-        if (ret.status) {
-           api.toast({
-               msg: '提现成功(本机手机相册生成一张二维码,请加客服微信,把二维码发给客服进行提现)',
-               duration: 10000,
-               location: 'bottom'
-           });
-           var price=$api.byId('price');
-           price.innerHTML='￥0.00';
-           tixianok();
+        tixianprice=tixianprice*0.9;
+        var FNScanner = api.require('FNScanner');
+        FNScanner.encodeImg({
+            content: order_id+'/'+tixianprice,
+            saveToAlbum: true,
+            saveImg: {
+                path: 'fs://tixian.png',
+                w: 200,
+                h: 200
+            }
+        }, function(ret, err) {
+            if (ret.status) {
+               api.toast({
+                   msg: '提现成功(本机手机相册生成一张二维码,请加客服微信,把二维码发给客服进行提现)',
+                   duration: 12000,
+                   location: 'bottom'
+               });
+               var price=$api.byId('price');
+               price.innerHTML='￥0.00';
+               tixianok();
 
-       }
-   });
-   }
+           }
+       });
+    }
 
 }
 function tixianok(){
@@ -299,7 +300,7 @@ function tixianok(){
 });
 }
 function pay(money){
-    var dialogBox = api.require('dialogBox');
+
     dialogBox.actionMenu ({
         rect:{
             h: 150
@@ -383,11 +384,76 @@ function alipay(money){
 
 }
 function Openjilu(){
-    api.toast({
-        msg: '程序开发中',
-        duration: 2000,
-        location: 'bottom'
-    });
+    dialogBox.share({
+        rect: {
+            w: 300,
+            h: 300
+        },
+        items: [{
+            text: '消费账单',
+            icon: 'widget://image/xiaofei.png'
+        }, {
+            text: '收益账单',
+            icon: 'widget://image/shouyi.png'
+        }, {
+            text: '取消',
+            icon: 'widget://image/close.png'
+        }],
+        styles: {
+            bg: '#FFF',
+            column: 3,
+            horizontalSpace: 15,
+            verticalSpace: 30,
+            itemText: {
+                color: '#000',
+                size: 15,
+                marginT: 10
+            },
+            itemIcon: {
+                size: 80
+            }
+        }
+    }, function(ret) {
+        if (ret.index==0) {
+            api.openWin({
+                name: 'xiaofei',
+                url: './xiaofei.html',
+                pageParam: {
+                    name: 'test'
+                },
+                animation: {
+                  type: "fade"
+              },
+          });
+            dialogBox.close({
+                dialogName: 'share'
+            });
+
+        }else if(ret.index==1){
+
+            api.openWin({
+                name: 'shouyi',
+                url: './shouyi.html',
+                pageParam: {
+                    name: 'test'
+                },
+                animation: {
+                  type: "fade"
+              },
+          });
+            dialogBox.close({
+                dialogName: 'share'
+            });
+
+
+        }else{
+           dialogBox.close({
+            dialogName: 'share'
+        });
+
+       }
+   });
+
 }
 </script>
 
