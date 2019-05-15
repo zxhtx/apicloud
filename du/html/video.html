@@ -48,7 +48,7 @@
 
     <img  id="zan" tapmode onclick="zanandzan2()" src="../image/zan.png" alt="" width="35px" height="30px">
     <div class="zancount" id="likecount">0</div>
-    <img class="img" src="../image/say.png" alt="" width="30px" height="30px"> 
+    <img class="img" src="../image/say.png" alt=""  tapmode onclick="say()"  width="30px" height="30px"> 
     <div class="count" >0</div>
     <img class="img" src="../image/xiazai.png"  tapmode onclick="xiazai()" alt="" width="30px" height="30px">
     <div class="count" id="downcount">0</div> 
@@ -340,6 +340,28 @@ function  redmoney(){
     },
     bgColor: 'rgba(0,0,0,0)',
   });
+}
+
+function say(){
+  api.openFrame({
+    name: 'redmoney_frame',
+    url: './redmoney_frame.html',
+    rect: {
+      x: 0,
+      y: api.winHeight/2,
+      w: api.winWidth,
+      h: api.winHeight/2
+    },
+    pageParam: {
+      videouserid:belike,
+      videouserprice:videouserprice
+    },
+    animation: {
+      type: "fade"
+    },
+    bgColor: 'rgba(0,0,0,0)',
+  });
+
 }
 </script>
 

@@ -93,6 +93,15 @@
     .gonggao{
         font-size: 15px;
     }
+    .dian{
+        width: 8px;
+        height:8px;
+        background: red;
+        border-radius: 25px;
+        position: absolute;
+        right: 9px;
+        top: 29px;
+    }
 </style>
 </head>
 
@@ -102,30 +111,35 @@
         <div class="center" tapmode onclick="opencaoshi()">潮视</div>
         <div class="left" tapmode onclick="openSearchWin()"></div>
         <div class="right" tapmode onclick="OpenPersonCenterWin()" ></div>
+        <div class="dian" id="dian"></div>
     </header>
 
     <div class="gonggao">
-       <marquee id="marquee" scrollamount="6" direction="left" loop="-1"></marquee>
-   </div>
-   <nav id="nav">
+     <marquee id="marquee" scrollamount="6" direction="left" loop="-1"></marquee>
+ </div>
+ <nav id="nav">
     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(0)">男鞋</div>
     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(1)">女鞋</div>
     <div class="menu selected" tapmode="selected" onclick="setNavMenuIndex(2)">男装</div>
     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(3)">女装</div>
-    <div class="menu" tapmode="selected" onclick="setNavMenuIndex(4)">配件</div>
-    <div class="menu" tapmode="selected" onclick="setNavMenuIndex(5)">优惠购</div>
+    <div class="menu" tapmode="selected" onclick="setNavMenuIndex(4)">优惠购</div>
+     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(5)">配件</div>
+
 
 </nav>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
-    apiready = function() {
+ var now;
+ var appKey;
+ var moneydian;
+ apiready = function() {
+  now = Date.now();
+  appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
 
         //监听back事件
         exitApp();
-        // initspeak();
-
         var header=$api.byId('header');
         var nav=$api.byId('nav');
         $api.fixStatusBar(header);
@@ -141,9 +155,48 @@
 
         openFrames();
         gonggao();
-
+        moneycount();
     };
-    function opencaoshi() {
+
+    function moneycount(){
+     var dian=$api.byId('dian');
+     dian.style.display='none';
+     var userInfo=$api.getStorage('userInfo');
+     if (userInfo==undefined && userInfo==null) {
+       dian.style.display='none';
+       return;
+   }
+   var params={
+    fields:{},
+    fields: {},
+    where: {
+        receivemoney:userInfo.userId
+    }
+}
+params=$api.jsonToStr(params);
+api.ajax({
+    url: 'http://d.apicloud.com/mcm/api/redmoney/count?filter='+params,
+    method: 'get',
+    headers: {
+        "X-APICloud-AppId": "A6099267504667",
+        "X-APICloud-AppKey":   appKey,
+    },
+},function(ret, err){
+    if (ret) {
+
+        if (ret.count>$api.getStorage('moneycount')) {
+            dian.style.display='';
+            moneydian='ok';
+
+        }
+        
+            $api.setStorage('moneycount', ret.count);
+
+
+    }
+});
+}
+function opencaoshi() {
         // api.openWin({
         //     name: 'caoshi_frame',
         //     url: './caoshi_frame.html',
@@ -186,7 +239,7 @@
     }
 
     function gonggao(){
-       var now = Date.now();
+     var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       var params={
@@ -207,16 +260,16 @@
 
     },function(ret, err){
         if (ret) {
-         var text=$api.byId('marquee');
-         text.innerHTML=ret[0].text;
-     } 
- });
+           var text=$api.byId('marquee');
+           text.innerHTML=ret[0].text;
+       } 
+   });
 }
 
 function openFrames(){
 
- var frames=[];
- for (var i = 0; i <menus.length; i++) {
+   var frames=[];
+   for (var i = 0; i <menus.length; i++) {
     frames.push({
         name:'main_frame_'+i,
         url:'./main_frame.html',
@@ -230,14 +283,14 @@ api.openFrameGroup ({
     name: 'mainFrameGroup',
     scrollEnabled: true,
     rect: {
-     x: 0,
-     y: headerH+navH+20,
-     w: 'auto',
-     h: 'auto'
- },
- frames: frames
+       x: 0,
+       y: headerH+navH+20,
+       w: 'auto',
+       h: 'auto'
+   },
+   frames: frames
 }, function(ret, err){
-    
+
     SetNavMenuselected(ret.index);
 });
 
@@ -283,13 +336,15 @@ var menus, headerH , navH;
     }
 
     function OpenPersonCenterWin(){
+        var dian=$api.byId('dian');
+        dian.style.display='none';
         var userInfo=$api.getStorage('userInfo');
         if (userInfo && userInfo.id) {
             api.openWin({
                 name: 'personalcenter',
                 url: './personalcenter.html',
                 pageParam: {
-                    name: 'test'
+                    moneydian: moneydian
                 },
                 allowEdit:true,
                 animation: {
@@ -354,71 +409,6 @@ var menus, headerH , navH;
         }
 
 
-        function initspeak(){
-            var dialogBox = api.require('dialogBox');
-            dialogBox.alert({
-                texts: {
-                    title: '赚钱小妙招',
-                    content: '有笔生意想与您谈一谈,您意下如何',
-                    leftBtnTitle: '不想谈,我有钱',
-                    rightBtnTitle: '谈一谈'
-                },
-                styles: {
-                    bg: '#fff',
-                    w: 300,
-                    corner:2,
-                    title: {
-                        marginT: 20,
-                        icon: 'widget://res/gou.png',
-                        iconSize: 40,
-                        titleSize: 14,
-                        titleColor: '#000'
-                    },
-                    content: {
-                        color: '#000',
-                        size: 14
-                    },
-                    left: {
-                        marginB: 7,
-                        marginL: 20,
-                        w: 130,
-                        h: 35,
-                        corner: 2,
-                        bg: '#000',
-                        size: 12,
-                        color: '#fff',
-                    },
-                    right: {
-                        marginB: 7,
-                        marginL: 10,
-                        w: 130,
-                        h: 35,
-                        corner: 2,
-                        bg: '#000',
-                        size: 12,
-                        color: '#fff',
-                    }
-                }
-            }, function(ret) {
-                if (ret.eventType == 'left') {
-            // var dialogBox = api.require('dialogBox');
-            dialogBox.close({
-                dialogName: 'alert'
-            });
-        }else{
-            api.openWin({
-                name: 'tuijian',
-                url: './tuijian.html',
-                pageParam: {
-                    name: 'test'
-                }
-            });
-            dialogBox.close({
-                dialogName: 'alert'
-            });
-        }
-    });
-        }
     </script>
 
     </html>

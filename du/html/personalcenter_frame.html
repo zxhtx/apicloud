@@ -191,6 +191,16 @@
     text-align: center;
     line-height: 20px;
 }
+.dian1{
+    width: 8px;
+    height:8px;
+    background: red;
+    border-radius: 25px;
+    position: absolute;
+    left: 102px;
+    top: 18px;
+    /*display: none;*/
+}
 </style>
 </head>
 
@@ -232,6 +242,7 @@
     <div class="option" tapmode onclick="Openmoney()">
         <div class="icon icon-money"></div>
         <div class="title">我的账户</div>
+        <div class="dian1" id="dian1"></div>
         <div class="arrow-pane2">
             <div class="text">查看打赏记录</div>
         </div>
@@ -280,6 +291,7 @@
        now = Date.now();
        appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
        dialogBox = api.require('dialogBox');
+       dian();
        getUsername();
        getuserInfo();
        dindantypeList();
@@ -291,25 +303,35 @@
 
 
    };
-   function fensi(){
-      api.openWin({
-        name: 'fensi',
-        url: './fensi.html',
-        rect: {
-            x: 0,
-            y: 0,
-            w: api.winWidth,
-            h: api.winHeight
-        },
-        pageParam: {
-            name: 'test'
-        },
-        animation: {
-            type: "fade"
-        }
-    });
-  }
-  function guanzhu(){
+   function dian(count){
+    var dian1=$api.byId('dian1');
+    if (api.pageParam.moneydian=='ok') {
+        dian1.style.display='';
+    }else{
+        dian1.style.display='none';
+
+    }
+}
+function fensi(){
+
+  api.openWin({
+    name: 'fensi',
+    url: './fensi.html',
+    rect: {
+        x: 0,
+        y: 0,
+        w: api.winWidth,
+        h: api.winHeight
+    },
+    pageParam: {
+        name: 'test'
+    },
+    animation: {
+        type: "fade"
+    }
+});
+}
+function guanzhu(){
     api.openWin({
         name: 'guanzhulist',
         url: './guanzhulist.html',
@@ -721,6 +743,8 @@ function updatevip(){
     });
 }
 function Openmoney(){
+    var dian1=$api.byId('dian1');
+    dian1.style.display='none';
     api.openWin({
         name: 'money',
         url: './money.html',
