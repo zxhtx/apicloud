@@ -99,16 +99,17 @@
         top: 15px;
     }
     .dingyue .text{
-     font-size: 13px;
-     line-height: 25px;
-     text-align: center;
-     color: white;
+       font-size: 13px;
+       line-height: 25px;
+       text-align: center;
+       color: white;
 
- }
+   }
 </style>
 </head>
 
 <body>
+  
     <section id="list">
      <!--    <div class="ware ware-0">
             <div class="content">
@@ -175,7 +176,7 @@
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript">
-   var now;
+ var now;
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey;
       apiready = function() {
@@ -184,7 +185,7 @@
       appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       init();
       getWareList();
-      initRefresh();
+ 
       initEventListenter();
 
 
@@ -195,12 +196,12 @@
   var skip=0;
   var LIMIT=9;
   function init(){
-   wareTypeList=$api.getStorage('WareTypeList');
+     wareTypeList=$api.getStorage('WareTypeList');
 
-}
-function quxiaodingyue(id){
- event.stopPropagation();
- api.ajax({
+ }
+ function quxiaodingyue(id){
+   event.stopPropagation();
+   api.ajax({
     url: 'https://d.apicloud.com/mcm/api/guanzhu/' + id,
     method: 'delete',
     headers: {
@@ -298,13 +299,13 @@ api.ajax({
          updateWareList(ret,_LoadMore);
 
      } else {
-       api.toast({
-           msg: err.msg,
-           duration: 2000,
-           location: 'bottom'
-       });
-   }
-});
+         api.toast({
+             msg: err.msg,
+             duration: 2000,
+             location: 'bottom'
+         });
+     }
+ });
 }
 function updateWareList(_data,_LoadMore){
     var list=$api.byId('list');
@@ -349,19 +350,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-     getWareList(true);
- });
-}
-// 下拉刷新
-function initRefresh(){
-    api.setCustomRefreshHeaderInfo({
-        bgColor: '#C0C0C0',
-        isScale: true
-    }, function() {
-        getWareList();
-        
-    });
-
+       getWareList(true);
+   });
 }
 
 
