@@ -37,67 +37,73 @@
   }
 
   function initPushGeTui(){
-//   var uzgetuisdk = api.require('pushGeTui');
+    var uzgetuisdk = api.require('pushGeTui');
     uzgetuisdk.initialize(function(ret) {
-    var value = "";
-    switch (ret.type) {
+      var value = "";
+      switch (ret.type) {
         case 'cid':
-            value = 'cid:' + ret.cid;
-            break;
+        value = 'cid:' + ret.cid;
+        break;
         case 'payload':
-            value = 'payload:' + ret.payload;
-            break;
+        value = 'payload:' + ret.payload;
+        fnpush(ret.payload);
+        break;
         case 'occurError':
-            value = 'occurError';
-            break;
+        value = 'occurError';
+        break;
         case'onNotificationMessageClicked':
-          value = 'onNotificationMessageClicked' + ret.onNotificationMessageClicked
-          break;
+        value = 'onNotificationMessageClicked' + ret.onNotificationMessageClicked
+        break;
         case'onNotificationMessageArrived':
-          value = 'onNotificationMessageArrived' + ret.onNotificationMessageArrived
-          break;
-    }
-    alert(value);
-});
-// var push = api.require('push');
-// push.bind({
-//   userName: 'zxhtx13',
-//   userId: '5caef95d91a794197f52cde4'
-// }, function(ret, err){
-//   if( ret ){
-//     alert( JSON.stringify( ret) );
-//   }else{
-//     alert( JSON.stringify( err) );
-//   }
-// });
-} 
-function WareTypeList(){
-  var WareTypeList=$api.getStorage('WareTypeList');
-  if (!WareTypeList) {
-   wareTypeList=[
-   {
-    "id": "56c80da883af652643474b6b",
-    "name": "男鞋",
-  },
-  {
-    "id": "56c80db78d04c83d3d1dedea",
-    "name": "女鞋",
-  },
-  {
-    "id": "56c80dc031da9e480de1cb49",
-    "name": "男装",
-  },
-  {
-    "id": "56c80dc383af652643474b6d",
-    "name": "女装",
-  },
-  {
-    "id": "5c6e5cc2d772329a6f2562dd",
-    "name": "优惠购",
-  },
-  ];
-}
-getWareTypeList();
+        value = 'onNotificationMessageArrived' + ret.onNotificationMessageArrived
+        break;
+      }
+      
+
+
+    });
+  } 
+  function fnpush(payload){
+    var ware=$api.strToJson(payload);
+    api.openWin({
+      name: 'html/ware',
+      url: 'html/ware.html',
+      pageParam: {
+        wareId:ware.id
+      },
+      animation: {
+        type: "fade"
+      }
+    });
+
+  }
+  function WareTypeList(){
+    var WareTypeList=$api.getStorage('WareTypeList');
+    if (!WareTypeList) {
+     wareTypeList=[
+     {
+      "id": "56c80da883af652643474b6b",
+      "name": "男鞋",
+    },
+    {
+      "id": "56c80db78d04c83d3d1dedea",
+      "name": "女鞋",
+    },
+    {
+      "id": "56c80dc031da9e480de1cb49",
+      "name": "男装",
+    },
+    {
+      "id": "56c80dc383af652643474b6d",
+      "name": "女装",
+    },
+    {
+      "id": "5c6e5cc2d772329a6f2562dd",
+      "name": "优惠购",
+    },
+    ];
+  }
+  getWareTypeList();
 }
 function getWareTypeList(){
  var now = Date.now();
