@@ -66,9 +66,9 @@
  		<param name="ios_appkey" value="xCGkZR1bCp6gscLUB20Dl4" />
  		<param name="ios_appid" value="G5lfFkQZ008VoZUXydA2r2" />
  		<param name="ios_appsecret" value="RuxlC8ExWA7T4NFoJhQFd6" />
- 		<param name="android_appkey" value="rgTdfXFqX06Yyz910Ng8U9" />
- 		<param name="android_appid" value="RoeQUddoIk5hXcbpEguqB4" />
- 		<param name="android_appsecret" value="xoSLxKH3ZyAkGpfuJPcr74" />
+ 		<param name="android_appkey" value="BZDiYXKxFXAvXPyk73xa91" />
+ 		<param name="android_appid" value="GtUQK3UXpyAlDA2ekM5Gx6" />
+ 		<param name="android_appsecret" value="BlRFirb4XM8OyNJPDJiRc6" />
  		<param name="android_groupid" value="" />
  	</feature>
 
