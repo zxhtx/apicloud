@@ -54,138 +54,127 @@
     <input id="password" class="input" type="password" placeholder="密码(7位字符即可)">
   </div>
   <div class="row">
-    <input id="QQ" class="input" type="text" placeholder="QQ号码(方便后期找回密码)">
+    <input id="QQ" class="input" type="text" placeholder="QQ号码(方便后期找回密码或用户名)">
   </div>
   <div class="btn" tapmode onclick="Register()">注册</div>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
-  apiready = function() {
+ var now;
+ var appKey;
+ apiready = function() {
+  now = Date.now();
+  appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
 
-  };
-  function Register(){
-    var username=$api.byId('username');
-    var password=$api.byId('password');
-    var qqval=$api.byId('QQ');
+};
+var username;
+var password;
+var qqval;
+var usernameValue;
+var passwordValue;
+var qqValue;
+var skip=0;
+var LIMIT=20;
 
-    if (username.value.length<5) {
-      api.toast({
-        msg: '用户名不能低于5位字符',
-        duration: 2000,
-        location: 'bottom'
-      });
-      return;
-    }else if (password.value.length<7) {
-      api.toast({
-        msg: '密码不能低于7位字符',
-        duration: 2000,
-        location: 'bottom'
-      });
-      return;
+
+function Register(){
+ username=$api.byId('username');
+ password=$api.byId('password');
+ qqval=$api.byId('QQ');
+
+ if (username.value.length<5) {
+  api.toast({
+    msg: '用户名不能低于5位字符',
+    duration: 2000,
+    location: 'bottom'
+  });
+  return;
+}else if (password.value.length<7) {
+  api.toast({
+    msg: '密码不能低于7位字符',
+    duration: 2000,
+    location: 'bottom'
+  });
+  return;
+}
+usernameValue=username.value;
+passwordValue=password.value;
+qqValue=qqval.value;
+
+
+if (usernameValue=='') {
+  api.toast({
+    msg:'用户名不能为空',
+    duration: 2000,
+    location: 'bottom'
+  });
+  return;
+
+}else if(passwordValue==''){
+  api.toast({
+    msg:'密码不能为空',
+    duration: 2000,
+    location: 'bottom'
+  });
+  return;
+}else if (qqValue==''){
+ api.toast({
+  msg:'QQ号不能为空',
+  duration: 2000,
+  location: 'bottom'
+});
+ return;
+
+}
+
+
+
+zhuce();
+
+
+
+}
+
+function zhuce(){
+  api.ajax({
+    url: 'https://d.apicloud.com/mcm/api/user',
+    method: 'post',
+    headers: {
+      "X-APICloud-AppId": "A6099267504667",
+      "X-APICloud-AppKey":   appKey
+    },
+    data: {
+      values: { 
+        'username': usernameValue,
+        'password':passwordValue,
+        'pwd':passwordValue,
+        'QQ':qqValue
+      },
+
     }
-    var usernameValue=username.value;
-    var passwordValue=password.value;
-    var qqValue=qqval.value;
-    var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
+  },function(ret, err){
+    if (ret) {
+      if (ret && ret.id) {
 
-      if (usernameValue=='') {
-        api.toast({
-          msg:'用户名不能为空',
-          duration: 2000,
-          location: 'bottom'
+        api.execScript({
+          name: 'login',
+          frameName: 'login_frame',
+          script: 'setUserName(\"'+usernameValue+'\");'
         });
-        return;
-        
-      }else if(passwordValue==''){
-        api.toast({
-          msg:'密码不能为空',
-          duration: 2000,
-          location: 'bottom'
-        });
-        return;
+        api.closeWin();
+
+
       }else{
-
-      }
-      var params={
-        fields: {},
-        skip: 0,
-      }
-      params=$api.jsonToStr(params);
-      api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
-        method: 'get',
-        headers: {
-          "X-APICloud-AppId": "A6099267504667",
-          "X-APICloud-AppKey":   appKey
-        },
-      },function(ret, err){
-        if (ret) {
-         $api.setStorage('Register',ret);
-       } else {
         api.toast({
-          msg: err.msg,
-          duration: 2000,
-          location: 'bottom'
-        });
-      }
-    });
-      var Register=$api.getStorage('Register');
-      if (Register){
-        for (var i =0; i<Register.length; i++) {
-          if (usernameValue==Register[i].username) {
-            api.toast({
-              msg: '该用户名已被注册',
-              duration: 2000,
-              location: 'bottom'
-            });
-            return;
-          } 
-
-        }
-
-      }
-
-      api.ajax({
-        url: 'https://d.apicloud.com/mcm/api/user',
-        method: 'post',
-        headers: {
-          "X-APICloud-AppId": "A6099267504667",
-          "X-APICloud-AppKey":   appKey
-        },
-        data: {
-          values: { 
-            'username': usernameValue,
-            'password':passwordValue,
-            'pwd':passwordValue,
-            'QQ':qqValue
-          },
-
-        }
-      },function(ret, err){
-        if (ret) {
-          if (ret && ret.id) {
-
-            api.execScript({
-              name: 'login',
-              frameName: 'login_frame',
-              script: 'setUserName(\"'+usernameValue+'\");'
-            });
-            api.closeWin();
-
-            
-          }
-        } else {
-          api.toast({
-            msg: err.msg,
+            msg: '该用户名已被其他用户注册',
             duration: 2000,
             location: 'bottom'
-          });
-        }
-      });
-    }
-  </script>
+        });
+      }
+    } 
+  });
+}
+</script>
 
-  </html>
+</html>

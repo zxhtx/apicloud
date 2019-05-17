@@ -78,16 +78,9 @@
 <script type="text/javascript">
 	var name;
 	var price1;
-	var price2;
 	var wareid;
 	var myDate = new Date();
-	var Y=myDate.getFullYear();
-	var M=myDate.getMonth()+1;
-	var D=myDate.getDate();  
-	var h=myDate.getHours();    
-	var m=myDate.getMinutes();
-	var s=myDate.getSeconds(); 
-	var order_id=Y+'-'+M+'-'+D+' '+h+':'+m+':'+s;
+	var order_id=myDate.getTime(); 
 	
 	var value;
 	var pay_type;
@@ -130,7 +123,7 @@
             // 赋值
             // updateWare(ret);
             name=ret[0].warename;
-            price2=ret[0].price;
+            price1=ret[0].price;
             wareid=ret[0].id;
             var text=$api.byId('text');
             text.innerHTML=ret[0].description;
@@ -150,13 +143,13 @@
       }
 
       function weixin(){
-      	location.href = "http://www.zxh.yueaa.com/bufpay_/bufpay_api_demo.php?price=" + price2 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=wechat";
+      	location.href = "http://www.zxh.yueaa.com/bufpay_/bufpay_api_demo.php?price=" + price1 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=wechat";
 
 
       }
 
       function alipay(){
-      	location.href = "http://www.zxh.yueaa.com/bufpay_/bufpay_api_demo.php?price=" + price2 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=alipay";
+      	location.href = "http://www.zxh.yueaa.com/bufpay_/bufpay_api_demo.php?price=" + price1 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=alipay";
 
 
 

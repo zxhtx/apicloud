@@ -410,7 +410,7 @@
             <div class="value value-2">&nbsp;运费平台付</div>
         </div>
         <div class="row">
-            <div class="text">优惠金额：</div>
+            <div class="text">VIP优惠：</div>
             <div class="value value-2" id="viptext">-&nbsp;￥0.0</div>
         </div>
         <div class="row">
@@ -514,7 +514,7 @@ api.ajax({
         var ceilprice =Math.round(vipprice);
             // 存储用户名
             // alert($api.jsonToStr(ret))
-            if (jiage>50) {
+            if (jiage>29) {
 
 
                 if (ret[0].vip==1) {
@@ -529,7 +529,7 @@ api.ajax({
               }
 
           }else{
-              viptext.innerHTML='商品价格大于50元即可打折'
+              viptext.innerHTML='商品价格大于30元即可打折'
               price2.innerHTML='￥'+dataprice;
               fanqian.innerHTML=Math.round(ceilprice*0.08);
 
