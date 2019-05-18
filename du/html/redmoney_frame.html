@@ -62,19 +62,19 @@
     }
 
     #frame2>div{
-       width: 100px;
-       height: 30px;
-       text-align: center;
-       line-height: 30px;
-       border-radius: 8px;
-       margin-left: 12px;
-       margin-top: 28px;
-       color: white;
-       background-color: black;
-       display: inline-block;
+     width: 100px;
+     height: 30px;
+     text-align: center;
+     line-height: 30px;
+     border-radius: 8px;
+     margin-left: 12px;
+     margin-top: 28px;
+     color: white;
+     background-color: black;
+     display: inline-block;
 
-   }
-   .header .top {
+ }
+ .header .top {
     position: relative;
     top: 6px;
     width: 100%;
@@ -174,14 +174,14 @@ api.ajax({
 
 },function(ret, err){
     if (ret) {
-       tixianprice=ret[0].money;
-       var price=$api.byId('price');
-       if (ret[0].money) {
+     tixianprice=ret[0].money;
+     var price=$api.byId('price');
+     if (ret[0].money) {
 
-          price.innerHTML='￥'+ret[0].money;
-      }else{
-        price.innerHTML='￥0.00';
-    }
+      price.innerHTML='￥'+ret[0].money;
+  }else{
+    price.innerHTML='￥0.00';
+}
 
 } 
 });
@@ -189,10 +189,10 @@ api.ajax({
 
 function pay(money){
     if (tixianprice>=money) {
-       dialogBox.alert({
+     dialogBox.alert({
         texts: {
             title: '打赏',
-            content: '是否打赏该玩家'+money+'元',
+            content: '是否打赏该用户'+money+'元',
             leftBtnTitle: '打赏',
             rightBtnTitle: '取消'
         },
@@ -249,7 +249,7 @@ function pay(money){
 
     }
 });
-   }else{
+ }else{
     api.toast({
         msg: '余额不足',
         duration: 2000,
@@ -269,48 +269,48 @@ function getvideouserprice(money){
         });
         return;
     }
- activity = api.require('UILoading');
- activity.keyFrame({
-    rect: {
-        w: 80,
-        h: 100
-    },
-    styles: {
-        bg: 'rgba(0,0,0,0.5)',
-        corner: 5,
-        interval: 50,
-        frame: {
+    activity = api.require('UILoading');
+    activity.keyFrame({
+        rect: {
             w: 80,
-            h: 80
+            h: 100
+        },
+        styles: {
+            bg: 'rgba(0,0,0,0.5)',
+            corner: 5,
+            interval: 50,
+            frame: {
+                w: 80,
+                h: 80
+            }
         }
+    });
+
+
+    var params={
+        fields:{},
+        fields: {},
+        where: {
+            id:api.pageParam.videouserid
+        },
+
     }
-});
+    params=$api.jsonToStr(params);
+    api.ajax({
+        url:  'http://d.apicloud.com/mcm/api/user?filter='+params,
+        method: 'get',
+        headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey
+        },
+    },function(ret, err){
+        if (ret) {
+            if (ret[0].money==null || ret[0].money==undefined) {
+               ret[0].money=0;
+           }
 
+           addvideouserprice(ret[0].money,money);
 
- var params={
-    fields:{},
-    fields: {},
-    where: {
-        id:api.pageParam.videouserid
-    },
-
-}
-params=$api.jsonToStr(params);
-api.ajax({
-    url:  'http://d.apicloud.com/mcm/api/user?filter='+params,
-    method: 'get',
-    headers: {
-        "X-APICloud-AppId": "A6099267504667",
-        "X-APICloud-AppKey":   appKey
-    },
-},function(ret, err){
-    if (ret) {
-        if (ret[0].money==null || ret[0].money==undefined) {
-         ret[0].money=0;
-     }
-
-     addvideouserprice(ret[0].money,money);
-     jianmeprice(money);
        // 添加关系
        addredmoney(money);
 
@@ -320,7 +320,7 @@ api.ajax({
 }
 
 function addvideouserprice(money,shangmoney){
-   api.ajax({
+ api.ajax({
     url:  'http://d.apicloud.com/mcm/api/user/'+api.pageParam.videouserid,
     method: 'put',
     headers: {
@@ -334,15 +334,16 @@ function addvideouserprice(money,shangmoney){
     }
 },function(ret, err){
     if (ret) {
+      jianmeprice(shangmoney);
 
-    } 
+  } 
 });
 
 }
 
 function jianmeprice(money){
 
-   api.ajax({
+ api.ajax({
     url:  'http://d.apicloud.com/mcm/api/user/'+userid,
     method: 'put',
     headers: {
@@ -356,13 +357,13 @@ function jianmeprice(money){
     }
 },function(ret, err){
     if (ret) {
-       activity.closeKeyFrame();
-       api.toast({
-           msg: '打赏成功',
-           duration: 3000,
-           location: 'bottom'
-       });
-   } 
+     activity.closeKeyFrame();
+     api.toast({
+         msg: '打赏成功',
+         duration: 3000,
+         location: 'bottom'
+     });
+ } 
 });
 
 }

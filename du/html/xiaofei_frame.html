@@ -97,15 +97,15 @@
         top: 15px;
     }
     .dingyue .text{
-     font-size: 15px;
-     line-height: 25px;
-     text-align: center;
-     color: black;
+       font-size: 15px;
+       line-height: 25px;
+       text-align: center;
+       color: black;
 
- }
- em{
+   }
+   em{
     font-size: 16px;
- }
+}
 </style>
 </head>
 
@@ -158,10 +158,21 @@
     {{~it:value:index}}
     <div class="ware ware-1" >
         <div class="content" >
+            {{? value.receivemoney.avatar==null || value.receivemoney.avatar==undefined }}
+            <img  class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
+
+            {{?? value.receivemoney.avatar}}
+
             <img onload="LoadImage(this,'{{=value.id}}')" data-url="{{=value.receivemoney.avatar.url}}"  data-wareTypeId="{{=value.wareTypeId}}" class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
+
+            {{?}}
             <div class="info" >
                 <div class="name">{{=value.date}}</div>
-                <div class="description">你给<em>"{{=value.receivemoney.chaoshiuser}}"</em>打赏了{{=value.money}}元</div>
+                {{? value.receivemoney.chaoshiuser==null}}
+                <div class="description">你给<em>"{{=value.receivemoney.username}}"</em>打赏了{{=value.money}}元</div>
+                {{??}}
+                    <div class="description">你给<em>"{{=value.receivemoney.chaoshiuser}}"</em>打赏了{{=value.money}}元</div>
+                {{?}}
                 <div class="dingyue" >
                     <div class="text">-{{=value.money}}</div>
                 </div>
@@ -176,7 +187,7 @@
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript">
-   var now;
+ var now;
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey;
       apiready = function() {
@@ -196,9 +207,9 @@
   var skip=0;
   var LIMIT=9;
   function init(){
-   wareTypeList=$api.getStorage('WareTypeList');
+     wareTypeList=$api.getStorage('WareTypeList');
 
-}
+ }
 
 // 获取列表页数据
 function getWareList(_LoadMore){
@@ -252,18 +263,18 @@ api.ajax({
           // 隐藏下拉刷新
           // api.refreshHeaderLoadDone();
          // 模板渲染
-        
+
          api.refreshHeaderLoadDone()
          updateWareList(ret,_LoadMore);
 
      } else {
-       api.toast({
-           msg: err.msg,
-           duration: 2000,
-           location: 'bottom'
-       });
-   }
-});
+         api.toast({
+             msg: err.msg,
+             duration: 2000,
+             location: 'bottom'
+         });
+     }
+ });
 }
 function updateWareList(_data,_LoadMore){
     var list=$api.byId('list');
@@ -308,8 +319,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-     getWareList(true);
- });
+       getWareList(true);
+   });
 }
 // 下拉刷新
 function initRefresh(){

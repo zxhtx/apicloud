@@ -143,13 +143,41 @@
       }
 
       function weixin(){
-      	location.href = "http://www.zxh.yueaa.com/bufpay_/bufpay_api_demo.php?price=" + price1 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=wechat";
+      	api.openWin({
+      		name: 'page1',
+      		url: "http://www.zxh.yueaa.com/bufpay_/bufpay_api_demo.php?price=" + price1 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=wechat"
+      	});
+      	// api.openApp({
+      	// 	androidPkg: 'android.intent.action.VIEW',
+      	// 	mimeType: 'text/html',
+      	// 	uri: "http://www.zxh.yueaa.com/bufpay_/bufpay_api_demo.php?price=" + price1 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=wechat"
+      	// }, function(ret, err) {
+      	// 	if (ret) {
+
+      	// 	}
+      	// });
+      	// location.href = "http://www.zxh.yueaa.com/bufpay_/bufpay_api_demo.php?price=" + price1 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=wechat";
 
 
       }
 
       function alipay(){
-      	location.href = "http://www.zxh.yueaa.com/bufpay_/bufpay_api_demo.php?price=" + price1 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=alipay";
+      	api.openWin({
+      		name: 'page1',
+      		url: "http://www.zxh.yueaa.com/bufpay_/bufpay_api_demo.php?price=" + price1 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=alipay"
+      	});
+      	// api.openApp({
+      	// 	androidPkg: 'android.intent.action.VIEW',
+      	// 	mimeType: 'text/html',
+      	// 	uri:  "http://www.zxh.yueaa.com/bufpay_/bufpay_api_demo.php?price=" + price1 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=alipay"
+      	// }, function(ret, err) {
+      	// 	if (ret) {
+
+      	// 	}
+      	// });
+
+
+      	// location.href = "http://www.zxh.yueaa.com/bufpay_/bufpay_api_demo.php?price=" + price1 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=alipay";
 
 
 

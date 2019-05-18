@@ -16,9 +16,7 @@
     */
     .back {
         position: fixed;
-        /*bottom: 0;*/
-        /*left: 0;*/
-        top: 0;
+        top: -6px;
         width: 50px;
         height: 50px;
         background: white;
@@ -35,7 +33,6 @@
         position: fixed;
         top: 13px;
         right: 6px;
-
         width: 42px;
         height: 20px;
         line-height: 20px;
@@ -43,7 +40,7 @@
         background: black;
         color: white;
         z-index: 999;
-        border-radius: 5px;
+        border-radius: 3px;
         
         /*border: 2px solid black;*/
     }
@@ -53,6 +50,7 @@
         height: auto;
         box-sizing: border-box;
         padding: 0 8px;
+        margin-top: 22px;
     }
 
     .content {
@@ -65,7 +63,7 @@
     .ware-1 {
         position: relative;
         width: 100%;
-        height: 56px;
+        height: 88px;
         box-sizing: border-box;
         padding-top: 15px;
         /*border: 1px solid red;*/
@@ -75,28 +73,30 @@
 
     .ware-1 .thumbnail {
         position: absolute;
-        top: 6px;
+        top: 12px;
         left: 0px;
-        height: 33px;
-        width: 33px;
+        height: 40px;
+        width: 40px;
         border-radius: 50px;
     }
 
     .ware-1 .info {
         width: 100%;
-        height: 88px;
-        box-sizing: border-box;
-        padding-left: 88px;
-        padding-right: 28px;
+        height: 20px;
+        /*box-sizing: border-box;*/
+        padding-left: 43px;
+        /*padding-right: 28px;*/
+        /*border: 1px solid red;*/
     }
 
     .ware-1 .info .description {
-        margin-top: 6px;
+        /*margin-top: -8px;*/
+
         width: 100%;
         height: 36px;
         overflow: hidden;
         font-size: 13px;
-        color: #9d9d9d;
+        color: gray;
     }
 
 
@@ -117,7 +117,7 @@
         opacity: 0.7;
     }
     .dingyue{
-        margin-top: 20px;
+        margin-top: 0px;
         width: 58px;
         height: 25px;
         border-radius: 8px;
@@ -133,12 +133,27 @@
      color: white;
 
  }
+ .date{
+    font-size: 12px;
+    color: gray;
+}
+.text{
+ position: absolute;
+ top: 50px;
+ left: 8px;
+ font-size: 13px;
+ width: 90%;
+ height: 38px;
+ overflow: hidden;
+ white-space:normal;
+ overflow-y:scroll;
+}
 </style>
 </head>
 
 <body>
     <div class="back" tapmode onclick="api.closeFrame()"></div>
-    <div class="say" tapmode >写评论</div>
+    <div class="say" tapmode onclick="writespeak()">写评论</div>
     <section id="list">
      <!--    <div class="ware ware-0">
             <div class="content">
@@ -186,74 +201,156 @@
 <script type="text/template" id="template">
     {{~it:value:index}}
     <div class="ware ware-1" >
-        <div class="content" tapmode onclick="openchaoshi('{{=value.id}}','{{=value.bewatched.id}}')" >
-            <img onload="LoadImage(this,'{{=value.id}}')" data-url="{{=value.bewatched.avatar.url}}"  data-wareTypeId="{{=value.wareTypeId}}" class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
-            <div class="info" >
-                <div class="description">{{=value.bewatched.chaoshiuser}}</div>
-                <div class="dingyue" tapmode onclick="quxiaodingyue('{{=value.id}}')">
-                    
-                </div>
-            </div>
+        <div class="content" tapmode onclick="openchaoshi('{{=value.id}}','{{=value.speak.id}}')" >
+         {{? value.speak.avatar==null || value.speak.avatar==undefined }}
+         <img  class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
+
+         {{?? value.speak.avatar}}
+
+         <img onload="LoadImage(this,'{{=value.id}}')" data-url="{{=value.speak.avatar.url}}"  data-wareTypeId="{{=value.wareTypeId}}" class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
+
+         {{?}}
+         <div class="info" >
+             <div class="date">{{=value.date}}</div>
+             {{? value.speak.chaoshiuser==null}}
+             <div class="description">{{=value.speak.chaoshiuser}}</div>
+             {{??}}
+             <div class="description">{{=value.speak.username}}</div>
+             {{?}}
+
+             <div class="text">{{=value.text}}</div>
+         </div>
+
+     </div>
 
 
-        </div>
-    </div>
-    {{~}}
+ </div>
+</div>
+{{~}}
 </script>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript">
    var now;
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey;
-      apiready = function() {
-          now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-      init();
-      getWareList();
+   var appKey;
+   var  dialogBox;
+   var userid;
+   var myDate = new Date();
+   var Y=myDate.getFullYear();
+   var M=myDate.getMonth()+1;
+   var D=myDate.getDate();  
+   var h=myDate.getHours();    
+   var m=myDate.getMinutes();
+   var s=myDate.getSeconds(); 
+   var date;
+   apiready = function() {
+       date=Y+'-'+M+'-'+D+' '+h+':'+m+':'+s;
+       userid=$api.getStorage('userInfo').userId;
+       now = Date.now();
+       appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+       init();
+       getWareList();
 
-      initEventListenter();
+
+       initEventListenter();
+       dialogBox = api.require('dialogBox');
 
 
+   };
+   var wareTypeList;
+   var skip=0;
+   var LIMIT=9;
+   function init(){
+       wareTypeList=$api.getStorage('WareTypeList');
 
-  };
-  var wareTypeList;
-  var skip=0;
-  var LIMIT=9;
-  function init(){
-   wareTypeList=$api.getStorage('WareTypeList');
+   }
+   function writespeak(){
+    dialogBox.input({
+        keyboardType: 'default',
+        texts: {
+            title: '发布评论',
+            placeholder: '评论其实很简单',
+            leftBtnTitle: '取消',
+            rightBtnTitle: '发布'
+        },
+        styles: {
+          bg: '#fff',
+          corner: 2,
+          w: 300,
+          h: 240,
+          title: {
+            h: 60,
+            alignment: 'center',
+            size: 14,
+            color: '#000',
+            marginT:30,
+        },
+        input: {
+            h: 60,
+            y:30,
+            marginT:15,
+            marginLeft: 10,
+            marginRight:10,
+            textSize: 14,
+            textColor: '#000'
+        },
+        dividingLine: {
+            width: 0.5,
+            color: '#696969'
+        },
+        left: {
+            bg: 'rgba(0,0,0,0)',
+            color: '#000',
+            size: 12
+        },
+        right: {
+            bg: 'rgba(0,0,0,0)',
+            color: '#000',
+            size: 12
+        }
+    }
+}, function(ret) {
+
+    if (ret.eventType == 'left') {
+
+      dialogBox.close({
+        dialogName: 'input'
+    });
+  }else{
+    addspeak(ret.text);
+    dialogBox.close({
+        dialogName: 'input'
+    });
+
 
 }
-function quxiaodingyue(id){
- event.stopPropagation();
- api.ajax({
-    url: 'https://d.apicloud.com/mcm/api/guanzhu/' + id,
-    method: 'delete',
-    headers: {
-      "X-APICloud-AppId": "A6099267504667",
-      "X-APICloud-AppKey":   appKey,
-  }
-}, function(ret, err) {
-    if (ret) {
-        api.toast({
-            msg: '成功取消订阅',
-            duration: 2000,
-            location: 'bottom'
-        });
-        getWareList();
-        api.execScript({
-            name: 'personalcenter',
-            frameName: 'personalcenter_frame',
-            script: 'guanzhucount();'
-        });
+});
+}
 
+function addspeak(text){
+  api.ajax({
+    url: 'http://d.apicloud.com/mcm/api/videospeak',
+    method: 'post',
+    headers: {
+        "X-APICloud-AppId": "A6099267504667",
+        "X-APICloud-AppKey":   appKey
+    },
+    data: {
+        values: { 
+            videoid:api.pageParam.videoid,
+            text:text,
+            speak:userid,
+            bespeak:api.pageParam.videouserid,
+            date:date
+        },
+    }
+},function(ret, err){
+    if (ret) {
+        // getusermoney()
     }
 });
-
 }
-
 
 // 获取列表页数据
 function getWareList(_LoadMore){
@@ -271,16 +368,17 @@ var params={
     fields:{},
     fields: {},
     where: {
-        focus:userInfo.userId
+        videoid:api.pageParam.videoid,
+        bespeak:api.pageParam.videouserid
     },
     skip:skip,
     limit:LIMIT,
     order:"createdAt DESC",
-    include: ['bewatchedPointer']
+    include: ['speakPointer']
 }
 params=$api.jsonToStr(params);
 api.ajax({
-    url: 'http://d.apicloud.com/mcm/api/guanzhu?filter='+params,
+    url: 'http://d.apicloud.com/mcm/api/videospeak?filter='+params,
     method: 'get',
     headers: {
         "X-APICloud-AppId": "A6099267504667",
