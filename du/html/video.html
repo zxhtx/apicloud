@@ -49,7 +49,7 @@
     <img  id="zan" tapmode onclick="zanandzan2()" src="../image/zan.png" alt="" width="35px" height="30px">
     <div class="zancount" id="likecount">0</div>
     <img class="img" src="../image/say.png" alt=""  tapmode onclick="say()"  width="30px" height="30px"> 
-    <div class="count" >0</div>
+    <div class="count"  id="speakcount">0</div>
     <img class="img" src="../image/xiazai.png"  tapmode onclick="xiazai()" alt="" width="30px" height="30px">
     <div class="count" id="downcount">0</div> 
     <img class="img" src="../image/redbao.png"  tapmode onclick="redmoney()" alt="" width="26px" height="30px"> 
@@ -79,10 +79,33 @@
 
 
  };
+ function videospeakcount(id){
+   var params={
+    fields:{},
+    fields: {},
+    where: {
+      videoid:id
+    }
+  }
+  params=$api.jsonToStr(params);
+  api.ajax({
+    url: 'http://d.apicloud.com/mcm/api/videospeak/count?filter='+params,
+    method: 'get',
+    headers: {
+      "X-APICloud-AppId": "A6099267504667",
+      "X-APICloud-AppKey":   appKey,
+    },
+  },function(ret, err){
+    if (ret) {
+     var speakcount=$api.byId('speakcount');
+     speakcount.innerHTML=ret.count;
+    }
+  });
+}
 
 
 
- function zanandzan2(){
+function zanandzan2(){
   var likecount=$api.byId('likecount');
   if (redzan==0) {
     var zan=$api.byId('zan');
@@ -246,6 +269,7 @@ function getuser(ret){
       videoid=ret.value.key1.id;
       videourl=ret.value.key1.video;
       getlikevideo(videoid);
+      videospeakcount(videoid)
       // getlikecount(videoid);
       redzan=0
       

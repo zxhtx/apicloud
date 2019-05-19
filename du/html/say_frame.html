@@ -51,6 +51,7 @@
         box-sizing: border-box;
         padding: 0 8px;
         margin-top: 22px;
+        /*border: 1px solid red;*/
     }
 
     .content {
@@ -81,7 +82,7 @@
     }
 
     .ware-1 .info {
-        width: 100%;
+        width: 78%;
         height: 20px;
         /*box-sizing: border-box;*/
         padding-left: 43px;
@@ -91,8 +92,8 @@
 
     .ware-1 .info .description {
         /*margin-top: -8px;*/
-
-        width: 100%;
+        /*border: 1px solid red;*/
+        width: 32%;
         height: 36px;
         overflow: hidden;
         font-size: 13px;
@@ -127,26 +128,33 @@
         top: 15px;
     }
     .dingyue .text{
-     font-size: 13px;
-     line-height: 25px;
-     text-align: center;
-     color: white;
+       font-size: 13px;
+       line-height: 25px;
+       text-align: center;
+       color: white;
 
- }
- .date{
+   }
+   .date{
     font-size: 12px;
     color: gray;
 }
 .text{
- position: absolute;
- top: 50px;
- left: 8px;
- font-size: 13px;
- width: 90%;
- height: 38px;
- overflow: hidden;
- white-space:normal;
- overflow-y:scroll;
+   position: absolute;
+   top: 52px;
+   left: 8px;
+   font-size: 13px;
+   width: 80%;
+   height: 38px;
+   overflow: hidden;
+   white-space:normal;
+   overflow-y:scroll;
+}
+.sayimg{
+    position: absolute;
+    right: 0px;
+    width: 25px;
+    height: 25px;
+    /*border: 1px solid red;*/
 }
 </style>
 </head>
@@ -202,29 +210,31 @@
     {{~it:value:index}}
     <div class="ware ware-1" >
         <div class="content" tapmode onclick="openchaoshi('{{=value.id}}','{{=value.speak.id}}')" >
-         {{? value.speak.avatar==null || value.speak.avatar==undefined }}
-         <img  class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
+           {{? value.speak.avatar==null || value.speak.avatar==undefined }}
+           <img  class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
 
-         {{?? value.speak.avatar}}
+           {{?? value.speak.avatar}}
 
-         <img onload="LoadImage(this,'{{=value.id}}')" data-url="{{=value.speak.avatar.url}}"  data-wareTypeId="{{=value.wareTypeId}}" class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
+           <img onload="LoadImage(this,'{{=value.id}}')" data-url="{{=value.speak.avatar.url}}"  data-wareTypeId="{{=value.wareTypeId}}" class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
 
-         {{?}}
-         <div class="info" >
-             <div class="date">{{=value.date}}</div>
-             {{? value.speak.chaoshiuser==null}}
-             <div class="description">{{=value.speak.chaoshiuser}}</div>
-             {{??}}
-             <div class="description">{{=value.speak.username}}</div>
-             {{?}}
+           {{?}}
+           <div class="info" >
+               <div class="date">{{=value.date}}</div>
+               <img class="sayimg" src="../image/speak.png" alt="">
+               {{? value.speak.chaoshiuser==null}}
+               <div class="description">{{=value.speak.username}}</div>
+               {{??}}
 
-             <div class="text">{{=value.text}}</div>
-         </div>
+               <div class="description">{{=value.speak.chaoshiuser}}</div>
+               {{?}}
 
-     </div>
+               <div class="text">回复_<b>{{=value.bespeak.username}}</b>：{{=value.text}}</div>
+           </div>
+
+       </div>
 
 
- </div>
+   </div>
 </div>
 {{~}}
 </script>
@@ -232,40 +242,40 @@
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript">
-   var now;
-   var appKey;
-   var  dialogBox;
-   var userid;
-   var myDate = new Date();
-   var Y=myDate.getFullYear();
-   var M=myDate.getMonth()+1;
-   var D=myDate.getDate();  
-   var h=myDate.getHours();    
-   var m=myDate.getMinutes();
-   var s=myDate.getSeconds(); 
-   var date;
-   apiready = function() {
-       date=Y+'-'+M+'-'+D+' '+h+':'+m+':'+s;
-       userid=$api.getStorage('userInfo').userId;
-       now = Date.now();
-       appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-       init();
-       getWareList();
+ var now;
+ var appKey;
+ var  dialogBox;
+ var userid;
+ var myDate = new Date();
+ var Y=myDate.getFullYear();
+ var M=myDate.getMonth()+1;
+ var D=myDate.getDate();  
+ var h=myDate.getHours();    
+ var m=myDate.getMinutes();
+ var s=myDate.getSeconds(); 
+ var date;
+ apiready = function() {
+     date=Y+'-'+M+'-'+D+' '+h+':'+m+':'+s;
+     userid=$api.getStorage('userInfo').userId;
+     now = Date.now();
+     appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+     init();
+     getWareList();
 
 
-       initEventListenter();
-       dialogBox = api.require('dialogBox');
+     initEventListenter();
+     dialogBox = api.require('dialogBox');
 
 
-   };
-   var wareTypeList;
-   var skip=0;
-   var LIMIT=9;
-   function init(){
-       wareTypeList=$api.getStorage('WareTypeList');
+ };
+ var wareTypeList;
+ var skip=0;
+ var LIMIT=18;
+ function init(){
+     wareTypeList=$api.getStorage('WareTypeList');
 
-   }
-   function writespeak(){
+ }
+ function writespeak(){
     dialogBox.input({
         keyboardType: 'default',
         texts: {
@@ -347,7 +357,13 @@ function addspeak(text){
     }
 },function(ret, err){
     if (ret) {
-        // getusermoney()
+        api.toast({
+            msg: '评论成功',
+            duration: 2000,
+            location: 'bottom'
+        });
+        getWareList();
+      
     }
 });
 }
@@ -374,7 +390,7 @@ var params={
     skip:skip,
     limit:LIMIT,
     order:"createdAt DESC",
-    include: ['speakPointer']
+    include: ['speakPointer','bespeakPointer']
 }
 params=$api.jsonToStr(params);
 api.ajax({
@@ -394,13 +410,13 @@ api.ajax({
          updateWareList(ret,_LoadMore);
 
      } else {
-       api.toast({
-           msg: err.msg,
-           duration: 2000,
-           location: 'bottom'
-       });
-   }
-});
+         api.toast({
+             msg: err.msg,
+             duration: 2000,
+             location: 'bottom'
+         });
+     }
+ });
 }
 function updateWareList(_data,_LoadMore){
     var list=$api.byId('list');
@@ -445,8 +461,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-     getWareList(true);
- });
+       getWareList(true);
+   });
 }
 
 

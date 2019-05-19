@@ -115,15 +115,15 @@
     </header>
 
     <div class="gonggao">
-     <marquee id="marquee" scrollamount="6" direction="left" loop="-1"></marquee>
- </div>
- <nav id="nav">
+       <marquee id="marquee" scrollamount="6" direction="left" loop="-1"></marquee>
+   </div>
+   <nav id="nav">
     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(0)">男鞋</div>
     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(1)">女鞋</div>
     <div class="menu selected" tapmode="selected" onclick="setNavMenuIndex(2)">男装</div>
     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(3)">女装</div>
     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(4)">优惠购</div>
-     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(5)">抽奖展区</div>
+    <div class="menu" tapmode="selected" onclick="setNavMenuIndex(5)">抽奖展区</div>
 
 
 </nav>
@@ -131,12 +131,12 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
- var now;
- var appKey;
- var moneydian;
- apiready = function() {
-  now = Date.now();
-  appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+   var now;
+   var appKey;
+   var moneydian;
+   apiready = function() {
+      now = Date.now();
+      appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
 
         //监听back事件
         exitApp();
@@ -150,23 +150,62 @@
         // 获取header和nav的高
         headerH=$api.offset(header).h
         navH=$api.offset(nav).h;
-
         menus=$api.domAll(nav, '.menu');
-
         openFrames();
         gonggao();
+        speakcount();
         moneycount();
     };
-
-    function moneycount(){
-     var dian=$api.byId('dian');
-     dian.style.display='none';
-     var userInfo=$api.getStorage('userInfo');
-     if (userInfo==undefined && userInfo==null) {
+    function speakcount(){
+       var dian=$api.byId('dian');
        dian.style.display='none';
-       return;
-   }
-   var params={
+       var userInfo=$api.getStorage('userInfo');
+       if (userInfo==undefined && userInfo==null) {
+         dian.style.display='none';
+         return;
+     }
+     var params={
+        fields:{},
+        fields: {},
+        where: {
+            bespeak:userInfo.userId
+        }
+    }
+    params=$api.jsonToStr(params);
+    api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/videospeak/count?filter='+params,
+        method: 'get',
+        headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey,
+        },
+    },function(ret, err){
+        if (ret) {
+
+            if (ret.count>$api.getStorage('speakcount')) {
+                dian.style.display='';
+                speakdian='ok';
+
+            }
+
+            $api.setStorage('speakcount', ret.count);
+
+
+        }
+    });
+
+}
+
+
+function moneycount(){
+   var dian=$api.byId('dian');
+   dian.style.display='none';
+   var userInfo=$api.getStorage('userInfo');
+   if (userInfo==undefined && userInfo==null) {
+     dian.style.display='none';
+     return;
+ }
+ var params={
     fields:{},
     fields: {},
     where: {
@@ -190,7 +229,7 @@ api.ajax({
 
         }
         
-            $api.setStorage('moneycount', ret.count);
+        $api.setStorage('moneycount', ret.count);
 
 
     }
@@ -239,7 +278,7 @@ function opencaoshi() {
     }
 
     function gonggao(){
-     var now = Date.now();
+       var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       var params={
@@ -260,16 +299,16 @@ function opencaoshi() {
 
     },function(ret, err){
         if (ret) {
-           var text=$api.byId('marquee');
-           text.innerHTML=ret[0].text;
-       } 
-   });
+         var text=$api.byId('marquee');
+         text.innerHTML=ret[0].text;
+     } 
+ });
 }
 
 function openFrames(){
 
-   var frames=[];
-   for (var i = 0; i <menus.length; i++) {
+ var frames=[];
+ for (var i = 0; i <menus.length; i++) {
     frames.push({
         name:'main_frame_'+i,
         url:'./main_frame.html',
@@ -283,12 +322,12 @@ api.openFrameGroup ({
     name: 'mainFrameGroup',
     scrollEnabled: true,
     rect: {
-       x: 0,
-       y: headerH+navH+20,
-       w: 'auto',
-       h: 'auto'
-   },
-   frames: frames
+     x: 0,
+     y: headerH+navH+20,
+     w: 'auto',
+     h: 'auto'
+ },
+ frames: frames
 }, function(ret, err){
 
     SetNavMenuselected(ret.index);
