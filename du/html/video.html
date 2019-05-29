@@ -99,8 +99,8 @@
     if (ret) {
      var speakcount=$api.byId('speakcount');
      speakcount.innerHTML=ret.count;
-    }
-  });
+   }
+ });
 }
 
 
@@ -186,7 +186,8 @@ function getlikevideo(id){
   fields: {},
   where:{
     likeuserid:userInfo[0].id,
-    belikeuserid:id
+    belikeuserid:id,
+    userid:belike
   },
 }
 params=$api.jsonToStr(params);
@@ -199,26 +200,21 @@ api.ajax({
   },
 
 },function(ret, err){
-  if (ret) {
-   var likecount=$api.byId('likecount');
-   var zan=$api.byId('zan');
-   if (ret.length!=0) {
-    for (var i =0 ; i<ret.length; i++) {
-      if (ret[i].belikeuserid==id) {
-        zan.src='../image/zan2.png'
-        redzan=1;
-        likecount.innerHTML=parseInt(likecount.innerHTML)+1;
-        break;
-      }else{
-        zan.src='../image/zan.png'
-          // redzan=0;
-        }
-      }   
-    }else{
-      zan.src='../image/zan.png'
-      // redzan=0;
-    }
-  }
+  // var ret1=$api.jsonToStr(ret);
+  var likecount=$api.byId('likecount');
+  var zan=$api.byId('zan');
+
+  if (ret=='' || ret==null ||ret==undefined) {
+
+   zan.src='../image/zan.png';
+   redzan=0;
+ }else{
+
+   zan.src='../image/zan2.png'
+   redzan=1;
+   likecount.innerHTML=parseInt(likecount.innerHTML)+1;
+ }
+
 });
 
 

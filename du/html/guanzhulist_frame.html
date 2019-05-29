@@ -99,12 +99,12 @@
         top: 15px;
     }
     .dingyue .text{
-     font-size: 13px;
-     line-height: 25px;
-     text-align: center;
-     color: white;
+       font-size: 13px;
+       line-height: 25px;
+       text-align: center;
+       color: white;
 
- }
+   }
 </style>
 </head>
 
@@ -157,7 +157,11 @@
     {{~it:value:index}}
     <div class="ware ware-1" >
         <div class="content" tapmode onclick="openchaoshi('{{=value.id}}','{{=value.bewatched.id}}')" >
+            {{? value.bewatched==null || value.bewatched.avatar==null}}
+            <img  class="thumbnail" src="../image/default_square.png">
+            {{?? value.bewatched.avatar.url}}
             <img onload="LoadImage(this,'{{=value.id}}')" data-url="{{=value.bewatched.avatar.url}}"  data-wareTypeId="{{=value.wareTypeId}}" class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
+            {{?}}
             <div class="info" >
                 <div class="name">账号:{{=value.bewatched.username}}</div>
                 <div class="description">潮视用户名:{{=value.bewatched.chaoshiuser}}</div>
@@ -175,7 +179,7 @@
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript">
-   var now;
+ var now;
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey;
       apiready = function() {
@@ -195,12 +199,12 @@
   var skip=0;
   var LIMIT=9;
   function init(){
-   wareTypeList=$api.getStorage('WareTypeList');
+     wareTypeList=$api.getStorage('WareTypeList');
 
-}
-function quxiaodingyue(id){
- event.stopPropagation();
- api.ajax({
+ }
+ function quxiaodingyue(id){
+   event.stopPropagation();
+   api.ajax({
     url: 'https://d.apicloud.com/mcm/api/guanzhu/' + id,
     method: 'delete',
     headers: {
@@ -298,13 +302,13 @@ api.ajax({
          updateWareList(ret,_LoadMore);
 
      } else {
-       api.toast({
-           msg: err.msg,
-           duration: 2000,
-           location: 'bottom'
-       });
-   }
-});
+         api.toast({
+             msg: err.msg,
+             duration: 2000,
+             location: 'bottom'
+         });
+     }
+ });
 }
 function updateWareList(_data,_LoadMore){
     var list=$api.byId('list');
@@ -349,8 +353,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-     getWareList(true);
- });
+       getWareList(true);
+   });
 }
 // 下拉刷新
 function initRefresh(){

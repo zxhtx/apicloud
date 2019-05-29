@@ -126,16 +126,16 @@
 }
 
 function getuserheader(ele){  
-      var userheaderimg=$api.byId('userheaderimg');
+  var userheaderimg=$api.byId('userheaderimg');
 
-      if (ele.avatar==null) {
-       userheaderimg.style.background="url(../image/default_square.png)"
-       userheaderimg.style.backgroundSize='50px 50px';
-     }else{
+  if (ele.avatar==null) {
+   userheaderimg.style.background="url(../image/default_square.png)"
+   userheaderimg.style.backgroundSize='50px 50px';
+ }else{
 
-      userheaderimg.style.background="url("+ele.avatar.url+")"
-      userheaderimg.style.backgroundSize='50px 50px';
-    }
+  userheaderimg.style.background="url("+ele.avatar.url+")"
+  userheaderimg.style.backgroundSize='50px 50px';
+}
 
 }
 
@@ -169,27 +169,18 @@ function getguanzhu(ele){
     },
 
   },function(ret, err){
-    if (ret) {
-      if (ret.length!=0) {
-        for (var i =0 ; i<ret.length; i++) {
-          if (ret[i].bewatched===ele) {
-            // count1=ele;
+    var guanzhu=$api.byId('guanzhu');
+    if (ret=='' || ret==null ||ret==undefined) {
+     guanzhu.style.display="";
 
-            guanzhu.style.display="none";
-            break;
-          }else{
-            // count1=ele;
-            guanzhu.style.display="";
-          }
-        }   
-      }else{
-        // count1=ele;
-        guanzhu.style.display="";
+   }else{
+  
+        guanzhu.style.display="none";
       }
       
 
-    }
-  });
+
+    });
 
 }
 

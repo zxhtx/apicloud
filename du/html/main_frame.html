@@ -56,12 +56,16 @@
         width: 100%;
         height: 15px;
         color: #555555;
-        margin-top: 14px;
-        font-size: 15px;
+        margin-top: 8px;
+        
+    }
+    .ware-1 .info .name .img{
+        height: 30px;
+        width: 28px;
     }
 
     .ware-1 .info .description {
-        margin-top: 10px;
+        margin-top: 18px;
         width: 100%;
         height: 36px;
         overflow: hidden;
@@ -211,7 +215,10 @@
         <div class="content" tapmode onclick="openWareWin('{{=value.id}}','{{=value.wareTypeId}}')" >
             <img onload="LoadImage(this,'{{=value.id}}')" data-url="{{=value.thumbnail}}"  data-wareTypeId="{{=value.wareTypeId}}" class="thumbnail" id="thumbnail_{{=value.id}}" src="{{=value.thumbnail}}"  date-price="{{=value.price}}" >
             <div class="info" >
-                <div class="name">{{=value.name}}</div>
+                {{? value.video}}
+                <div class="name" tapmode onclick="video('{{=value.video.url}}')"><img class="img" src="../image/video2.png" alt=""></div>
+                {{?}}
+
                 <div class="description">{{=value.description}}</div>
                 <div class="price-tag">
                     <span class="price">￥{{=value.price}}</span>
@@ -247,11 +254,27 @@
     var skip=0;
     var LIMIT=9;
     function init(){
-       wareTypeList=$api.getStorage('WareTypeList');
+     wareTypeList=$api.getStorage('WareTypeList');
 
-   }
+ }
+ function video(video){
+     event.stopPropagation();
+     api.openFrame({
+         name: 'playvideo',
+         url: './playvideo_frame.html',
+         rect: {
+             x: 0,
+             y: 0,
+             w: api.winWidth,
+             h: api.winHeight
+         },
+         pageParam: {
+             video: video
+         },
+     });
 
-   function openWareWin(_wareId,_wareTypeId){
+ }
+ function openWareWin(_wareId,_wareTypeId){
 
     api.openWin({
         name: 'ware',
@@ -268,8 +291,8 @@
 }
 // 获取列表页数据
 function getWareList(_LoadMore){
- activity = api.require('UILoading');
- activity.keyFrame({
+   activity = api.require('UILoading');
+   activity.keyFrame({
     rect: {
         w: 80,
         h: 100
@@ -285,7 +308,7 @@ function getWareList(_LoadMore){
     }
 });
 
- var now = Date.now();
+   var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
       if (_LoadMore) {
@@ -323,13 +346,13 @@ function getWareList(_LoadMore){
 
 
      } else {
-       api.toast({
-           msg: err.msg,
-           duration: 2000,
-           location: 'bottom'
-       });
-   }
-});
+         api.toast({
+             msg: err.msg,
+             duration: 2000,
+             location: 'bottom'
+         });
+     }
+ });
 }
 function updateWareList(_data,_LoadMore){
     var list=$api.byId('list');
@@ -365,10 +388,10 @@ function LoadImage(_this,_id){
     var price=$api.attr(_this, 'date-price');
     var  priceid=$api.byId('price_'+_id);
     if (price<30) {
-         priceid.innerHTML='未达到要求';
-    }else{
-         priceid.innerHTML=Math.round(price*0.91);
-    }
+       priceid.innerHTML='未达到要求';
+   }else{
+       priceid.innerHTML=Math.round(price*0.91);
+   }
    
 
 }
@@ -380,8 +403,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-     getWareList(true);
- });
+       getWareList(true);
+   });
 }
 // 下拉刷新
 function initRefresh(){
@@ -395,10 +418,10 @@ function initRefresh(){
 
 }
 function Add(_wareId){
-   event.stopPropagation();
+ event.stopPropagation();
 
-   var count = $api.byId('count_' + _wareId);
-   var panel = $api.byId('panel_' + _wareId);
+ var count = $api.byId('count_' + _wareId);
+ var panel = $api.byId('panel_' + _wareId);
 
     // 更新商品数量及显示状态
     var countNumber = parseInt(count.innerHTML);
@@ -412,10 +435,10 @@ function Add(_wareId){
         }
     });
     api.toast({
-       msg: '已加入购物车',
-       duration: 2000,
-       location: 'bottom'
-   });
+     msg: '已加入购物车',
+     duration: 2000,
+     location: 'bottom'
+ });
     
 }
 

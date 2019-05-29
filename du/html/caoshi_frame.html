@@ -188,6 +188,7 @@
         },
         method: 'get'
       }, function(ret, err) {
+       
         if (api.pageParam.like=='likevideo') {
           if (ret==null || ret==undefined || ret=='') {
             activity.closeKeyFrame();
@@ -226,13 +227,16 @@
         }
         // alert($api.jsonToStr(ret))
         if (_LoadMore) {
+
           addRoom(ret);
         }else{
           fnOpenRoom(ret);
         }
 
         for (var i = 0; i <ret.length; i++) {
-          if (ret[i].belikeuserid.video==null || ret[i].belikeuserid.video==undefined || ret[i].belikeuserid.video=='' ) {
+          if (ret[i].belikeuserid==null || ret[i].likeuserid==null || ret[i].userid==null  ) {
+            continue;
+          }else if(ret[i].belikeuserid.video==null || ret[i].belikeuserid.video==undefined || ret[i].belikeuserid.video==''){
             continue;
           }else{
             retele.push({
@@ -288,15 +292,15 @@
     include: ['useridPointer']
   }
 
-  }else{
-   var params={
-    fields:{},
-    fields: {},
-    skip:skip,
-    limit:LIMIT,
-    order:"createdAt DESC",
-    include: ['useridPointer']
-  }
+}else{
+ var params={
+  fields:{},
+  fields: {},
+  skip:skip,
+  limit:LIMIT,
+  order:"createdAt DESC",
+  include: ['useridPointer']
+}
 }
 
 
@@ -424,9 +428,11 @@ function  eventlister(element){
        eventlister();
        if (api.pageParam.likevideo=='likevideo') {
         for (var i = 0; i <ret.length; i++) {
-          if (ret[i].belikeuserid.video==null  ||  ret[i].belikeuserid.video==''  || ret[i].belikeuserid.video==undefined) {
+          if (ret[i].belikeuserid==null || ret[i].likeuserid==null || ret[i].userid==null ) {
             continue;
 
+          }else if( ret[i].belikeuserid.video==null  ||  ret[i].belikeuserid.video==''  || ret[i].belikeuserid.video==undefined){
+            continue;
           }else{
             addvideo.push({
              imageUrl:'',
@@ -458,12 +464,15 @@ function  eventlister(element){
 
     function fnOpenRoom(ret){
      eventlister();
-     // alert(1)
+
      if (api.pageParam.like=='likevideo') {
+      
       for (var i = 0; i <ret.length; i++) {
-        if (ret[i].belikeuserid.video==null  ||  ret[i].belikeuserid.video==''  || ret[i].belikeuserid.video==undefined) {
+        if (ret[i].belikeuserid==null || ret[i].likeuserid==null || ret[i].userid==null) {
           continue;
           
+        }else if(ret[i].belikeuserid.video==null  ||  ret[i].belikeuserid.video==''  || ret[i].belikeuserid.video==undefined){
+          continue;
         }else{
 
           video.push({
