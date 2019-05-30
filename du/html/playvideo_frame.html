@@ -35,8 +35,27 @@
                 videoUrl:api.pageParam.video,
             }],
         },function(ret, err){
-          
+
         });
+        setTimeout(function(){
+
+          api.openFrame({
+            name: 'backimg_frame',
+            url: './backimg_frame.html',
+            rect: {
+              x: 10,
+              y: 28,
+              w: 50,
+              h: 50
+          },
+          bgColor: 'rgba(0,0,0,0)',
+          pageParam: {
+            video: 'video'
+       },
+
+   });
+
+      },500);
     }
 
 

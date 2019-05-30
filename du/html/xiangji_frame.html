@@ -39,9 +39,14 @@
  var texts;
  var videourl;
  var videoid;
+ var delvideoid;
+ var now;
+ var appKey;
  apiready = function() {
+  now = Date.now();
+  appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
   dialogBox = api.require('dialogBox');
-
+  getuser();
   img();
 
 
@@ -121,9 +126,7 @@ function xiangji(){
 
     if (ret.eventType == 'left') {
 
-      dialogBox.close({
-        dialogName: 'alert'
-      });
+      delvideo();
 
 
     }else{
@@ -196,6 +199,43 @@ function xiangji(){
  }
 
  
+
+}
+function getuser(ret){
+
+
+  api.addEventListener({
+    name: 'userandtext'
+  }, function(ret, err){
+    if( ret ){
+
+      delvideoid=ret.value.key1.id;
+
+    }
+  });
+}
+
+function delvideo(){
+ close();
+
+ // var userInfo = $api.getStorage('userInfo');
+ api.ajax({
+  url: 'https://d.apicloud.com/mcm/api/video1/'+delvideoid,
+  method: 'delete',
+  headers: {
+   "X-APICloud-AppId": "A6099267504667",
+   "X-APICloud-AppKey":   appKey,
+ }
+},function(ret, err){
+  if (ret) {
+    api.toast({
+      msg: '删除成功',
+      duration: 2000,
+      location: 'bottom'
+    });
+
+  } 
+});
 
 }
 
@@ -314,22 +354,20 @@ function addtext(texts,video){
     down:'0'
 
   }
-  var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-      var userInfo=$api.getStorage('userInfo');
-      api.ajax({
-        url: 'https://d.apicloud.com/mcm/api/video1',
-        method: 'post',
-        headers: {
-         "X-APICloud-AppId": "A6099267504667",
-         "X-APICloud-AppKey":   appKey,
-         "Authorization": userInfo.id
-       },
-       data: {
-        values: addinfo
-      }
-    }, function(ret, err) {
+
+  var userInfo=$api.getStorage('userInfo');
+  api.ajax({
+    url: 'https://d.apicloud.com/mcm/api/video1',
+    method: 'post',
+    headers: {
+     "X-APICloud-AppId": "A6099267504667",
+     "X-APICloud-AppKey":   appKey,
+     "Authorization": userInfo.id
+   },
+   data: {
+    values: addinfo
+  }
+}, function(ret, err) {
       // videoid=ret.id;
       api.toast({
         msg: '视频上传成功',
@@ -338,47 +376,46 @@ function addtext(texts,video){
       });
 
     });
-    }
+}
 
-    function addvideourl(text){
-     api.toast({
-      msg: '视频上传时勿退出潮视页面,否则放弃上传视频',
-      duration: 10000,
+function addvideourl(text){
+ api.toast({
+  msg: '视频上传时勿退出潮视页面,否则放弃上传视频',
+  duration: 10000,
+  location: 'bottom'
+});
+
+ api.ajax({
+  url: 'https://d.apicloud.com/mcm/api/file',
+  method: 'post',
+  data: {
+    values: { 
+      filename: 'video'
+    },
+    files: { 
+      file: videourl
+    }
+  },
+  headers: {
+    "X-APICloud-AppId": "A6099267504667",
+    "X-APICloud-AppKey":   appKey
+  },
+},function(ret, err){
+  if (ret) {
+    addtext(text,ret);
+
+  } else {
+    api.toast({
+      msg: err.msg,
+      duration: 2000,
       location: 'bottom'
     });
-     var now = Date.now();
-     var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-     api.ajax({
-      url: 'https://d.apicloud.com/mcm/api/file',
-      method: 'post',
-      data: {
-        values: { 
-          filename: 'video'
-        },
-        files: { 
-          file: videourl
-        }
-      },
-      headers: {
-        "X-APICloud-AppId": "A6099267504667",
-        "X-APICloud-AppKey":   appKey
-      },
-    },function(ret, err){
-      if (ret) {
-        addtext(text,ret);
-        
-      } else {
-        api.toast({
-          msg: err.msg,
-          duration: 2000,
-          location: 'bottom'
-        });
-      }
-    });
+  }
+});
 
-   }
+}
 
 
- </script>
+</script>
 
- </html>
+</html>

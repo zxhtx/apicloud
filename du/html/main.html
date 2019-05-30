@@ -14,12 +14,12 @@
         height: 50px;
         background-color: white;
     }
- /*   header .music{
+    header .music{
         position: absolute;
         right: 50px;
-        top: 0px;
-        width: 20px;
-        height: 20px;
+        top: 2px;
+        width: 40px;
+        height: 40px;
         border: 1px solid red;
         border-radius: 20px;
     }
@@ -44,7 +44,7 @@ to{-o-transform: rotate(359deg)}
 }
 @keyframes rotate{from{transform: rotate(0deg)}
 to{transform: rotate(359deg)}
-}*/
+}
 header .center{
     position: relative;
     top: 6px;
@@ -140,16 +140,16 @@ nav .menu.selected{
     <header id="header">
 
         <div class="center" tapmode onclick="opencaoshi()">潮视</div>
-        <!-- <div class="music"></div> -->
+        <div class="music" id="music"></div>
         <div class="left" tapmode onclick="openSearchWin()"></div>
         <div class="right" tapmode onclick="OpenPersonCenterWin()" ></div>
         <div class="dian" id="dian"></div>
     </header>
 
     <div class="gonggao">
-       <marquee id="marquee" scrollamount="6" direction="left" loop="-1"></marquee>
-   </div>
-   <nav id="nav">
+     <marquee id="marquee" scrollamount="6" direction="left" loop="-1"></marquee>
+ </div>
+ <nav id="nav">
     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(0)">男鞋</div>
     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(1)">女鞋</div>
     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(2)">男装</div>
@@ -164,13 +164,13 @@ nav .menu.selected{
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
-   var now;
-   var appKey;
-   var moneydian;
-   apiready = function() {
+ var now;
+ var appKey;
+ var moneydian;
+ apiready = function() {
 
-      now = Date.now();
-      appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+  now = Date.now();
+  appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
 
         //监听back事件
         exitApp();
@@ -189,44 +189,80 @@ nav .menu.selected{
         gonggao();
         speakcount();
         moneycount();
+        fnmusic();
+
     };
-    function speakcount(){
-       var dian=$api.byId('dian');
-       dian.style.display='none';
-       var userInfo=$api.getStorage('userInfo');
-       if (userInfo==undefined && userInfo==null) {
-         dian.style.display='none';
-         return;
-     }
-     var params={
-        fields:{},
-        fields: {},
-        where: {
-            bespeak:userInfo.userId
-        }
-    }
-    params=$api.jsonToStr(params);
-    api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/videospeak/count?filter='+params,
-        method: 'get',
-        headers: {
-            "X-APICloud-AppId": "A6099267504667",
-            "X-APICloud-AppKey":   appKey,
+    function fnmusic(){
+        var demo = api.require('uimusic');
+        demo.playMusic({
+            musics: [{
+                name: "小苹果1(在线)",
+                filename: "http://a8b2ba6ef61d32f2d7d9.test.upcdn.net/apicloud/7b601360215dc03b3d23a5c618e4ae8d.mp3",
+                singer: "筷子兄弟",
+                icon: "http://a8b2ba6ef61d32f2d7d9.test.upcdn.net/apicloud/dbdea915d07700dc399e6678842bf96f.jpg",
+                other : 1,
+                fenxiangSum : 55,
+                downmusicSum : 66,
+                pinglunSum : 233,
+                background : "#800080"
+            },
+            {
+                name: "小苹果2(在线)",
+                filename: "http://a8b2ba6ef61d32f2d7d9.test.upcdn.net/apicloud/29e60e41438d5bbe9bb90ab14556a536.mp3",
+                singer: "筷子兄弟",
+                icon: "http://7xwc0t.com1.z0.glb.clouddn.com/apicloud/7c23cd15fc8fe841ab20f6c87d47ae59.jpg",
+                other : 2,
+                fenxiangSum : 55,
+                downmusicSum : 66,
+                pinglunSum : 233,
+                background : "#800080"
+            }]
         },
-    },function(ret, err){
-        if (ret) {
+        function(ret, err) {
+            alert($api.jsonToStr(ret))
+        });
+    }
 
-            if (ret.count>$api.getStorage('speakcount')) {
-                dian.style.display='';
-                speakdian='ok';
 
-            }
 
-            $api.setStorage('speakcount', ret.count);
 
+    function speakcount(){
+     var dian=$api.byId('dian');
+     dian.style.display='none';
+     var userInfo=$api.getStorage('userInfo');
+     if (userInfo==undefined && userInfo==null) {
+       dian.style.display='none';
+       return;
+   }
+   var params={
+    fields:{},
+    fields: {},
+    where: {
+        bespeak:userInfo.userId
+    }
+}
+params=$api.jsonToStr(params);
+api.ajax({
+    url: 'http://d.apicloud.com/mcm/api/videospeak/count?filter='+params,
+    method: 'get',
+    headers: {
+        "X-APICloud-AppId": "A6099267504667",
+        "X-APICloud-AppKey":   appKey,
+    },
+},function(ret, err){
+    if (ret) {
+
+        if (ret.count>$api.getStorage('speakcount')) {
+            dian.style.display='';
+            speakdian='ok';
 
         }
-    });
+
+        $api.setStorage('speakcount', ret.count);
+
+
+    }
+});
 
 }
 
@@ -237,10 +273,10 @@ function moneycount(){
     dian.style.display='none';
     var userInfo=$api.getStorage('userInfo');
     if (userInfo==undefined && userInfo==null) {
-     dian.style.display='none';
-     return;
- }
- var params={
+       dian.style.display='none';
+       return;
+   }
+   var params={
     fields:{},
     fields: {},
     where: {
@@ -313,7 +349,7 @@ function opencaoshi() {
     }
 
     function gonggao(){
-       var now = Date.now();
+     var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       var params={
@@ -334,16 +370,16 @@ function opencaoshi() {
 
     },function(ret, err){
         if (ret) {
-         var text=$api.byId('marquee');
-         text.innerHTML=ret[0].text;
-     } 
- });
+           var text=$api.byId('marquee');
+           text.innerHTML=ret[0].text;
+       } 
+   });
 }
 
 function openFrames(){
 
- var frames=[];
- for (var i = 0; i <menus.length; i++) {
+   var frames=[];
+   for (var i = 0; i <menus.length; i++) {
     frames.push({
         name:'main_frame_'+i,
         url:'./main_frame.html',
@@ -358,12 +394,12 @@ api.openFrameGroup ({
     name: 'mainFrameGroup',
     scrollEnabled: true,
     rect: {
-     x: 0,
-     y: headerH+navH+20,
-     w: 'auto',
-     h: 'auto'
- },
- frames: frames
+       x: 0,
+       y: headerH+navH+20,
+       w: 'auto',
+       h: 'auto'
+   },
+   frames: frames
 }, function(ret, err){
 
     SetNavMenuselected(ret.index);
@@ -411,21 +447,21 @@ var menus, headerH , navH;
                 location: 'bottom'
             });
         }else if (_index==5) {
-           api.toast({
+         api.toast({
             msg: '此展区商品价格定格于12元',
             duration: 6000,
             location: 'bottom'
         });
-       
-      }
-      api.setFrameGroupIndex({
+
+     }
+     api.setFrameGroupIndex({
         name: 'mainFrameGroup',
         index: _index,
         scroll: true
     });
-  }
+ }
 
-  function OpenPersonCenterWin(){
+ function OpenPersonCenterWin(){
     var dian=$api.byId('dian');
     dian.style.display='none';
     var userInfo=$api.getStorage('userInfo');

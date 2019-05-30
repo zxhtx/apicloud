@@ -188,7 +188,7 @@
         },
         method: 'get'
       }, function(ret, err) {
-       
+
         if (api.pageParam.like=='likevideo') {
           if (ret==null || ret==undefined || ret=='') {
             activity.closeKeyFrame();
@@ -247,6 +247,7 @@
              like:ret[i].belikeuserid.like,
              money:ret[i].belikeuserid.money,
              down:ret[i].belikeuserid.down,
+             ware:ret[i].wareid
 
            })
           }
@@ -367,6 +368,7 @@ var now = Date.now();
              like:ret[i].like,
              money:ret[i].money,
              down:ret[i].down,
+             ware:ret[i].wareid
 
            })
           }
@@ -392,6 +394,29 @@ function  eventlister(element){
         key1: retele[ret.index], 
       }
     });
+    if (retele[ret.index].ware) {
+      api.openFrame({
+          name: 'videoshopping_frame',
+          url: './videoshopping_frame.html',
+          rect: {
+              x: 10,
+              y: api.winHeight/2+128,
+              h: 32,
+              w: api.winWidth/4
+          },
+          pageParam: {
+              ware: retele[ret.index].ware
+          },
+          bgColor: 'rgba(0,0,0,0)',
+      });
+     
+
+    }else{
+      api.closeFrame({
+          name: 'videoshopping_frame'
+      });
+    }
+
 
     if (ret.index>=30) {
       // alert(2)
@@ -466,7 +491,7 @@ function  eventlister(element){
      eventlister();
 
      if (api.pageParam.like=='likevideo') {
-      
+
       for (var i = 0; i <ret.length; i++) {
         if (ret[i].belikeuserid==null || ret[i].likeuserid==null || ret[i].userid==null) {
           continue;

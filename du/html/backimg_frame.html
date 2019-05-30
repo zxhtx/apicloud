@@ -40,32 +40,47 @@
 
   };
   function back(){
-    api.closeFrame({
+    if (api.pageParam.video=='video') {
+      api.closeFrame({
+        name: 'playvideo_frame'
+      });
+      api.closeFrame({
+        name: 'backimg_frame'
+      });
+
+    }else{
+     api.closeFrame({
       name: 'caoshi_frame'
     });
-    api.closeFrame({
+     api.closeFrame({
+      name: 'videoshopping_frame'
+    });
+     api.closeFrame({
       name: 'video'
     });
-    api.closeFrame({
+     api.closeFrame({
       name: 'xiangji_frame'
     });
-    api.closeFrame({
+     api.closeFrame({
       name: 'videotitle_frame'
     });
-    api.closeFrame({
+     api.closeFrame({
       name: 'videouser_frame'
     });
-    api.closeFrame({
+     api.closeFrame({
       name: 'userheaderimg_frame'
     });
      api.closeFrame({
       name: 'say_frame'
     });
-    api.closeFrame({
+
+     api.closeFrame({
       name: 'backimg_frame'
     });
 
-  }
+   }
+   
+ }
 
 
 

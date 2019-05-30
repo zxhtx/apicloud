@@ -85,9 +85,6 @@
     .option .icon-money {
         background-image: url(../image/money.png);
     }
-    .option .icon-vip {
-        background-image: url(../image/huiyuan.png);
-    }
     .option .icon-mevideo {
         background-image: url(../image/video.png);
     }
@@ -259,13 +256,6 @@
         <div class="title">收货地址</div>
         <div class="arrow-panel">
             <div class="text">管理我的收货地址</div>
-        </div>
-    </div>
-    <div class="option" tapmode onclick="OpenvipWin()">
-        <div class="icon icon-vip"></div>
-        <div class="title">充值vip</div>
-        <div class="arrow-panel">
-            <div class="text">敢充吗？你敢充,我敢打折</div>
         </div>
     </div>
     <div class="option" tapmode onclick="share()">
@@ -756,18 +746,18 @@ function Openmoney(){
         }
     });
 }
-function OpenvipWin(){
-    api.openWin({
-        name: 'vip',
-        url: './vip.html',
-        pageParam: {
-            name: 'test'
-        },
-        animation: {
-            type: "fade"
-        }
-    });
-}
+// function OpenvipWin(){
+//     api.openWin({
+//         name: 'vip',
+//         url: './vip.html',
+//         pageParam: {
+//             name: 'test'
+//         },
+//         animation: {
+//             type: "fade"
+//         }
+//     });
+// }
 function Openvideo(){
 
     api.openFrame({
