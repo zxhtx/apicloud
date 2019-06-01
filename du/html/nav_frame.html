@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>首页Frame</title>
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+	<style type="text/css">
+
+</style>
+</head>
+
+<body>
+	
+</body>
+<script type="text/template" id="template">
+	
+
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript">
+	apiready = function() {
+
+		NVTabBar_open();
+	};
+
+	function NVTabBar_open() {
+		var NVTabBar = api.require('NVTabBar');
+    // alert(NVTabBar)
+    NVTabBar.open({
+    	styles: {
+    		bg: '#dbdbdb',
+    		h: 50,
+    		dividingLine: {
+    			width: 0.5,
+    			color: '#e6e6e6'
+    		},
+    		badge: {
+    			bgColor: '#f00',
+    			numColor: '#000',
+    			size: 6.0,
+    			centerY: 2
+    		}
+    	},
+    	items: [{
+    		w: api.winWidth / 5.0,
+    		iconRect: {
+    			w: 25.0,
+    			h: 25.0,
+    		},
+    		icon: {
+    			normal: 'widget://image/nvtabbar/shopping.png',
+    			highlight: 'widget://image/nvtabbar/shopping2.png',
+    			selected: 'widget://image/nvtabbar/shopping2.png'
+    		},
+    		title: {
+    			text: '商场',
+    			size: 12.0,
+    			normal: '#696969',
+    			selected: '#000',
+    			marginB: 6.0
+    		}
+    	}, {
+    		w: api.winWidth / 5.0,
+    		iconRect: {
+    			w: 25.0,
+    			h: 25.0,
+    		},
+    		icon: {
+    			normal: 'widget://image/nvtabbar/tui.png',
+    			highlight: 'widget://image/nvtabbar/tui2.png',
+    			selected: 'widget://image/nvtabbar/tui2.png'
+    		},
+    		title: {
+    			text: '热推',
+    			size: 12.0,
+    			normal: '#696969',
+    			selected: '#000',
+    			marginB: 6.0
+    		}
+    	}, {
+    		w: api.winWidth / 5.0,
+    		bg: {
+    			marginB: 0,
+    			image: 'rgba(200,200,200,0)'
+    		},
+    		iconRect: {
+    			w: 25.0,
+    			h: 25.0,
+    		},
+    		icon: {
+    			normal: 'widget://image/nvtabbar/music.png',
+    			highlight: 'widget://image/nvtabbar/music2.png',
+    			selected: 'widget://image/nvtabbar/music2.png'
+    		}
+    	}, {
+    		w: api.winWidth / 5.0,
+    		iconRect: {
+    			w: 25.0,
+    			h: 25.0,
+    		},
+    		icon: {
+    			normal: 'widget://image/nvtabbar/video.png',
+    			highlight: 'widget://image/nvtabbar/video2.png',
+    			selected: 'widget://image/nvtabbar/video2.png'
+    		},
+    		title: {
+    			text: '潮视',
+    			size: 12.0,
+    			normal: '#696969',
+    			selected: '#000',
+    			marginB: 6.0
+    		}
+    	}, {
+    		w: api.winWidth / 5.0,
+    		iconRect: {
+    			w: 25.0,
+    			h: 25.0,
+    		},
+    		icon: {
+    			normal: 'widget://image/nvtabbar/me.png',
+    			highlight: 'widget://image/nvtabbar/me2.png',
+    			selected: 'widget://image/nvtabbar/me2.png'
+    		},
+    		title: {
+    			text: '我的',
+    			size: 12.0,
+    			normal: '#696969',
+    			selected: '#000',
+    			marginB: 6.0
+    		}
+    	}],
+    	selectedIndex: 0
+    }, function(ret, err) {
+    	if (ret) {
+    		if (ret.eventType =='show') {
+    			// alert(1)
+    			api.openWin({
+    			    name: 'main',
+    			    url: './main.html',
+    			    pageParam: {
+    			        name: 'test'
+    			    }
+    			});
+    			// NVTabBar.setSelect({
+    			// 	index: 0,
+    			// 	selected: true,
+    			// });
+
+    		}
+    		if (ret.eventType == "click" && ret.index == 1) {
+
+    		}
+    		if (ret.eventType == "click" && ret.index == 1) {
+
+    		}
+    		if (ret.eventType == "click" && ret.index == 2) {
+
+    		}
+    		if (ret.eventType == "click" && ret.index == 3) {
+    			
+
+    		}
+    		if (ret.eventType == "click" && ret.index == 4) {
+                // alert(1)
+                var NVTabBar = api.require('NVTabBar');
+                NVTabBar.bringToFront();
+              
+            }
+            var NVTabBar = api.require('NVTabBar');
+            NVTabBar.setBadge({
+            	index: 4,
+            	badge: ''
+            });
+
+        }
+    });
+}
+</script>
+
+</html>

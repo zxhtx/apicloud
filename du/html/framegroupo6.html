@@ -327,7 +327,7 @@ function getWareList(_LoadMore){
         fields:{},
         fields: {},
         where: {
-            wareTypeId: wareTypeList[api.pageParam.wareTypeIndex].id
+            wareTypeId: wareTypeList[1].id
         },
         skip:skip,
         limit:LIMIT,
@@ -347,6 +347,7 @@ function getWareList(_LoadMore){
           // 隐藏下拉刷新
           // api.refreshHeaderLoadDone();
          // 模板渲染
+         alert($api.jsonToStr(ret))
          api.refreshHeaderLoadDone()
          updateWareList(ret,_LoadMore);
 

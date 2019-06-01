@@ -8,101 +8,105 @@
   <title>Hello APP</title>
   <link rel="stylesheet" type="text/css" href="./css/api.css" />
   <style type="text/css">
+  html,
+  body {
+    height: 100%;
+    background-color: #fff;
+  }
+
+  .wrap {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-flex-flow: column;
+  }
+
+  header {
+    height: 44px;
+    width: 100%;
+    text-align: center;
+    background-color: #81a9c3;
+    color: #fff;
+    line-height: 44px;
+    font-size: 20px;
+  }
 
 </style>
 </head>
 
 <body class="wrap">
-
+  <header>APICloud</header>
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
 <script type="text/javascript" src="./script/SHA1.js"></script>
 <script type="text/javascript" src="./script/db.js"></script>
 <script type="text/javascript">
-  apiready = function() {
-    WareTypeList();
+ var headerH;
+ apiready = function() {
+      var header = $api.dom('header'); // 获取 header 标签元素
+      headerH = $api.fixStatusBar(header);
+      // WareTypeList();
     // initPushGeTui();
-    initdb();
-
-    api.openWin({
-      name: 'main',
-      url: './html/main.html',
-      pageParam: {
-        name: 'test'
-      }
-    });
-  }
-  function initdb(){
-    $db.open();
+    // initdb();
+    fnNVTabBar_open();
+    fnopenFrameGroup1();
+    fnOpenNvnBar1();
   }
 
-  function initPushGeTui(){
-    var uzgetuisdk = api.require('pushGeTui');
-    uzgetuisdk.initialize(function(ret) {
-      var value = "";
-      switch (ret.type) {
-        case 'cid':
-        value = 'cid:' + ret.cid;
-        break;
-        case 'payload':
-        value = 'payload:' + ret.payload;
-        fnpush(ret.payload);
-        break;
-        case 'occurError':
-        value = 'occurError';
-        break;
-        case'onNotificationMessageClicked':
-        value = 'onNotificationMessageClicked' + ret.onNotificationMessageClicked
-        break;
-        case'onNotificationMessageArrived':
-        value = 'onNotificationMessageArrived' + ret.onNotificationMessageArrived
-        break;
-      }
-      
+  //   api.openWin({
+  //     name: 'nav',
+  //     url: './html/nav_frame.html',
+  //     pageParam: {
+  //       name: 'test'
+  //     }
+  //   });
+  // }
+//   function initdb(){
+//     $db.open();
+//   }
+
+function initPushGeTui(){
+  var uzgetuisdk = api.require('pushGeTui');
+  uzgetuisdk.initialize(function(ret) {
+    var value = "";
+    switch (ret.type) {
+      case 'cid':
+      value = 'cid:' + ret.cid;
+      break;
+      case 'payload':
+      value = 'payload:' + ret.payload;
+      fnpush(ret.payload);
+      break;
+      case 'occurError':
+      value = 'occurError';
+      break;
+      case'onNotificationMessageClicked':
+      value = 'onNotificationMessageClicked' + ret.onNotificationMessageClicked
+      break;
+      case'onNotificationMessageArrived':
+      value = 'onNotificationMessageArrived' + ret.onNotificationMessageArrived
+      break;
+    }
 
 
-    });
-  } 
-  function fnpush(payload){
-    var ware=$api.strToJson(payload);
-    api.openWin({
-      name: 'html/ware',
-      url: 'html/ware.html',
-      pageParam: {
-        wareId:ware.id
-      },
-      animation: {
-        type: "fade"
-      }
-    });
 
-  }
-  function WareTypeList(){
-    var WareTypeList=$api.getStorage('WareTypeList');
-    if (!WareTypeList) {
-     wareTypeList=[
-     {
-      "id": "56c80da883af652643474b6b",
-      "name": "男鞋",
+  });
+} 
+function fnpush(payload){
+  var ware=$api.strToJson(payload);
+  api.openWin({
+    name: 'html/ware',
+    url: 'html/ware.html',
+    pageParam: {
+      wareId:ware.id
     },
-    {
-      "id": "56c80db78d04c83d3d1dedea",
-      "name": "女鞋",
-    },
-    {
-      "id": "56c80dc031da9e480de1cb49",
-      "name": "男装",
-    },
-    {
-      "id": "56c80dc383af652643474b6d",
-      "name": "女装",
-    },
-    {
-      "id": "5c6e5cc2d772329a6f2562dd",
-      "name": "优惠购",
-    },
-    ];
-  }
+    animation: {
+      type: "fade"
+    }
+  });
+
+}
+function WareTypeList(){
+  var WareTypeList=$api.getStorage('WareTypeList');
   getWareTypeList();
 }
 function getWareTypeList(){
@@ -135,7 +139,370 @@ function getWareTypeList(){
     }
 
 
+    function fnOpenNvnBar1() {
+      api.openFrame({
+        name: 'nvnavigationbar1',
+        url: 'html/nvnavigationbar1.html',
+        bounces: false,
+            rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
+                marginTop: headerH, // main页面距离win顶部的高度
+                w: 'auto', // main页面的宽度 自适应屏幕宽度
+                h: 42
+              }
+            });
+    }
 
-  </script>
+    function fnOpenNvnBar2() {
+      api.openFrame({
+        name: 'nvnavigationbar2',
+        url: 'html/nvnavigationbar2.html',
+        bounces: false,
+            rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
+                marginTop: 0, // main页面距离win顶部的高度
+                w: 'auto', // main页面的宽度 自适应屏幕宽度
+                h: 42
+              }
+            });
+    }
 
-  </html>
+    function fnNVTabBar_open() {
+      var NVTabBar = api.require('NVTabBar');
+      NVTabBar.open({
+        styles: {
+          bg: 'rgba(200,200,200,1)',
+          h: 54,
+          dividingLine: {
+            width: 1,
+            color: '#E2E2E2'
+          },
+          badge: {
+            bgColor: '#f00',
+            numColor: '#000',
+            size: 6.0,
+            centerY: 2
+          }
+        },
+        items: [{
+          w: api.winWidth / 4.0,
+          iconRect: {
+            w: 25.0,
+            h: 25.0,
+          },
+          icon: {
+            normal: 'widget://image/NVTabBar/shopping.png',
+            highlight: 'widget://image/NVTabBar/shopping2.png',
+            selected: 'widget://image/NVTabBar/shopping2.png'
+          },
+          title: {
+            text: '商城',
+            size: 12.0,
+            normal: '#696969',
+            selected: '#000',
+            marginB: 3.0,
+          }
+        }, {
+          w: api.winWidth / 4.0,
+          iconRect: {
+            w: 25.0,
+            h: 25.0,
+          },
+          icon: {
+            normal: 'widget://image/NVTabBar/tui.png',
+            highlight: 'widget://image/NVTabBar/tui2.png',
+            selected: 'widget://image/NVTabBar/tui2.png'
+          },
+          title: {
+            text: '热推',
+            size: 12.0,
+            normal: '#696969',
+            selected: '#000',
+            marginB: 3.0
+          }
+        }, {
+          w: api.winWidth / 4.0,
+          iconRect: {
+            w: 25.0,
+            h: 25.0,
+          },
+          icon: {
+            normal: 'widget://image/NVTabBar/video.png',
+            highlight: 'widget://image/NVTabBar/video2.png',
+            selected: 'widget://image/NVTabBar/video2.png'
+          },
+          title: {
+            text: '消息',
+            size: 12.0,
+            normal: '#696969',
+            selected: '#eb4f38',
+            marginB: 3.0
+          }
+        }, {
+          w: api.winWidth / 4.0,
+          iconRect: {
+            w: 25.0,
+            h: 25.0,
+          },
+          icon: {
+            normal: 'widget://image/NVTabBar/me.png',
+            highlight: 'widget://image/NVTabBar/me2.png',
+            selected: 'widget://image/NVTabBar/me2.png'
+          },
+          title: {
+            text: '我的',
+            size: 12.0,
+            normal: '#696969',
+            selected: '#eb4f38',
+            marginB: 3.0
+          }
+        }],
+        selectedIndex: 0
+      }, function(ret, err) {
+        if (ret) {
+
+          if (ret.eventType == "click" && ret.index == 0) {
+            fnHidemessageFrame();
+            fnHideMyinfoFrame();
+            fnopenFrameGroup1();
+            fnHideVideo();
+          }
+          if (ret.eventType == "click" && ret.index == 1) {
+            fnopenFrameGroup2();
+            fnOpenNvnBar2();
+          }
+          if (ret.eventType == "click" && ret.index == 2) {
+            fnOpenMessageFrame();
+          }
+          if (ret.eventType == "click" && ret.index == 3) {
+            fnOpenMyinfoFrame();
+
+          }
+        }
+      });
+    }
+
+    function fnopenFrameGroup1() {
+
+      api.openFrameGroup({
+        name: 'group1',
+        rect: {
+          x: 0,
+          marginTop: 43,
+          w: 'auto',
+          marginBottom: 54
+        },
+        scrollEnabled: true,
+        frames: [{
+          name: 'frameName1',
+          url: 'html/main_frame1.html',
+          pageParam: {
+            name: 'value'
+          },
+          bounces:true,
+          customRefreshHeader: 'UIPullRefresh'
+        }, {
+          name: 'frameName2',
+          url: 'html/main_frame2.html',
+          pageParam: {
+            name: 'value'
+          },
+          bounces:true
+        }, {
+          name: 'frameName3',
+          url: 'html/main_frame3.html',
+          pageParam: {
+            name: 'value'
+          }
+        }, {
+          name: 'frameName4',
+          url: 'html/main_frame4.html',
+          pageParam: {
+            name: 'value'
+          }
+        }, {
+          name: 'frameName5',
+          url: 'html/main_frame5.html',
+          pageParam: {
+            name: 'value'
+          }
+        }, {
+          name: 'frameName6',
+          url: 'html/main_frame6.html',
+          pageParam: {
+            name: 'value'
+          },
+
+        }, {
+          name: 'frameName7',
+          url: 'html/main_frame7.html',
+          pageParam: {
+            name: 'value'
+          },
+          
+        }]
+      }, function(ret, err) {
+        if (ret) {
+          console.log(JSON.stringify(ret));
+          if (ret.index > -1) {
+            api.execScript({
+              frameName: 'nvnavigationbar1',
+              script: 'fnNvnsetSelected("' + ret.index + '");'
+            });
+          }
+        } else {
+          alert(JSON.stringify(err));
+        }
+      });
+
+    }
+
+    function fnopenFrameGroup2() {
+      api.openFrameGroup({
+        name: 'group2',
+        rect: {
+          x: 0,
+          marginTop: 42,
+          w: 'auto',
+          marginBottom: 54
+        },
+        scrollEnabled: true,
+        frames: [{
+          name: 'newvideo',
+          url: 'html/newvideo.html',
+          pageParam: {
+            name: 'value'
+          },
+          bounces:true,
+          customRefreshHeader: 'UIPullRefresh'
+        }, {
+          name: 'favviedeo',
+          url: 'html/favvideo.html',
+          pageParam: {
+            name: 'value'
+          },
+          bounces:true,
+          customRefreshHeader: 'UIPullRefresh'
+        }]
+      }, function(ret, err) {
+        if (ret) {
+          console.log(JSON.stringify(ret));
+          if (ret.index > -1) {
+            api.execScript({
+              frameName: 'nvnavigationbar2',
+              script: 'fnNvnsetSelected("' + ret.index + '");'
+            });
+          }
+        } else {
+          alert(JSON.stringify(err));
+        }
+      });
+
+    }
+
+    function fnOpenMessageFrame() {
+     var userInfo=$api.getStorage('userInfo');
+     if (userInfo==undefined && userInfo==null) {
+      api.toast({
+        msg: '您还未登录，请登录后再操作',
+        duration: 3000,
+        location: 'bottom'
+      });
+    }else{
+      api.openFrame({
+        name: 'caoshi_frame',
+        url: 'html/caoshi_frame.html',
+        rect: {
+          x: 0,
+          y: 0,
+          w: api.winWidth,
+          h: api.winHeight
+        },
+        pageParam: {
+          name: 'test'
+        },
+        animation: {
+          type: "fade"
+        },
+            // bounces: true,
+            bgColor: 'rgba(0,0,0,0)',
+          });
+
+    }
+  }
+
+  function fnOpenMyinfoFrame() {
+    var userInfo=$api.getStorage('userInfo');
+    if (userInfo && userInfo.id) {
+      api.openFrame({
+        name: 'personalcenter_frame',
+        url: 'html/personalcenter_frame.html',
+        rect: {
+          x: 0,
+          y: 0,
+          w: api.winWidth,
+          h: api.winHeight-54
+        },
+        pageParam: {
+          name: 'test'
+        },
+
+      });
+    }else{
+      api.openWin({
+        name: 'login',
+        url: './login.html',
+        pageParam: {
+          name: 'test'
+        },
+        animation: {
+          type: "fade"
+        }
+      });
+    }
+
+  }
+
+  function fnsetFrameGroupIndex(name, index) {
+    api.setFrameGroupIndex({
+      name: name,
+      index: index,
+      scroll: true
+    });
+  }
+
+  function fnHideVideo() {
+    fnHideGroup2();
+    fnHideNvngationBar2();
+  }
+
+  function fnHideGroup2() {
+    api.setFrameGroupAttr({
+      name: 'group2',
+      hidden: true
+    });
+  }
+
+  function fnHideNvngationBar2() {
+    api.setFrameAttr({
+      name: 'nvnavigationbar2',
+      hidden: true
+    });
+  }
+
+  function fnHidemessageFrame(){
+    api.setFrameAttr({
+      name: 'message',
+      hidden: true
+    });
+  }
+
+  function fnHideMyinfoFrame(){
+    api.setFrameAttr({
+      name: 'myinfo',
+      hidden: true
+    });
+  }
+
+
+</script>
+
+</html>
