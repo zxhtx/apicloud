@@ -260,14 +260,14 @@
    }
    function NVTabBar_open() {
     var NVTabBar = api.require('NVTabBar');
-    alert(NVTabBar)
+    // alert(NVTabBar)
     NVTabBar.open({
         styles: {
-            bg: 'rgba(200,200,200,1)',
-            h: 54,
+            bg: '#dbdbdb',
+            h: 50,
             dividingLine: {
-                width: 0,
-                color: '#000'
+                width: 0.5,
+                color: '#e6e6e6'
             },
             badge: {
                 bgColor: '#f00',
@@ -283,15 +283,15 @@
                 h: 25.0,
             },
             icon: {
-                normal: 'widget://image/nvtabbar/acti.png',
-                highlight: 'widget://image/nvtabbar/actied.png',
-                selected: 'widget://image/nvtabbar/actied.png'
+                normal: 'widget://image/nvtabbar/shopping.png',
+                highlight: 'widget://image/nvtabbar/shopping2.png',
+                selected: 'widget://image/nvtabbar/shopping2.png'
             },
             title: {
-                text: '动态',
+                text: '商场',
                 size: 12.0,
                 normal: '#696969',
-                selected: '#eb4f38',
+                selected: '#000',
                 marginB: 6.0
             }
         }, {
@@ -301,15 +301,15 @@
                 h: 25.0,
             },
             icon: {
-                normal: 'widget://image/nvtabbar/guan.png',
-                highlight: 'widget://image/nvtabbar/guaned.png',
-                selected: 'widget://image/nvtabbar/guaned.png'
+                normal: 'widget://image/nvtabbar/tui.png',
+                highlight: 'widget://image/nvtabbar/tui2.png',
+                selected: 'widget://image/nvtabbar/tui2.png'
             },
             title: {
-                text: '发现',
+                text: '热推',
                 size: 12.0,
                 normal: '#696969',
-                selected: '#eb4f38',
+                selected: '#000',
                 marginB: 6.0
             }
         }, {
@@ -319,13 +319,13 @@
                 image: 'rgba(200,200,200,0)'
             },
             iconRect: {
-                w: 50,
-                h: 50,
+                w: 25.0,
+                h: 25.0,
             },
             icon: {
-                normal: 'widget://image/nvtabbar/yyuan.png',
-                highlight: 'widget://image/nvtabbar/mai.png',
-                selected: 'widget://image/nvtabbar/mai.png'
+                normal: 'widget://image/nvtabbar/music.png',
+                highlight: 'widget://image/nvtabbar/music2.png',
+                selected: 'widget://image/nvtabbar/music2.png'
             }
         }, {
             w: api.winWidth / 5.0,
@@ -334,15 +334,15 @@
                 h: 25.0,
             },
             icon: {
-                normal: 'widget://image/nvtabbar/bir.png',
-                highlight: 'widget://image/nvtabbar/bired.png',
-                selected: 'widget://image/nvtabbar/bired.png'
+                normal: 'widget://image/nvtabbar/video.png',
+                highlight: 'widget://image/nvtabbar/video2.png',
+                selected: 'widget://image/nvtabbar/video2.png'
             },
             title: {
-                text: '消息',
+                text: '潮视',
                 size: 12.0,
                 normal: '#696969',
-                selected: '#eb4f38',
+                selected: '#000',
                 marginB: 6.0
             }
         }, {
@@ -352,51 +352,70 @@
                 h: 25.0,
             },
             icon: {
-                normal: 'widget://image/nvtabbar/fav.png',
-                highlight: 'widget://image/nvtabbar/faved.png',
-                selected: 'widget://image/nvtabbar/faved.png'
+                normal: 'widget://image/nvtabbar/me.png',
+                highlight: 'widget://image/nvtabbar/me2.png',
+                selected: 'widget://image/nvtabbar/me2.png'
             },
             title: {
                 text: '我的',
                 size: 12.0,
                 normal: '#696969',
-                selected: '#eb4f38',
+                selected: '#000',
                 marginB: 6.0
             }
         }],
         selectedIndex: 0
     }, function(ret, err) {
         if (ret) {
-
             if (ret.eventType == "click" && ret.index == 0) {
-                api.openFrame({
-                    name: 'kong',
-                    url: '../html/fame1.html',
-                    rect: {
-                        x: 0,
-                        y: 70,
-                        h: 200
-                    }
-                });
+                alert(1)
+
             }
             if (ret.eventType == "click" && ret.index == 1) {
-                api.openFrame({
-                    name: 'kong2',
-                    url: 'fame2.html',
-                    rect: {
-                        x: 0,
-                        y: 70,
-                        h: 200
+
+            }
+            if (ret.eventType == "click" && ret.index == 2) {
+
+            }
+            if (ret.eventType == "click" && ret.index == 3) {
+
+            }
+            if (ret.eventType == "click" && ret.index == 4) {
+                alert(1)
+                var userInfo=$api.getStorage('userInfo');
+                if (userInfo && userInfo.id) {
+                    api.openWin({
+                        name: 'personalcenter',
+                        url: './personalcenter.html',
+                        pageParam: {
+                            moneydian: moneydian
+                        },
+                        allowEdit:true,
+                        animation: {
+                            type: "fade"
+                        }
+                    });
+                }else{
+                  api.openWin({
+                    name: 'login',
+                    url: './login.html',
+                    pageParam: {
+                        name: 'test'
+                    },
+                    animation: {
+                        type: "fade"
                     }
                 });
-            }
-            var NVTabBar = api.require('NVTabBar');
-            NVTabBar.setBadge({
-                index: 4,
-                badge: ''
-            });
-        }
-    });
+              }
+          }
+          var NVTabBar = api.require('NVTabBar');
+          NVTabBar.setBadge({
+            index: 4,
+            badge: ''
+        });
+
+      }
+  });
 }
 function video(video){
    event.stopPropagation();
