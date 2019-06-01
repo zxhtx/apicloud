@@ -510,7 +510,7 @@ api.ajax({
     if (ret) {
         var viptext=$api.byId('viptext');
         var fanqian=$api.byId('fanqian');
-        var vipprice=dataprice * 0.91;
+        var vipprice=dataprice * 0.95;
         var ceilprice =Math.round(vipprice);
             // 存储用户名
             // alert($api.jsonToStr(ret))
@@ -519,11 +519,11 @@ api.ajax({
 
                 if (ret[0].vip==1) {
 
-                   viptext.innerHTML='您是vip打9折'
+                   viptext.innerHTML='9.5折'
                    price2.innerHTML='￥'+ceilprice;
                    fanqian.innerHTML=Math.round(ceilprice*0.06);
                } else{
-                  viptext.innerHTML='充值vip可打9折'
+                  viptext.innerHTML='分享应用获取vip打9.5折'
                   price2.innerHTML='￥'+dataprice;
                   fanqian.innerHTML=Math.round(ceilprice*0.08);
               }
