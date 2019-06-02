@@ -14,35 +14,41 @@
     width: 54px;
     background-color: #fff;
   }
-
+/*
   .wrap {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-flex-flow: column;
-  }
+    }*/
+    header {
+     position: relative;
+     width: 100%;
+     height: 50px;
+     background-color: white;
+   }
 
- 
-</style>
+
+ </style>
 </head>
 
-<body class="wrap" id="header">
- <!--  <header id="header"></header> -->
+<body >
+  <header id="header"></header>
 </body>
-<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript" src="./script/api.js"></script>
 <script type="text/javascript" src="script/SHA1.js"></script>
 <script type="text/javascript" src="script/db.js"></script>
 <script type="text/javascript">
  var headerH;
  apiready = function() {
-   var header=$api.byId('header');
-     $api.fixStatusBar(header);
-     headerH = $api.fixStatusBar(header);
-     
-     api.setStatusBarStyle({
-      style: 'light',
-      color:'#000'
-    });
-     exitApp();
+   var header = $api.dom('header'); // 获取 header 标签元素
+   headerH = $api.fixStatusBar(header);
+   
+
+   api.setStatusBarStyle({
+    style: 'light',
+    color:'#000'
+  });
+   exitApp();
       // WareTypeList();
     // initPushGeTui();
     // initdb();
@@ -146,7 +152,7 @@ function getWareTypeList(){
             rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
                 marginTop: headerH, // main页面距离win顶部的高度
                 w: 'auto', // main页面的宽度 自适应屏幕宽度
-                h: 42
+                h: 58
               }
             });
     }
@@ -182,7 +188,7 @@ function getWareTypeList(){
           }
         },
         items: [{
-          w: api.winWidth / 4.0,
+          w: api.winWidth / 5.0,
           iconRect: {
             w: 25.0,
             h: 25.0,
@@ -200,7 +206,7 @@ function getWareTypeList(){
             marginB: 3.0,
           }
         }, {
-          w: api.winWidth / 4.0,
+          w: api.winWidth / 5.0,
           iconRect: {
             w: 25.0,
             h: 25.0,
@@ -218,7 +224,7 @@ function getWareTypeList(){
             marginB: 3.0
           }
         }, {
-          w: api.winWidth / 4.0,
+          w: api.winWidth / 5.0,
           iconRect: {
             w: 25.0,
             h: 25.0,
@@ -236,7 +242,7 @@ function getWareTypeList(){
             marginB: 3.0
           }
         }, {
-          w: api.winWidth / 4.0,
+          w: api.winWidth / 5.0,
           iconRect: {
             w: 25.0,
             h: 25.0,
@@ -244,10 +250,28 @@ function getWareTypeList(){
           icon: {
             normal: 'widget://image/NVTabBar/me.png',
             highlight: 'widget://image/NVTabBar/me2.png',
-            selected: 'widget://image/nvTabBar/me2.png'
+            selected: 'widget://image/NVTabBar/me2.png'
           },
           title: {
             text: '我的',
+            size: 12.0,
+            normal: '#696969',
+            selected: '#000',
+            marginB: 3.0
+          }
+        },{
+          w: api.winWidth / 5.0,
+          iconRect: {
+            w: 25.0,
+            h: 25.0,
+          },
+          icon: {
+            normal: 'widget://image/NVTabBar/search.png',
+            highlight: 'widget://image/NVTabBar/search.png',
+            selected: 'widget://image/NVTabBar/search.png'
+          },
+          title: {
+            text: '搜索',
             size: 12.0,
             normal: '#696969',
             selected: '#000',
@@ -275,10 +299,21 @@ function getWareTypeList(){
             fnOpenMyinfoFrame();
 
           }
+          if (ret.eventType == "click" && ret.index == 4) {
+            fnOpensearch();
+          }
         }
       });
     }
-
+    function fnOpensearch(){
+      api.openWin({
+        name: 'html/search',
+        url: 'html/search.html',
+        pageParam: {
+          name: 'test'
+        }
+      });
+    }
     function fnopenFrameGroup1() {
 
 
@@ -286,7 +321,7 @@ function getWareTypeList(){
         name: 'group1',
         rect: {
           x: 0,
-          marginTop: 43,
+          marginTop: 58,
           w: 'auto',
           marginBottom: 54
         },
