@@ -11,6 +11,7 @@
   html,
   body {
     height: 100%;
+    width: 54px;
     background-color: #fff;
   }
 
@@ -20,30 +21,28 @@
     -webkit-flex-flow: column;
   }
 
-  header {
-    height: 44px;
-    width: 100%;
-    text-align: center;
-    background-color: #81a9c3;
-    color: #fff;
-    line-height: 44px;
-    font-size: 20px;
-  }
-
+ 
 </style>
 </head>
 
-<body class="wrap">
-  <header>APICloud</header>
+<body class="wrap" id="header">
+ <!--  <header id="header"></header> -->
 </body>
-<script type="text/javascript" src="./script/api.js"></script>
-<script type="text/javascript" src="./script/SHA1.js"></script>
-<script type="text/javascript" src="./script/db.js"></script>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript" src="script/SHA1.js"></script>
+<script type="text/javascript" src="script/db.js"></script>
 <script type="text/javascript">
  var headerH;
  apiready = function() {
-      var header = $api.dom('header'); // 获取 header 标签元素
-      headerH = $api.fixStatusBar(header);
+   var header=$api.byId('header');
+     $api.fixStatusBar(header);
+     headerH = $api.fixStatusBar(header);
+     
+     api.setStatusBarStyle({
+      style: 'light',
+      color:'#000'
+    });
+     exitApp();
       // WareTypeList();
     // initPushGeTui();
     // initdb();
@@ -230,10 +229,10 @@ function getWareTypeList(){
             selected: 'widget://image/NVTabBar/video2.png'
           },
           title: {
-            text: '消息',
+            text: '潮视',
             size: 12.0,
             normal: '#696969',
-            selected: '#eb4f38',
+            selected: '#000',
             marginB: 3.0
           }
         }, {
@@ -245,13 +244,13 @@ function getWareTypeList(){
           icon: {
             normal: 'widget://image/NVTabBar/me.png',
             highlight: 'widget://image/NVTabBar/me2.png',
-            selected: 'widget://image/NVTabBar/me2.png'
+            selected: 'widget://image/nvTabBar/me2.png'
           },
           title: {
             text: '我的',
             size: 12.0,
             normal: '#696969',
-            selected: '#eb4f38',
+            selected: '#000',
             marginB: 3.0
           }
         }],
@@ -282,6 +281,7 @@ function getWareTypeList(){
 
     function fnopenFrameGroup1() {
 
+
       api.openFrameGroup({
         name: 'group1',
         rect: {
@@ -298,7 +298,7 @@ function getWareTypeList(){
             name: 'value'
           },
           bounces:true,
-          customRefreshHeader: 'UIPullRefresh'
+          // customRefreshHeader: 'UIPullRefresh'
         }, {
           name: 'frameName2',
           url: 'html/main_frame2.html',
@@ -422,9 +422,8 @@ function getWareTypeList(){
         animation: {
           type: "fade"
         },
-            // bounces: true,
-            bgColor: 'rgba(0,0,0,0)',
-          });
+
+      });
 
     }
   }
@@ -441,21 +440,16 @@ function getWareTypeList(){
           w: api.winWidth,
           h: api.winHeight-54
         },
-        pageParam: {
-          name: 'test'
-        },
+
 
       });
     }else{
       api.openWin({
         name: 'login',
-        url: './login.html',
+        url: 'html/login.html',
         pageParam: {
           name: 'test'
         },
-        animation: {
-          type: "fade"
-        }
       });
     }
 
@@ -490,18 +484,47 @@ function getWareTypeList(){
 
   function fnHidemessageFrame(){
     api.setFrameAttr({
-      name: 'message',
+      name: 'chaoshi_frame',
       hidden: true
     });
   }
 
   function fnHideMyinfoFrame(){
-    api.setFrameAttr({
-      name: 'myinfo',
-      hidden: true
+    // api.setFrameAttr({
+    //   name: 'personalcenter_frame',
+    //   hidden: true
+    // });
+    api.closeFrame({
+      name: 'personalcenter_frame'
     });
   }
 
+  function exitApp(){
+    api.addEventListener({
+      name: 'keyback'
+    }, function(ret, err){
+      api.toast({
+        msg: '再按一次退出应用',
+        duration:2000,
+        location: 'bottom'
+      });
+
+      api.addEventListener({
+        name: 'keyback'
+      }, function(ret, err){
+        $api.setStorage("gesture",false);
+        api.closeWidget({
+            id: 'A6099267504667', //这里需要修改为自己的应用ID
+            retData: {name:'closeWidget'},
+            silent:true
+          });
+      });
+
+      setTimeout(function(){
+        exitApp();
+      },3000)
+    });
+  }
 
 </script>
 
