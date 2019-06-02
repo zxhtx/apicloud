@@ -86,70 +86,71 @@
 </head>
 
 <body>
-<header id="header">
-	  <div class="back" tapmode onclick="api.closeWin()">
-	  	 <img src="../image/back.png">
-	  </div>
-    <h1>我的订单</h1>
+    <header id="header">
+     <div class="back" tapmode onclick="api.closeWin()">
+       <img src="../image/back.png">
+   </div>
+   <h1>我的订单</h1>
 </header>
-    <nav id="nav">
-        <div class="menu selected" tapmode="selected" onclick="setNavMenuIndex(0)">待付款</div>
-        <div class="menu" tapmode="selected" onclick="setNavMenuIndex(1)">待收货</div>
-        <div class="menu" tapmode="selected" onclick="setNavMenuIndex(2)">已签收</div>
-    </nav>
+<nav id="nav">
+    <div class="menu selected" tapmode="selected" onclick="setNavMenuIndex(0)">待付款</div>
+    <div class="menu" tapmode="selected" onclick="setNavMenuIndex(1)">待收货</div>
+    <div class="menu" tapmode="selected" onclick="setNavMenuIndex(2)">已签收</div>
+</nav>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
     apiready = function() {
 
-       
+     
 
         var header=$api.byId('header');
         var nav=$api.byId('nav');
         $api.fixStatusBar(header);
+        // alert(api.statusBarAppearance);
         api.setStatusBarStyle({
-            style: 'light',
-            color:'#000'
-        });
+           style: 'dark'，
+           color:'transparent'
+       });
         // 获取header和nav的高
         headerH=$api.offset(header).h
         navH=$api.offset(nav).h;
 
-         menus=$api.domAll(nav, '.menu');
+        menus=$api.domAll(nav, '.menu');
 
-         openFrames();
+        openFrames();
 
     };
 
 
     function openFrames(){
 
-         var frames=[];
-        for (var i = 0; i <menus.length; i++) {
-            frames.push({
-                name:'dindan_frame_'+i,
-                url:'./dindan_frame.html',
-                pageParam:{
-                    dindantypeIndex:i
-                }
-            })
-        }
-
-        api.openFrameGroup ({
-            name: 'mainFrameGroup',
-            scrollEnabled: true,
-            rect: {
-                 x: 0,
-                 y: headerH+navH,
-                 w: 'auto',
-                 h: 'auto'
-            },
-            frames: frames
-        }, function(ret, err){
-           SetNavMenuselected(ret.index);
-        });
+       var frames=[];
+       for (var i = 0; i <menus.length; i++) {
+        frames.push({
+            name:'dindan_frame_'+i,
+            url:'./dindan_frame.html',
+            pageParam:{
+                dindantypeIndex:i
+            }
+        })
     }
-    var menus, headerH , navH;
+
+    api.openFrameGroup ({
+        name: 'mainFrameGroup',
+        scrollEnabled: true,
+        rect: {
+           x: 0,
+           y: headerH+navH,
+           w: 'auto',
+           h: 'auto'
+       },
+       frames: frames
+   }, function(ret, err){
+     SetNavMenuselected(ret.index);
+ });
+}
+var menus, headerH , navH;
 
     // 滑动时标题变化
     function SetNavMenuselected(_index){
@@ -170,9 +171,9 @@
         });
     }
 
-  
+    
 
-        
+    
 </script>
 
 </html>

@@ -42,12 +42,13 @@
  apiready = function() {
    var header = $api.dom('header'); // 获取 header 标签元素
    headerH = $api.fixStatusBar(header);
+   alert(api.statusBarAppearance)
    
 
    api.setStatusBarStyle({
-    style: 'light',
-    color:'#000'
-  });
+     style: 'dark'，
+     color:'transparent'
+   });
    exitApp();
       // WareTypeList();
     // initPushGeTui();
