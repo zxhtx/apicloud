@@ -11,7 +11,7 @@
     header{
         position: relative;
         width: 100%;
-        height: 50px;
+        height: 40px;
         background-color: white;
     }
 
@@ -19,8 +19,8 @@
         position: absolute;
         bottom: 0;
         left: 0;
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         z-index: 2;
     }
     
@@ -32,26 +32,13 @@
     }
     header h1{
         position: relative;
-        height: 50px;
-        line-height: 50px;
+        height: 40px;
+        line-height: 40px;
         font-size: 18px ;
         color: black;
         text-align: center;
     }
-    header .right{
-        position: absolute;
-        bottom:0;
-        right: 0;
-        width: 40px;
-        height: 50px;
-        background: url(../image/touxiang.png);
-        background-size: 20px 20px;
-        background-position: center center;
-        background-repeat: no-repeat;
-        z-index: 2;
-
-
-    }
+   
     nav{
         display: -webkit-box ;
         display: -webkit-flex ;
@@ -106,11 +93,7 @@
 
         var header=$api.byId('header');
         var nav=$api.byId('nav');
-        $api.fixStatusBar(header);
-        api.setStatusBarStyle({
-            style: 'light',
-            color:'#000'
-        });
+      
         // 获取header和nav的高
         headerH=$api.offset(header).h
         navH=$api.offset(nav).h;

@@ -99,11 +99,6 @@
 	var record = [];
 	apiready = function() {
 		var header=$api.byId('header');
-		api.setStatusBarStyle({
-			style: 'light',
-			color:'#000'
-		});
-		$api.fixStatusBar(header);
         // 获取header和nav的高
         headerH=$api.offset(header).h
         api.openFrame({
