@@ -68,14 +68,14 @@
     }
 
     .ware-1 .info .price-tag {
-       margin-top: 6px;
-       width: 100%;
-       height: 12px;
-       font-size: 12px;
-       vertical-align: top;
-   }
+     margin-top: 6px;
+     width: 100%;
+     height: 12px;
+     font-size: 12px;
+     vertical-align: top;
+ }
 
-   .ware-1 .info .price-tag .price {
+ .ware-1 .info .price-tag .price {
     color: black;
     font-size: 16px;
 }
@@ -160,7 +160,7 @@
 <body>
 	<section id="list">
 	</section>
-   <div class="push-status" id="pushStatus"></div>
+ <div class="push-status" id="pushStatus"></div>
 
 </body>
 <script type="text/template" id="template">
@@ -173,18 +173,18 @@
                 <div class="name">{{=value.name}}</div>
                 <div class="description">{{=value.description}}</div>
                 <div class="price-tag">
-                 <span class="price">￥{{=value.price}}</span>
+                   <span class="price">￥{{=value.price}}</span>
 
-             </div>
-         </div>
-         <div class="control">
+               </div>
+           </div>
+           <div class="control">
             <div class="panel" id="panel_{{=value.id}}">
-             <img class="minus" src="../image/jian.png" tapmode onclick="Minus('{{=value.id}}')">
-             <div class="count" id="count_{{=value.id}}">0</div>
-         </div>
-         <img class="add" src="../image/jia.png" tapmode onclick="Add('{{=value.id}}')">
-     </div>
- </div>
+               <img class="minus" src="../image/jian.png" tapmode onclick="Minus('{{=value.id}}')">
+               <div class="count" id="count_{{=value.id}}">0</div>
+           </div>
+           <img class="add" src="../image/jia.png" tapmode onclick="Add('{{=value.id}}')">
+       </div>
+   </div>
 </div>
 {{~}}
 
@@ -207,34 +207,34 @@
     var skip=0;
     var LIMIT=8;
     function init(){
-       wareTypeList=$api.getStorage('WareTypeList');
-   }
-   function videosearch(){
+     wareTypeList=$api.getStorage('WareTypeList');
+ }
+ function videosearch(){
     if (api.pageParam.searchtitle!=undefined) {
         searchval(api.pageParam.searchtitle);
     }
-   }
-   function openWareWin(_wareId,_wareTypeId){
-     api.openWin({
-        name: 'ware',
-        url: './ware.html',
-        pageParam: {
-            wareId: _wareId,
-            wareTypeId:_wareTypeId
-        },
-        animation: {
-            type: "fade"
-        }
-    });
+}
+function openWareWin(_wareId,_wareTypeId){
+   api.openWin({
+    name: 'ware',
+    url: './ware.html',
+    pageParam: {
+        wareId: _wareId,
+        wareTypeId:_wareTypeId
+    },
+    animation: {
+        type: "fade"
+    }
+});
 
- }
+}
 // 获取列表页数据
 function searchval(val,_LoadMore){
 	// alert($api.jsonToStr($api.getStorage('history_list')))
 	// alert(val)
 	searchvalue=val;
- activity = api.require('UILoading');
- activity.keyFrame({
+   activity = api.require('UILoading');
+   activity.keyFrame({
     rect: {
         w: 80,
         h: 100
@@ -250,7 +250,7 @@ function searchval(val,_LoadMore){
     }
 });
 
- var now = Date.now();
+   var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
       if (_LoadMore) {
@@ -265,7 +265,8 @@ function searchval(val,_LoadMore){
             "description":{"like":val},
         },
         skip:skip,
-        limit:LIMIT
+        limit:LIMIT,
+        order:"createdAt DESC"
     }
     params=$api.jsonToStr(params);
     api.ajax({
@@ -286,13 +287,13 @@ function searchval(val,_LoadMore){
          
          updateWareList(ret,_LoadMore);
      } else {
-       api.toast({
-           msg: err.msg,
-           duration: 2000,
-           location: 'bottom'
-       });
-   }
-});
+         api.toast({
+             msg: err.msg,
+             duration: 2000,
+             location: 'bottom'
+         });
+     }
+ });
 }
 function updateWareList(_data,_LoadMore){
 	var pushStatus=$api.byId('pushStatus');
@@ -324,7 +325,7 @@ function updateWareList(_data,_LoadMore){
 function LoadImage(_this,_id){
     var dataUrl=$api.attr(_this, 'data-url');
     var dataWareTypeId=$api.attr(_this, 'data-wareTypeId');
-   
+    
     if (dataUrl) {
         api.imageCache({
             url: dataUrl
@@ -347,8 +348,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-     searchval(searchvalue,true);
- });
+       searchval(searchvalue,true);
+   });
 }
 // 下拉刷新
 function initRefresh(){
@@ -362,10 +363,10 @@ function initRefresh(){
 
 }
 function Add(_wareId){
-   event.stopPropagation();
+ event.stopPropagation();
 
-   var count = $api.byId('count_' + _wareId);
-   var panel = $api.byId('panel_' + _wareId);
+ var count = $api.byId('count_' + _wareId);
+ var panel = $api.byId('panel_' + _wareId);
 
     // 更新商品数量及显示状态
     var countNumber = parseInt(count.innerHTML);
@@ -379,10 +380,10 @@ function Add(_wareId){
         }
     });
     api.toast({
-       msg: '已加入购物车',
-       duration: 2000,
-       location: 'bottom'
-   });
+     msg: '已加入购物车',
+     duration: 2000,
+     location: 'bottom'
+ });
     
 }
 </script>

@@ -16,18 +16,20 @@
     }
 
     header .back {
-          position: absolute;
+        position: absolute;
         bottom: 0;
         left: 0;
         width: 40px;
         height: 40px;
-        /*border: 1px solid red;*/
-        background: url(../image/back.png);
-        background-position: 12px 9px;
-        background-size: 11px 18px;
-        background-repeat: no-repeat;
+        z-index: 2;
     }
     
+    header .back img {
+        margin-top: 16px;
+        margin-left: 12px;
+        width: 11px;
+        height: 18px;
+    }
     header h1{
         position: relative;
         height: 40px;
@@ -36,7 +38,7 @@
         color: black;
         text-align: center;
     }
-  
+
     nav{
         display: -webkit-box ;
         display: -webkit-flex ;
@@ -72,10 +74,12 @@
 
 <body>
     <header id="header">
-       <div class="back" tapmode onclick="api.closeWin();"></div>
-     <h1>我的订单</h1>
- </header>
- <nav id="nav">
+       <div class="back" tapmode onclick="api.closeWin();">
+           <img src="../image/back.png">
+       </div>
+       <h1>我的订单</h1>
+   </header>
+   <nav id="nav">
     <div class="menu selected" tapmode="selected" onclick="setNavMenuIndex(0)">待付款</div>
     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(1)">待收货</div>
     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(2)">已签收</div>
@@ -100,7 +104,6 @@
         openFrames();
 
     };
-
 
     function openFrames(){
 

@@ -249,6 +249,7 @@
 
 
     };
+    var flowerid ;
     var activity ;
     var wareTypeList;
     var skip=0;
@@ -298,20 +299,18 @@ function openWareWin(_wareId,_wareTypeId){
 // 获取列表页数据
 function getWareList(_LoadMore){
  activity = api.require('UILoading');
- activity.keyFrame({
-    rect: {
-        w: 80,
-        h: 100
+  activity = api.require('UILoading');
+   activity.flower({
+    center: {
+        x: api.winWidth/2,
+        y: api.winHeight/2
     },
-    styles: {
-        bg: 'rgba(0,0,0,0.5)',
-        corner: 5,
-        interval: 50,
-        frame: {
-            w: 80,
-            h: 80
-        }
-    }
+    mask:'rgba(20,0,0,0.5)',
+    size: 30,
+    // fixed: true,
+
+}, function(ret) {
+  flowerid=ret.id;
 });
 
  var now = Date.now();
@@ -377,7 +376,9 @@ function updateWareList(_data,_LoadMore){
             pushStatus.innerHTML="我是有底线滴"
         }
     }
-    activity.closeKeyFrame();
+     activity.closeFlower({
+        id:flowerid 
+    });
 
 }
 

@@ -165,7 +165,7 @@
 </head>
 
 <body>
-    
+
     <section id="list">
      <!--    <div class="ware ware-0">
             <div class="content">
@@ -251,6 +251,7 @@
 
 
     };
+    var flowerid ;
     var activity ;
     var wareTypeList;
     var skip=0;
@@ -259,30 +260,30 @@
        wareTypeList=$api.getStorage('WareTypeList');
 
    }
-   
-function video(video){
-   event.stopPropagation();
-   api.execScript({
-       name: 'main',
+
+   function video(video){
+       event.stopPropagation();
+       api.execScript({
+           name: 'main',
          // frameName: 'main_frame',
          script: 'pause();'
      });
-   api.openFrame({
-       name: 'playvideo_frame',
-       url: './playvideo_frame.html',
-       rect: {
-           x: 0,
-           y: 0,
-           w: api.winWidth,
-           h: api.winHeight
-       },
-       pageParam: {
-           video: video
-       },
-   });
+       api.openFrame({
+           name: 'playvideo_frame',
+           url: './playvideo_frame.html',
+           rect: {
+               x: 0,
+               y: 0,
+               w: api.winWidth,
+               h: api.winHeight
+           },
+           pageParam: {
+               video: video
+           },
+       });
 
-}
-function openWareWin(_wareId,_wareTypeId){
+   }
+   function openWareWin(_wareId,_wareTypeId){
 
     api.openWin({
         name: 'ware',
@@ -300,21 +301,20 @@ function openWareWin(_wareId,_wareTypeId){
 // 获取列表页数据
 function getWareList(_LoadMore){
  activity = api.require('UILoading');
- activity.keyFrame({
-    rect: {
-        w: 80,
-        h: 100
+ activity.flower({
+    center: {
+        x: api.winWidth/2,
+        y: api.winHeight/2
     },
-    styles: {
-        bg: 'rgba(0,0,0,0.5)',
-        corner: 5,
-        interval: 50,
-        frame: {
-            w: 80,
-            h: 80
-        }
-    }
+    mask:'rgba(20,0,0,0.5)',
+    size: 30,
+    // fixed: true,
+
+}, function(ret) {
+  flowerid=ret.id;
 });
+
+
 
  var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
@@ -346,11 +346,13 @@ function getWareList(_LoadMore){
         
     },function(ret, err){
         if (ret) {
+         
           // 隐藏下拉刷新
           // api.refreshHeaderLoadDone();
          // 模板渲染
          api.refreshHeaderLoadDone()
          updateWareList(ret,_LoadMore);
+
 
 
      } else {
@@ -379,7 +381,10 @@ function updateWareList(_data,_LoadMore){
             pushStatus.innerHTML="我是有底线滴"
         }
     }
-    activity.closeKeyFrame();
+    activity.closeFlower({
+        id:flowerid 
+    });
+    
 
 }
 

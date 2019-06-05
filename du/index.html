@@ -42,10 +42,9 @@
  apiready = function() {
    var header = $api.dom('header'); // 获取 header 标签元素
    headerH = $api.fixStatusBar(header);
-   alert(api.statusBarAppearance)
    
 
-  
+
    exitApp();
       // WareTypeList();
     // initPushGeTui();
@@ -397,23 +396,12 @@ function getWareTypeList(){
           w: 'auto',
           marginBottom: 54
         },
-        scrollEnabled: true,
         frames: [{
           name: 'newvideo',
           url: 'html/newvideo.html',
           pageParam: {
             name: 'value'
           },
-          bounces:true,
-          customRefreshHeader: 'UIPullRefresh'
-        }, {
-          name: 'favviedeo',
-          url: 'html/favvideo.html',
-          pageParam: {
-            name: 'value'
-          },
-          bounces:true,
-          customRefreshHeader: 'UIPullRefresh'
         }]
       }, function(ret, err) {
         if (ret) {

@@ -7,35 +7,202 @@
     <title>title</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
     <style>
-        html,
-        body {
-            background-color: #fff;
-        }
-    </style>
+    html,
+    body {
+        /*background-color: transparent;*/
+    }
+
+    #list {
+        padding: 11px;
+        display: flex;
+        justify-content: space-between;
+
+    }
+
+    #list>.card {
+        position: relative;
+        float: left;
+        padding: 4px;
+         display: flex;
+         justify-content: space-between;
+        box-sizing: border-box;
+        background-clip: content-box;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        /*border: 1px solid red;*/
+        margin:2px 0px 2px 0px;
+        /*border-radius: 10px 2px 30px 5px;*/
+    }
+
+    .card>img{
+       background-clip: content-box;
+       background-position: center;
+       background-repeat: no-repeat;
+       background-size: cover;
+       border-radius: 10px 10px 0px 24px;
+       /*border: 1px solid red;*/
+   }
+
+</style>
 </head>
 
 <body>
-    <h3>最新视频列表页面</h3>
+    <div id="list">
+
+    </div>
 </body>
+<script type="text/template" id="template">
+    {{~it.list:value:index}}
+    {{? value.video}}
+    <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" data-imageurl="{{=value.thumbnail}}" data-id="{{=value.id}}" onclick="fnOpenRoom(this)" tapmode>
+        <img src="../image/loading.png" style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" onload="fnLoadCardImage(this)">
+
+    </div>
+    {{?}}
+    {{~}}
+</script>
 <script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript">
+    var flowerid ;
+    var activity ;
+    var wareTypeList;
+    var skip=0;
+    var LIMIT=30;
     apiready = function() {
-        api.setCustomRefreshHeaderInfo({
-            bgColor: '#C0C0C0',
-            // image: { // pull: 'widget://image/refresh/pulling.png', // transform: [ // 'widget://image/refresh/transform0.png', // 'widget://image/refresh/transform1.png', // 'widget://image/refresh/transform2.png', // 'widget://image/refresh/transform3.png',
-            // 'widget://image/refresh/transform4.png', // 'widget://image/refresh/transform5.png', // 'widget://image/refresh/transform6.png' // ], // load: [ // 'widget://image/refresh/loading0.png', // 'widget://image/refresh/loading1.png', // 'widget://image/refresh/loading2.png',
-            // 'widget://image/refresh/loading3.png', // 'widget://image/refresh/loading4.png' // ] // }
-        }, function() {
-            //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
-            //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态
-            alert('开始加载刷新数据，摇一摇停止加载状态');
-        });
-        api.addEventListener({
-            name: 'shake'
-        }, function(ret, err) {
-            api.refreshHeaderLoadDone()
-        });
+        getWareList();
+        initEventListenter();
+        initRefresh();
+
     };
+
+    function getWareList(_LoadMore){
+       activity = api.require('UILoading');
+       activity.flower({
+        center: {
+            x: api.winWidth/2,
+            y: api.winHeight/2
+        },
+        mask:'rgba(20,0,0,0.5)',
+        size: 30,
+    // fixed: true,
+
+}, function(ret) {
+  flowerid=ret.id;
+});
+
+
+
+       var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
+      if (_LoadMore) {
+        skip+=LIMIT;
+    }else{
+
+        skip=0;
+    }
+    var params={
+        fields:{},
+        fields: {},
+        skip:skip,
+        limit:LIMIT,
+        order:"createdAt DESC"
+    }
+    params=$api.jsonToStr(params);
+    api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/ware?filter='+params,
+        method: 'get',
+        headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey
+        },
+        
+    },function(ret, err){
+        if (ret) {
+
+          // 隐藏下拉刷新
+          // api.refreshHeaderLoadDone();
+         // 模板渲染
+         api.refreshHeaderLoadDone()
+         updateWareList(ret,_LoadMore);
+
+
+
+     } else {
+         api.toast({
+             msg: err.msg,
+             duration: 2000,
+             location: 'bottom'
+         });
+     }
+ });
+}
+function updateWareList(_data,_LoadMore){
+ var param = {
+    list:_data,
+    frameWidth: api.frameWidth,
+};
+var list=$api.byId('list');
+var tempFn=doT.template($api.byId('template').innerHTML);
+var resultText=tempFn(param)
+if (_LoadMore) {
+    $api.append(list, resultText);
+}else{
+    $api.html(list, resultText);
+}
+    // 优化
+    api.parseTapmode();
+    if (_LoadMore) {
+        if (_data.length<LIMIT) {
+            var pushStatus=$api.byId('pushStatus');
+            pushStatus.innerHTML="我是有底线滴"
+        }
+    }
+    activity.closeFlower({
+        id:flowerid 
+    });
+    
+
+}
+// 监听 
+function initEventListenter(){
+    api.addEventListener({
+        name:'scrolltobottom',
+        extra:{
+            threshold:100
+        }
+    }, function(ret, err){        
+     getWareList(true);
+ });
+}
+// 下拉刷新
+function initRefresh(){
+    api.setCustomRefreshHeaderInfo({
+        bgColor: '#C0C0C0',
+        isScale: true
+    }, function() {
+        getWareList();
+        
+    });
+
+}
+
+function fnLoadCardImage(element){
+
+
+    var eCard = $api.closest(element, '.card');
+
+    var url = eCard.dataset['imageurl'];
+    // api.imageCache({
+    //     url: url
+    // }, function(ret, err){
+        element.src = url ;
+    // });
+
+}
 </script>
 
 </html>
