@@ -1,0 +1,817 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>APICloud APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+        background-color: rgb(240, 240, 240);
+    }
+    /* swipe begin. */
+
+    #swipe {
+        position: relative;
+        overflow: hidden;
+        visibility: hidden;
+        background-color: #fff;
+    }
+
+    .swipe-wrap {
+        overflow: hidden;
+        padding-bottom: 24px;
+    }
+
+    .swipe-page {
+        float: left;
+        width: 100%;
+        position: relative;
+    }
+
+    .swipe-page-item {
+        float: left;
+        width: 25%;
+        text-align: center;
+    }
+
+    .swipe-page-item>img {
+        width: 60%;
+        margin-top: 10px;
+    }
+
+    .swipe-page-item>span {
+        display: block;
+        font-size: 13px;
+        margin-top: 5px;
+    }
+
+    #swipeIndicator {
+        position: absolute;
+        left: 50%;
+        bottom: 0px;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+
+    #swipeIndicator li {
+        height: 24px;
+        line-height: 24px;
+        width: 16px;
+        float: left;
+        background: url(../image/swipe/indicator.png) no-repeat center center;
+        background-color: transparent;
+        background-size: 8px 8px;
+    }
+
+    #swipeIndicator li.active {
+        background: url(../image/swipe/indicator_act.png) no-repeat center center;
+        background-color: transparent;
+        background-size: 8px 8px;
+    }
+    /* swipe end. */
+
+    .h80 {
+        height: 80px;
+    }
+
+    .h40 {
+        height: 40px;
+    }
+
+    .h20 {
+        height: 20px;
+    }
+
+    .h10 {
+        height: 10px;
+        background: #f0f0f0;
+    }
+
+    .h1 {
+        height: 1px;
+        margin-left: 15px;
+        background: #f0f0f0;
+    }
+
+    .fr {
+        float: right;
+    }
+
+    .fl {
+        float: left;
+    }
+
+    .hightitem {
+        background-color: #fff;
+    }
+    /* 抢购样式 */
+
+    .snapup {
+        height: 80px;
+    }
+
+    .snapup .infologo {
+        height: 60px;
+        margin: 10px;
+        border-radius: 10px;
+    }
+
+    .snapup .shelf2 {
+        display: table;
+        height: inherit;
+        margin-left: 10px;
+    }
+
+    .snapup .shelfcell {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .snapup .shelfcell .title {
+        margin-bottom: 10px;
+        width: 200px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+    }
+
+    .snapup .arrow {
+        width: 20px;
+        padding-top: 30px;
+        padding-right: 10px;
+    }
+    /* 2X2样式 */
+
+    .row {
+        display: -webkit-box;
+        display: -webkit-flex;
+    }
+
+    .col {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+        position: relative;
+    }
+
+    .col img {
+        position: absolute;
+        right: 0;
+        width: 80px;
+        top: 0;
+    }
+
+    .col .matrixcell {
+        display: table-cell;
+        vertical-align: middle;
+        padding-left: 10px;
+    }
+
+    .col .matrixcell .title {
+        margin-bottom: 10px;
+    }
+
+    .matrix {
+        display: table;
+        height: inherit;
+    }
+    /* 猜你喜欢 */
+
+    .guesstitle {
+        height: 20px;
+        line-height: 20px;
+        padding-left: 10px;
+        vertical-align: top;
+        font-size: 12px;
+        color: #999;
+    }
+
+    .guesstitle img {
+        height: 15px;
+        /*padding-top: 12px;*/
+        padding-left: 10px;
+    }
+
+    .home-tuan-list .item {
+        position: relative;
+        display: block;
+        padding-left: 10px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .home-tuan-list .cnt {
+        padding: 7px 10px 10px 0;
+        display: box;
+        display: -webkit-box;
+        min-height: 78px;
+        background-size: auto 1px;
+    }
+
+    .home-tuan-list .pic {
+        margin-right: 10px;
+        background: center;
+    }
+
+    .home-tuan-list img {
+        width: 90px;
+        height: 66px;
+        margin-top: 7px;
+        margin-bottom: 5px;
+        border-radius: 3px;
+    }
+
+    .home-tuan-list .wrap {
+        -webkit-box-flex: 1;
+    }
+
+    .home-tuan-list .wrap2 {
+        display: table;
+        height: 88px;
+        width: 100%;
+    }
+
+    .home-tuan-list .content {
+        -webkit-box-flex: 1;
+        box-flex: 1;
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .home-tuan-list .shopname {
+        color: #333;
+        /*line-height: 16px;*/
+        font-size: 17px;
+        max-width: 11em;
+        white-space: nowrap;
+        word-wrap: normal;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        min-height: 10px;
+        padding-bottom: 2px;
+        padding-top: 3px;
+        display: inline-block;
+    }
+
+    .home-tuan-list .title {
+        color: #666;
+        line-height: 16px;
+        font-size: 13px;
+        max-height: 30px;
+        overflow: hidden;
+        padding-top: 3px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .home-tuan-list .hot-title {
+        margin-bottom: 8px;
+    }
+
+    .home-tuan-list .hot-subtitle {
+        margin-bottom: 9px;
+    }
+
+    .home-tuan-list .info {
+        margin-top: 9px;
+        /*margin-bottom: 11px;*/
+        color: #666;
+        font-size: 12px;
+        position: relative;
+        line-height: 15px;
+        display: box;
+        display: -webkit-box;
+        height: 15px;
+    }
+
+    .home-tuan-list .symbol {
+        font-size: 14px;
+        color: #f60;
+        display: block;
+        margin-top: 1px;
+    }
+
+    .home-tuan-list .price {
+        color: #f60;
+        font-size: 20px;
+        line-height: 15px;
+        margin-right: 5px;
+        margin-top: 1px;
+    }
+
+    .home-tuan-list .o-price {
+        color: #999;
+        margin-top: 5px;
+        line-height: 10px;
+    }
+
+    .home-tuan-list .sale {
+        color: #f63;
+        border: solid 1px #ff916e;
+        padding: 3px 2px 2px;
+        font-size: 10px;
+        border-radius: 2px;
+        -webkit-border-radius: 2px;
+        margin-left: 5px;
+        line-height: 10px;
+        height: 10px;
+    }
+
+    .home-tuan-list .distance {
+        -webkit-box-flex: 1;
+        box-flex: 1;
+        -ms-box-flex: 1;
+        -ms-flex: 1;
+        text-align: right;
+        line-height: 10px;
+        margin-top: 5px;
+        color: #999;
+        float: right;
+        font-size: 12px;
+    }
+
+    .home-tuan-list .price,
+    .index-rec .home-tuan-list .o-price,
+    .index-rec .home-tuan-list .distance,
+    .index-rec .home-tuan-list .sale {
+        display: block;
+        line-height: 15px;
+        font-size: 12px;
+    }
+
+    .Fix:after {
+        display: block;
+        content: '';
+        height: 0;
+        clear: both;
+    }
+    /* 3. */
+
+    .section03 .col img {
+        width: 60px;
+        top: 10px;
+    }
+
+    .section03 .title01 .title {
+        color: #965037;
+    }
+
+    .section03 .title02 .title {
+        color: #ffa001;
+    }
+
+    .section03 .title03 .title {
+        color: #ff558c;
+    }
+
+    .section03 .title04 .title {
+        color: #19b4ff;
+    }
+
+    .section03 .matrixcell .info {
+        color: #666;
+    }
+    /* 2. */
+
+    .section02 .shelfcell .title span {
+        color: #ff6633;
+    }
+
+    .section02 .shelfcell .subtitel {
+        color: #666;
+        font-size: 14px;
+    }
+
+    .swiper-container {
+        background-color: #fff;
+    }
+
+    .item-hov {
+        background-color: #FAFAFA;
+    }
+
+    .brb {
+        border-bottom: 1px solid #e0e0e0;
+        border-right: 1px solid #e0e0e0;
+    }
+
+    .bb {
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .br {
+        border-right: 1px solid #e0e0e0;
+    }
+
+    .highlight {
+        opacity: 0.7;
+    }
+
+    #list {
+        padding: 11px;
+
+
+    }
+
+    #list>.card {
+        position: relative;
+        float: left;
+        padding: 4px;
+        box-sizing: border-box;
+        background-clip: content-box;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-color: white;
+        border-radius: 22px 26px 0px 29px;
+        /*border: 1px solid red;*/
+        /*margin:2px 0px 2px 0px;*/
+    }
+
+    .card>img{
+       background-clip: content-box;
+       background-position: center;
+       background-repeat: no-repeat;
+       background-size: cover;
+       border-radius: 10px 10px 0px 24px;
+       /*border: 1px solid red;*/
+   }
+   .description{
+    padding-left: 8px;
+    font-size: 13px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+.price1{
+    height: 38px;
+    color: #FF2900;
+    line-height: 38px;
+    padding-left:8px;
+    font-size: 16px;
+}
+.price1 span{
+    position: absolute;
+    right: 6px;
+    line-height: 38px;
+    font-size: 12px;
+    color: black;
+
+}
+</style>
+</head>
+
+<body>
+    <div class="h1"></div>
+    <section id="swipe" class="section01">
+        <div class="swipe-wrap">
+            <div class="swipe-page">
+                <div class="swipe-page-row">
+                    <div class="swipe-page-item open-win" tapmode onclick="shop(1)" >
+                        <img src="../image/swipe/around.png">
+                        <span>男装</span>
+                    </div>
+                    <div class="swipe-page-item open-win" tapmode onclick="shop(2)" >
+                        <img src="../image/swipe/beauty.png">
+                        <span>女装</span>
+                    </div>
+                    <div class="swipe-page-item open-win" tapmode onclick="shop(4)" >
+                        <img src="../image/swipe/children.png">
+                        <span>高品质</span>
+                    </div>
+                    <div class="swipe-page-item open-win"tapmode onclick="shop(3)" >
+                        <img src="../image/swipe/decorate.png">
+                        <span>12元购</span>
+                    </div>
+                </div>
+                <div class="swipe-page-row">
+                    <div class="swipe-page-item open-win" tapmode onclick="shop(5)" >
+                        <img src="../image/swipe/dessert.png">
+                        <span>优惠购</span>
+                    </div>
+                    <div class="swipe-page-item open-win" tapmode onclick="shop(6)" >
+                        <img src="../image/swipe/discount.png">
+                        <span>男鞋</span>
+                    </div>
+                    <div class="swipe-page-item open-win" tapmode onclick="shop(7)" >
+                        <img src="../image/swipe/food.png">
+                        <span>女鞋</span>
+                    </div>
+                    <div class="swipe-page-item open-win" win="shoplist" param='{"type":0,"shopType":6}'>
+                        <img src="../image/swipe/hotel.png">
+                        <span>配件</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <div class="h20"></div>
+    <div class="guesstitle">抢手货<img src="../image/home/competitive_icon.png" alt=""></div>
+    <div id="list1">
+
+    </div>
+    
+    <div class="h10"></div>
+       <!--  <div class="row hightitem section03">
+            <div class="col h80 brb open-win" win="shoplist" param='{"type":0,"shopType":8}'>
+                <div class="matrix">
+                    <div class="matrixcell title01">
+                        <div class="title">免费吃喝玩</div>
+                        <div class="info">新用户专享</div>
+                    </div>
+                </div>
+                <img src="../image/home/cover_02.png" class="fl">
+            </div>
+            <div class="col h80 bb open-win" win="shoplist" param='{"type":0,"shopType":2}'>
+                <div class="matrix">
+                    <div class="matrixcell title02">
+                        <div class="title">免费看电影</div>
+                        <div class="info">新用户专享</div>
+                    </div>
+                </div>
+                <img src="../image/home/cover_01.png" class="fl">
+            </div>
+        </div>
+        <div class="row hightitem section03">
+            <div class="col h80 br open-win" win="shoplist" param='{"type":0,"shopType":8}'>
+                <div class="matrix">
+                    <div class="matrixcell title03">
+                        <div class="title">食色性也</div>
+                        <div class="info">光棍节等你来</div>
+                    </div>
+                </div>
+                <img src="../image/home/cover_03.png" class="fl">
+            </div>
+            <div class="col h80 open-win" win="shoplist" param='{"type":0,"shopType":0}'>
+                <div class="matrix">
+                    <div class="matrixcell title04">
+                        <div class="title">点评祝福</div>
+                        <div class="info">单身用户专享</div>
+                    </div>
+                </div>
+                <img src="../image/home/cover_04.png" class="fl">
+            </div>
+        </div> -->
+        <div class="guesstitle">热推<img src="../image/home/competitive_icon.png" alt=""></div>
+        <div id="list" class="home-tuan-list"></div>
+    </body>
+
+
+    <script type="text/template" id="template1">
+        {{~it.list:value:index}}
+        <div class="snapup hightitem section02 open-win" tapmode onclick="openware('{{=value.wareid.id}}')">
+            <img src="{{=value.wareid.thumbnail}}" class="fl infologo">
+            <div class="shelf2 fl">
+                <div class="shelfcell">
+                    <div class="title">{{=value.wareid.description}}<span>￥{{=value.wareid.price}}</span></div>
+                    <span class="subtitel">周计火爆商品</span>
+                </div>
+            </div>
+            <img src="../image/arrow.png" class="arrow fr">
+        </div>
+        {{~}}
+    </script>
+    <script type="text/template" id="template">
+        {{~it.list:value:index}}
+        <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" data-imageurl="{{=value.wareid.thumbnail}}" data-id="{{=value.id}}" onclick="openretuivideo('{{=value.id}}')" tapmode>
+            <img src="../image/loading.png" style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" onload="fnLoadCardImage(this)">
+            <div class="description">{{=value.wareid.description}}</div>
+            <div class="price1">￥{{=value.wareid.price}}<span>{{=value.date}}</span></div>
+        </div>
+        {{~}}
+    </script>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/common.js"></script>
+    <script type="text/javascript" src="../script/swipe.js"></script>
+    <script type="text/javascript" src="../script/SHA1.js"></script>
+    <script type="text/javascript" src="../script/doT.min.js"></script>
+    <script type="text/javascript" src="../script/remotedb.js"></script>
+    <!-- <script type="text/javascript" src="../script/list.js"></script> -->
+    <script type="text/javascript">
+      var flowerid ;
+      var activity ;
+      var wareTypeList;
+      var skip=0;
+      var LIMIT=16;
+      apiready = function() {
+       getWareList();
+       initEventListenter();
+       initRefresh();
+
+       fnInitSwipe();
+
+   };
+   function openware(id){
+    api.openWin({
+        name: 'ware',
+        url: './ware.html',
+        pageParam: {
+            wareId: id
+        }
+    });
+
+   }
+   function shop(_index){
+     api.openWin({
+         name: 'shoplist',
+         url: './shoplist.html',
+         pageParam: {
+             shoptype: 'main_frame'+_index
+         }
+     });
+ }
+ function fnInitSwipe() {
+    var swipe = $api.byId('swipe'),
+    indicators = $api.domAll(swipe, 'li');
+
+    new Swipe(swipe, {
+        callback: function(index) {
+            for (var i = 0; i < indicators.length; i++) {
+                if (index == i) {
+                    $api.addCls(indicators[i], 'active');
+                } else {
+                    $api.removeCls(indicators[i], 'active');
+                }
+            }
+        }
+    });
+};
+
+function getWareList(_LoadMore){
+    if (_LoadMore) {
+
+    }else{
+       activity = api.require('UILoading');
+       activity.flower({
+        center: {
+            x: api.winWidth/2,
+            y: api.winHeight/2
+        },
+        mask:'rgba(20,0,0,0.5)',
+        size: 30,
+    // fixed: true,
+
+}, function(ret) {
+  flowerid=ret.id;
+});
+   }
+
+
+
+
+   var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
+      if (_LoadMore) {
+        skip+=LIMIT;
+    }else{
+
+        skip=0;
+    }
+    var params={
+        fields:{},
+        fields: {},
+        skip:skip,
+        limit:LIMIT,
+        include: ['wareidPointer'],
+        order:"createdAt DESC"
+    }
+    params=$api.jsonToStr(params);
+    api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/retuivideo?filter='+params,
+        method: 'get',
+        headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey
+        },
+        
+    },function(ret, err){
+        if (ret) {
+
+          // 隐藏下拉刷新
+          // api.refreshHeaderLoadDone();
+         // 模板渲染
+         activity.closeFlower({
+            id:flowerid 
+        });
+         api.refreshHeaderLoadDone();
+         updateWareList(ret,_LoadMore);
+
+         var ret1=[
+            ret[0],
+            ret[1],
+            ret[2]
+         ]
+         // alert($api.jsonToStr( ret1));
+         updateWareList1(ret1,_LoadMore);
+
+
+
+     } else {
+       api.toast({
+           msg: err.msg,
+           duration: 2000,
+           location: 'bottom'
+       });
+   }
+});
+}
+
+function updateWareList(_data,_LoadMore){
+   var param = {
+    list:_data,
+    frameWidth: api.frameWidth,
+};
+var list=$api.byId('list');
+var tempFn=doT.template($api.byId('template').innerHTML);
+var resultText=tempFn(param)
+if (_LoadMore) {
+    $api.append(list, resultText);
+}else{
+    $api.html(list, resultText);
+}
+    // 优化
+    api.parseTapmode();
+    if (_LoadMore) {
+        if (_data.length<LIMIT) {
+            var pushStatus=$api.byId('pushStatus');
+            pushStatus.innerHTML="我是有底线滴"
+        }
+    }
+    
+    
+
+}
+function updateWareList1(_data,_LoadMore){
+    // alert($api.jsonToStr(_data))
+   var param = {
+    list:_data,
+    frameWidth: api.frameWidth,
+};
+var list=$api.byId('list1');
+var tempFn=doT.template($api.byId('template1').innerHTML);
+var resultText=tempFn(param)
+if (_LoadMore) {
+    $api.append(list, resultText);
+}else{
+    $api.html(list, resultText);
+}
+    // 优化
+    api.parseTapmode();
+    if (_LoadMore) {
+        if (_data.length<LIMIT) {
+            var pushStatus=$api.byId('pushStatus');
+            pushStatus.innerHTML="我是有底线滴"
+        }
+    }
+    
+    
+
+}
+// 监听 
+function initEventListenter(){
+    api.addEventListener({
+        name:'scrolltobottom',
+        extra:{
+            threshold:100
+        }
+    }, function(ret, err){        
+       getWareList(true);
+   });
+}
+// 下拉刷新
+function initRefresh(){
+    api.setCustomRefreshHeaderInfo({
+        bgColor: '#C0C0C0',
+        isScale: true
+    }, function() {
+        getWareList();
+        
+    });
+
+}
+
+function fnLoadCardImage(element){
+
+
+    var eCard = $api.closest(element, '.card');
+
+    var url = eCard.dataset['imageurl'];
+    // api.imageCache({
+    //     url: url
+    // }, function(ret, err){
+        element.src = url ;
+    // });
+
+}
+</script>
+
+</html>

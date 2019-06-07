@@ -255,7 +255,7 @@
     var activity ;
     var wareTypeList;
     var skip=0;
-    var LIMIT=9;
+    var LIMIT=19;
     function init(){
        wareTypeList=$api.getStorage('WareTypeList');
 
@@ -300,23 +300,28 @@
 }
 // 获取列表页数据
 function getWareList(_LoadMore){
- activity = api.require('UILoading');
- activity.flower({
-    center: {
-        x: api.winWidth/2,
-        y: api.winHeight/2
-    },
-    mask:'rgba(20,0,0,0.5)',
-    size: 30,
+    if (_LoadMore) {
+
+    }else{
+      activity = api.require('UILoading');
+      activity.flower({
+        center: {
+            x: api.winWidth/2,
+            y: api.winHeight/2
+        },
+        mask:'rgba(20,0,0,0.5)',
+        size: 30,
     // fixed: true,
 
 }, function(ret) {
   flowerid=ret.id;
 });
 
+  }
 
 
- var now = Date.now();
+
+  var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
       if (_LoadMore) {
@@ -346,10 +351,13 @@ function getWareList(_LoadMore){
         
     },function(ret, err){
         if (ret) {
-         
+
           // 隐藏下拉刷新
           // api.refreshHeaderLoadDone();
          // 模板渲染
+         activity.closeFlower({
+            id:flowerid 
+        });
          api.refreshHeaderLoadDone()
          updateWareList(ret,_LoadMore);
 
@@ -381,9 +389,7 @@ function updateWareList(_data,_LoadMore){
             pushStatus.innerHTML="我是有底线滴"
         }
     }
-    activity.closeFlower({
-        id:flowerid 
-    });
+
     
 
 }

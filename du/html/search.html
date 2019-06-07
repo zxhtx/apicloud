@@ -1,323 +1,124 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-	<title>title</title>
-	<link rel="stylesheet" type="text/css" href="../css/api.css"/>
-	<style>
-	html, body {
-		background: #f8f8f8;
-	}
-	header {
-		background-color: white;
-	}
-	.input {
-		padding: 0px 0px 5px 5px;
-		overflow: hidden;
-		/*border: 1px solid gray;*/
-		/*border-radius: 30px;*/
-	}
-	.buttom {
-		width: 80px;
-		height: 40px;
-		line-height: 40px;
-		text-align: center;
-		color: black;
-		float: right;
-	}
-	.display-none {
-		display: none;
-	}
-	.record {
-		font-size: 16px;
-		background-color: white;
-		color: black;
-		margin-left: 6px;
-		padding: 3px 8px 3px 8px;
-		border-bottom: 1px solid #eee;
-		border: 1px solid #eee;
-		border-radius: 50px;
-		overflow:hidden;
-		text-overflow:ellipsis
-		width: 28px;
-		text-align: center;
-	}
-	.record:active {
-		background: #f4f4f4;
-	}
-	.eliminate {
-		font-size: 16px;
-		text-align: center;
-		padding-top: 5px ;
-		background: #FFFFFF
-	}
-	.eliminate:active {
-		background: #FFFFFF;
-	}
-	#list{
-		height: 26px;
-		background: #FFFFFF;
-		overflow: hidden;
-	}
-	
-</style>
-</head>
-<body>
-	<header id="header">
-		<div class="input">
-			<div id="button" class="buttom">
-				取消
-			</div>
-		</div>
-		<div id="list"></div>
-		<div tapmode onclick="eliminaterecord();" id="eliminate" class="eliminate">
-			清除搜索记录
-		</div>
-	</header>
-	<script id="template" type="text/template">
-		{{ if (it.length == 0) { }}
-		<div style="font-size: 14px; text-align: center;padding: 5px 0;">暂无搜索记录</div>
-		{{ } else { }}
-		{{ for (var i = 0, len = it.length; i < len; i++) { }}
-		<span tapmode onclick="Performsearch(this.innerHTML,2);" class="record">
-			{{=it[i].searchrecord}}
-		</span>
-		{{ } }}
-		{{ } }}
-	</script>
-	
-</body>
-<script type="text/javascript" src="../script/api.js"></script>
-<script type="text/javascript" src="../script/doT.min.js"></script>
-<script type="text/javascript">
-	var db, UIInput, Inputid;
-	var button = $api.byId('button');
-	var reset = $api.byId('reset');
-	var eliminate = $api.byId('eliminate');
-	var record = [];
-	apiready = function() {
-		var header=$api.byId('header');
-        // 获取header和nav的高
-        headerH=$api.offset(header).h
-        api.openFrame({
-        	name: 'search_frame',
-        	url: './search_frame.html',
-        	rect: {
-        		x: 0,
-        		y: headerH,
-        		w: 'auto',
-        		h: 'auto'
-        	},
-        	pageParam: {
-        		searchtitle: api.pageParam.searchtitle
-        	},
-        	bounces: true
-        });
-        openUIInput();
-        opendb();
-        // videosearch();
 
-    };
-		//打开表单
-		// function videosearch(){
-		// 	if (api.pageParam.searchtitle!=undefined) {
-		// 		// alert(1)
-		// 		api.execScript({
-		// 			name: 'search2',
-		// 			frameName: 'search_frame',
-		// 			script: "searchval('"+ api.pageParam.searchtitle +"')"
-		// 		});
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>APICloud APP</title>
+        <link rel="stylesheet" type="text/css" href="../css/api.css" />
+        <style>
+            header {
+                background: #fcfcfc;
+                height: 50px;
+                border-bottom: 1px solid #DDDFE3;
+            }
+            
+            .left {
+                float: left;
+                width: 50px;
+                height: 50px;
+                background: url(../image/header/back.png) no-repeat center center;
+                background-size: 28px auto;
+                /*border: 1px solid red;*/
+            }
+            
+            .right {
+                float: right;
+                width: 50px;
+                line-height: 50px;
+                color: #FF8400;
+                font-size: 16px;
+                text-align: center;
+            }
+            
+            .right-hov {
+                color: #DD8400;
+            }
+            
+            .middle {
+                position: absolute;
+                left: 50px;
+                right: 60px;
+                margin-top: 8px;
+                height: 34px;
+                border-radius: 34px;
+                background-color: #E8E8E8;
+            }
+            
+            .middle>img:first-child {
+                float: left;
+                padding-top: 7px;
+                height: 20px;
+                vertical-align: top;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            
+            .middle>input {
+                position: absolute;
+                left: 40px;
+                right: 50px;
+                margin-top: 8px;
+                height: 18px;
+                line-height: 18px;
+                color: #999;
+                font-size: 14px;
+                outline: none;
+            }
+            
+            .middle>input::-webkit-input-placeholder {
+                color: #666;
+                line-height: 18px;
+                font-size: 14px;
+            }
+            
+            .middle>img:last-child {
+                float: right;
+                padding-top: 4px;
+                height: 27px;
+                vertical-align: top;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+        </style>
+    </head>
 
-		// 	}
-		// } 
-		function openUIInput() {
-			var recty = 10;//div的高度减去模块的高度除以2
-			//如果页面开启了沉浸式，请加上沉浸式的高度。Android 25px,ios 20px
-			UIInput = api.require('UIInput');
-			UIInput.open({
-				rect : {
-					x : 18,
-					y : 3,
-					w : api.winWidth - 85,//减去按钮和边距的宽度。可以自定义宽度，但不要大于win的宽度减去（按钮的宽度和header左边距的宽度）的值。
-					h : 30
-				},
-				styles : {
-					bgColor : '#fff',
-					size : 14,
-					color : '#000',
-					placeholder : {
-						color : '#666'
-					}
-				},
-				autoFocus : true,
-				maxRows : 1,
-				placeholder : '请输入搜索关键字',
-				keyboardType : 'search',
-			}, function(ret, err) {
-				if (ret) {
-					if (ret.status) {
-						Inputid = ret.id;
-						var eventType = ret.eventType;
-						//监听表单焦点
-						UIInput.addEventListener({
-							id : Inputid,
-							name : 'resignFirstResponder'
-						}, function() {
-							//表单失去焦点，收起键盘
-							UIInput.closeKeyboard({
-								id : Inputid
-							});
-						});
-						//监听表单值的变化
-						UIInput.value(function(ret, err) {
-							if (ret.status) {
-								if (ret.msg != '') {//如果表单的值为空
-									$api.text(button, '搜索');//更换按钮显示文字
-									$api.rmEvt(button, 'click', closesearch);//移除DOM点击事件
-									$api.addEvt(button, 'click', search);//为DOM绑定新事件
-									if (eventType == 'search') {//点击键盘上的搜索按钮
-										search();//搜索
-									}
-								} else {
-									$api.text(button, '取消');//更换按钮显示文字
-									$api.rmEvt(button, 'click', search);//移除DOM点击事件
-									$api.addEvt(button, 'click', closesearch);//为DOM绑定新事件
-								}
-							}
-						});
-					}
-				} else {
-					alert(JSON.stringify(err));
-				}
-			});
-		};
-		//点击搜索
-		function search() {
-			//获取表单的值
-			UIInput.value({
-				id : Inputid,
-			}, function(ret, err) {
-				if (ret.status) {
-					var msg = $api.trimAll(ret.msg);//清除字符串中空格
-					//储存搜索记录
-					Savesearchrecord(msg);
-					//执行搜索
-					Performsearch(msg,1);
-				} else {
-					alert(JSON.stringify(err));
-				}
-			});
-		};
-		//执行搜索
-		function Performsearch(record,_data) {
-			if (_data==2) {
-				UIInput.insertValue({
-					msg: record
-				});
-			}
-			// alert(record)
-			// 页面执行搜索
-			api.execScript({
-				// name: 'search',
-				frameName: 'search_frame',
-				script: "searchval('"+ record +"')"
-			});
-			//可以使用api.execScript跨页面执行脚本。也可以使用自定义监听。
-			
-		};
-		//点击取消
-		function closesearch() {
-			api.closeWin();
-		};
-		//打开数据库
-		function opendb() {
-			db = api.require('db');
-			db.openDatabase({
-				name : 'record',
-				path:'fs://history.db'
-			}, function(ret, err) {
-				if (ret.status) {
-					initdb();
-				}
-			});
-		}
+    <body>
+        <header id="header">
+            <div class="left event-back" tapmode onclick="api.closeWin();"></div>
+            <div class="right" tapmode="highlight" onclick="fnSearch();">搜索</div>
+            <div class="middle">
+                <img src="../image/header/search_groupbuy.png">
+                <input id="searchText" type="text" placeholder="请输入搜索内容">
+            </div>
+        </header>
+    </body>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/common.js"></script>
+    <script type="text/javascript">
+        apiready = function() {
+           
+        };
 
-		//初始化数据库
-		function initdb() {
-			db.executeSql({
-				name : 'record',
-				sql : "CREATE TABLE IF NOT EXISTS 'record' ('config_name' VARCHAR(32),'config_value' VARCHAR(32))"
-			}, function(ret, err) {
-				if (ret.status) {
-					Readsearchrecord();
-				} else {
-					api.alert({
-						msg : '数据库初始化失败！请重新打开/n' + JSON.stringify(err),
-						buttons : ['确定']
-					});
-				}
-			});
-		}
+      
+        function fnSearch() {
+            var searchText=$api.byId('searchText').value;
+          api.openFrame({
+              name: 'search_frame',
+              url: './search_frame.html',
+              rect: {
+                  x: 0,
+                  y: 50,
+                  w: 'auto',
+                  h: 'auto'
+              },
+              pageParam: {
+                  searchtitle: searchText
+              },
+              
+          });
+          
+        };
+    </script>
 
-		//读取搜索记录
-		function Readsearchrecord() {
-			db.selectSql({
-				name : 'record',
-				sql : "select * from record where config_name='searchrecord'"
-			}, function(ret, err) {
-				if (ret) {
-					if (ret.data != '') {
-						//取出数据库中的数据生成数组
-						for (var i = 0, len = ret.data.length; i < len; i++) {
-							record.push({
-								searchrecord : ret.data[i].config_value
-							})
-						}
-						//倒序输出
-						record.reverse();
-						//渲染页面
-						UpdateList(record);
-					} else {
-						//数据库无数据时清除按钮不显示
-						$api.addCls(eliminate, 'display-none');
-						UpdateList(record);
-					}
-				} else {
-					console.log(JSON.stringify(err))
-				}
-			})
-		};
-		//储存搜索关键字
-		function Savesearchrecord(record) {
-			db.executeSql({
-				name : 'record',
-				sql : "insert into record(config_name,config_value) values('searchrecord','" + record + "')"
-			});
-		};
-		//清除搜索记录
-		function eliminaterecord() {
-			db.executeSql({
-				name : 'record',
-				sql : "delete from record where config_name='searchrecord'"
-			});
-			var list=$api.byId('list');
-			list.style.height='26px';
-			$api.addCls(eliminate, 'display-none');
-			record = [];
-			UpdateList(record);
-			api.toast({
-				msg : '清除成功'
-			});
-		};
-		//渲染数据
-		function UpdateList(record) {
-			var act_content = $api.byId('list');
-			var tempFn = doT.template($api.byId('template').innerHTML);
-			var resultText = tempFn(record);
-			$api.html(act_content, resultText);
-			api.parseTapmode();
-		}
-	</script>
-	</html>
+</html>

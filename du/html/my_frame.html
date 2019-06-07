@@ -1,0 +1,515 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>APICloud APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+    html,
+    body {
+        height: 100%;
+        background-color: #f0f0f0;
+    }
+
+    .h10 {
+        height: 10px;
+        background: #f0f0f0;
+    }
+
+    .h1 {
+        height: 1px;
+        margin-left: 15px;
+        background: #f0f0f0;
+    }
+
+    .fr {
+        float: right;
+    }
+
+    .hint {
+        color: #666;
+        font-size: 12px;
+        margin-right: 5px;
+    }
+
+    .firstblock,
+    .secondblock,
+    .thirdblock {
+        background-color: #fff;
+    }
+
+    .login {
+        background-image: url(../image/my/personal_bkg.jpg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        position: relative;
+    }
+
+    .loginbg {
+        width: 100%;
+    }
+
+    .login .personal_logo {
+        position: absolute;
+        top: 60px;
+        width: 64px;
+        height: 64px;
+        left: 20px;
+        border-radius: 32px;
+    }
+
+    .person_arrow {
+        position: absolute;
+        height: 20px;
+        right: 10px;
+        top: 90px;
+    }
+
+    .login .userinfo {
+        position: absolute;
+        top: 60px;
+        margin-left: 100px;
+    }
+
+    .login .userinfo .title {
+        font-size: 14px;
+        color: black;
+    }
+
+    .login .userinfo .subtitle {
+        font-size: 14px;
+        color: #000;
+        border: 1px solid #fff;
+        display: inline-block;
+        padding: 3px;
+        border-radius: 4px;
+        margin-top: 5px;
+    }
+    .login .userinfo .vip {
+        font-size: 14px;
+        color: #000;
+        display: block;
+        /*padding: 3px;*/
+        border-radius: 4px;
+        margin-top: 5px;
+    }
+    .login .dingyueandfensi{
+        position: absolute;
+        bottom: 12px;
+        width: 100%;
+        height: 20px;
+        text-align: center;
+    }
+    .login .dingyueandfensi .dingyue {
+        font-size: 14px;
+        color: #000;
+        display: inline-block;
+        border-radius: 4px;
+        margin-right: 58px;
+    }
+    .login .dingyueandfensi .fensi {
+        margin-left: 58px;
+        font-size: 14px;
+        color: #000;
+        display: inline-block;
+        border-radius: 4px;
+
+    }
+
+    .item {
+        height: 50px;
+        line-height: 50px;
+        padding-left: 15px;
+        background-color: #fff;
+    }
+
+    .item_ico {
+        float: left;
+        width: 30px;
+        padding: 10px 10px 10px 0;
+    }
+
+    .item_arrow {
+        float: right;
+        width: 16px;
+        padding: 17px 15px 15px 0;
+    }
+
+    .item-hov {
+        background-color: #E8E8E8;
+    }
+</style>
+</head>
+
+<body>
+    <div class="login open-win" win="person_info">
+        <img src="../image/my/personal_bkg.jpg" class="loginbg">
+        <img id="userAvatar" src="../image/my/profile_default.png" tapmode onclick="setAvatar()" class="personal_logo">
+        <div class="userinfo">
+            <div id="userAccount" class="title">点击登录</div>
+            <div id="userRegion" class="subtitle">用户名：未设置</div>
+            <div id="vip" class="vip"></div>
+
+            
+        </div>
+        <div class="dingyueandfensi">
+            <div id="dingyue" class="dingyue">订阅/0</div>
+            <div id="fensi" class="fensi">粉丝/0</div>
+        </div>
+    </div>
+    <div class="h10"></div>
+    <div class="firstblock">
+        <div class="item open-win" win="myorder" login="true">
+            <img src="../image/my/my_order_user_icon_normal.png" alt="" class="item_ico">
+            <span>我的订单</span>
+            <img src="../image/arrow.png" class="item_arrow">
+        </div>
+        <div class="h1"></div>
+    </div>
+    <div class="h10"></div>
+    <div class="secondblock">
+        <div class="item open-win" win="myfavorite" login="true">
+            <img src="../image/my/my_favorite_user_icon_normal.png" class="item_ico">
+            <span>购物车</span>
+            <img src="../image/arrow.png" class="item_arrow">
+        </div>
+        <div class="h1"></div>
+        <div class="item open-win" win="myhistory">
+            <img src="../image/my/my_history_user_icon_normal.png" class="item_ico">
+            <span>最近浏览</span>
+            <img src="../image/arrow.png" class="item_arrow">
+        </div>
+        <div class="h1"></div>
+    </div>
+    <div class="h10"></div>
+    <div class="thirdblock">
+        <div class="h1"></div>
+        <div class="item open-win" win="setting">
+            <img src="../image/my/my_setting_user_icon_normal.png" class="item_ico">
+            <span>设置</span>
+            <img src="../image/arrow.png" class="item_arrow">
+        </div>
+    </div>
+    <div class="h10"></div>
+    <div class="h10"></div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<script type="text/javascript">
+    var userInfo=$api.getStorage('userInfo');
+    var now = Date.now();
+    var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+    var myDate = new Date();
+    var Y=myDate.getFullYear();
+    var M=myDate.getMonth()+1;
+    var D=myDate.getDate();
+    apiready = function() {
+        getUsername();
+        dingyuecount();
+        fensicount();
+
+    };
+    function dingyuecount(){
+        alert(1)
+        var dingyue=$api.byId('dingyue');
+        var params={
+            fields:{},
+            fields: {},
+            where: {
+                focus:userInfo.userId
+            }
+        }
+        params=$api.jsonToStr(params);
+        api.ajax({
+            url: 'http://d.apicloud.com/mcm/api/guanzhu/count?filter='+params,
+            method: 'get',
+            headers: {
+                "X-APICloud-AppId": "A6099267504667",
+                "X-APICloud-AppKey":   appKey,
+            },
+        },function(ret, err){
+            if (ret) {
+
+                dingyue.innerHTML='订阅/'+ret.count;
+            }
+        });
+    }
+    function fensicount(){
+
+        var fensicount=$api.byId('fensi');
+        var params={
+            fields:{},
+            fields: {},
+            where: {
+                bewatched:userInfo.userId
+            }
+        }
+        params=$api.jsonToStr(params);
+        api.ajax({
+            url: 'http://d.apicloud.com/mcm/api/guanzhu/count?filter='+params,
+            method: 'get',
+            headers: {
+                "X-APICloud-AppId": "A6099267504667",
+                "X-APICloud-AppKey":   appKey,
+            },
+        },function(ret, err){
+            if (ret) {
+                fensicount.innerHTML='粉丝/'+ret.count;
+            }
+        });
+    }
+        // 在个人中心中显示头像
+        function setAvatar(){
+
+          if (!userInfo) {
+            api.openWin({
+                name: 'login',
+                url: './login.html',
+                pageParam: {
+                    name: 'test'
+                }
+            });
+            return;
+        }
+        alert($api.jsonToStr(userInfo))
+        api.getPicture({
+            sourceType: 'album',
+            encodingType: 'jpg',
+            mediaValue: 'pic',
+            destinationType: 'url',
+            allowEdit: true,
+            quality: 50,
+    // targetWidth: 100,
+    // targetHeight: 100,
+    saveToPhotoAlbum: false
+}, function(ret, err) {
+    if (ret) {
+        if (ret.data=='') {
+            api.toast({
+                msg: '未选择图片',
+                duration: 2000,
+                location: 'bottom'
+            });
+        }else{
+           uploadAtavar(ret.data)
+       }
+
+   }
+
+});
+
+    }
+// 上传头像 
+function uploadAtavar(_data){
+
+
+  api.ajax({
+    url: 'https://d.apicloud.com/mcm/api/file',
+    method: 'post',
+    data: {
+        values: { 
+            filename: 'icon'
+        },
+        files: { 
+            file: _data
+        }
+    },
+    headers: {
+        "X-APICloud-AppId": "A6099267504667",
+        "X-APICloud-AppKey":   appKey
+    },
+},function(ret, err){
+    if (ret) {
+
+        updateUserAtavar(ret)
+    } else {
+        api.toast({
+            msg: err.msg,
+            duration: 2000,
+            location: 'bottom'
+        });
+    }
+});
+}
+// 更改头像
+function updateUserAtavar(_data){
+    // alert($api.jsonToStr(_data))
+    var now = Date.now();
+    var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+    
+    api.ajax({
+        url: 'https://d.apicloud.com/mcm/api/user/'+userInfo.userId,
+        method: 'put',
+        headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey,
+            "Authorization":userInfo.id
+        },
+        data: {
+            values: { 
+                avatar: _data
+            }
+
+        }
+    },function(ret, err){
+        if (ret) {
+           updateLocalAvatar(ret)
+       } else {
+        api.toast({
+            msg: err.msg,
+            duration: 2000,
+            location: 'bottom'
+        });
+    }
+});
+}   
+// 改变头像路径
+function updateLocalAvatar(_data){
+   var  userAvatar=$api.byId('userAvatar');
+   if (!_data.avatar) {
+    return;
+}
+api.imageCache({
+    url: _data.avatar.url
+}, function(ret, err){
+    if( ret ){
+       userAvatar.src=ret.url;
+     // userAvatar.style.backgroundSize='108px 108px';
+ }else{
+    api.toast({
+        msg: err.msg,
+        duration: 2000,
+        location: 'bottom'
+    });
+
+}
+});
+
+}
+
+
+// 在个人中心中显示用户名
+function getUsername(){
+    var userAccount=$api.byId('userAccount');
+    var userRegion=$api.byId('userRegion');
+    var  userAvatar=$api.byId('userAvatar');
+    var vip=$api.byId('vip');
+
+    var now = Date.now();
+    var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+    var params={
+        fields: {},
+        where:{
+            id:userInfo.userId
+        },
+        skip: 0,
+    }
+    params=$api.jsonToStr(params);
+    api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
+        method: 'get',
+        headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey
+        },
+
+    },function(ret, err){
+        if (ret) {
+            // 存储用户名
+            $api.setStorage('user', ret);
+            userAccount.innerHTML='账号'+ret[0].username;
+            if (ret[0].avatar) {
+                userAvatar.src=ret[0].avatar.url;
+            }else{
+
+            }
+
+            if (ret[0].chaoshiuser==undefined) {
+               userRegion.innerHTML='修改用户名';
+           }else{
+              userRegion.innerHTML='用户名:'+ret[0].chaoshiuser;
+          }
+
+
+          var now=Y+"-"+M+"-"+D;
+          var vipday=datedifference(ret[0].date,now)
+          vipday=99-vipday;
+          if (ret[0].vip==1) {
+            vip.innerHTML='vip'+'(仅剩'+ vipday +'天)';
+
+        }else{
+            vip.innerHTML='普通用户'
+        }
+        date(ret[0].date);
+
+    } else {
+        api.toast({
+            msg: err.msg,
+            duration: 2000,
+            location: 'bottom'
+        });
+    }
+});
+
+}   
+
+
+ function datedifference(sDate1, sDate2) {    //sDate1和sDate2是2006-12-18格式  
+    var dateSpan,
+    tempDate,
+    iDays;
+    sDate1 = Date.parse(sDate1);
+    sDate2 = Date.parse(sDate2);
+    dateSpan = sDate2 - sDate1;
+    dateSpan = Math.abs(dateSpan);
+    iDays = Math.floor(dateSpan / (24 * 3600 * 1000));
+    return iDays
+};
+
+
+function date(_date){
+    var now=Y+"-"+M+"-"+D;
+    var day=datedifference(_date,now);
+    if (day>99){
+        updatevip();
+
+    }
+
+}
+function updatevip(){
+ var usernameinfo=$api.getStorage('userInfo');
+ api.ajax({
+    url: 'http://d.apicloud.com/mcm/api/user/'+usernameinfo.userId,
+    method: 'put',
+    headers: {
+        "X-APICloud-AppId": "A6099267504667",
+        "X-APICloud-AppKey":   appKey,
+        "Authorization": usernameinfo.id
+    },
+    data: {
+        values:{
+            "vip":'',
+            "date":''
+        }
+    },
+
+},function(ret, err){
+    if (ret) {
+       var vip=$api.byId('vip');  
+       vip.innerHTML='普通用户';
+   } else {
+    api.toast({
+        msg: err.msg,
+        duration: 2000,
+        location: 'bottom'
+    });
+}
+});
+
+}
+
+</script>
+
+</html>

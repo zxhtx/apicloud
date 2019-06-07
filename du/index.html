@@ -5,66 +5,309 @@
   <meta charset="utf-8">
   <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
   <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-  <title>Hello APP</title>
+  <title>APICloud App</title>
   <link rel="stylesheet" type="text/css" href="./css/api.css" />
-  <style type="text/css">
+  <style>
   html,
   body {
     height: 100%;
-    width: 54px;
-    background-color: #fff;
   }
-/*
-  .wrap {
+
+  body {
     display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
     -webkit-box-orient: vertical;
     -webkit-flex-flow: column;
-    }*/
-    header {
-     position: relative;
-     width: 100%;
-     height: 50px;
-     background-color: white;
-   }
-
-
- </style>
-</head>
-
-<body >
-  <header id="header"></header>
-</body>
-<script type="text/javascript" src="./script/api.js"></script>
-<script type="text/javascript" src="script/SHA1.js"></script>
-<script type="text/javascript" src="script/db.js"></script>
-<script type="text/javascript">
- var headerH;
- apiready = function() {
-   var header = $api.dom('header'); // 获取 header 标签元素
-   headerH = $api.fixStatusBar(header);
-   
-
-
-   exitApp();
-      // WareTypeList();
-    // initPushGeTui();
-    // initdb();
-    fnNVTabBar_open();
-    fnopenFrameGroup1();
-    fnOpenNvnBar1();
+    flex-flow: column;
   }
 
-  //   api.openWin({
-  //     name: 'nav',
-  //     url: './html/nav_frame.html',
-  //     pageParam: {
-  //       name: 'test'
-  //     }
-  //   });
-  // }
-//   function initdb(){
-//     $db.open();
-//   }
+  section {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+  }
+
+  header {
+    position: relative;
+    height: auto;
+  }
+
+  footer {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    box-sizing: border-box;
+    height: 50px;
+    background-color: rgb(250, 250, 250);
+    border-top: 1px solid #ccc;
+  }
+
+  footer>div {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    width: 100%;
+    color: rgb(165, 165, 165);
+    font-size: 12px;
+    text-align: center;
+    padding-bottom: 4px;
+    padding-top: 34px;
+    background-repeat: no-repeat;
+    background-position: center 6px;
+    background-size: auto 24px;
+  }
+
+  footer>div:nth-child(1) {
+    background-image: url(./image/footer/home.png);
+  }
+
+  footer>div:nth-child(2) {
+    background-image: url(./image/footer/groupbuy.png);
+  }
+
+  footer>div:nth-child(3) {
+    background-image: url(./image/footer/find.png);
+  }
+
+  footer>div:nth-child(4) {
+    background-image: url(./image/footer/my.png);
+  }
+
+  footer>div:nth-child(1).active {
+    background-image: url(./image/footer/home_act.png);
+    color: rgb(254, 151, 84);
+  }
+
+  footer>div:nth-child(2).active {
+    background-image: url(./image/footer/groupbuy_act.png);
+    color: rgb(254, 151, 84);
+  }
+
+  footer>div:nth-child(3).active {
+    background-image: url(./image/footer/find_act.png);
+    color: rgb(254, 151, 84);
+  }
+
+  footer>div:nth-child(4).active {
+    background-image: url(./image/footer/my_act.png);
+    color: rgb(254, 151, 84);
+  }
+
+  .header-item {
+    position: relative;
+    display: none;
+  }
+
+  .header-item-act {
+    display: block;
+  }
+
+  header>div:nth-child(1) {
+    position: relative;
+    background-color: white;
+    height: 50px;   
+  }
+
+  header>div:nth-child(2) {
+    position: relative;
+    height: 50px;
+    background-color: rgb(252, 252, 252);
+  }
+
+  header>div:nth-child(3) {
+    position: relative;
+    height: 50px;
+    background-color: rgb(252, 252, 252);
+  }
+  /* header home */
+
+  .home-citylist {
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    color: #fff;
+    font-size: 14px;
+    margin-left: 15px;
+  }
+
+  .home-citylist>img {
+    height: 20px;
+    vertical-align: top;
+    padding-top: 15px;
+  }
+
+  .home-search {
+    position: absolute;
+    bottom: 8px;
+    left: 9px;
+    right: 9px;
+    height: 34px;
+    line-height: 34px;
+    background-color:#000;
+    border-radius: 34px;
+    color: white;
+    font-size: 14px;
+  }
+
+  .home-search>img {
+    height: 20px;
+    padding-top: 7px;
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: top;
+  }
+
+
+  .find-search {
+    position: absolute;
+    bottom: 8px;
+    left: 15px;
+    right: 60px;
+    height: 34px;
+    line-height: 34px;
+    font-size: 16px;
+  }
+
+</style>
+</head>
+
+<body>
+  <header id="header">
+    <div class="header-item header-item-act" id="home">
+      <div class="home-search open-win" win="html/search">
+        <img src="./image/header/search_home.png">
+        <span>搜索其实很简单</span>
+      </div>
+    </div>
+    <div class="header-item" id="find">
+      <div class="find-search open-win">
+       热推短视频
+     </div>
+
+   </div>
+   <div class="header-item" id="my">
+   </div>
+ </header>
+ <section></section>
+ <footer id="footer">
+  <div class="menu active" tapmode="active" onclick="fnChange(0)">首页</div>
+  <div class="menu" tapmode="active" onclick="fnChange(1)">热推</div>
+  <div class="menu" tapmode="active" onclick="fnChange(2)">潮视</div>
+  <div class="menu" tapmode="active" onclick="fnChange(3)">我的</div>
+</footer>
+</body>
+<script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript" src="./script/common.js"></script>
+<script type="text/javascript" src="./script/localdb.js"></script>
+<script type="text/javascript" src="./script/SHA1.js"></script>
+<script type="text/javascript">
+  apiready = function() {
+    // initPushGeTui();
+    WareTypeList();
+    fnReadyOpenWin();
+    fnInit();
+
+    fnOpenDatabase();
+    fnChange(0);
+
+    fnGetLocation(function() {
+      setTimeout(function() {
+        fnOpenWelcome();
+      }, 100);
+    });
+  };
+
+  function fnInitListener() {
+    var flag = false;
+    api.addEventListener({
+      name: 'keyback'
+    }, function(ret, err) {
+      if (false == flag) {
+        api.toast({
+          msg: '再按一次退出',
+          duration: 2000,
+          location: 'bottom'
+        });
+        flag = true;
+        setTimeout(function() {
+          flag = false;
+        }, 2000);
+      } else {
+        api.closeWidget({
+          silent: true
+        });
+      }
+    });
+
+
+  };
+
+
+
+  var headers, footers, headerHeight, footerHeight;
+
+  function fnInit() {
+    var header = $api.byId('header');
+    var footer = $api.byId('footer');
+
+    headers = $api.domAll(header, '.header-item');
+    footers = $api.domAll(footer, 'div');
+
+    for (var i = 0; i < headers.length; i++) {
+      $api.fixIos7Bar(headers[i]);
+    }
+
+    headerHeight = $api.offset(header).h;
+    footerHeight = $api.offset(footer).h;
+  };
+
+  function fnOpenScanner() {
+    var fnscanner = api.require('FNScanner');
+    fnscanner.openScanner({}, function(ret, err) {
+      if (ret && 'success' == ret.eventType) {
+        alert(ret.content);
+      }
+    });
+  };
+  var frames = ['home_frame', 'newvideo', 'caoshi_frame', 'my_frame'];
+
+  function fnChange(index) {
+    
+   for (var i = 0; i <=headers.length; i++) {
+    if (index == i) {
+      $api.addCls(headers[i], 'header-item-act');
+      $api.addCls(footers[i], 'active');
+
+      var y = 3 == index ? 0 : headerHeight;
+      
+      api.openFrame({
+        name: frames[i],
+        url: './html/' + frames[i] + '.html',
+        bounces: false,
+        bgColor: '#f0f0f0',
+        vScrollBarEnabled: false,
+        hScrollBarEnabled: false,
+        rect: {
+          x: 0,
+          y: y,
+          w: 'auto',
+          h: api.frameHeight - y - footerHeight
+        }
+      });
+    } else {
+      $api.removeCls(headers[i], 'header-item-act');
+      $api.removeCls(footers[i], 'active');
+
+      api.setFrameAttr({
+        name: frames[i],
+        hidden: true
+      });
+    }
+  }
+};
+
+
 
 function initPushGeTui(){
   var uzgetuisdk = api.require('pushGeTui');
@@ -88,9 +331,6 @@ function initPushGeTui(){
       value = 'onNotificationMessageArrived' + ret.onNotificationMessageArrived
       break;
     }
-
-
-
   });
 } 
 function fnpush(payload){
@@ -105,7 +345,6 @@ function fnpush(payload){
       type: "fade"
     }
   });
-
 }
 function WareTypeList(){
   var WareTypeList=$api.getStorage('WareTypeList');
@@ -115,7 +354,6 @@ function getWareTypeList(){
  var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
-
       var params={
         fields:{},
         where:{},
@@ -130,7 +368,6 @@ function getWareTypeList(){
           "X-APICloud-AppId": "A6099267504667",
           "X-APICloud-AppKey":   appKey
         },
-
       },function(ret, err){
         if (ret) {
          $api.setStorage('WareTypeList', ret);
@@ -141,412 +378,6 @@ function getWareTypeList(){
     }
 
 
-    function fnOpenNvnBar1() {
-      api.openFrame({
-        name: 'nvnavigationbar1',
-        url: 'html/nvnavigationbar1.html',
-        bounces: false,
-            rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
-                marginTop: headerH, // main页面距离win顶部的高度
-                w: 'auto', // main页面的宽度 自适应屏幕宽度
-                h: 58
-              }
-            });
-    }
+  </script>
 
-    function fnOpenNvnBar2() {
-      api.openFrame({
-        name: 'nvnavigationbar2',
-        url: 'html/nvnavigationbar2.html',
-        bounces: false,
-            rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
-                marginTop: 0, // main页面距离win顶部的高度
-                w: 'auto', // main页面的宽度 自适应屏幕宽度
-                h: 42
-              }
-            });
-    }
-
-    function fnNVTabBar_open() {
-      var NVTabBar = api.require('NVTabBar');
-      NVTabBar.open({
-        styles: {
-          bg: 'rgba(200,200,200,1)',
-          h: 54,
-          dividingLine: {
-            width: 1,
-            color: '#E2E2E2'
-          },
-          badge: {
-            bgColor: '#f00',
-            numColor: '#000',
-            size: 6.0,
-            centerY: 2
-          }
-        },
-        items: [{
-          w: api.winWidth / 5.0,
-          iconRect: {
-            w: 25.0,
-            h: 25.0,
-          },
-          icon: {
-            normal: 'widget://image/NVTabBar/shopping.png',
-            highlight: 'widget://image/NVTabBar/shopping2.png',
-            selected: 'widget://image/NVTabBar/shopping2.png'
-          },
-          title: {
-            text: '商城',
-            size: 12.0,
-            normal: '#696969',
-            selected: '#000',
-            marginB: 3.0,
-          }
-        }, {
-          w: api.winWidth / 5.0,
-          iconRect: {
-            w: 25.0,
-            h: 25.0,
-          },
-          icon: {
-            normal: 'widget://image/NVTabBar/tui.png',
-            highlight: 'widget://image/NVTabBar/tui2.png',
-            selected: 'widget://image/NVTabBar/tui2.png'
-          },
-          title: {
-            text: '热推',
-            size: 12.0,
-            normal: '#696969',
-            selected: '#000',
-            marginB: 3.0
-          }
-        }, {
-          w: api.winWidth / 5.0,
-          iconRect: {
-            w: 25.0,
-            h: 25.0,
-          },
-          icon: {
-            normal: 'widget://image/NVTabBar/video.png',
-            highlight: 'widget://image/NVTabBar/video2.png',
-            selected: 'widget://image/NVTabBar/video2.png'
-          },
-          title: {
-            text: '潮视',
-            size: 12.0,
-            normal: '#696969',
-            selected: '#000',
-            marginB: 3.0
-          }
-        }, {
-          w: api.winWidth / 5.0,
-          iconRect: {
-            w: 25.0,
-            h: 25.0,
-          },
-          icon: {
-            normal: 'widget://image/NVTabBar/me.png',
-            highlight: 'widget://image/NVTabBar/me2.png',
-            selected: 'widget://image/NVTabBar/me2.png'
-          },
-          title: {
-            text: '我的',
-            size: 12.0,
-            normal: '#696969',
-            selected: '#000',
-            marginB: 3.0
-          }
-        },{
-          w: api.winWidth / 5.0,
-          iconRect: {
-            w: 25.0,
-            h: 25.0,
-          },
-          icon: {
-            normal: 'widget://image/NVTabBar/search.png',
-            highlight: 'widget://image/NVTabBar/search.png',
-            selected: 'widget://image/NVTabBar/search.png'
-          },
-          title: {
-            text: '搜索',
-            size: 12.0,
-            normal: '#696969',
-            selected: '#000',
-            marginB: 3.0
-          }
-        }],
-        selectedIndex: 0
-      }, function(ret, err) {
-        if (ret) {
-
-          if (ret.eventType == "click" && ret.index == 0) {
-            fnHidemessageFrame();
-            fnHideMyinfoFrame();
-            fnopenFrameGroup1();
-            fnHideVideo();
-          }
-          if (ret.eventType == "click" && ret.index == 1) {
-            fnopenFrameGroup2();
-            fnOpenNvnBar2();
-          }
-          if (ret.eventType == "click" && ret.index == 2) {
-            fnOpenMessageFrame();
-          }
-          if (ret.eventType == "click" && ret.index == 3) {
-            fnOpenMyinfoFrame();
-
-          }
-          if (ret.eventType == "click" && ret.index == 4) {
-            fnOpensearch();
-          }
-        }
-      });
-    }
-    function fnOpensearch(){
-      api.openWin({
-        name: 'html/search',
-        url: 'html/search.html',
-        pageParam: {
-          name: 'test'
-        }
-      });
-    }
-    function fnopenFrameGroup1() {
-
-
-      api.openFrameGroup({
-        name: 'group1',
-        rect: {
-          x: 0,
-          marginTop: 58,
-          w: 'auto',
-          marginBottom: 54
-        },
-        scrollEnabled: true,
-        frames: [{
-          name: 'frameName1',
-          url: 'html/main_frame1.html',
-          pageParam: {
-            name: 'value'
-          },
-          bounces:true,
-          // customRefreshHeader: 'UIPullRefresh'
-        }, {
-          name: 'frameName2',
-          url: 'html/main_frame2.html',
-          pageParam: {
-            name: 'value'
-          },
-          bounces:true
-        }, {
-          name: 'frameName3',
-          url: 'html/main_frame3.html',
-          pageParam: {
-            name: 'value'
-          }
-        }, {
-          name: 'frameName4',
-          url: 'html/main_frame4.html',
-          pageParam: {
-            name: 'value'
-          }
-        }, {
-          name: 'frameName5',
-          url: 'html/main_frame5.html',
-          pageParam: {
-            name: 'value'
-          }
-        }, {
-          name: 'frameName6',
-          url: 'html/main_frame6.html',
-          pageParam: {
-            name: 'value'
-          },
-
-        }, {
-          name: 'frameName7',
-          url: 'html/main_frame7.html',
-          pageParam: {
-            name: 'value'
-          },
-          
-        }]
-      }, function(ret, err) {
-        if (ret) {
-          console.log(JSON.stringify(ret));
-          if (ret.index > -1) {
-            api.execScript({
-              frameName: 'nvnavigationbar1',
-              script: 'fnNvnsetSelected("' + ret.index + '");'
-            });
-          }
-        } else {
-          alert(JSON.stringify(err));
-        }
-      });
-
-    }
-
-    function fnopenFrameGroup2() {
-      api.openFrameGroup({
-        name: 'group2',
-        rect: {
-          x: 0,
-          marginTop: 42,
-          w: 'auto',
-          marginBottom: 54
-        },
-        frames: [{
-          name: 'newvideo',
-          url: 'html/newvideo.html',
-          pageParam: {
-            name: 'value'
-          },
-        }]
-      }, function(ret, err) {
-        if (ret) {
-          console.log(JSON.stringify(ret));
-          if (ret.index > -1) {
-            api.execScript({
-              frameName: 'nvnavigationbar2',
-              script: 'fnNvnsetSelected("' + ret.index + '");'
-            });
-          }
-        } else {
-          alert(JSON.stringify(err));
-        }
-      });
-
-    }
-
-    function fnOpenMessageFrame() {
-     var userInfo=$api.getStorage('userInfo');
-     if (userInfo==undefined && userInfo==null) {
-      api.toast({
-        msg: '您还未登录，请登录后再操作',
-        duration: 3000,
-        location: 'bottom'
-      });
-    }else{
-      api.openFrame({
-        name: 'caoshi_frame',
-        url: 'html/caoshi_frame.html',
-        rect: {
-          x: 0,
-          y: 0,
-          w: api.winWidth,
-          h: api.winHeight
-        },
-        pageParam: {
-          name: 'test'
-        },
-        animation: {
-          type: "fade"
-        },
-
-      });
-
-    }
-  }
-
-  function fnOpenMyinfoFrame() {
-    var userInfo=$api.getStorage('userInfo');
-    if (userInfo && userInfo.id) {
-      api.openFrame({
-        name: 'personalcenter_frame',
-        url: 'html/personalcenter_frame.html',
-        rect: {
-          x: 0,
-          y: 0,
-          w: api.winWidth,
-          h: api.winHeight-54
-        },
-
-
-      });
-    }else{
-      api.openWin({
-        name: 'login',
-        url: 'html/login.html',
-        pageParam: {
-          name: 'test'
-        },
-      });
-    }
-
-  }
-
-  function fnsetFrameGroupIndex(name, index) {
-    api.setFrameGroupIndex({
-      name: name,
-      index: index,
-      scroll: true
-    });
-  }
-
-  function fnHideVideo() {
-    fnHideGroup2();
-    fnHideNvngationBar2();
-  }
-
-  function fnHideGroup2() {
-    api.setFrameGroupAttr({
-      name: 'group2',
-      hidden: true
-    });
-  }
-
-  function fnHideNvngationBar2() {
-    api.setFrameAttr({
-      name: 'nvnavigationbar2',
-      hidden: true
-    });
-  }
-
-  function fnHidemessageFrame(){
-    api.setFrameAttr({
-      name: 'chaoshi_frame',
-      hidden: true
-    });
-  }
-
-  function fnHideMyinfoFrame(){
-    // api.setFrameAttr({
-    //   name: 'personalcenter_frame',
-    //   hidden: true
-    // });
-    api.closeFrame({
-      name: 'personalcenter_frame'
-    });
-  }
-
-  function exitApp(){
-    api.addEventListener({
-      name: 'keyback'
-    }, function(ret, err){
-      api.toast({
-        msg: '再按一次退出应用',
-        duration:2000,
-        location: 'bottom'
-      });
-
-      api.addEventListener({
-        name: 'keyback'
-      }, function(ret, err){
-        $api.setStorage("gesture",false);
-        api.closeWidget({
-            id: 'A6099267504667', //这里需要修改为自己的应用ID
-            retData: {name:'closeWidget'},
-            silent:true
-          });
-      });
-
-      setTimeout(function(){
-        exitApp();
-      },3000)
-    });
-  }
-
-</script>
-
-</html>
+  </html>

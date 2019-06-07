@@ -9,13 +9,12 @@
     <style>
     html,
     body {
-        /*background-color: transparent;*/
+        background-color: #F0F0F0;
     }
 
     #list {
         padding: 11px;
-        display: flex;
-        justify-content: space-between;
+
 
     }
 
@@ -23,27 +22,48 @@
         position: relative;
         float: left;
         padding: 4px;
-         display: flex;
-         justify-content: space-between;
         box-sizing: border-box;
         background-clip: content-box;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
+        background-color: white;
+        border-radius: 22px 26px 0px 29px;
         /*border: 1px solid red;*/
-        margin:2px 0px 2px 0px;
-        /*border-radius: 10px 2px 30px 5px;*/
+        /*margin:2px 0px 2px 0px;*/
     }
 
     .card>img{
-       background-clip: content-box;
-       background-position: center;
-       background-repeat: no-repeat;
-       background-size: cover;
-       border-radius: 10px 10px 0px 24px;
-       /*border: 1px solid red;*/
-   }
+     background-clip: content-box;
+     background-position: center;
+     background-repeat: no-repeat;
+     background-size: cover;
+     border-radius: 10px 10px 0px 24px;
+     /*border: 1px solid red;*/
+ }
+ .description{
+    padding-left: 8px;
+    font-size: 13px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+.price{
+    height: 38px;
+    color: #FF2900;
+    line-height: 39px;
+    padding-left:8px;
+    font-size: 16px;
+}
+.price span{
+    position: absolute;
+    right: 6px;
+    line-height: 38px;
+    font-size: 12px;
+    color: black;
 
+}
 </style>
 </head>
 
@@ -54,12 +74,15 @@
 </body>
 <script type="text/template" id="template">
     {{~it.list:value:index}}
-    {{? value.video}}
-    <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" data-imageurl="{{=value.thumbnail}}" data-id="{{=value.id}}" onclick="fnOpenRoom(this)" tapmode>
+    <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" data-imageurl="{{=value.wareid.thumbnail}}" data-id="{{=value.id}}" onclick="openretuivideo('{{=value.id}}')" tapmode>
         <img src="../image/loading.png" style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" onload="fnLoadCardImage(this)">
+        <div class="description">{{=value.wareid.description}}</div>
+        <div class="price">￥{{=value.wareid.price}}<span>{{=value.date}}</span></div>
+
+
+
 
     </div>
-    {{?}}
     {{~}}
 </script>
 <script type="text/javascript" src="../script/api.js"></script>
@@ -70,28 +93,40 @@
     var activity ;
     var wareTypeList;
     var skip=0;
-    var LIMIT=30;
+    var LIMIT=8;
     apiready = function() {
         getWareList();
         initEventListenter();
         initRefresh();
 
     };
-
+    function openretuivideo(ret){
+        api.toast({
+            msg: '正在修复中',
+            duration: 2000,
+            location: 'bottom'
+        });
+    
+    }
     function getWareList(_LoadMore){
-       activity = api.require('UILoading');
-       activity.flower({
-        center: {
-            x: api.winWidth/2,
-            y: api.winHeight/2
-        },
-        mask:'rgba(20,0,0,0.5)',
-        size: 30,
+        if (_LoadMore) {
+
+        }else{
+           activity = api.require('UILoading');
+           activity.flower({
+            center: {
+                x: api.winWidth/2,
+                y: api.winHeight/2
+            },
+            mask:'rgba(20,0,0,0.5)',
+            size: 30,
     // fixed: true,
 
 }, function(ret) {
   flowerid=ret.id;
 });
+       }
+
 
 
 
@@ -109,11 +144,12 @@
         fields: {},
         skip:skip,
         limit:LIMIT,
+        include: ['wareidPointer'],
         order:"createdAt DESC"
     }
     params=$api.jsonToStr(params);
     api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/ware?filter='+params,
+        url: 'http://d.apicloud.com/mcm/api/retuivideo?filter='+params,
         method: 'get',
         headers: {
             "X-APICloud-AppId": "A6099267504667",
@@ -126,22 +162,25 @@
           // 隐藏下拉刷新
           // api.refreshHeaderLoadDone();
          // 模板渲染
+         activity.closeFlower({
+            id:flowerid 
+        });
          api.refreshHeaderLoadDone()
          updateWareList(ret,_LoadMore);
 
 
 
      } else {
-         api.toast({
-             msg: err.msg,
-             duration: 2000,
-             location: 'bottom'
-         });
-     }
- });
+       api.toast({
+           msg: err.msg,
+           duration: 2000,
+           location: 'bottom'
+       });
+   }
+});
 }
 function updateWareList(_data,_LoadMore){
- var param = {
+   var param = {
     list:_data,
     frameWidth: api.frameWidth,
 };
@@ -161,9 +200,7 @@ if (_LoadMore) {
             pushStatus.innerHTML="我是有底线滴"
         }
     }
-    activity.closeFlower({
-        id:flowerid 
-    });
+    
     
 
 }
@@ -175,8 +212,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-     getWareList(true);
- });
+       getWareList(true);
+   });
 }
 // 下拉刷新
 function initRefresh(){
