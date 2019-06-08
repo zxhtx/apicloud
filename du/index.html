@@ -5,387 +5,223 @@
   <meta charset="utf-8">
   <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
   <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-  <title>APICloud App</title>
+  <title>Hello APP</title>
   <link rel="stylesheet" type="text/css" href="./css/api.css" />
-  <style>
+  <style type="text/css">
   html,
   body {
     height: 100%;
+    background-color: #fff;
   }
 
-  body {
+  .wrap {
     display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
     -webkit-box-orient: vertical;
     -webkit-flex-flow: column;
-    flex-flow: column;
-  }
-
-  section {
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    flex: 1;
   }
 
   header {
-    position: relative;
-    height: auto;
-  }
-
-  footer {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-    box-sizing: border-box;
-    height: 50px;
-    background-color: rgb(250, 250, 250);
-    border-top: 1px solid #ccc;
-  }
-
-  footer>div {
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    flex: 1;
+    height: 40px;
     width: 100%;
-    color: rgb(165, 165, 165);
-    font-size: 12px;
     text-align: center;
-    padding-bottom: 4px;
-    padding-top: 34px;
-    background-repeat: no-repeat;
-    background-position: center 6px;
-    background-size: auto 24px;
-  }
-
-  footer>div:nth-child(1) {
-    background-image: url(./image/footer/home.png);
-  }
-
-  footer>div:nth-child(2) {
-    background-image: url(./image/footer/groupbuy.png);
-  }
-
-/*  footer>div:nth-child(3) {
-    background-image: url(./image/footer/find.png);
-  }*/
-
-  footer>div:nth-child(3) {
-    background-image: url(./image/footer/my.png);
-  }
-
-  footer>div:nth-child(1).active {
-    background-image: url(./image/footer/home_act.png);
-    color: rgb(254, 151, 84);
-  }
-
-  footer>div:nth-child(2).active {
-    background-image: url(./image/footer/groupbuy_act.png);
-    color: rgb(254, 151, 84);
-  }
-
- /* footer>div:nth-child(3).active {
-    background-image: url(./image/footer/find_act.png);
-    color: rgb(254, 151, 84);
-  }*/
-
-  footer>div:nth-child(3).active {
-    background-image: url(./image/footer/my_act.png);
-    color: rgb(254, 151, 84);
-  }
-
-  .header-item {
-    position: relative;
-    display: none;
-  }
-
-  .header-item-act {
-    display: block;
-  }
-
-  header>div:nth-child(1) {
-    position: relative;
-    background-color: white;
-    height: 50px;   
-  }
-
-  header>div:nth-child(2) {
-    position: relative;
-    height: 50px;
-    background-color: rgb(252, 252, 252);
-  }
-
-  header>div:nth-child(3) {
-    position: relative;
-    height: 50px;
-    background-color: rgb(252, 252, 252);
-  }
-  /* header home */
-
-  .home-citylist {
-    float: left;
-    height: 50px;
-    line-height: 50px;
+    background-color: #81a9c3;
     color: #fff;
-    font-size: 14px;
-    margin-left: 15px;
+    line-height: 44px;
+    font-size: 20px;
   }
-
-  .home-citylist>img {
-    height: 20px;
-    vertical-align: top;
-    padding-top: 15px;
-  }
-
-  .home-search {
-    position: absolute;
-    bottom: 8px;
-    left: 9px;
-    right: 9px;
-    height: 34px;
-    line-height: 34px;
-    background-color:#000;
-    border-radius: 34px;
-    color: white;
-    font-size: 14px;
-  }
-
-  .home-search>img {
-    height: 20px;
-    padding-top: 7px;
-    padding-left: 10px;
-    padding-right: 10px;
-    vertical-align: top;
-  }
-
-
-  .find-search {
-    position: absolute;
-    bottom: 8px;
-    left: 15px;
-    right: 60px;
-    height: 34px;
-    line-height: 34px;
-    font-size: 16px;
-  }
-
 </style>
 </head>
 
-<body>
-  <header id="header">
-    <div class="header-item header-item-act" id="home">
-      <div class="home-search open-win" win="html/search">
-        <img src="./image/header/search_home.png">
-        <span>搜索其实很简单</span>
-      </div>
-    </div>
-    <!-- <div class="header-item" id="find">
-      <div class="find-search open-win">
-       热推短视频
-     </div>
-
-   </div> -->
-   <div class="header-item" id="my">
-   </div>
- </header>
- <section></section>
- <footer id="footer">
-  <div class="menu active" tapmode="active" onclick="fnChange(0)">首页</div>
-  <div class="menu" tapmode="active" onclick="fnChange(1)">热推</div>
-  <!-- <div class="menu" tapmode="active" onclick="fnChange(2)">潮视</div> -->
-  <div class="menu" tapmode="active" onclick="fnChange(2)">我的</div>
-</footer>
+<body class="wrap">
+  <header>APICloud</header>
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
-<script type="text/javascript" src="./script/common.js"></script>
-<script type="text/javascript" src="./script/localdb.js"></script>
-<script type="text/javascript" src="./script/SHA1.js"></script>
 <script type="text/javascript">
+  var headerH;
   apiready = function() {
-    // initPushGeTui();
-    WareTypeList();
-    fnReadyOpenWin();
-    fnInit();
-    fnInitListener()
-  
-    fnOpenDatabase();
-    fnChange(0);
 
-    fnGetLocation(function() {
-      setTimeout(function() {
-        fnOpenWelcome();
-      }, 100);
-    });
-  };
+        var header = $api.dom('header'); // 获取 header 标签元素
+        headerH=$api.offset(header).h;
+        // fnNVTabBar_open();
+        // openmain();
+        openretui()
+      };
 
-  function fnInitListener() {
-    var flag = false;
-    api.addEventListener({
-      name: 'keyback'
-    }, function(ret, err) {
-      if (false == flag) {
-        api.toast({
-          msg: '再按一次退出',
-          duration: 2000,
-          location: 'bottom'
+      function fnNVTabBar_open() {
+        var NVTabBar = api.require('NVTabBar');
+        NVTabBar.open({
+          styles: {
+            bg: '#fff',
+            h: 54,
+            dividingLine: {
+              width: 1,
+              color: '#E2E2E2'
+            },
+            badge: {
+              bgColor: '#f00',
+              numColor: '#000',
+              size: 6.0,
+              centerY: 2
+            }
+          },
+          items: [{
+            w: api.winWidth / 3.0,
+            iconRect: {
+              w: 25.0,
+              h: 25.0,
+            },
+            icon: {
+              normal: 'widget://image/footer/home.png',
+              highlight: 'widget://image/footer/home_act.png',
+              selected: 'widget://image/footer/home_act.png'
+            },
+            title: {
+              text: '首页',
+              size: 12.0,
+              normal: '#696969',
+              selected: '#000',
+              marginB: 6.0,
+            }
+          }, {
+            w: api.winWidth / 3.0,
+            iconRect: {
+              w: 25.0,
+              h: 25.0,
+            },
+            icon: {
+              normal: 'widget://image/footer/groupbuy.png',
+              highlight: 'widget://image/footer/groupbuy_act.png',
+              selected: 'widget://image/footer/groupbuy_act.png'
+            },
+            title: {
+              text: '热推',
+              size: 12.0,
+              normal: '#696969',
+              selected: '#eb4f38',
+              marginB: 6.0
+            }
+          },{
+            w: api.winWidth / 3.0,
+            iconRect: {
+              w: 25.0,
+              h: 25.0,
+            },
+            icon: {
+              normal: 'widget://image/footer/me.png',
+              highlight: 'widget://image/footer/me_act.png',
+              selected: 'widget://image/footer/me_act.png'
+            },
+            title: {
+              text: '我的',
+              size: 12.0,
+              normal: '#696969',
+              selected: '#eb4f38',
+              marginB: 6.0
+            }
+          }],
+          selectedIndex: 0
+        }, function(ret, err) {
+          if (ret) {
+
+            if (ret.eventType == "show") {
+              openmain();
+            }
+            if (ret.eventType == "click" && ret.index == 0) {
+              openmain();
+            }
+            if (ret.eventType == "click" && ret.index == 1) {
+             openretui();
+           }
+           if (ret.eventType == "click" && ret.index == 2) {
+            openmy();
+          }
+
+        }
+      });
+      }
+      function openmain(){
+        api.openFrame({
+          name: 'home_frame',
+          url: './html/home_frame.html',
+          rect: {
+            x: 0,
+            y: headerH,
+            w: api.winWidth,
+            h: api.winHeight-54-headerH
+          },
+          pageParam: {
+            name: 'test'
+          },
+
         });
-        flag = true;
-        setTimeout(function() {
-          flag = false;
-        }, 2000);
-      } else {
-        api.closeWidget({
-          silent: true
-        });
+        // var NVTabBar = api.require('NVTabBar');
+        // NVTabBar.bringToFront();
+        hiddennewvideo();
+        hiddenmy();
       }
-    });
-
-
-  };
-
-
-
-  var headers, footers, headerHeight, footerHeight;
-
-  function fnInit() {
-    var header = $api.byId('header');
-    var footer = $api.byId('footer');
-
-    headers = $api.domAll(header, '.header-item');
-    footers = $api.domAll(footer, 'div');
-
-    for (var i = 0; i < headers.length; i++) {
-      $api.fixIos7Bar(headers[i]);
-    }
-
-    headerHeight = $api.offset(header).h;
-    footerHeight = $api.offset(footer).h;
-  };
-
-  function fnOpenScanner() {
-    var fnscanner = api.require('FNScanner');
-    fnscanner.openScanner({}, function(ret, err) {
-      if (ret && 'success' == ret.eventType) {
-        alert(ret.content);
-      }
-    });
-  };
-  var frames = ['home_frame', 'newvideo', 'my_frame'];
-
-  function fnChange(index) {
- for (var i = 0; i <=headers.length; i++) {
-  if (index == i) {
-    $api.addCls(headers[i], 'header-item-act');
-    $api.addCls(footers[i], 'active');
-
-    var y = 2 == index ? 0 : headerHeight;
-    // if (index==2) {
-    //   y=0;
-    //   footerHeight=0;
-
-
-    // }
-
-    api.openFrame({
-      name: frames[i],
-      url: './html/' + frames[i] + '.html',
-      bounces: false,
-      bgColor: '#f0f0f0',
-      vScrollBarEnabled: false,
-      hScrollBarEnabled: false,
-      rect: {
-        x: 0,
-        y: y,
-        w: 'auto',
-        h: api.frameHeight - y - footerHeight
-      }
-    });
-  } else {
-    $api.removeCls(headers[i], 'header-item-act');
-    $api.removeCls(footers[i], 'active');
-
-    api.setFrameAttr({
-      name: frames[i],
-      hidden: true
-    });
-  }
-}
-};
-
-
-
-
-
-function initPushGeTui(){
-  var uzgetuisdk = api.require('pushGeTui');
-  uzgetuisdk.initialize(function(ret) {
-    var value = "";
-    switch (ret.type) {
-      case 'cid':
-      value = 'cid:' + ret.cid;
-      break;
-      case 'payload':
-      value = 'payload:' + ret.payload;
-      fnpush(ret.payload);
-      break;
-      case 'occurError':
-      value = 'occurError';
-      break;
-      case'onNotificationMessageClicked':
-      value = 'onNotificationMessageClicked' + ret.onNotificationMessageClicked
-      break;
-      case'onNotificationMessageArrived':
-      value = 'onNotificationMessageArrived' + ret.onNotificationMessageArrived
-      break;
-    }
-  });
-} 
-function fnpush(payload){
-  var ware=$api.strToJson(payload);
-  api.openWin({
-    name: 'html/ware',
-    url: 'html/ware.html',
-    pageParam: {
-      wareId:ware.id
-    },
-    animation: {
-      type: "fade"
-    }
-  });
-}
-function WareTypeList(){
-  var WareTypeList=$api.getStorage('WareTypeList');
-  getWareTypeList();
-}
-function getWareTypeList(){
- var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
-      var params={
-        fields:{},
-        where:{},
-        skip:0,
-        
-      }
-      params=$api.jsonToStr(params);
-      api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/wareType?filter='+params,
-        method: 'get',
-        headers: {
-          "X-APICloud-AppId": "A6099267504667",
-          "X-APICloud-AppKey":   appKey
+      function openretui(){
+       api.openFrame({
+        name: 'newvideo',
+        url: './html/newvideo.html',
+        rect: {
+          x: 0,
+          y: headerH,
+          w: api.winWidth,
+          h: api.winHeight-54-headerH
         },
-      },function(ret, err){
-        if (ret) {
-         $api.setStorage('WareTypeList', ret);
-       } else {
-        // alert( err.msg );
-      }
-    });
+        pageParam: {
+          name: 'test'
+        },
+
+      });
+       // var NVTabBar = api.require('NVTabBar');
+       // NVTabBar.bringToFront();
+       // hiddenhome();
+       // hiddenmy();
+
+     }
+     function openmy(){
+       api.openFrame({
+        name: 'my_frame',
+        url: './html/my_frame.html',
+        rect: {
+          x: 0,
+          y: 0,
+          w: api.winWidth,
+          h: api.winHeight-54
+        },
+        pageParam: {
+          name: 'test'
+        },
+
+      });
+       // var NVTabBar = api.require('NVTabBar');
+       // NVTabBar.bringToFront();
+       hiddenhome();
+       hiddennewvideo();
+
+
+     }
+
+     function hiddenhome(){
+      api.setFrameAttr({
+        name: 'home_frame',
+        hidden: true
+      });
+    }
+    function hiddennewvideo(){
+      api.setFrameAttr({
+        name: 'newvideo',
+        hidden: true
+      });
     }
 
-
+    function hiddenmy(){
+      api.setFrameAttr({
+        name: 'my_frame',
+        hidden: true
+      });
+    }
   </script>
 
   </html>

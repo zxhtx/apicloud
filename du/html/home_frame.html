@@ -591,7 +591,7 @@
        initEventListenter();
        initRefresh();
        fnInitSwipe();
-       
+
 
    };
    function openware(id){
@@ -744,11 +744,9 @@ function updateWareList1(_data,_LoadMore){
 var list=$api.byId('list1');
 var tempFn=doT.template($api.byId('template1').innerHTML);
 var resultText=tempFn(param)
-if (_LoadMore) {
-    $api.append(list, resultText);
-}else{
+
     $api.html(list, resultText);
-}
+
     // 优化
     api.parseTapmode();
     if (_LoadMore) {
