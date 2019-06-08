@@ -247,6 +247,17 @@
         getWareList();
         initRefresh();
         initEventListenter();
+        api.openFrame({
+            name: 'minicart_frame',
+            url: './minicart_frame.html',
+            rect: {
+                x: 0,
+                y: api.winHeight - 55,
+                w: 0,
+                h: 0
+            },
+        bounces: false // 关闭弹动
+    });
 
 
 
@@ -257,33 +268,33 @@
     var skip=0;
     var LIMIT=19;
     function init(){
-       wareTypeList=$api.getStorage('WareTypeList');
+     wareTypeList=$api.getStorage('WareTypeList');
 
-   }
+ }
 
-   function video(video){
-       event.stopPropagation();
-       api.execScript({
-           name: 'main',
+ function video(video){
+     event.stopPropagation();
+     api.execScript({
+         name: 'main',
          // frameName: 'main_frame',
          script: 'pause();'
      });
-       api.openFrame({
-           name: 'playvideo_frame',
-           url: './playvideo_frame.html',
-           rect: {
-               x: 0,
-               y: 0,
-               w: api.winWidth,
-               h: api.winHeight
-           },
-           pageParam: {
-               video: video
-           },
-       });
+     api.openFrame({
+         name: 'playvideo_frame',
+         url: './playvideo_frame.html',
+         rect: {
+             x: 0,
+             y: 0,
+             w: api.winWidth,
+             h: api.winHeight
+         },
+         pageParam: {
+             video: video
+         },
+     });
 
-   }
-   function openWareWin(_wareId,_wareTypeId){
+ }
+ function openWareWin(_wareId,_wareTypeId){
 
     api.openWin({
         name: 'ware',
@@ -364,13 +375,13 @@ function getWareList(_LoadMore){
 
 
      } else {
-       api.toast({
-           msg: err.msg,
-           duration: 2000,
-           location: 'bottom'
-       });
-   }
-});
+         api.toast({
+             msg: err.msg,
+             duration: 2000,
+             location: 'bottom'
+         });
+     }
+ });
 }
 function updateWareList(_data,_LoadMore){
     var list=$api.byId('list');
@@ -407,10 +418,10 @@ function LoadImage(_this,_id){
     var price=$api.attr(_this, 'date-price');
     var  priceid=$api.byId('price_'+_id);
     if (price<30) {
-     priceid.innerHTML='未达到要求';
- }else{
-     priceid.innerHTML=Math.round(price*0.95);
- }
+       priceid.innerHTML='未达到要求';
+   }else{
+       priceid.innerHTML=Math.round(price*0.95);
+   }
 
 
 }
@@ -422,8 +433,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-     getWareList(true);
- });
+       getWareList(true);
+   });
 }
 // 下拉刷新
 function initRefresh(){
@@ -437,10 +448,10 @@ function initRefresh(){
 
 }
 function Add(_wareId){
-   event.stopPropagation();
+ event.stopPropagation();
 
-   var count = $api.byId('count_' + _wareId);
-   var panel = $api.byId('panel_' + _wareId);
+ var count = $api.byId('count_' + _wareId);
+ var panel = $api.byId('panel_' + _wareId);
 
     // 更新商品数量及显示状态
     var countNumber = parseInt(count.innerHTML);
@@ -454,12 +465,13 @@ function Add(_wareId){
         }
     });
     api.toast({
-       msg: '已加入购物车',
-       duration: 2000,
-       location: 'bottom'
-   });
+     msg: '已加入购物车',
+     duration: 2000,
+     location: 'bottom'
+ });
     
 }
+
 
 </script>
 

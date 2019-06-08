@@ -126,23 +126,21 @@
                 });
                 api.closeWin();
             }else{
-             api.openWin({
-                name: 'my_frame',
-                url: './my_frame.html',
-            });
-             api.closeWin({
-                 name: 'login'
-             });
-         }
+                api.sendEvent({
+                    name: 'setuserinfo'
+                });
+                api.closeWin();
 
-     } else {
-        api.toast({
-            msg: '账号或密码错误',
-            duration: 2000,
-            location: 'bottom'
-        });
-    }
-});
+            }
+
+        } else {
+            api.toast({
+                msg: '账号或密码错误',
+                duration: 2000,
+                location: 'bottom'
+            });
+        }
+    });
 }
 function setUserName(_username){
     var username=$api.byId('username');

@@ -159,7 +159,11 @@
     .description{
         margin-top: 10px;
         font-size: 12px;
-        color: gray
+        color: gray;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
 
     }
 </style>
@@ -214,10 +218,10 @@
     {{~}}
 </script>
 <script type="text/javascript">
-     var now = Date.now();
+   var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
-    apiready = function() {
+      apiready = function() {
         initEventListener();
         getWareListFromDB();
     };
@@ -245,6 +249,7 @@
 }
 
 function getWareListFromDB() {
+    $db.open();
     var ret = $db.select();
     // 购物车中有商品，则显示商品列表
     if (ret && ret.data.length > 0) {
@@ -256,57 +261,57 @@ function getWareListFromDB() {
 }
 
 function fnGetWareList(wareList_) {
-   activity = api.require('UILoading');
-    activity.keyFrame({
-        rect: {
+ activity = api.require('UILoading');
+ activity.keyFrame({
+    rect: {
+        w: 80,
+        h: 100
+    },
+    styles: {
+        bg: 'rgba(0,0,0,0.5)',
+        corner: 5,
+        interval: 50,
+        frame: {
             w: 80,
-            h: 100
-        },
-        styles: {
-            bg: 'rgba(0,0,0,0.5)',
-            corner: 5,
-            interval: 50,
-            frame: {
-                w: 80,
-                h: 80
-            }
-        }
-    });
-    var wares = [];
-    for (var i = 0; i < wareList_.length; i++) {
-        if (wareList_[i].wareCount != 0) {
-            wares.push(wareList_[i].wareId);
+            h: 80
         }
     }
-    var params = {
-        fields: {},
-        where: {
-            id: {
-                inq: wares
-            }
-        },
-        skip: 0,
-        limit: wares.length,
-        order:"createdAt DESC"
+});
+ var wares = [];
+ for (var i = 0; i < wareList_.length; i++) {
+    if (wareList_[i].wareCount != 0) {
+        wares.push(wareList_[i].wareId);
     }
-    params = $api.jsonToStr(params);
-    api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/ware?filter=' + params,
-        method: 'get',
-        headers: {
-            "X-APICloud-AppId": "A6099267504667",
-            "X-APICloud-AppKey": appKey
+}
+var params = {
+    fields: {},
+    where: {
+        id: {
+            inq: wares
         }
-    }, function(ret, err) {
-        if (ret) {
-            for (var i = 0; i < ret.length; i++) {
-                for (var j = 0; j < wareList_.length; j++) {
-                    if (ret[i].id == wareList_[j].wareId) {
-                        ret[i].wareCount = wareList_[j].wareCount;
-                    }
+    },
+    skip: 0,
+    limit: wares.length,
+    order:"createdAt DESC"
+}
+params = $api.jsonToStr(params);
+api.ajax({
+    url: 'http://d.apicloud.com/mcm/api/ware?filter=' + params,
+    method: 'get',
+    headers: {
+        "X-APICloud-AppId": "A6099267504667",
+        "X-APICloud-AppKey": appKey
+    }
+}, function(ret, err) {
+    if (ret) {
+        for (var i = 0; i < ret.length; i++) {
+            for (var j = 0; j < wareList_.length; j++) {
+                if (ret[i].id == wareList_[j].wareId) {
+                    ret[i].wareCount = wareList_[j].wareCount;
                 }
             }
-            api.hideProgress();
+        }
+        api.hideProgress();
 
             // 显示购物车中的商品列表
             fnUpdateWareListByShoppingCart(ret);
@@ -415,9 +420,9 @@ function fnOpenWareWin(wareId_) {
 
 // 从购物车删除按钮的监听函数
 function fnMinus(wareId_) { 
-   event.stopPropagation();
-   var dialogBox = api.require('dialogBox');
-   dialogBox.alert({
+ event.stopPropagation();
+ var dialogBox = api.require('dialogBox');
+ dialogBox.alert({
     texts: {
         title: '收货地址',
         content: '您真的要删除此商品么ლ(′◉❥◉｀ლ)',
@@ -477,11 +482,11 @@ function fnMinus(wareId_) {
                 wareCount: countNumber
             }
         });
-           dialogBox.close();
+          dialogBox.close();
       }else{
-         dialogBox.close();
-      }
-  }
+       dialogBox.close();
+   }
+}
 });
 
 

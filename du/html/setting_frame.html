@@ -90,9 +90,9 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
     apiready = function() {
-       getCacheSize();
-   };
-   function getCacheSize(){
+     getCacheSize();
+ };
+ function getCacheSize(){
     api.getCacheSize(function(ret){
         var size = ret.size;
         var cacheSize=$api.byId('cacheSize');
@@ -115,18 +115,19 @@ function logout(){
     });
 
     api.toast({
-     msg: '注销成功',
-     duration: 2000,
-     location: 'bottom'
- });
+       msg: '注销成功',
+       duration: 2000,
+       location: 'bottom'
+   });
     setTimeout(function(){
       $api.rmStorage('userInfo');
-
-           api.closeToWin({
-               name: 'root'
-           });
-            
-       },1000)
+      api.sendEvent({
+          name: 'logout',
+      });
+      api.closeWin();
+      
+      
+  },1000)
 
 
 }

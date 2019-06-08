@@ -66,11 +66,11 @@
     background-image: url(./image/footer/groupbuy.png);
   }
 
-  footer>div:nth-child(3) {
+/*  footer>div:nth-child(3) {
     background-image: url(./image/footer/find.png);
-  }
+  }*/
 
-  footer>div:nth-child(4) {
+  footer>div:nth-child(3) {
     background-image: url(./image/footer/my.png);
   }
 
@@ -84,12 +84,12 @@
     color: rgb(254, 151, 84);
   }
 
-  footer>div:nth-child(3).active {
+ /* footer>div:nth-child(3).active {
     background-image: url(./image/footer/find_act.png);
     color: rgb(254, 151, 84);
-  }
+  }*/
 
-  footer>div:nth-child(4).active {
+  footer>div:nth-child(3).active {
     background-image: url(./image/footer/my_act.png);
     color: rgb(254, 151, 84);
   }
@@ -180,12 +180,12 @@
         <span>搜索其实很简单</span>
       </div>
     </div>
-    <div class="header-item" id="find">
+    <!-- <div class="header-item" id="find">
       <div class="find-search open-win">
        热推短视频
      </div>
 
-   </div>
+   </div> -->
    <div class="header-item" id="my">
    </div>
  </header>
@@ -193,8 +193,8 @@
  <footer id="footer">
   <div class="menu active" tapmode="active" onclick="fnChange(0)">首页</div>
   <div class="menu" tapmode="active" onclick="fnChange(1)">热推</div>
-  <div class="menu" tapmode="active" onclick="fnChange(2)">潮视</div>
-  <div class="menu" tapmode="active" onclick="fnChange(3)">我的</div>
+  <!-- <div class="menu" tapmode="active" onclick="fnChange(2)">潮视</div> -->
+  <div class="menu" tapmode="active" onclick="fnChange(2)">我的</div>
 </footer>
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
@@ -207,7 +207,8 @@
     WareTypeList();
     fnReadyOpenWin();
     fnInit();
-
+    fnInitListener()
+  
     fnOpenDatabase();
     fnChange(0);
 
@@ -270,42 +271,49 @@
       }
     });
   };
-  var frames = ['home_frame', 'newvideo', 'caoshi_frame', 'my_frame'];
+  var frames = ['home_frame', 'newvideo', 'my_frame'];
 
   function fnChange(index) {
-    
-   for (var i = 0; i <=headers.length; i++) {
-    if (index == i) {
-      $api.addCls(headers[i], 'header-item-act');
-      $api.addCls(footers[i], 'active');
+ for (var i = 0; i <=headers.length; i++) {
+  if (index == i) {
+    $api.addCls(headers[i], 'header-item-act');
+    $api.addCls(footers[i], 'active');
 
-      var y = 3 == index ? 0 : headerHeight;
-      
-      api.openFrame({
-        name: frames[i],
-        url: './html/' + frames[i] + '.html',
-        bounces: false,
-        bgColor: '#f0f0f0',
-        vScrollBarEnabled: false,
-        hScrollBarEnabled: false,
-        rect: {
-          x: 0,
-          y: y,
-          w: 'auto',
-          h: api.frameHeight - y - footerHeight
-        }
-      });
-    } else {
-      $api.removeCls(headers[i], 'header-item-act');
-      $api.removeCls(footers[i], 'active');
+    var y = 2 == index ? 0 : headerHeight;
+    // if (index==2) {
+    //   y=0;
+    //   footerHeight=0;
 
-      api.setFrameAttr({
-        name: frames[i],
-        hidden: true
-      });
-    }
+
+    // }
+
+    api.openFrame({
+      name: frames[i],
+      url: './html/' + frames[i] + '.html',
+      bounces: false,
+      bgColor: '#f0f0f0',
+      vScrollBarEnabled: false,
+      hScrollBarEnabled: false,
+      rect: {
+        x: 0,
+        y: y,
+        w: 'auto',
+        h: api.frameHeight - y - footerHeight
+      }
+    });
+  } else {
+    $api.removeCls(headers[i], 'header-item-act');
+    $api.removeCls(footers[i], 'active');
+
+    api.setFrameAttr({
+      name: frames[i],
+      hidden: true
+    });
   }
+}
 };
+
+
 
 
 

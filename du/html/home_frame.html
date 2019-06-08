@@ -18,20 +18,11 @@
     #swipe {
         position: relative;
         overflow: hidden;
-        visibility: hidden;
-        background-color: #fff;
-    }
-
-    .swipe-wrap {
-        overflow: hidden;
-        padding-bottom: 24px;
-    }
-
-    .swipe-page {
-        float: left;
         width: 100%;
-        position: relative;
+        background-color: #fff;
+        /*border: 1px solid red;*/
     }
+
 
     .swipe-page-item {
         float: left;
@@ -471,9 +462,6 @@
 <body>
     <div class="h1"></div>
     <section id="swipe" class="section01">
-        <div class="swipe-wrap">
-            <div class="swipe-page">
-                <div class="swipe-page-row">
                     <div class="swipe-page-item open-win" tapmode onclick="shop(1)" >
                         <img src="../image/swipe/around.png">
                         <span>男装</span>
@@ -508,10 +496,7 @@
                         <img src="../image/swipe/hotel.png">
                         <span>配件</span>
                     </div>
-                </div>
-            </div>
-
-        </div>
+             
     </section>
     <div class="h20"></div>
     <div class="guesstitle">抢手货<img src="../image/home/competitive_icon.png" alt=""></div>
@@ -589,11 +574,11 @@
         {{~}}
     </script>
     <script type="text/javascript" src="../script/api.js"></script>
-    <script type="text/javascript" src="../script/common.js"></script>
-    <script type="text/javascript" src="../script/swipe.js"></script>
+    <!-- <script type="text/javascript" src="../script/common.js"></script> -->
+    <!-- <script type="text/javascript" src="../script/swipe.js"></script> -->
     <script type="text/javascript" src="../script/SHA1.js"></script>
     <script type="text/javascript" src="../script/doT.min.js"></script>
-    <script type="text/javascript" src="../script/remotedb.js"></script>
+    <!-- <script type="text/javascript" src="../script/remotedb.js"></script> -->
     <!-- <script type="text/javascript" src="../script/list.js"></script> -->
     <script type="text/javascript">
       var flowerid ;
@@ -605,8 +590,8 @@
        getWareList();
        initEventListenter();
        initRefresh();
-
        fnInitSwipe();
+       
 
    };
    function openware(id){
@@ -628,22 +613,22 @@
          }
      });
  }
- function fnInitSwipe() {
-    var swipe = $api.byId('swipe'),
-    indicators = $api.domAll(swipe, 'li');
+//  function fnInitSwipe() {
+//     var swipe = $api.byId('swipe'),
+//     indicators = $api.domAll(swipe, 'li');
 
-    new Swipe(swipe, {
-        callback: function(index) {
-            for (var i = 0; i < indicators.length; i++) {
-                if (index == i) {
-                    $api.addCls(indicators[i], 'active');
-                } else {
-                    $api.removeCls(indicators[i], 'active');
-                }
-            }
-        }
-    });
-};
+//     new Swipe(swipe, {
+//         callback: function(index) {
+//             for (var i = 0; i < indicators.length; i++) {
+//                 if (index == i) {
+//                     $api.addCls(indicators[i], 'active');
+//                 } else {
+//                     $api.removeCls(indicators[i], 'active');
+//                 }
+//             }
+//         }
+//     });
+// };
 
 function getWareList(_LoadMore){
     if (_LoadMore) {
