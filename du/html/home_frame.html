@@ -154,10 +154,13 @@
     .col img {
         position: absolute;
         right: 0;
-        width: 80px;
         top: 0;
+        width: 80px;
     }
-
+    .pinzhi{
+        width: 53px;
+        height: 62px;
+    }
     .col .matrixcell {
         display: table-cell;
         vertical-align: middle;
@@ -185,7 +188,7 @@
 
     .guesstitle img {
         height: 15px;
-        /*padding-top: 12px;*/
+        padding-top: px;
         padding-left: 10px;
     }
 
@@ -358,11 +361,11 @@
     }
 
     .section03 .title03 .title {
-        color: #ff558c;
+        color: #000;
     }
 
     .section03 .title04 .title {
-        color: #19b4ff;
+        color: #000;
     }
 
     .section03 .matrixcell .info {
@@ -426,14 +429,14 @@
     }
 
     .card>img{
-       background-clip: content-box;
-       background-position: center;
-       background-repeat: no-repeat;
-       background-size: cover;
-       border-radius: 10px 10px 0px 24px;
-       /*border: 1px solid red;*/
-   }
-   .description{
+     background-clip: content-box;
+     background-position: center;
+     background-repeat: no-repeat;
+     background-size: cover;
+     border-radius: 10px 10px 0px 24px;
+     /*border: 1px solid red;*/
+ }
+ .description{
     padding-left: 8px;
     font-size: 13px;
     display: -webkit-box;
@@ -462,48 +465,77 @@
 <body>
     <div class="h1"></div>
     <section id="swipe" class="section01">
-                    <div class="swipe-page-item open-win" tapmode onclick="shop(1)" >
-                        <img src="../image/swipe/around.png">
-                        <span>男装</span>
-                    </div>
-                    <div class="swipe-page-item open-win" tapmode onclick="shop(2)" >
-                        <img src="../image/swipe/beauty.png">
-                        <span>女装</span>
-                    </div>
-                    <div class="swipe-page-item open-win" tapmode onclick="shop(4)" >
-                        <img src="../image/swipe/children.png">
-                        <span>高品质</span>
-                    </div>
-                    <div class="swipe-page-item open-win"tapmode onclick="shop(3)" >
-                        <img src="../image/swipe/decorate.png">
-                        <span>12元购</span>
-                    </div>
-                </div>
-                <div class="swipe-page-row">
-                    <div class="swipe-page-item open-win" tapmode onclick="shop(5)" >
-                        <img src="../image/swipe/dessert.png">
-                        <span>优惠购</span>
-                    </div>
-                    <div class="swipe-page-item open-win" tapmode onclick="shop(6)" >
-                        <img src="../image/swipe/discount.png">
-                        <span>男鞋</span>
-                    </div>
-                    <div class="swipe-page-item open-win" tapmode onclick="shop(7)" >
-                        <img src="../image/swipe/food.png">
-                        <span>女鞋</span>
-                    </div>
-                    <div class="swipe-page-item open-win" win="shoplist" param='{"type":0,"shopType":6}'>
-                        <img src="../image/swipe/hotel.png">
-                        <span>配件</span>
-                    </div>
-             
+        <div class="swipe-page-item open-win" tapmode onclick="shop(1)" >
+            <img src="../image/swipe/around.png">
+            <span>男装</span>
+        </div>
+        <div class="swipe-page-item open-win" tapmode onclick="shop(2)" >
+            <img src="../image/swipe/beauty.png">
+            <span>女装</span>
+        </div>
+        
+
+    </div>
+    <div class="swipe-page-row">
+
+        <div class="swipe-page-item open-win" tapmode onclick="shop(6)" >
+            <img src="../image/swipe/discount.png">
+            <span>男鞋</span>
+        </div>
+        <div class="swipe-page-item open-win" tapmode onclick="shop(7)" >
+            <img src="../image/swipe/food.png">
+            <span>女鞋</span>
+        </div>
+        
     </section>
+    <div class="h20"></div>
+    <div class="guesstitle">火爆四专区<img src="../image/home/competitive_icon.png" alt=""></div>
+    <div class="row hightitem section03">
+        <div class="col h80 brb open-win"tapmode onclick="shop(3)" >
+            <div class="matrix">
+                <div class="matrixcell title01">
+                    <div class="title">12元购全场</div>
+                    <div class="info" style="font-size: 12px">低价潮装中的战斗机</div>
+                </div>
+            </div>
+            <img src="../image/swipe/decorate.png" class="fl">
+        </div>
+        <div class="col h80 bb open-win" win="shoplist" param='{"type":0,"shopType":2}'>
+            <div class="matrix">
+                <div class="matrixcell title02">
+                    <div class="title">配件</div>
+                    <div class="info">潮流首饰/包包</div>
+                </div>
+            </div>
+            <img src="../image/swipe/peijian.png" class="fl">
+        </div>
+    </div>
+    <div class="row hightitem section03">
+        <div class="col h80 br open-win" tapmode onclick="shop(4)" >
+            <div class="matrix">
+                <div class="matrixcell title03">
+                    <div class="title">高品质</div>
+                    <div class="info">潮流又有范儿</div>
+                </div>
+            </div>
+            <img src="../image/swipe/children.png" class="fl pinzhi">
+        </div>
+        <div class="col h80 open-win" tapmode onclick="shop(5)">
+            <div class="matrix">
+                <div class="matrixcell title04">
+                    <div class="title">优惠购</div>
+                    <div class="info" style="font-size: 12px">全场30元以内随你买</div>
+                </div>
+            </div>
+            <img src="../image/swipe/dessert.png" class="fl">
+        </div>
+    </div>
     <div class="h20"></div>
     <div class="guesstitle">抢手货<img src="../image/home/competitive_icon.png" alt=""></div>
     <div id="list1">
 
     </div>
-    
+
     <div class="h10"></div>
        <!--  <div class="row hightitem section03">
             <div class="col h80 brb open-win" win="shoplist" param='{"type":0,"shopType":8}'>
@@ -566,53 +598,97 @@
     </script>
     <script type="text/template" id="template">
         {{~it.list:value:index}}
-        <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" data-imageurl="{{=value.wareid.thumbnail}}" data-id="{{=value.id}}" onclick="openretuivideo('{{=value.id}}')" tapmode>
-            <img src="../image/loading.png" style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" onload="fnLoadCardImage(this)">
-            <div class="description">{{=value.wareid.description}}</div>
-            <div class="price1">￥{{=value.wareid.price}}<span>{{=value.date}}</span></div>
-        </div>
-        {{~}}
-    </script>
-    <script type="text/javascript" src="../script/api.js"></script>
-    <!-- <script type="text/javascript" src="../script/common.js"></script> -->
-    <!-- <script type="text/javascript" src="../script/swipe.js"></script> -->
-    <script type="text/javascript" src="../script/SHA1.js"></script>
-    <script type="text/javascript" src="../script/doT.min.js"></script>
-    <!-- <script type="text/javascript" src="../script/remotedb.js"></script> -->
-    <!-- <script type="text/javascript" src="../script/list.js"></script> -->
-    <script type="text/javascript">
+        <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" onclick="openware('{{=value.wareid.id}}')" tapmode>
+          <img src="{{=value.wareid.thumbnail}}" style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" >
+          <div class="description">{{=value.wareid.description}}</div>
+          <div class="price1">￥{{=value.wareid.price}}<span>{{=value.date}}</span></div>
+      </div>
+      {{~}}
+  </script>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <!-- <script type="text/javascript" src="../script/common.js"></script> -->
+  <!-- <script type="text/javascript" src="../script/swipe.js"></script> -->
+  <script type="text/javascript" src="../script/SHA1.js"></script>
+  <script type="text/javascript" src="../script/doT.min.js"></script>
+  <!-- <script type="text/javascript" src="../script/remotedb.js"></script> -->
+  <!-- <script type="text/javascript" src="../script/list.js"></script> -->
+  <script type="text/javascript">
       var flowerid ;
       var activity ;
       var wareTypeList;
       var skip=0;
       var LIMIT=16;
+      var dialogBox;
+      var clipBoard;
       apiready = function() {
-       getWareList();
-       initEventListenter();
-       initRefresh();
-       fnInitSwipe();
-
-
-   };
-   function openware(id){
-    api.openWin({
-        name: 'ware',
-        url: './ware.html',
-        pageParam: {
-            wareId: id
-        }
+        clipBoard = api.require('clipBoard');
+        dialogBox = api.require('dialogBox');
+        getWareList();
+        initEventListenter();
+        initRefresh();
+         // fnInitSwipe();
+         alert1();
+         api.openFrame({
+            name: 'minicart_frame',
+            url: './minicart_frame.html',
+            rect: {
+                x: 0,
+                y: api.winHeight - 55,
+                w: 0,
+                h: 0
+            },
+        bounces: false // 关闭弹动
     });
 
-   }
-   function shop(_index){
-     api.openWin({
-         name: 'shoplist',
-         url: './shoplist.html',
-         pageParam: {
-             shoptype: 'main_frame'+_index
-         }
-     });
- }
+
+     };
+     function openware(id){
+        api.openWin({
+            name: 'ware',
+            url: './ware.html',
+            pageParam: {
+                wareId: id
+            },
+            animation:{
+                type:'fade'
+            }
+        });
+
+    }
+    function shop(_index){
+        if (_index==1) {
+            var topname='男装'
+        }
+        if (_index==2) {
+            var topname='女装'
+        }
+        if (_index==4) {
+            var topname='高品质'
+        }
+        if (_index==3) {
+            var topname='12元购'
+        }
+        if (_index==5) {
+            var topname='优惠购'
+        }
+        if (_index==6) {
+            var topname='男鞋'
+        }
+        if (_index==7) {
+            var topname='女鞋'
+        }
+        api.openWin({
+           name: 'shoplist',
+           url: './shoplist.html',
+           pageParam: {
+               shoptype: 'main_frame'+_index,
+               topname:topname
+           },
+           animation:{
+            type:'fade'
+        }
+    });
+    }
 //  function fnInitSwipe() {
 //     var swipe = $api.byId('swipe'),
 //     indicators = $api.domAll(swipe, 'li');
@@ -634,8 +710,8 @@ function getWareList(_LoadMore){
     if (_LoadMore) {
 
     }else{
-       activity = api.require('UILoading');
-       activity.flower({
+     activity = api.require('UILoading');
+     activity.flower({
         center: {
             x: api.winWidth/2,
             y: api.winHeight/2
@@ -647,12 +723,12 @@ function getWareList(_LoadMore){
 }, function(ret) {
   flowerid=ret.id;
 });
-   }
+ }
 
 
 
 
-   var now = Date.now();
+ var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
       if (_LoadMore) {
@@ -666,8 +742,9 @@ function getWareList(_LoadMore){
         fields: {},
         skip:skip,
         limit:LIMIT,
+        order:"createdAt DESC",
         include: ['wareidPointer'],
-        order:"createdAt DESC"
+        
     }
     params=$api.jsonToStr(params);
     api.ajax({
@@ -688,30 +765,31 @@ function getWareList(_LoadMore){
             id:flowerid 
         });
          api.refreshHeaderLoadDone();
-         updateWareList(ret,_LoadMore);
+         for (var i =0; i <ret.length-1; i++) {
+            for (var j = i+1; j <ret.length; j++) {
+                if (ret[i].wareid.id==ret[j].wareid.id) {
+                   ret.splice(j,1);  
+               }
+           }
 
-         var ret1=[
-            ret[0],
-            ret[1],
-            ret[2]
-         ]
-         // alert($api.jsonToStr( ret1));
-         updateWareList1(ret1,_LoadMore);
+       }
 
-
-
-     } else {
-       api.toast({
-           msg: err.msg,
-           duration: 2000,
-           location: 'bottom'
-       });
+       var ret1=[
+       ret[3],
+       ret[6],
+       ret[2]
+       ]
+       updateWareList(ret,_LoadMore);
+       updateWareList1(ret1,_LoadMore);
    }
 });
 }
 
+
+
+
 function updateWareList(_data,_LoadMore){
-   var param = {
+ var param = {
     list:_data,
     frameWidth: api.frameWidth,
 };
@@ -737,13 +815,13 @@ if (_LoadMore) {
 }
 function updateWareList1(_data,_LoadMore){
     // alert($api.jsonToStr(_data))
-   var param = {
-    list:_data,
-    frameWidth: api.frameWidth,
-};
-var list=$api.byId('list1');
-var tempFn=doT.template($api.byId('template1').innerHTML);
-var resultText=tempFn(param)
+    var param = {
+        list:_data,
+        frameWidth: api.frameWidth,
+    };
+    var list=$api.byId('list1');
+    var tempFn=doT.template($api.byId('template1').innerHTML);
+    var resultText=tempFn(param)
 
     $api.html(list, resultText);
 
@@ -767,8 +845,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-       getWareList(true);
-   });
+     getWareList(true);
+ });
 }
 // 下拉刷新
 function initRefresh(){
@@ -782,18 +860,109 @@ function initRefresh(){
 
 }
 
-function fnLoadCardImage(element){
+function alert1() {
+    dialogBox.evaluation({
+        styles: {
+            bg: '#fff',
+            w: 300,
+            title: {
+                marginT: 20,
+                size: 15,
+                color: '#000',
+                bold: true
+            },
+            content: {
+                marginT: 20,
+                color: '#111',
+                size: 12
+            },
+            buttons: [{
+                marginB: 0,
+                marginL: 0,
+                w: 300,
+                h: 35,
+                bg: '#fff',
+                color: '#000',
+                size: 12
+            }, {
+                marginB: 0,
+                marginL: 0,
+                w: 300,
+                h: 35,
+                bg: '#fff',
+                color: '#000',
+                size: 12
+            },
+            {
+                marginB: 0,
+                marginL: 0,
+                w: 300,
+                h: 35,
+                bg: '#fff',
+                color: '#000000',
+                size: 12
+            }
+            ]
+        },
+        texts: {
+            title: '内部价来啦!!!',
+            content: '快进群,每个人都可以用内部价购买全场啦!!!',
+            buttons: [{
+                text: '复制qq群'
+            }, {
+                text: '复制客服微信邀请进群'
+            },{
+                text:'取消'
+            }]
+        }
+    }, function(ret, err) {
+        if (ret) {
+            if (ret.index==0) {
+             clipBoard.set({
+                value: '852841974'
+            }, function(ret, err) {
+                if (ret) {
+                    api.toast({
+                        msg: '复制成功',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+
+                }
+            });
 
 
-    var eCard = $api.closest(element, '.card');
+             dialogBox.close({
+                dialogName: 'scene'
+            });
 
-    var url = eCard.dataset['imageurl'];
-    // api.imageCache({
-    //     url: url
-    // }, function(ret, err){
-        element.src = url ;
-    // });
+         }else if (ret.index==1){
+           clipBoard.set({
+            value: 'zxh2764832464'
+        }, function(ret, err) {
+            if (ret) {
+                api.toast({
+                    msg: '复制成功',
+                    duration: 2000,
+                    location: 'bottom'
+                });
 
+            }
+        });
+
+
+           dialogBox.close({
+            dialogName: 'scene'
+        });
+
+       }else{
+           dialogBox.close({
+            dialogName: 'alert'
+        });
+       }
+
+   } 
+});
 }
 </script>
 

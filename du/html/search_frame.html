@@ -6,110 +6,87 @@
 	<title>title</title>
 	<link rel="stylesheet" type="text/css" href="../css/api.css"/>
 	<style>
-
-    section {
-        position: relative;
-        width: 100%;
-        height: auto;
-        box-sizing: border-box;
-        padding: 0 8px;
+    html,
+    body {
+        background-color: #F0F0F0;
     }
 
-    .content {
-        width: 100%;
-        height: 100%;
+    #list {
+        padding: 11px;
+
+
     }
 
+    #list>.card {
+      margin-bottom: 18px;
+      position: relative;
+      float: left;
+      padding: 4px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-color: white;
+      border-radius: 22px 26px 0px 29px;
+      /*border: 1px solid red;*/
+      /*margin:2px 0px 2px 0px;*/
+  }
 
-
-    .ware-1 {
-        position: relative;
-        width: 100%;
-        height: 145px;
-        box-sizing: border-box;
-        padding-top: 15px;
-        /*border: 1px solid red;*/
-        padding-bottom: 15px;
-        border-bottom: 1px solid #d1d1d1;
-    }
-
-    .ware-1 .thumbnail {
-        position: absolute;
-        top: 20px;
-        left: 0px;
-        height: 100px;
-        width: 100px;
-        border-radius: 20px;
-    }
-
-    .ware-1 .info {
-        width: 100%;
-        height: 114px;
-        box-sizing: border-box;
-        padding-left: 112px;
-        padding-right: 28px;
-    }
-
-    .ware-1 .info .name {
-        width: 100%;
-        height: 15px;
-        color: #555555;
-        margin-top: 14px;
-        font-size: 15px;
-    }
-
-    .ware-1 .info .description {
-        margin-top: 10px;
-        width: 100%;
-        height: 36px;
-        overflow: hidden;
-        font-size: 12px;
-        color: #9d9d9d;
-    }
-
-    .ware-1 .info .price-tag {
-     margin-top: 6px;
-     width: 100%;
-     height: 12px;
-     font-size: 12px;
-     vertical-align: top;
- }
-
- .ware-1 .info .price-tag .price {
-    color: black;
-    font-size: 16px;
+  .card>img{
+   background-clip: content-box;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   border-radius: 10px 10px 0px 24px;
+   /*border: 1px solid red;*/
 }
-
-.ware-1 .info .price-tag .unit {
-    font-size: 8px;
-    color: #cbcbcb;
+.description{
+    padding-left: 8px;
+    font-size: 13px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
 }
-
-.ware-1 .info .origin-price {
-    margin-top: 5px;
-    width: 100%;
-    height: 10px;
-    font-size: 10px;
-    color: #d3d3d3;
-}
-
-.ware .control {
-    position: absolute;
-    width: 38px;
+.price{
+    position: relative;
     height: 38px;
-    right: 8px;
+    color: #FF2900;
+    line-height: 39px;
+    padding-left:8px;
+    font-size: 16px;
+    /*border: 1px solid red;*/
+
+}
+.price span{
+    position: absolute;
+    right: 1px;
+    line-height: 38px;
+    font-size: 12px;
+    color: black;
+
+}
+.card .add{
+   position: absolute;
+   bottom: 0;
+   right: 6;
+   width: 28px;
+   height: 28px;
+   /*padding-bottom: 10px;*/
+}
+.card .add img{
+    width: 100%;
+
 }
 
-.ware-1 .control {
-    top: 90px;
-}
 
-.ware .control .panel {
+.panel {
     display: none;
     height: 23px;
 }
 
-.ware .control .minus {
+.control .minus {
     position: absolute;
     top: 0;
     left: 0;
@@ -117,7 +94,7 @@
     height: 23px;
 }
 
-.ware .control .count {
+.control .count {
     position: relative;
     top: 0;
     margin-left: 31px;
@@ -132,60 +109,38 @@
     background-repeat: no-repeat;
     background-size: 48px 23px;
 }
-
-.ware .control .add {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 28px;
-    height: 28px;
-}
-
 .push-status {
     width: 100%;
     height: 40px;
     font-size: 16px;
-    color: #888;
+    color: black;
     line-height: 40px;
     text-align: center;
-    background-color: #fff;
-}
-
-.active {
-    opacity: 0.7;
+    background-color: #f0f0f0;
 }
 
 </style>
 </head>
 <body>
-	<section id="list">
-	</section>
- <div class="push-status" id="pushStatus"></div>
+   <div id="list">
+
+   </div>
+   <div class="push-status" id="pushStatus"></div>
 
 </body>
 <script type="text/template" id="template">
-	{{~it:value:index}}
 
-	<div class="ware ware-1" >
-		<div class="content" tapmode onclick="openWareWin('{{=value.id}}','{{=value.wareTypeId}}')">
-            <img onload="LoadImage(this,'{{=value.id}}')" data-url="{{=value.thumbnail}}"  data-wareTypeId="{{=value.wareTypeId}}" class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
-            <div class="info" >
-                <div class="name">{{=value.name}}</div>
-                <div class="description">{{=value.description}}</div>
-                <div class="price-tag">
-                   <span class="price">￥{{=value.price}}</span>
-
-               </div>
-           </div>
-           <div class="control">
-            <div class="panel" id="panel_{{=value.id}}">
-               <img class="minus" src="../image/jian.png" tapmode onclick="Minus('{{=value.id}}')">
-               <div class="count" id="count_{{=value.id}}">0</div>
-           </div>
-           <img class="add" src="../image/jia.png" tapmode onclick="Add('{{=value.id}}')">
-       </div>
-   </div>
+  {{~it.list:value:index}}
+  <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" onclick="openretuivideo('{{=value.id}}')" tapmode>
+    <img src="{{=value.thumbnail}}" style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" >
+    <div class="description">{{=value.description}}</div>
+    <div class="panel" id="panel_{{=value.id}}">
+        <img class="minus" src="../image/jian.png" tapmode onclick="Minus('{{=value.id}}')">
+        <div class="count" id="count_{{=value.id}}">0</div>
+    </div>
+    <div class="price">￥{{=value.price}}<span class='add' tapmode onclick="Add('{{=value.id}}')"><img src="../image/minicart.png" alt=""></span></div>
 </div>
+
 {{~}}
 
 </script>
@@ -198,57 +153,54 @@
         // getWareList();
         initRefresh();
         initEventListenter();
-        videosearch();
+        
 
     };
     var searchvalue;
     var activity ;
     var wareTypeList;
     var skip=0;
-    var LIMIT=8;
+    var LIMIT=18;
     function init(){
-     wareTypeList=$api.getStorage('WareTypeList');
- }
- function videosearch(){
-    if (api.pageParam.searchtitle!=undefined) {
-        searchval(api.pageParam.searchtitle);
+        // alert(1)
+        wareTypeList=$api.getStorage('WareTypeList');
     }
-}
-function openWareWin(_wareId,_wareTypeId){
-   api.openWin({
-    name: 'ware',
-    url: './ware.html',
-    pageParam: {
-        wareId: _wareId,
-        wareTypeId:_wareTypeId
-    },
-    animation: {
-        type: "fade"
-    }
-});
+    function openWareWin(_wareId,_wareTypeId){
+     api.openWin({
+        name: 'ware',
+        url: './ware.html',
+        pageParam: {
+            wareId: _wareId,
+            wareTypeId:_wareTypeId
+        },
+        animation: {
+            type: "fade"
+        }
+    });
 
-}
+ }
 // 获取列表页数据
 function searchval(val,_LoadMore){
 	// alert($api.jsonToStr($api.getStorage('history_list')))
+	searchvalue=val
 	// alert(val)
-	searchvalue=val;
-   activity = api.require('UILoading');
-   activity.keyFrame({
-    rect: {
-        w: 80,
-        h: 100
-    },
-    styles: {
-        bg: 'rgba(0,0,0,0.5)',
-        corner: 5,
-        interval: 50,
-        frame: {
-            w: 80,
-            h: 80
-        }
-    }
+    if (_LoadMore) {
+
+    }else{
+       activity = api.require('UILoading');
+       activity.flower({
+        center: {
+            x: api.winWidth/2,
+            y: api.winHeight/2
+        },
+        mask:'rgba(20,0,0,0.5)',
+        size: 30,
+    // fixed: true,
+
+}, function(ret) {
+  flowerid=ret.id;
 });
+   }
 
    var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
@@ -284,31 +236,32 @@ function searchval(val,_LoadMore){
          // 模板渲染
          // alert($api.jsonToStr(ret))
          api.refreshHeaderLoadDone()
-         
+         activity.closeFlower({
+            id:flowerid 
+        });
          updateWareList(ret,_LoadMore);
-     } else {
-         api.toast({
-             msg: err.msg,
-             duration: 2000,
-             location: 'bottom'
-         });
-     }
+     } 
  });
 }
 function updateWareList(_data,_LoadMore){
 	var pushStatus=$api.byId('pushStatus');
-	if (_data[0]==undefined) {
-        pushStatus.innerHTML="该商品暂未上架"
-        
-    }
-    var list=$api.byId('list');
-    var tempFn=doT.template($api.byId('template').innerHTML);
-    var resultText=tempFn(_data)
-    if (_LoadMore) {
-        $api.append(list, resultText);
-    }else{
-        $api.html(list, resultText);
-    }
+  pushStatus.innerHTML="";
+  if (_data[0]==undefined) {
+    pushStatus.innerHTML="该商品暂未上架"
+
+}
+var param = {
+    list:_data,
+    frameWidth: api.frameWidth,
+};
+var list=$api.byId('list');
+var tempFn=doT.template($api.byId('template').innerHTML);
+var resultText=tempFn(param)
+if (_LoadMore) {
+    $api.append(list, resultText);
+}else{
+    $api.html(list, resultText);
+}
     // 优化
     api.parseTapmode();
     if (_LoadMore) {
@@ -317,39 +270,25 @@ function updateWareList(_data,_LoadMore){
             pushStatus.innerHTML="我是有底线滴"
         }
     }
-    activity.closeKeyFrame();
-}
-
-// 列表页图片缓存
-
-function LoadImage(_this,_id){
-    var dataUrl=$api.attr(_this, 'data-url');
-    var dataWareTypeId=$api.attr(_this, 'data-wareTypeId');
-    
-    if (dataUrl) {
-        api.imageCache({
-            url: dataUrl
-        }, function(ret, err){
-            if( ret ){
-                _this.src=ret.url;
-                $api.attr(_this, 'data-url', '');
-            }else{
-             // alert( JSON.stringify( err ) );
-         }
-     });
-    }
 
 }
+
+
 // 监听 
 function initEventListenter(){
     api.addEventListener({
         name:'scrolltobottom',
         extra:{
-            threshold:100
+            threshold:300
         }
     }, function(ret, err){        
-       searchval(searchvalue,true);
-   });
+     searchval(searchvalue,true);
+ });
+    api.addEventListener({
+        name: 'search'
+    }, function(ret, err){
+     searchval(ret.value.key1)
+ });
 }
 // 下拉刷新
 function initRefresh(){
@@ -357,16 +296,17 @@ function initRefresh(){
         bgColor: '#C0C0C0',
         isScale: true
     }, function() {
+  
         searchval(searchvalue);
         
     });
 
 }
 function Add(_wareId){
- event.stopPropagation();
+   event.stopPropagation();
 
- var count = $api.byId('count_' + _wareId);
- var panel = $api.byId('panel_' + _wareId);
+   var count = $api.byId('count_' + _wareId);
+   var panel = $api.byId('panel_' + _wareId);
 
     // 更新商品数量及显示状态
     var countNumber = parseInt(count.innerHTML);
@@ -380,10 +320,10 @@ function Add(_wareId){
         }
     });
     api.toast({
-     msg: '已加入购物车',
-     duration: 2000,
-     location: 'bottom'
- });
+       msg: '已加入购物车',
+       duration: 2000,
+       location: 'bottom'
+   });
     
 }
 </script>

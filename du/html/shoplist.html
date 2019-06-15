@@ -46,6 +46,8 @@
     <!-- <script type="text/javascript" src="../script/common.js"></script> -->
     <script type="text/javascript">
         apiready = function() {
+            var menu=$api.dom('.menu');
+            menu.innerHTML=api.pageParam.topname
          api.openFrame({
              name: 'main_frame',
              url: './'+api.pageParam.shoptype+'.html',
@@ -55,6 +57,7 @@
                  w: 'auto',
                  h: 'auto'
              },
+
             
          });
         };

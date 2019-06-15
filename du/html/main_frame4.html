@@ -1,238 +1,134 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>首页Frame</title>
+    <title>title</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
-    <style type="text/css">
-    
-    section {
-        position: relative;
-        width: 100%;
-        height: auto;
-        box-sizing: border-box;
-        padding: 0 8px;
+    <style>
+    html,
+    body {
+        background-color: #F0F0F0;
     }
 
-    .content {
-        width: 100%;
-        height: 100%;
-    }
+    #list {
+        padding: 11px;
 
 
-
-    .ware-1 {
-        position: relative;
-        width: 100%;
-        height: 128px;
-        box-sizing: border-box;
-        padding-top: 15px;
-        /*border: 1px solid red;*/
-        padding-bottom: 15px;
-        border-bottom: 1px solid #d1d1d1;
     }
 
-    .ware-1 .thumbnail {
-        position: absolute;
-        top: 20px;
-        left: 0px;
-        height: 100px;
-        width: 100px;
-        border-radius: 20px;
-    }
+    #list>.card {
+      margin-bottom: 18px;
+      position: relative;
+      float: left;
+      padding: 4px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-color: white;
+      border-radius: 22px 26px 0px 29px;
+      /*border: 1px solid red;*/
+      /*margin:2px 0px 2px 0px;*/
+  }
 
-    .ware-1 .info {
-        width: 100%;
-        height: 114px;
-        box-sizing: border-box;
-        padding-left: 112px;
-        padding-right: 28px;
-    }
+  .card>img{
+   background-clip: content-box;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   border-radius: 10px 10px 0px 24px;
+   /*border: 1px solid red;*/
+}
+.description{
+    padding-left: 8px;
+    font-size: 13px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+.price{
+    position: relative;
+    height: 38px;
+    color: #FF2900;
+    line-height: 39px;
+    padding-left:8px;
+    font-size: 16px;
+    /*border: 1px solid red;*/
 
-    .ware-1 .info .name {
-        width: 36px;
-        height: 15px;
-        color: #555555;
-        margin-top: 8px;
-        
-    }
-    .ware-1 .info .name .img{
-        height: 30px;
-        width: 35px;
-    }
+}
+.price span{
+    position: absolute;
+    right: 1px;
+    line-height: 38px;
+    font-size: 12px;
+    color: black;
 
-    .ware-1 .info .description {
-        margin-top: 18px;
-        width: 100%;
-        height: 36px;
-        overflow: hidden;
-        font-size: 12px;
-        color: #9d9d9d;
-    }
+}
+.card .add{
+   position: absolute;
+   bottom: 0;
+   right: 6;
+   width: 28px;
+   height: 28px;
+   /*padding-bottom: 10px;*/
+}
+.card .add img{
+    width: 100%;
 
-    .ware-1 .info .price-tag {
-        margin-top: 6px;
-        width: 100%;
-        height: 12px;
-        font-size: 12px;
-        vertical-align: top;
-    }
+}
 
-    .ware-1 .info .price-tag .price {
-        color: black;
-        font-size: 16px;
-        margin-top: 2px;
-    }
 
-    .ware-1 .info .price-tag .unit {
-        font-size: 8px;
-        color: #cbcbcb;
-    }
+.panel {
+    display: none;
+    height: 23px;
+}
 
-    .ware-1 .info .origin-price {
-        margin-top: 5px;
-        width: 100%;
-        height: 10px;
-        font-size: 10px;
-        color: #d3d3d3;
-    }
+.control .minus {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 23px;
+    height: 23px;
+}
 
-    .ware .control {
-        position: absolute;
-        width: 38px;
-        height: 38px;
-        right: 8px;
-    }
+.control .count {
+    position: relative;
+    top: 0;
+    margin-left: 31px;
+    margin-right: 31px;
+    width: auto;
+    height: 23px;
+    text-align: center;
+    line-height: 23px;
+    color: #444;
+    font-size: 12px;
+    background-image: url(../image/count.png);
+    background-repeat: no-repeat;
+    background-size: 48px 23px;
+}
 
-    .ware-1 .control {
-        top: 90px;
-    }
-
-    .ware .control .panel {
-        display: none;
-        height: 23px;
-    }
-
-    .ware .control .minus {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 23px;
-        height: 23px;
-    }
-
-    .ware .control .count {
-        position: relative;
-        top: 0;
-        margin-left: 31px;
-        margin-right: 31px;
-        width: auto;
-        height: 23px;
-        text-align: center;
-        line-height: 23px;
-        color: #444;
-        font-size: 12px;
-        background-image: url(../image/count.png);
-        background-repeat: no-repeat;
-        background-size: 48px 23px;
-    }
-
-    .ware .control .add {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 28px;
-        height: 28px;
-    }
-
-    .push-status {
-        width: 100%;
-        height: 40px;
-        font-size: 16px;
-        color: #888;
-        line-height: 40px;
-        text-align: center;
-        background-color: #fff;
-    }
-
-    .active {
-        opacity: 0.7;
-    }
 </style>
 </head>
 
 <body>
-    <section id="list">
-     <!--    <div class="ware ware-0">
-            <div class="content">
-                <img class="thumbnail" src="../image/default_rect.png">
-                <div class="info">
-                    <span class="price">RMB14.9</span>
-                    <span class="unit">/4盒</span>
-                    <span class="origin-price">&nbsp;超市:<del>19.9元</del></span>
-                </div>
-                <div class="control">
-                    <div class="panel">
-                        <img class="minus" src="../image/minus.png">
-                        <div class="count">0</div>
-                    </div>
-                    <img class="add" src="../image/add.png">
-                </div>
-            </div>
-        </div>
-        <div class="ware ware-1" >
-            <div class="content" >
-                <img class="thumbnail" src="../image/default_square.png">
-                <div class="info" tapmode onclick="openWareWin()">
-                    <div class="name">牛奶巧克力</div>
-                    <div class="description">下雨天更配哦</div>
-                    <div class="price-tag">
-                        <span class="price">￥28.9</span>
-                        <span class="unit">/1盒</span>
-                    </div>
-                    <div class="origin-price">超市:
-                        <del>59.9元</del>
-                    </div>
-                </div>
-                <div class="control">
-                    <div class="panel">
-                        <img class="minus" src="../image/minus.png">
-                        <div class="count">0</div>
-                    </div>
-                    <img class="add" src="../image/add.png ">
-                </div>
-            </div>
-        </div> -->
-    </section>
-    <div class="push-status" id="pushStatus">上拉显示更多</div>
+    <div id="list">
+
+    </div>
 </body>
 <script type="text/template" id="template">
-    {{~it:value:index}}
-    <div class="ware ware-1" >
-        <div class="content" tapmode onclick="openWareWin('{{=value.id}}','{{=value.wareTypeId}}')" >
-            <img onload="LoadImage(this,'{{=value.id}}')" data-url="{{=value.thumbnail}}"  data-wareTypeId="{{=value.wareTypeId}}" class="thumbnail" id="thumbnail_{{=value.id}}" src="{{=value.thumbnail}}"  date-price="{{=value.price}}" >
-            <div class="info" >
-                {{? value.video}}
-                <div class="name" tapmode onclick="video('{{=value.video.url}}')"><img class="img" src="../image/video2.png" alt=""></div>
-                {{?}}
-
-                <div class="description">{{=value.description}}</div>
-                <div class="price-tag">
-                    <span class="price">￥{{=value.price}}</span>
-                    <span>VIP专价：<span id="price_{{=value.id}}"></span></span>
-                </div>
-            </div>
-            <div class="control">
-                <div class="panel" id="panel_{{=value.id}}">
-                    <img class="minus" src="../image/jian.png" tapmode onclick="Minus('{{=value.id}}')">
-                    <div class="count" id="count_{{=value.id}}">0</div>
-                </div>
-                <img class="add" src="../image/jia.png" tapmode onclick="Add('{{=value.id}}')">
-            </div>
+    {{~it.list:value:index}}
+    <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" onclick="openWareWin('{{=value.id}}')" tapmode>
+        <img src="{{=value.thumbnail}}" style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" >
+        <div class="description">{{=value.description}}</div>
+        <div class="panel" id="panel_{{=value.id}}">
+            <img class="minus" src="../image/jian.png" tapmode onclick="Minus('{{=value.id}}')">
+            <div class="count" id="count_{{=value.id}}">0</div>
         </div>
+        <div class="price">￥{{=value.price}}<span class='add' tapmode onclick="Add('{{=value.id}}')"><img src="../image/minicart.png" alt=""></span></div>
     </div>
     {{~}}
 </script>
@@ -240,55 +136,30 @@
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript">
-    apiready = function() {
-        init();
-        getWareList();
-        initRefresh();
-        initEventListenter();
-
-
-
-    };
     var flowerid ;
     var activity ;
     var wareTypeList;
     var skip=0;
-    var LIMIT=19;
-    function init(){
-       wareTypeList=$api.getStorage('WareTypeList');
+    var LIMIT=18;
+    apiready = function() {
+       init();
+       getWareList();
+       initEventListenter();
+       initRefresh();
 
-   }
 
-   function video(video){
-       event.stopPropagation();
-       api.execScript({
-           name: 'main',
-         // frameName: 'main_frame',
-         script: 'pause();'
-     });
-       api.openFrame({
-           name: 'playvideo_frame',
-           url: './playvideo_frame.html',
-           rect: {
-               x: 0,
-               y: 0,
-               w: api.winWidth,
-               h: api.winHeight
-           },
-           pageParam: {
-               video: video
-           },
-       });
+   };
+   function init(){
+     wareTypeList=$api.getStorage('WareTypeList');
 
-   }
-   function openWareWin(_wareId,_wareTypeId){
+ }
+ function openWareWin(_wareId){
 
     api.openWin({
         name: 'ware',
         url: './ware.html',
         pageParam: {
-            wareId: _wareId,
-            wareTypeId:_wareTypeId
+            wareId: _wareId
         },
         animation: {
             type: "fade"
@@ -296,28 +167,31 @@
     });
 
 }
-// 获取列表页数据
-function getWareList(_LoadMore){
- if (_LoadMore) {
 
- }else{
-  activity = api.require('UILoading');
-  activity.flower({
-    center: {
-        x: api.winWidth/2,
-        y: api.winHeight/2
-    },
-    mask:'rgba(20,0,0,0.5)',
-    size: 30,
+function getWareList(_LoadMore){
+
+    if (_LoadMore) {
+
+    }else{
+     activity = api.require('UILoading');
+     activity.flower({
+        center: {
+            x: api.winWidth/2,
+            y: api.winHeight/2
+        },
+        mask:'rgba(20,0,0,0.5)',
+        size: 30,
     // fixed: true,
 
 }, function(ret) {
   flowerid=ret.id;
 });
+ }
 
-}
 
-var now = Date.now();
+
+
+ var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
       if (_LoadMore) {
@@ -347,34 +221,31 @@ var now = Date.now();
         
     },function(ret, err){
         if (ret) {
-          // 隐藏下拉刷新
-          // api.refreshHeaderLoadDone();
-         // 模板渲染
-         activity.closeFlower({
+
+           activity.closeFlower({
             id:flowerid 
         });
-         api.refreshHeaderLoadDone()
-         updateWareList(ret,_LoadMore);
+           api.refreshHeaderLoadDone()
+           updateWareList(ret,_LoadMore);
 
 
-     } else {
-       api.toast({
-           msg: err.msg,
-           duration: 2000,
-           location: 'bottom'
-       });
-   }
-});
+
+       } 
+   });
 }
 function updateWareList(_data,_LoadMore){
-    var list=$api.byId('list');
-    var tempFn=doT.template($api.byId('template').innerHTML);
-    var resultText=tempFn(_data)
-    if (_LoadMore) {
-        $api.append(list, resultText);
-    }else{
-        $api.html(list, resultText);
-    }
+ var param = {
+    list:_data,
+    frameWidth: api.frameWidth,
+};
+var list=$api.byId('list');
+var tempFn=doT.template($api.byId('template').innerHTML);
+var resultText=tempFn(param)
+if (_LoadMore) {
+    $api.append(list, resultText);
+}else{
+    $api.html(list, resultText);
+}
     // 优化
     api.parseTapmode();
     if (_LoadMore) {
@@ -383,27 +254,8 @@ function updateWareList(_data,_LoadMore){
             pushStatus.innerHTML="我是有底线滴"
         }
     }
-
-}
-
-// 列表页图片缓存
-
-function LoadImage(_this,_id){
-    var dataUrl=$api.attr(_this, 'data-url');
-    var dataWareTypeId=$api.attr(_this, 'data-wareTypeId');
-    if (dataUrl) {
-        _this.src=dataUrl;
-
-
-    }
-    var price=$api.attr(_this, 'date-price');
-    var  priceid=$api.byId('price_'+_id);
-    if (price<30) {
-     priceid.innerHTML='未达到要求';
- }else{
-     priceid.innerHTML=Math.round(price*0.95);
- }
-
+    
+    
 
 }
 // 监听 
@@ -428,9 +280,11 @@ function initRefresh(){
     });
 
 }
+
+
+
 function Add(_wareId){
    event.stopPropagation();
-
    var count = $api.byId('count_' + _wareId);
    var panel = $api.byId('panel_' + _wareId);
 
@@ -452,7 +306,6 @@ function Add(_wareId){
    });
     
 }
-
 </script>
 
 </html>

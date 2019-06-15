@@ -19,29 +19,30 @@
     }
 
     #list>.card {
-        position: relative;
-        float: left;
-        padding: 4px;
-        box-sizing: border-box;
-        background-clip: content-box;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-color: white;
-        border-radius: 22px 26px 0px 29px;
-        /*border: 1px solid red;*/
-        /*margin:2px 0px 2px 0px;*/
-    }
+      margin-bottom: 18px;
+      position: relative;
+      float: left;
+      padding: 4px;
+      box-sizing: border-box;
+      background-clip: content-box;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-color: white;
+      border-radius: 22px 26px 0px 29px;
+      /*border: 1px solid red;*/
+      /*margin:2px 0px 2px 0px;*/
+  }
 
-    .card>img{
-     background-clip: content-box;
-     background-position: center;
-     background-repeat: no-repeat;
-     background-size: cover;
-     border-radius: 10px 10px 0px 24px;
-     /*border: 1px solid red;*/
- }
- .description{
+  .card>img{
+   background-clip: content-box;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   border-radius: 10px 10px 0px 24px;
+   /*border: 1px solid red;*/
+}
+.description{
     padding-left: 8px;
     font-size: 13px;
     display: -webkit-box;
@@ -74,8 +75,8 @@
 </body>
 <script type="text/template" id="template">
     {{~it.list:value:index}}
-    <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" data-imageurl="{{=value.wareid.thumbnail}}" data-id="{{=value.id}}" onclick="openretuivideo('{{=value.id}}')" tapmode>
-        <img src="../image/loading.png" style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" onload="fnLoadCardImage(this)">
+    <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" onclick="openretuivideo('{{=value.wareid.video.url}}','{{=value.wareid.id}}','{{=value.wareid.description}}','{{=value.wareid.thumbnail}}')" tapmode>
+        <img src="{{=value.wareid.thumbnail}}" style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" >
         <div class="description">{{=value.wareid.description}}</div>
         <div class="price">￥{{=value.wareid.price}}<span>{{=value.date}}</span></div>
     </div>
@@ -96,37 +97,49 @@
         initRefresh();
 
     };
-    function openretuivideo(ret){
-        api.toast({
-            msg: '正在修复中',
-            duration: 2000,
-            location: 'bottom'
-        });
-    
-    }
-    function getWareList(_LoadMore){
-        if (_LoadMore) {
+    function openretuivideo(video,wareid,text,img){
+     api.openFrame({
+         name: 'playvideo_frame',
+         url: './playvideo_frame.html',
+         rect: {
+             x: 0,
+             y: 0,
+             w: api.winWidth,
+             h: api.winHeight
+         },
+         pageParam: {
+             video: video,
+             retui:'ok',
+             wareid:wareid,
+             text:text,
+             img:img
+         },
+     });
 
-        }else{
-           activity = api.require('UILoading');
-           activity.flower({
-            center: {
-                x: api.winWidth/2,
-                y: api.winHeight/2
-            },
-            mask:'rgba(20,0,0,0.5)',
-            size: 30,
+ }
+ function getWareList(_LoadMore){
+    if (_LoadMore) {
+
+    }else{
+     activity = api.require('UILoading');
+     activity.flower({
+        center: {
+            x: api.winWidth/2,
+            y: api.winHeight/2
+        },
+        mask:'rgba(20,0,0,0.5)',
+        size: 30,
     // fixed: true,
 
 }, function(ret) {
   flowerid=ret.id;
 });
-       }
+ }
 
 
 
 
-       var now = Date.now();
+ var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
       if (_LoadMore) {
@@ -166,17 +179,11 @@
 
 
 
-     } else {
-       api.toast({
-           msg: err.msg,
-           duration: 2000,
-           location: 'bottom'
-       });
-   }
-});
+     } 
+ });
 }
 function updateWareList(_data,_LoadMore){
-   var param = {
+ var param = {
     list:_data,
     frameWidth: api.frameWidth,
 };
@@ -208,8 +215,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-       getWareList(true);
-   });
+     getWareList(true);
+ });
 }
 // 下拉刷新
 function initRefresh(){

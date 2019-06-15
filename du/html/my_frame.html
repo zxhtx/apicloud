@@ -203,9 +203,21 @@
     <div class="h10"></div>
     <div class="thirdblock">
         <div class="h1"></div>
+        <div class="item open-win" tapmode onclick="share()">
+            <img src="../image/share.png" class="item_ico">
+            <span>分享应用得vip打9.5折</span>
+            <img src="../image/arrow.png" class="item_arrow">
+        </div>
+        <div class="h1"></div>
         <div class="item open-win" tapmode onclick="opensetting()">
             <img src="../image/my/my_setting_user_icon_normal.png" class="item_ico">
             <span>设置</span>
+            <img src="../image/arrow.png" class="item_arrow">
+        </div>
+        <div class="h1"></div>
+        <div class="item open-win" tapmode onclick="kefu()">
+            <img src="../image/kefu.png" class="item_ico">
+            <span>客服</span>
             <img src="../image/arrow.png" class="item_arrow">
         </div>
     </div>
@@ -223,24 +235,14 @@
     var M=myDate.getMonth()+1;
     var D=myDate.getDate();
     var dialogBox;
+    var clipBoard;
     apiready = function() {
+        clipBoard = api.require('clipBoard');
         dialogBox = api.require('dialogBox');
         fnInitEvent();
         getUsername();
         dingyuecount();
         fensicount();
-        api.openFrame({
-            name: 'minicart_frame',
-            url: './minicart_frame.html',
-            rect: {
-                x: 0,
-                y: api.winHeight - 55,
-                w: 0,
-                h: 0
-            },
-        bounces: false // 关闭弹动
-    });
-
 
     };
     function fnInitEvent(){
@@ -275,9 +277,9 @@
     function updatauser(){
         userInfo=$api.getStorage('userInfo');
         if (userInfo) {
-           input();
-       }else{
-           api.openWin({
+         input();
+     }else{
+         api.openWin({
             name: 'login',
             url: './login.html',
             pageParam: {
@@ -285,53 +287,53 @@
             }
         });
 
-       }
-   }
-   function input(){
-      dialogBox.input({
-        keyboardType: 'default',
-        texts: {
-          title: '潮视',
-          placeholder: '修改用户名',
-          leftBtnTitle: '取消',
-          rightBtnTitle: '确定'
-      },
-      styles: {
-          bg: '#fff',
-          corner: 2,
-          w: 300,
-          h: 240,
-          title: {
-            h: 60,
-            alignment: 'center',
-            size: 14,
-            color: '#000',
-            marginT:30,
-        },
-        input: {
-            h: 60,
-            y:30,
-            marginT:15,
-            marginLeft: 10,
-            marginRight:10,
-            textSize: 14,
-            textColor: '#000'
-        },
-        dividingLine: {
-            width: 0.5,
-            color: '#696969'
-        },
-        left: {
-            bg: 'rgba(0,0,0,0)',
-            color: '#000',
-            size: 12
-        },
-        right: {
-            bg: 'rgba(0,0,0,0)',
-            color: '#000',
-            size: 12
-        }
+     }
+ }
+ function input(){
+  dialogBox.input({
+    keyboardType: 'default',
+    texts: {
+      title: '潮视',
+      placeholder: '修改用户名',
+      leftBtnTitle: '取消',
+      rightBtnTitle: '确定'
+  },
+  styles: {
+      bg: '#fff',
+      corner: 2,
+      w: 300,
+      h: 240,
+      title: {
+        h: 60,
+        alignment: 'center',
+        size: 14,
+        color: '#000',
+        marginT:30,
+    },
+    input: {
+        h: 60,
+        y:30,
+        marginT:15,
+        marginLeft: 10,
+        marginRight:10,
+        textSize: 14,
+        textColor: '#000'
+    },
+    dividingLine: {
+        width: 0.5,
+        color: '#696969'
+    },
+    left: {
+        bg: 'rgba(0,0,0,0)',
+        color: '#000',
+        size: 12
+    },
+    right: {
+        bg: 'rgba(0,0,0,0)',
+        color: '#000',
+        size: 12
     }
+}
 }, function(ret) {
 
     if (ret.eventType == 'left') {
@@ -348,11 +350,11 @@
         });
     }
 });
-  }
-  function updatausername(user){
-     userInfo=$api.getStorage('userInfo');
-     var userRegion=$api.byId('userRegion');
-     api.ajax({
+}
+function updatausername(user){
+   userInfo=$api.getStorage('userInfo');
+   var userRegion=$api.byId('userRegion');
+   api.ajax({
       url: 'https://d.apicloud.com/mcm/api/user/'+userInfo.userId,
       method: 'put',
       headers: {
@@ -377,14 +379,14 @@
     }
 });
 
- }
+}
 
- function login(){
+function login(){
     userInfo=$api.getStorage('userInfo');
     if (userInfo) {
         return;
     }else{
-       api.openWin({
+     api.openWin({
         name: 'login',
         url: './login.html',
         pageParam: {
@@ -392,12 +394,12 @@
         }
     });
 
-   }
+ }
 }
 
 function dingyuecount(){
- userInfo=$api.getStorage('userInfo');
- if (!userInfo) {
+   userInfo=$api.getStorage('userInfo');
+   if (!userInfo) {
     return;
 }
 var dingyue=$api.byId('dingyue');
@@ -482,10 +484,10 @@ function fensicount(){
                 location: 'bottom'
             });
         }else{
-         uploadAtavar(ret.data)
-     }
+           uploadAtavar(ret.data)
+       }
 
- }
+   }
 
 });
 
@@ -544,8 +546,8 @@ function updateUserAtavar(_data){
         }
     },function(ret, err){
         if (ret) {
-         updateLocalAvatar(ret)
-     } else {
+           updateLocalAvatar(ret)
+       } else {
         api.toast({
             msg: err.msg,
             duration: 2000,
@@ -556,15 +558,15 @@ function updateUserAtavar(_data){
 }   
 // 改变头像路径
 function updateLocalAvatar(_data){
- var  userAvatar=$api.byId('userAvatar');
- if (!_data.avatar) {
+   var  userAvatar=$api.byId('userAvatar');
+   if (!_data.avatar) {
     return;
 }
 api.imageCache({
     url: _data.avatar.url
 }, function(ret, err){
     if( ret ){
-     userAvatar.src=ret.url;
+       userAvatar.src=ret.url;
      // userAvatar.style.backgroundSize='108px 108px';
  }else{
     api.toast({
@@ -581,8 +583,8 @@ api.imageCache({
 
 // 在个人中心中显示用户名
 function getUsername(){
-   userInfo=$api.getStorage('userInfo');
-   if (!userInfo) {
+ userInfo=$api.getStorage('userInfo');
+ if (!userInfo) {
     return;
 }
 var userAccount=$api.byId('userAccount');
@@ -620,30 +622,30 @@ api.ajax({
             }
 
             if (ret[0].chaoshiuser==undefined) {
-             userRegion.innerHTML='用户名：未设置';
-         }else{
-          userRegion.innerHTML='用户名:'+ret[0].chaoshiuser;
-      }
+               userRegion.innerHTML='用户名：未设置';
+           }else{
+              userRegion.innerHTML='用户名:'+ret[0].chaoshiuser;
+          }
 
 
-      var now=Y+"-"+M+"-"+D;
-      var vipday=datedifference(ret[0].date,now)
-      vipday=99-vipday;
-      if (ret[0].vip==1) {
-        vip.innerHTML='vip'+'(仅剩'+ vipday +'天)';
+          var now=Y+"-"+M+"-"+D;
+          var vipday=datedifference(ret[0].date,now)
+          vipday=99-vipday;
+          if (ret[0].vip==1) {
+            vip.innerHTML='vip'+'(仅剩'+ vipday +'天)';
 
-    }else{
-        vip.innerHTML=''
+        }else{
+            vip.innerHTML=''
+        }
+        date(ret[0].date);
+
+    } else {
+        api.toast({
+            msg: err.msg,
+            duration: 2000,
+            location: 'bottom'
+        });
     }
-    date(ret[0].date);
-
-} else {
-    api.toast({
-        msg: err.msg,
-        duration: 2000,
-        location: 'bottom'
-    });
-}
 });
 
 }   
@@ -672,8 +674,8 @@ function date(_date){
 
 }
 function updatevip(){
-   var usernameinfo=$api.getStorage('userInfo');
-   api.ajax({
+ var usernameinfo=$api.getStorage('userInfo');
+ api.ajax({
     url: 'http://d.apicloud.com/mcm/api/user/'+usernameinfo.userId,
     method: 'put',
     headers: {
@@ -690,9 +692,9 @@ function updatevip(){
 
 },function(ret, err){
     if (ret) {
-     var vip=$api.byId('vip');  
-     vip.innerHTML='普通用户';
- } else {
+       var vip=$api.byId('vip');  
+       vip.innerHTML='普通用户';
+   } else {
     api.toast({
         msg: err.msg,
         duration: 2000,
@@ -718,19 +720,19 @@ function openchaoshi(){
     userInfo=$api.getStorage('userInfo');
     if (userInfo) {
         api.openFrame({
-         name: 'caoshi_frame',
-         url: './caoshi_frame.html',
-         rect: {
-             x: 0,
-             y: 0,
-             w:'auto',
-             h: 'auto'
-         },
-         pageParam: {
-             name: 'test'
-         },
+           name: 'caoshi_frame',
+           url: './caoshi_frame.html',
+           rect: {
+               x: 0,
+               y: 0,
+               w:'auto',
+               h: 'auto'
+           },
+           pageParam: {
+               name: 'test'
+           },
 
-     });
+       });
     }else{
         api.openWin({
             name: 'login',
@@ -801,8 +803,8 @@ api.openWin({
 }
 
 function openshoppingcart(){
-   userInfo=$api.getStorage('userInfo');
-   if (!userInfo) {
+ userInfo=$api.getStorage('userInfo');
+ if (!userInfo) {
     api.openWin({
         name: 'login',
         url: './login.html',
@@ -891,6 +893,187 @@ function openlikevideo(){
             bgColor: 'rgba(0,0,0,0)',
         });
 }
+
+
+
+function share(){
+
+ var sharedModule = api.require('shareAction');
+ sharedModule.share({
+    text: '【你要的潮装都在这里】 http://www.zxh.yueaa.com/ 点击链接 有你想不到的低价潮装 分享应用领取3个月vip 第一单返8元',
+    type: 'text'
+});
+ var userInfo=$api.getStorage('userInfo');
+       // alert(userInfo.userId)
+       var params={
+        fields:{},
+        fields: {},
+        where: {
+            id:userInfo.userId
+        }
+    }
+    params=$api.jsonToStr(params);
+    api.ajax({
+        url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
+        method: 'get',
+        headers: {
+            "X-APICloud-AppId": "A6099267504667",
+            "X-APICloud-AppKey":   appKey
+        },
+
+    },function(ret, err){
+        if (ret) {
+            // alert(ret[0].vip)
+            if (ret[0].vip!=1) {
+                // alert(1)
+                sharevip()
+
+            }
+        } 
+    });
+
+    
+
+
+
+
+
+}
+function sharevip(){
+   var myDate = new Date();
+   var Y=myDate.getFullYear();
+   var M=myDate.getMonth()+1;
+   var D=myDate.getDate();  
+   var shijian=Y+'-'+M+'-'+D;
+
+   userInfo=$api.getStorage('userInfo');
+
+   api.ajax({
+    url: 'https://d.apicloud.com/mcm/api/user/'+userInfo.userId,
+    method: 'put',
+    headers: {
+        "X-APICloud-AppId": "A6099267504667",
+        "X-APICloud-AppKey":   appKey,
+    },
+    data: {
+        values: { 
+            vip:'1',
+            date:shijian
+        }
+
+
+    }
+},function(ret, err){
+    if (ret) {
+
+
+    }
+});
+}
+
+
+function kefu(){
+   dialogBox.scene({
+    rect: {
+        w: 280,
+        h: 388
+    },
+    texts: {
+        okBtnTitle: '取消' ,
+        content: '爱的火花就是从这里开始滴啦#^_^#',
+
+    },
+    styles: {
+        bg: '#fff',
+        sceneImg: {
+            h: 150,
+            path: 'widget://image/kefuqun.jpg'
+        },
+        content: {
+            color: '#636363',
+            size: 12
+        },
+        cell: {
+            bg: '#fff',
+            h: 48,
+            text: {
+                color: '#636363',
+                size: 13
+            },
+            icon: {
+                marginL: 15,
+                marginT: 9,
+                w: 30,
+                h: 30,
+                corner: 2
+            }
+        },
+        ok: {
+            h:40,
+            bg: '#89a',
+            titleColor: '#000'
+        }
+    },
+    optionDatas: [{
+        icon: 'widget://image/qq.png',
+        text: '复制扣扣'
+    }, {
+        icon: 'widget://image/wx.png',
+        text: '复制微信'
+    }, ]
+}, function(ret, err) {
+    if (ret) {
+       if (ret.eventType=='ok') {
+           dialogBox.close({
+            dialogName: 'scene'
+        });
+       }
+       if (ret.index==0) {
+          
+        clipBoard.set({
+            value: '852841974'
+        }, function(ret, err) {
+            if (ret) {
+                api.toast({
+                    msg: '复制成功',
+                    duration: 2000,
+                    location: 'bottom'
+                });
+
+            }
+        });
+
+
+        dialogBox.close({
+            dialogName: 'scene'
+        });
+    }else if (ret.index==1) {
+
+     
+      clipBoard.set({
+        value: 'zxh2764832464'
+    }, function(ret, err) {
+        if (ret) {
+            api.toast({
+                msg: '复制成功',
+                duration: 2000,
+                location: 'bottom'
+            });
+
+        }
+    });
+
+
+      dialogBox.close({
+        dialogName: 'scene'
+    });
+  }
+
+} 
+});
+}
+
+
 </script>
 
 </html>

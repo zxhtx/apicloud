@@ -2,12 +2,12 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>收货地址</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css" />
-    <style>    
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>收货地址</title>
+  <link rel="stylesheet" type="text/css" href="../css/api.css" />
+  <style>    
 </style>
 </head>
 
@@ -17,46 +17,65 @@
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
-    apiready = function() {
-        playvideo();
-    };
+  apiready = function() {
+    playvideo();
+  };
 
-    function playvideo(){
-        var UIScrollPlayer = api.require('UIScrollPlayer');
-        UIScrollPlayer.open({
-            rect : {
-                x : 0,
-                y : 0,
-                h : api.winHeight,
-                w :api.winWidth
-            },
-            videos : [{
-                imageUrl:'',
-                videoUrl:api.pageParam.video,
-            }],
-        },function(ret, err){
+  function playvideo(){
+    var UIScrollPlayer = api.require('UIScrollPlayer');
+    UIScrollPlayer.open({
+      rect : {
+        x : 0,
+        y : 0,
+        h : api.winHeight,
+        w :api.winWidth
+      },
+      videos : [{
+        imageUrl:'',
+        videoUrl:api.pageParam.video,
+      }],
+    },function(ret, err){
 
-        });
-        setTimeout(function(){
+    });
+    setTimeout(function(){
 
-          api.openFrame({
-            name: 'backimg_frame',
-            url: './backimg_frame.html',
-            rect: {
-              x: 10,
-              y: 28,
-              w: 50,
-              h: 50
+      api.openFrame({
+        name: 'backimg_frame',
+        url: './backimg_frame.html',
+        rect: {
+          x: 10,
+          y: 28,
+          w: 50,
+          h: 50
+        },
+        bgColor: 'rgba(0,0,0,0)',
+        pageParam: {
+          video: 'video'
+        },
+
+      });
+      if (api.pageParam.retui=='ok') {
+        api.openFrame({
+          name: 'retuiware_frame',
+          url: './retuiware_frame.html',
+          rect: {
+            x: 0,
+            y: api.winHeight-80,
+            w: api.winWidth,
+            h: 80
           },
           bgColor: 'rgba(0,0,0,0)',
           pageParam: {
-            video: 'video'
-       },
+            wareid:api.pageParam.wareid,
+            text:api.pageParam.text,
+            img:api.pageParam.img
+          },
 
-   });
+        });
+      }
 
-      },500);
-    }
+    },500);
+  }
 
 
 </script>

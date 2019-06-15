@@ -86,10 +86,11 @@
 </nav>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
     apiready = function() {
 
-
+        initWareTypeList()
 
         var header=$api.byId('header');
         var nav=$api.byId('nav');
@@ -154,7 +155,51 @@ var menus, headerH , navH;
     }
 
 
+    function initWareTypeList() {
 
+      var now = Date.now();
+      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
+      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
+
+    // 获取上一次的商品分类列表
+    var dindantypeList = $api.getStorage('dindantypeList');
+
+    // 如果没有商品分类列表，则使用默认的商品分类列表
+    if (!dindantypeList) {
+      var params = {
+        fields: {
+          createdAt: false,
+          updatedAt: false
+      },
+      where: {},
+      skip: 0,
+      limit: 10
+  }
+  params = $api.jsonToStr(params);
+  api.ajax({
+    url: 'http://d.apicloud.com/mcm/api/dindantype?filter=' + params,
+    method: 'get',
+    headers: {
+      "X-APICloud-AppId": "A6099267504667",
+      "X-APICloud-AppKey":   appKey
+  }
+}, function(ret, err) {
+    if (ret) {
+            // 存储商品分类列表到本地
+            // alert($api.jsonToStr(ret))
+            $api.setStorage('dindantypeList', ret);
+        } else {
+            api.toast({
+              msg: '更新商品分类列表失败',
+              duration: 2000,
+              location: 'bottom'
+          });
+        }
+    });
+
+}
+
+}
 
 </script>
 
