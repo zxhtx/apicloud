@@ -155,8 +155,8 @@
             
         </div>
         <div class="dingyueandfensi">
-            <div id="dingyue" class="dingyue">订阅/0</div>
-            <div id="fensi" class="fensi">粉丝/0</div>
+            <div id="dingyue" class="dingyue" tapmode onclick="guanzhu()" >订阅/0</div>
+            <div id="fensi" class="fensi"  tapmode onclick="fensi()" >粉丝/0</div>
         </div>
     </div>
     <div class="h10"></div>
@@ -1073,6 +1073,47 @@ function kefu(){
 });
 }
 
+function guanzhu(){
+    api.openWin({
+        name: 'guanzhulist',
+        url: './guanzhulist.html',
+        rect: {
+            x: 0,
+            y: 0,
+            w: api.winWidth,
+            h: api.winHeight
+        },
+        pageParam: {
+            name: 'test'
+        },
+        animation: {
+            type: "fade"
+        }
+    });
+
+
+
+}
+
+function fensi(){
+
+  api.openWin({
+    name: 'fensi',
+    url: './fensi.html',
+    rect: {
+        x: 0,
+        y: 0,
+        w: api.winWidth,
+        h: api.winHeight
+    },
+    pageParam: {
+        name: 'test'
+    },
+    animation: {
+        type: "fade"
+    }
+});
+}
 
 </script>
 

@@ -289,6 +289,12 @@ api.openWin({
 
 
 function lookspeak(){
+    api.toast({
+        msg: '修复中',
+        duration: 2000,
+        location: 'bottom'
+    });
+    return;
     api.openWin({
         name: 'lookspeak',
         url: './lookspeak.html',

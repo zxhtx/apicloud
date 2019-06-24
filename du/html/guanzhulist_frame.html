@@ -249,22 +249,7 @@ function openchaoshi(Id,guanzhuid){
 // 获取列表页数据
 function getWareList(_LoadMore){
   var userInfo=$api.getStorage('userInfo');
-  activity = api.require('UILoading');
-  activity.keyFrame({
-    rect: {
-        w: 80,
-        h: 100
-    },
-    styles: {
-        bg: 'rgba(0,0,0,0.5)',
-        corner: 5,
-        interval: 50,
-        frame: {
-            w: 80,
-            h: 80
-        }
-    }
-});
+ 
 
 
   if (_LoadMore) {
@@ -327,7 +312,7 @@ function updateWareList(_data,_LoadMore){
             pushStatus.innerHTML="我是有底线滴"
         }
     }
-    activity.closeKeyFrame();
+   
 
 }
 

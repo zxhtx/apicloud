@@ -19,7 +19,7 @@
     }
 
     #list>.card {
-      /*margin-bottom: 0px;*/
+      margin-bottom: 18px;
       position: relative;
       float: left;
       padding: 4px;
@@ -47,24 +47,70 @@
     font-size: 13px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
+    -webkit-line-clamp: 2;
     overflow: hidden;
 }
 .price{
+    position: relative;
     height: 38px;
     color: #FF2900;
     line-height: 39px;
     padding-left:8px;
     font-size: 16px;
+    /*border: 1px solid red;*/
+
 }
 .price span{
     position: absolute;
-    right: 6px;
+    right: 1px;
     line-height: 38px;
     font-size: 12px;
     color: black;
 
 }
+.card .add{
+   position: absolute;
+   bottom: 0;
+   right: 6;
+   width: 28px;
+   height: 28px;
+   /*padding-bottom: 10px;*/
+}
+.card .add img{
+    width: 100%;
+
+}
+
+
+.panel {
+    display: none;
+    height: 23px;
+}
+
+.control .minus {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 23px;
+    height: 23px;
+}
+
+.control .count {
+    position: relative;
+    top: 0;
+    margin-left: 31px;
+    margin-right: 31px;
+    width: auto;
+    height: 23px;
+    text-align: center;
+    line-height: 23px;
+    color: #444;
+    font-size: 12px;
+    background-image: url(../image/count.png);
+    background-repeat: no-repeat;
+    background-size: 48px 23px;
+}
+
 </style>
 </head>
 
@@ -75,10 +121,14 @@
 </body>
 <script type="text/template" id="template">
     {{~it.list:value:index}}
-    <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" onclick="openretuivideo('{{=value.wareid.video.url}}','{{=value.wareid.id}}','{{=value.wareid.description}}','{{=value.wareid.thumbnail}}')" tapmode>
-        <img src="{{=value.wareid.thumbnail}}" style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" >
-        <div class="description">{{=value.wareid.description}}</div>
-        <div class="price">￥{{=value.wareid.price}}<span>{{=value.date}}</span></div>
+    <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" onclick="openWareWin('{{=value.id}}')" tapmode>
+        <img src="{{=value.thumbnail}}" style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" >
+        <div class="description">{{=value.description}}</div>
+        <div class="panel" id="panel_{{=value.id}}">
+            <img class="minus" src="../image/jian.png" tapmode onclick="Minus('{{=value.id}}')">
+            <div class="count" id="count_{{=value.id}}">0</div>
+        </div>
+        <div class="price">￥{{=value.price}}<span class='add' tapmode onclick="Add('{{=value.id}}')"><img src="../image/minicart.png" alt=""></span></div>
     </div>
     {{~}}
 </script>
@@ -90,34 +140,36 @@
     var activity ;
     var wareTypeList;
     var skip=0;
-    var LIMIT=8;
+    var LIMIT=18;
     apiready = function() {
-        getWareList();
-        initEventListenter();
-        initRefresh();
+       init();
+       getWareList();
+       initEventListenter();
+       initRefresh();
 
-    };
-    function openretuivideo(video,wareid,text,img){
-     api.openFrame({
-         name: 'playvideo_frame',
-         url: './playvideo_frame.html',
-         rect: {
-             x: 0,
-             y: 0,
-             w: api.winWidth,
-             h: api.winHeight
-         },
-         pageParam: {
-             video: video,
-             retui:'ok',
-             wareid:wareid,
-             text:text,
-             img:img
-         },
-     });
+
+   };
+   function init(){
+     wareTypeList=$api.getStorage('WareTypeList');
 
  }
- function getWareList(_LoadMore){
+ function openWareWin(_wareId){
+
+    api.openWin({
+        name: 'ware',
+        url: './ware.html',
+        pageParam: {
+            wareId: _wareId
+        },
+        animation: {
+            type: "fade"
+        }
+    });
+
+}
+
+function getWareList(_LoadMore){
+
     if (_LoadMore) {
 
     }else{
@@ -151,14 +203,16 @@
     var params={
         fields:{},
         fields: {},
+        where: {
+            wareTypeId: wareTypeList[7].id
+        },
         skip:skip,
         limit:LIMIT,
-        include: ['wareidPointer'],
         order:"createdAt DESC"
     }
     params=$api.jsonToStr(params);
     api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/retuivideo?filter='+params,
+        url: 'http://d.apicloud.com/mcm/api/ware?filter='+params,
         method: 'get',
         headers: {
             "X-APICloud-AppId": "A6099267504667",
@@ -168,19 +222,16 @@
     },function(ret, err){
         if (ret) {
 
-          // 隐藏下拉刷新
-          // api.refreshHeaderLoadDone();
-         // 模板渲染
-         activity.closeFlower({
+           activity.closeFlower({
             id:flowerid 
         });
-         api.refreshHeaderLoadDone()
-         updateWareList(ret,_LoadMore);
+           api.refreshHeaderLoadDone()
+           updateWareList(ret,_LoadMore);
 
 
 
-     } 
- });
+       } 
+   });
 }
 function updateWareList(_data,_LoadMore){
  var param = {
@@ -230,18 +281,30 @@ function initRefresh(){
 
 }
 
-function fnLoadCardImage(element){
 
 
-    var eCard = $api.closest(element, '.card');
+function Add(_wareId){
+   event.stopPropagation();
+   var count = $api.byId('count_' + _wareId);
+   var panel = $api.byId('panel_' + _wareId);
 
-    var url = eCard.dataset['imageurl'];
-    // api.imageCache({
-    //     url: url
-    // }, function(ret, err){
-        element.src = url ;
-    // });
-
+    // 更新商品数量及显示状态
+    var countNumber = parseInt(count.innerHTML);
+    countNumber = 1;
+    count.innerHTML = countNumber;
+    api.sendEvent({
+        name: 'updateshoppingcart',
+        extra: {
+            wareId:_wareId, 
+            wareCount:countNumber
+        }
+    });
+    api.toast({
+       msg: '已加入购物车',
+       duration: 2000,
+       location: 'bottom'
+   });
+    
 }
 </script>
 

@@ -353,11 +353,11 @@
     }
 
     .section03 .title01 .title {
-        color: #965037;
+        color: #000;
     }
 
     .section03 .title02 .title {
-        color: #ffa001;
+        color: #000;
     }
 
     .section03 .title03 .title {
@@ -500,7 +500,7 @@
             </div>
             <img src="../image/swipe/decorate.png" class="fl">
         </div>
-        <div class="col h80 bb open-win" win="shoplist" param='{"type":0,"shopType":2}'>
+        <div class="col h80 bb open-win" tapmode onclick="shop(8)">
             <div class="matrix">
                 <div class="matrixcell title02">
                     <div class="title">配件</div>
@@ -584,11 +584,11 @@
 
     <script type="text/template" id="template1">
         {{~it.list:value:index}}
-        <div class="snapup hightitem section02 open-win" tapmode onclick="openware('{{=value.wareid.id}}')">
-            <img src="{{=value.wareid.thumbnail}}" class="fl infologo">
+        <div class="snapup hightitem section02 open-win" tapmode onclick="openware('{{=value.id}}')">
+            <img src="{{=value.thumbnail}}" class="fl infologo">
             <div class="shelf2 fl">
                 <div class="shelfcell">
-                    <div class="title">{{=value.wareid.description}}<span>￥{{=value.wareid.price}}</span></div>
+                    <div class="title">{{=value.description}}<span>￥{{=value.price}}</span></div>
                     <span class="subtitel">周计火爆商品</span>
                 </div>
             </div>
@@ -598,10 +598,10 @@
     </script>
     <script type="text/template" id="template">
         {{~it.list:value:index}}
-        <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" onclick="openware('{{=value.wareid.id}}')" tapmode>
-          <img src="{{=value.wareid.thumbnail}}" style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" >
-          <div class="description">{{=value.wareid.description}}</div>
-          <div class="price1">￥{{=value.wareid.price}}<span>{{=value.date}}</span></div>
+        <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" onclick="openware('{{=value.id}}')" tapmode>
+          <img src="{{=value.thumbnail}}" style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" >
+          <div class="description">{{=value.description}}</div>
+          <div class="price1">￥{{=value.price}}<span>领取兑换码</span></div>
       </div>
       {{~}}
   </script>
@@ -627,7 +627,7 @@
         initEventListenter();
         initRefresh();
          // fnInitSwipe();
-         alert1();
+         // alert1();
          api.openFrame({
             name: 'minicart_frame',
             url: './minicart_frame.html',
@@ -676,6 +676,9 @@
         }
         if (_index==7) {
             var topname='女鞋'
+        }
+         if (_index==8) {
+            var topname='配件'
         }
         api.openWin({
            name: 'shoplist',
@@ -743,12 +746,12 @@ function getWareList(_LoadMore){
         skip:skip,
         limit:LIMIT,
         order:"createdAt DESC",
-        include: ['wareidPointer'],
+        // include: ['wareidPointer'],
         
     }
     params=$api.jsonToStr(params);
     api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/retuivideo?filter='+params,
+        url: 'http://d.apicloud.com/mcm/api/ware?filter='+params,
         method: 'get',
         headers: {
             "X-APICloud-AppId": "A6099267504667",
@@ -765,14 +768,14 @@ function getWareList(_LoadMore){
             id:flowerid 
         });
          api.refreshHeaderLoadDone();
-         for (var i =0; i <ret.length-1; i++) {
-            for (var j = i+1; j <ret.length; j++) {
-                if (ret[i].wareid.id==ret[j].wareid.id) {
-                   ret.splice(j,1);  
-               }
-           }
+       //   for (var i =0; i <ret.length-1; i++) {
+       //      for (var j = i+1; j <ret.length; j++) {
+       //          if (ret[i].wareid.id==ret[j].wareid.id) {
+       //             ret.splice(j,1);  
+       //         }
+       //     }
 
-       }
+       // }
 
        var ret1=[
        ret[3],
@@ -805,8 +808,8 @@ if (_LoadMore) {
     api.parseTapmode();
     if (_LoadMore) {
         if (_data.length<LIMIT) {
-            var pushStatus=$api.byId('pushStatus');
-            pushStatus.innerHTML="我是有底线滴"
+            // var pushStatus=$api.byId('pushStatus');
+            // pushStatus.innerHTML="我是有底线滴"
         }
     }
     
@@ -829,8 +832,8 @@ function updateWareList1(_data,_LoadMore){
     api.parseTapmode();
     if (_LoadMore) {
         if (_data.length<LIMIT) {
-            var pushStatus=$api.byId('pushStatus');
-            pushStatus.innerHTML="我是有底线滴"
+            // var pushStatus=$api.byId('pushStatus');
+            // pushStatus.innerHTML="我是有底线滴"
         }
     }
     
@@ -906,7 +909,7 @@ function alert1() {
         },
         texts: {
             title: '内部价来啦!!!',
-            content: '快进群,每个人都可以用内部价购买全场啦!!!',
+            content: '快进群,领福利内部价购买全场啦!!!',
             buttons: [{
                 text: '复制qq群'
             }, {
