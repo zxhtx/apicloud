@@ -114,12 +114,12 @@
         </div>
     </header>
     <section></section>
-    <footer id="footer">
+    <!--<footer id="footer">
         <div class="panel" id="price">总金额:￥24.9</div>
         <div class="buy">
             <img class="buy-button" src="../image/confirm.png" tapmode onclick="yesadd()">
         </div>
-    </footer>
+    </footer>-->
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
@@ -127,15 +127,13 @@
 
     apiready = function() {
         var jiage;
-        window.setInterval(close,3000);
+
 
 
         var header=$api.byId('header');
-        var footer=$api.byId('footer');
 
         // 获取header和nav的高
         headerH=$api.offset(header).h
-        footerH=$api.offset(footer).h
         api.openFrame({
             name: 'order_frame',
             url: './order_frame.html',
@@ -143,355 +141,23 @@
                 x: 0,
                 y: headerH,
                 w: 'auto',
-                h: api.winHeight-headerH-footerH
+                h: api.winHeight-headerH
             },
             pageParam: {
-                wareId:api.pageParam.wareId 
+                wareId:api.pageParam.wareId, 
+                size:api.pageParam.size,
+                color:api.pageParam.color
             },
             animation: {
                 type: "fade"
             },
             bounces: true
         });
-        getprice();
-        getuser();
+//      getuser();
+        //      getprice();
 
     };
-    var activity;
-    
-    var addInfo = {
-        dindantypeid:'5c2a3991af3114d73d9ddfc2',
-    };
-
-    function getuser(){
-      activity = api.require('UILoading');
-      activity.keyFrame({
-        rect: {
-            w: 80,
-            h: 100
-        },
-        styles: {
-            bg: 'rgba(0,0,0,0.5)',
-            corner: 5,
-            interval: 50,
-            frame: {
-                w: 80,
-                h: 80
-            }
-        }
-    });
-      var userInfo=$api.getStorage('userInfo');
-      var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
-      var params={
-        fields:{},
-        fields: {},
-        where: {
-            id:userInfo.userId
-        },
-    }
-    params=$api.jsonToStr(params);
-    api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
-        method: 'get',
-        headers: {
-            "X-APICloud-AppId": "A6099267504667",
-            "X-APICloud-AppKey":   appKey
-        },
-        
-    },function(ret, err){
-        if (ret) {
-            addInfo.username=ret[0].username;
-            // alert($api.jsonToStr(ret))
-        } else {
-         api.toast({
-             msg: err.msg,
-             duration: 2000,
-             location: 'bottom'
-         });
-     }
- });
-
-}
-function close(){
-    activity.closeKeyFrame();
-
-}
-
-function getprice(){
-
-
-   var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
-      var params={
-        fields:{},
-        fields: {},
-        where: {
-            id:api.pageParam.wareId
-        },
-        skip:0
-    }
-    params=$api.jsonToStr(params);
-    api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/ware?filter='+params,
-        method: 'get',
-        headers: {
-            "X-APICloud-AppId": "A6099267504667",
-            "X-APICloud-AppKey":   appKey
-        },
-        
-    },function(ret, err){
-        if (ret) {
-            vip(ret[0].price);
-            addInfo.size=api.pageParam.size;
-            addInfo.color=api.pageParam.color;
-            getware();
-            getaddress();
-            jiage=ret[0].price;
-
-        } else {
-         api.toast({
-             msg: err.msg,
-             duration: 2000,
-             location: 'bottom'
-         });
-     }
- });
-
-}
-
-function vip(dataprice){
-    var usernameinfo=$api.getStorage('userInfo');
-
-    var now = Date.now();
-    var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-    var params={
-        fields: {},
-        where:{
-            id:usernameinfo.userId
-        },
-        skip: 0,
-    }
-    params=$api.jsonToStr(params);
-    api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
-        method: 'get',
-        headers: {
-            "X-APICloud-AppId": "A6099267504667",
-            "X-APICloud-AppKey":   appKey
-        },
-
-    },function(ret, err){
-        if (ret) {
-         var price=$api.byId('price');
-            // 存储用户名
-            if (jiage>29) {
-
-
-                if (ret[0].vip==1) {
-                 var vipprice=dataprice * 0.95;
-                 var ceilprice =Math.round(vipprice);
-
-                 price.innerHTML='总金额 :￥'+ceilprice;
-                 addInfo.price=ceilprice;
-
-             }else{
-                 price.innerHTML='总金额 :￥'+dataprice;
-                 addInfo.price=dataprice;
-             }
-         }else{
-          price.innerHTML='总金额 :￥'+dataprice;
-          addInfo.price=dataprice;
-
-      }
-  } else {
-    api.toast({
-        msg: err.msg,
-        duration: 2000,
-        location: 'bottom'
-    });
-}
-});
-
-}
-
-
-function getware(){
-
-  var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
-      var params={
-        fields:{},
-        fields: {},
-        where: {
-            id:api.pageParam.wareId
-        },
-        skip:0
-    }
-    params=$api.jsonToStr(params);
-    api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/ware?filter='+params,
-        method: 'get',
-        headers: {
-            "X-APICloud-AppId": "A6099267504667",
-            "X-APICloud-AppKey":   appKey
-        },
-        
-    },function(ret, err){
-        if (ret) {
-            addInfo.wareid=ret[0].id;
-            addInfo.description=ret[0].description;
-            addInfo.warename=ret[0].name;
-            addInfo.url=ret[0].thumbnail;
-            addInfo.shangjia=ret[0].shangjia;
-            addInfo.wareTypeId=ret[0].wareTypeId;
-        } else {
-         api.toast({
-             msg: err.msg,
-             duration: 2000,
-             location: 'bottom'
-         });
-     }
- });
-
-}
-function getaddress(){
-    var userInfo=$api.getStorage('userInfo');
-    var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-      var params={
-         fields: {},
-         where: {
-            default:1,
-            userId:userInfo.userId
-        },
-        skip: 0
-    }
-    params = $api.jsonToStr(params);
-    api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/address?filter='+params,
-        method: 'get',
-        headers: {
-         "X-APICloud-AppId": "A6099267504667",
-         "X-APICloud-AppKey":   appKey
-     }
- },function(ret, err){
-    addInfo.addressid=ret[0].id;
-    addInfo.address=ret[0].address;
-    addInfo.shoppingname=ret[0].name;
-    addInfo.userid=ret[0].userId;
-    addInfo.house=ret[0].house;
-    addInfo.addresstype=ret[0].type;
-    addInfo.mobile=ret[0].mobile; 
-    if (addInfo.url!=null && addInfo.addresstype!=null) {
-        if ( addInfo.warename!=null &&  addInfo.address!=null) {
-            if (addInfo.addresstype!=null && addInfo.mobile!=null) {
-              activity.closeKeyFrame();
-          }else{
-           activity.closeKeyFrame();
-       }
-   }else{
-    return;
-}
-
-}else{
-    return;
-}
-}); 
-}
-function yesadd(){ 
-
-    if (addInfo.url!=null && addInfo.addresstype!=null) {
-       // activity.closeKeyFrame();
-       if ( addInfo.warename!=null &&  addInfo.address!=null) {
-           // activity.closeKeyFrame();
-           if (addInfo.addresstype!=null && addInfo.mobile!=null) {
-              activity.closeKeyFrame();
-          }else{
-        return;
-        }
-    }else{
-        return;
-    }
-
-}else{
-    return;
-}
-var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-      var userInfo=$api.getStorage('userInfo');
-      api.ajax({
-        url: 'https://d.apicloud.com/mcm/api/shoppinginformation',
-        method: 'post',
-        headers: {
-           "X-APICloud-AppId": "A6099267504667",
-           "X-APICloud-AppKey":   appKey,
-           "Authorization": userInfo.id
-       },
-       data: {
-        values: addInfo
-    }
-}, function(ret, err) {
-    if (ret) {
-        var dialogBox = api.require('dialogBox');
-        dialogBox.alert({
-            texts: {
-                title: '下单成功',
-                content: "下单成功去我的订单支付(〃'▽'〃)",
-                leftBtnTitle: '确认',
-            },
-            styles: {
-                bg: '#fff',
-                w: 300,
-                corner:2,
-                title: {
-                    marginT: 18,
-                    titleSize: 14,
-                    titleColor: '#000'
-                },
-                content: {
-                    color: '#000',
-                    size: 14
-                },
-                left: {
-                    marginB: 7,
-                    marginL: 88,
-                    w: 130,
-                    h: 35,
-                    corner: 8,
-                    bg: '#000',
-                    size: 12,
-                    color: '#fff',
-                },
-
-            }
-        }, function(ret) {
-            if (ret.eventType == 'left') {
-
-                api.openWin({
-                    name: 'dindan.html',
-                    url: './dindan.html',
-                    pageParam: {
-                        name: 'test'
-                    },
-                    animation: {
-                        type: "fade"
-                    }
-                });
-                dialogBox.close(); 
-                api.closeWin();
-
-            }
-        });  
-
-    } 
-});
-  }
+   
 </script>
 
 </html>
