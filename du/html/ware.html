@@ -30,100 +30,113 @@
     }
     
     header .back {
-           position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 40px;
-        height: 40px;
-        /*border: 1px solid red;*/
-        background: url(../image/back.png);
-        background-position: 12px 9px;
-        background-size: 11px 18px;
-        background-repeat: no-repeat;
-    }
-    
-    header h1 {
-        width: 100%;
-        height: 40px;
-        line-height: 40px;
-        text-align: center;
-        color: #000;
-        font-size: 16px;
-    }
-    
+       position: absolute;
+       bottom: 0;
+       left: 0;
+       width: 40px;
+       height: 40px;
+       /*border: 1px solid red;*/
+       background: url(../image/back.png);
+       background-position: 12px 9px;
+       background-size: 11px 18px;
+       background-repeat: no-repeat;
+   }
+   header .share {
+       position: absolute;
+       bottom: 0;
+       right: 0;
+       width: 40px;
+       height: 40px;
+       /*border: 1px solid red;*/
+       background: url(../image/share.png);
+       background-position: 9px 6px;
+       background-size: 28px 28px;
+       background-repeat: no-repeat;
+   }
 
-    
-    section {
-        -webkit-box-flex: 1;
-        -webkit-flex: 1;
-        flex: 1;
-    }
-    
-    footer {
-        width: 100%;
-        height: 50px;
-        background-color: white;
-        position:relative;
-    }
-    
-    .buy-button {
-        width:47px;
-        height: 47px;
-        position: absolute;
-        right: 0;
-        margin-right:18px;
-    }
-    
-    .control {
-        position: absolute;
-        top: 12px;
-        left: 16px;
-        font-size: 16px;
-        color: #2c2c2c;
-        width: 25px;
-        height: 25px;
-    }
-    .control img{
-        width: 25px;
-        height: 25px;
-    }
-    
-    .minus {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 25px;
-        height: 25px;
-    }
-    
-    .count {
-        position: relative;
-        top: 0;
-        margin-left: 31px;
-        margin-right: 31px;
-        width: auto;
-        height: 25px;
-        text-align: center;
-        line-height: 25px;
-        color: #444;
-        font-size: 14px;
-        background-image: url(../image/count.png);
-        background-repeat: no-repeat;
-        background-size: 48px 25px;
-        background-position: center center;
-    }
-    
-    .add {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 25px;
-        height: 25px;
-    }
-    
-    .highlight {
-        opacity: 0.7;
-    }
+
+   header h1 {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: #000;
+    font-size: 16px;
+}
+
+
+
+section {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+footer {
+    width: 100%;
+    height: 50px;
+    background-color: white;
+    position:relative;
+}
+
+.buy-button {
+    width:47px;
+    height: 47px;
+    position: absolute;
+    right: 0;
+    margin-right:18px;
+}
+
+.control {
+    position: absolute;
+    top: 12px;
+    left: 16px;
+    font-size: 16px;
+    color: #2c2c2c;
+    width: 25px;
+    height: 25px;
+}
+.control img{
+    width: 25px;
+    height: 25px;
+}
+
+.minus {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 25px;
+    height: 25px;
+}
+
+.count {
+    position: relative;
+    top: 0;
+    margin-left: 31px;
+    margin-right: 31px;
+    width: auto;
+    height: 25px;
+    text-align: center;
+    line-height: 25px;
+    color: #444;
+    font-size: 14px;
+    background-image: url(../image/count.png);
+    background-repeat: no-repeat;
+    background-size: 48px 25px;
+    background-position: center center;
+}
+
+.add {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 25px;
+    height: 25px;
+}
+
+.highlight {
+    opacity: 0.7;
+}
 </style>
 </head>
 
@@ -131,6 +144,7 @@
     <header id="header">
         <div class="back" tapmode onclick="api.closeWin()"></div>
         <h1>商品详情</h1>
+        <div class="share" tapmode onclick="clip()"></div>
     </header>
     <section></section>
     <footer id="footer">
@@ -146,6 +160,7 @@
     var datasize,datacolor;
     apiready = function() {
         speaktypeList();
+        shareevent();
 
         var header=$api.byId('header');
         var footer=$api.byId('footer');
@@ -199,6 +214,29 @@ function addcolor(color){
     
 
 
+}
+function shareevent(){
+  api.addEventListener({
+      name: 'updatashare'
+  }, function(ret, err){
+      if( ret ){
+           api.pageParam.wareId=ret.value.key1;
+      }
+  });
+}
+function clip(){
+    var clipBoard = api.require('clipBoard');
+    clipBoard.set({
+        value: 'http://www.zxh.yueaa.com/A6099267504667/web_adapter/adapter.html?wid='+api.pageParam.wareId
+    }, function(ret, err) {
+        if (ret) {
+          api.toast({
+              msg: '成功复制链接',
+              duration: 2000,
+              location: 'bottom'
+          });
+        } 
+    });
 }
 function addsize(size){
     datasize=size;
@@ -305,7 +343,7 @@ function lookspeak(){
         type: "fade"
     },
      bounces: false // 关闭弹动
-});
+ });
 
 }
 

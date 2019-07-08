@@ -45,6 +45,8 @@
         background-repeat: no-repeat;
         background-size: contain;
         position: relative;
+        height: 166px;
+        /*border: 1px solid red;*/
     }
 
     .loginbg {
@@ -53,7 +55,7 @@
 
     .login .personal_logo {
         position: absolute;
-        top: 60px;
+        top: 50px;
         width: 64px;
         height: 64px;
         left: 20px;
@@ -69,7 +71,7 @@
 
     .login .userinfo {
         position: absolute;
-        top: 60px;
+        top: 50px;
         margin-left: 100px;
     }
 
@@ -145,7 +147,7 @@
 
 <body>
     <div class="login open-win" win="person_info">
-        <img src="../image/my/personal_bkg.jpg" class="loginbg">
+      
         <img id="userAvatar" src="../image/empty_page_nothing.png" tapmode onclick="setAvatar()" class="personal_logo">
         <div class="userinfo">
             <div id="userAccount" class="title" tapmode onclick="login()">点击登录</div>
@@ -210,7 +212,7 @@
         </div>
         <div class="h1"></div>
         <div class="item open-win" tapmode onclick="opensetting()">
-            <img src="../image/my/my_setting_user_icon_normal.png" class="item_ico">
+            <img src="../image/setting.png" class="item_ico">
             <span>设置</span>
             <img src="../image/arrow.png" class="item_arrow">
         </div>

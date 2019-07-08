@@ -56,7 +56,7 @@
 <body class="wrap">
   <header>
     <div class="home-search open-win" tapmode onclick="opensearch()">
-      <img src="./image/header/search_home.png">
+      <img src="./image/search_home.png">
       <span>搜索其实很简单</span>
     </div>
   </header>
@@ -65,16 +65,136 @@
 <script type="text/javascript" src="./script/SHA1.js"></script>
 <script type="text/javascript">
   var headerH;
+  var clipBoard;
+  var dialogBox ;
+  var status = false;
   apiready = function() {
 
         var header = $api.dom('header'); // 获取 header 标签元素
         headerH=$api.offset(header).h;
         fnNVTabBar_open();
+        kouling();
         fnInitListener();
         initWareTypeList();
         // openmain();
         // openretui()
       };
+      function kouling(){
+        clipBoard= api.require('clipBoard');
+        api.addEventListener({
+          name: 'resume'
+        }, function(ret, err) {
+
+          clipBoard.get(function(ret, err) {
+           if (ret && ret.value && ret.value != "" && ret.type =="url") {
+           
+            if(status==true){
+                return;
+            }else{
+              alertkouling(ret.value);
+            }
+
+            clipBoard.set({value: ""}, function() {})
+          }
+        });
+         // alert(1)
+       });
+
+        clipBoard.get(function(ret, err) {
+          if (ret && ret.value && ret.value != "" && ret.type =="url") {
+
+            alertkouling(ret.value);
+            clipBoard.set({value: ""}, function() {})
+          }
+        });
+
+      }
+
+      function alertkouling(val){
+        status = true;
+        dialogBox = api.require('dialogBox');
+        dialogBox.alert({
+          texts: {
+            title: '是否根据链接查找商品',
+            content:val ,
+            leftBtnTitle: '取消',
+            rightBtnTitle: '确认'
+          },
+          styles: {
+            bg: '#fff',
+            w: 300,
+            corner:2,
+            title: {
+              marginT: 20,
+              icon: 'widget://res/gou.png',
+              iconSize: 40,
+              titleSize: 14,
+              titleColor: '#000',
+              bg:'#F14E7D',
+            },
+            content: {
+              color: '#000',
+              size: 14
+            },
+            left: {
+              marginB: 7,
+              marginL: 20,
+              w: 130,
+              h: 35,
+              corner: 2,
+              color: '#000',
+              bg: 'white',
+              size: 18
+            },
+            right: {
+              marginB: 7,
+              marginL: 10,
+              w: 130,
+              h: 35,
+              corner: 2,
+              bg: 'white',
+              color: '#F14E7D',
+              size: 18
+            }
+          }
+        }, function(ret) {
+          if (ret.eventType == 'left') {
+            status = false;
+            dialogBox.close({
+              dialogName: 'alert'
+            });
+            
+          }else{
+            var url=val;
+            var arr=url.split('?');
+            var canshu=arr[1].substring(4);
+            status = false;
+            if (canshu.length==24){
+
+              api.openWin({
+                name: 'ware',
+                url: './html/ware.html',
+                pageParam: {
+                  wareId: canshu,
+                },
+                animation:{
+                  type:'fade'
+                }
+              });
+            }else{
+              api.toast({
+                  msg: '链接不是本站链接',
+                  duration: 2000,
+                  location: 'bottom'
+              });
+            }
+            
+            dialogBox.close({
+              dialogName: 'alert'
+            });
+          }
+        });
+      }
       function opensearch(){
         api.openWin({
           name: 'search',
@@ -310,7 +430,7 @@
 
 
     function initWareTypeList() {
-    
+
       var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now

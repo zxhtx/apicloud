@@ -7,11 +7,13 @@
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>商品Frame</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../script/mui/css/mui.min.css" />
     <style>
     html,
     body {
         height: 100%;
         min-height: 100%;
+        background-color: white;
     }
     
     section {
@@ -19,7 +21,7 @@
     }
     
     .info-name {
-        box-sizing: border-box;
+        /*box-sizing: border-box;*/
         margin-top: 20px;
         width: 100%;
         height: 88px;
@@ -62,9 +64,10 @@
     .info-discount {
         box-sizing: border-box;
         width: 100%;
-        height: 56px;
-        /*border-bottom: 1px solid #ddd;*/
-        margin-top: 20px;
+        /*height: 56px;*/
+        border-bottom: 8px solid  #F2F2F2;
+        margin-top: 8px;
+        margin-bottom: 8px;
     }
     
     .info-discount .name {
@@ -79,8 +82,10 @@
     .info-color {
         box-sizing: border-box;
         width: 100%;
-        height: 40px;
-        /*border-bottom: 1px solid #ddd;*/
+        /*height: 40px;*/
+        margin-top: 8px;
+        margin-bottom: 8px;
+        border-bottom: 2px solid  #F2F2F2;
     }
     
     .info-color .name {
@@ -116,10 +121,7 @@
         height: 20px;
         line-height: 20px;
     }
-    .info-discount{
-        line-height: 20px;
-        margin-top: 35px;
-    }
+    
     .info-discount span{
       padding: 5px 8px 5px 8px;
       margin:3px;
@@ -130,20 +132,15 @@
       border-radius: 6px;
   }
   .info-discount span.now{
-     padding: 5px 8px 5px 8px;
-     font-size: 12px;
-     color: black;
-     background: gray;
-     background: white;
-     border: 1px solid black;
+   padding: 5px 8px 5px 8px;
+   font-size: 12px;
+   color: black;
+   background: gray;
+   background: white;
+   border: 1px solid black;
 
- }
-
- .info-color{
-    line-height: 20px;
-    margin-top: 20px;
-    /*margin-bottom: 10px;*/
 }
+
 .info-color span{
     padding: 5px 8px 5px 8px;
     margin:3px;
@@ -161,6 +158,42 @@
     background: white;
     border: 1px solid black;
     font-weight: bold;
+}
+.quan{
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border-bottom: 2px solid #F2F2F2;
+    padding-left: 6px;
+}
+.quan .onespan{
+    background-color: #E02E24;
+    padding:3px;
+    color: white;
+    border-radius: 5px;
+    font-size: 10px;
+}
+.quan .twospan{
+    color: #58595B;
+    margin-left: 6px;
+}
+.quan p{
+
+    margin-bottom: 6px;
+}
+.baolist{
+
+    border-bottom: 8px solid #F2F2F2;
+    margin-bottom: 2px;
+}
+.baolist span{
+    padding-left: 6px;
+    color: #58595B;
+}
+#sixtext{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 </style>
 </head>
@@ -184,40 +217,88 @@
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/javascript" src="../script/zepto/zepto.min.js"></script>
+<script type="text/javascript" src="../script/mui/js/mui.min.js"></script>
 <script type="text/x-dot-template" id="template">
-    {{~it:value:index}}
+    {{~it.list:value:index}}
+    <div class="mui-slider">
+        <div class="mui-slider-group mui-slider-loop">
+            <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="{{=value.wareInfo.length-1}}" /></a></div>
+            {{for(var i=0; i< value.wareInfo.length;i++) { }}
+            <div class="mui-slider-item"><a href="#"><img src="{{=value.wareInfo[i]}}" /></a></div>
+            {{  }  }}
+            <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="{{=value.wareInfo[0]}}" /></a></div>
+        </div>
+        <div class="mui-slider-indicator">
+           {{for(var i=0; i< value.wareInfo.length;i++) { }}
+           {{if(i==0) {  }}
+           <div class="mui-indicator mui-active"></div>
+           {{  }else{ }}
 
-    <div class="info-name">
-        <div id="wareName" class="name">{{=value.name}}</div>
-        <div id="description" class="description">{{=value.description}}</div>
-        <div id="price" class="price">￥{{=value.price}}</div>
-    </div>
+              <div class="mui-indicator"></div>
+           {{  } }}
+           {{  }  }}
+       </div>
+
+   </div>
+   <div class="info-name">
+    <div id="wareName" class="name">{{=value.name}}</div>
+    <div id="description" class="description">{{=value.description}}</div>
+    <div id="price" class="price">￥{{=value.price}}</div>
+</div>
+<div class="quan">
+  <p><span class="onespan">返现(单单返)</span><span class="twospan">全站每单都会获得商品相应的优惠</span></p>
+  <p><span class="onespan">VIP优惠</span><span class="twospan">VIP用户全站购物均9.5折</span></p>
+
+</div>
+<div class="baolist" >
+   <span>全场包邮</span>
+   <span>7天退换</span>
+   <span>24小时发货</span>
+
+</div>
+<div class="sizeandcolor">
     <div class="info-color">
         <div class="name">颜色</div>
-        {{ for(var key in value.color) { }}
-        <span data-color="{{=value.color[key]}}" tapmode onclick=color(this)>{{=value.color[key]}}</span>
+        {{ for(var i=0; i< value.color.length;i++) { }}
+        <span data-color="{{=value.color[i]}}" tapmode onclick=color(this)>{{=value.color[i]}}</span>
         {{ } }}
     </div>
     
 
-
-
     <div class="info-discount">
         <div class="name">尺码</div>
-        {{~ value.size : value : index }}
-        <span data-value="{{=value}}" tapmode onclick=size(this)>{{=value}}</span>
-        {{~}}
+        {{for(var i=0; i<value.size.length ;i++) { }}
+        <span data-value="{{=value.size[i]}}" tapmode onclick=size(this)>{{=value.size[i]}}</span>
+        {{ } }}
     </div>
+</div>
 
-    {{~}}
-    
+<div id="" style="width: {{=it.frameWidth}}px; margin-top: 28px; ">
+  {{for(var i=0; i<it.alllist.length;i++) { }}
+  <div tapmode onclick="openware('{{=it.alllist[i].id}}')" style="width: {{=it.frameWidth/4}}px; margin-left:{{=(it.frameWidth/4)/4}}px ;  display: inline-block;">
+    <img src="{{=it.alllist[i].thumbnail}}" style="width:100% ; border-radius:6px ;  " />
+    <span id="sixtext" style="font-size: 10px; ">{{=it.alllist[i].description}}</span>
+</div>
+{{  }  }}
+
+</div>
+
+<div class="imglist">
+    {{for(var i= value.imglist.length-1; i>=0 ;i--) { }}
+    <img style="width:{{=it.frameWidth}}px ;" src="{{=value.imglist[i]}}" alt="" />
+    {{  }  }}
+</div>
+
+
+{{~}}
+
 </script>
 <script type="text/javascript">
     var size;
     var color;
     apiready = function() {
     // 初始化轮播图模块
-    initUIScrollPicture();
+    // initUIScrollPicture();
 
     // 获取商品详情数据
     getWareInfo(api.pageParam.wareId);
@@ -225,69 +306,18 @@
 
 var UIScrollPicture;
 var activity;
+function openware(id){
 
-function initUIScrollPicture() {
-
-
-    // 获取占位的div元素，并设置元素的宽高
-    var picture = $api.byId('picture');
-    picture.style.width = api.winWidth + 'px';
-    // if (api.pageParam.wareTypeId=='5c6e5cc2d772329a6f2562dd') {
-    //      picture.style.height = api.winWidth-120+ 'px';
-    // }else{
-         picture.style.height = api.winWidth + 'px';
-    // }
-   
-    var rect = $api.offset(picture);
-
-    // 引入UIScrollPicture模块，并指定位置和宽高
-    UIScrollPicture = api.require('UIScrollPicture');
-    UIScrollPicture.open({
-        rect: {
-            x: rect.l,
-            y: rect.t,
-            w: rect.w,
-            h: rect.h
-        },
-        data: {
-            paths: [
-            'widget://image/default_rect.png',
-            'widget://image/default_rect.png'
-            ]
-        },
-        styles: {
-            caption: {
-                height: 35,
-                color: '#E0FFFF',
-                size: 13,
-                bgColor: '#696969',
-                position: 'bottom'
-            },
-            indicator: {
-                align: 'center',
-                color: '#000',
-                activeColor: '#fff'
-            }
-        },
-        placeholderImg:   'widget://image/default_rect.png',
-        contentMode: 'scaleToFill',
-        interval: 5,
-        fixedOn: api.frameName,
-        loop: true,
-        fixed: false
-    }, function(ret, err) {
-        if (ret) {
-
-        } else {
-            api.toast({
-                msg: err.msg,
-                duration: 2000,
-                location: 'bottom'
-            });
+    getWareInfo(id);
+    api.sendEvent({
+        name: 'updatashare',
+        extra: {
+            key1: id,
         }
     });
-}
 
+
+}
 var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
@@ -332,7 +362,26 @@ var now = Date.now();
         },function(ret, err) {
             if (ret) {
             // 更新商品详情展示
-            fnUpdateWareInfo(ret);
+            var picture=[];
+            picture.push(
+                ret[0].wareInfo.picture0,
+                ret[0].wareInfo.picture1,
+                ret[0].wareInfo.picture2,
+                ret[0].wareInfo.picture3,
+                ret[0].wareInfo.picture4
+
+                );
+            for(var i=0;i<picture.length;i++){
+               if(picture[i]==null){
+                   picture.splice(i,1)
+               }
+
+           }
+           ret[0].wareInfo=picture;
+           ret[0].imglist=picture;
+           // alert($api.jsonToStr(ret[0]))
+
+           getallware(ret);
             // alert(JSON.stringify(ret))
         } else {
           api.toast({
@@ -344,62 +393,83 @@ var now = Date.now();
   });
     }
 
+    function getallware(ret1){
+        // alert(1)
+        var suiji=Math.round(Math.random()*600);
+        var params={
+            fields:{},
+            fields: {},
+            skip:suiji,
+            limit:6,
+
+        }
+        params=$api.jsonToStr(params);
+        api.ajax({
+            url: 'http://d.apicloud.com/mcm/api/ware?filter='+params,
+            method: 'get',
+            headers: {
+                "X-APICloud-AppId": "A6099267504667",
+                "X-APICloud-AppKey":   appKey
+            },
+
+        },function(ret, err){
+            if (ret) {
+
+             fnUpdateWareInfo(ret1,ret);
+         }
+
+     });
+    }
 // 更新商品详情展示
-function fnUpdateWareInfo(_ware) {
+function fnUpdateWareInfo(_ware,_ware2) {
+    var param = {
+        list:_ware,
+        frameWidth: api.frameWidth,
+        alllist:_ware2,
+    };
     if (_ware=='') {
-          api.toast({
-                msg: '改商品已下架',
-                duration: 2000,
-                location: 'bottom'
-            });
-            setTimeout(function(){
-                api.closeWin();
-            },2000)
-            return;
-
-    }
-
-    var list=$api.byId('list');
-    var tempFn=doT.template($api.byId('template').innerHTML);
-    var resultText=tempFn(_ware)
-        // $api.html(list, resultText)
-        $api.append(list, resultText);
-
-
-    // 更新轮播图中的图片
-    var paths = [];
-    for (var i = 0; i < 5; i++) {
-        if (_ware[0].wareInfo['picture' + i]) {
-            paths.push(_ware[0].wareInfo['picture' + i]);
-        }
-    }
-    UIScrollPicture.reloadData({
-        data: {
-            paths: paths
-        }
+      api.toast({
+        msg: '改商品已下架',
+        duration: 2000,
+        location: 'bottom'
     });
-    activity.closeKeyFrame();
+      setTimeout(function(){
+        api.closeWin();
+    },2000)
+      return;
 
-}
-function size(_this){
-    var datasize=$api.attr(_this, 'data-value');
-    $(_this).addClass('now').siblings().removeClass('now');
-    api.execScript({
-        name: 'ware',
+  }
+
+  var list=$api.byId('list');
+  var tempFn=doT.template($api.byId('template').innerHTML);
+  var resultText=tempFn(param)
+  $api.html(list, resultText)
+        // $api.append(list, resultText);
+
+
+        activity.closeKeyFrame();
+        mui('.mui-slider').slider({interval: 3000});
+
+    }
+    function size(_this){
+        var datasize=$api.attr(_this, 'data-value');
+        $(_this).addClass('now').siblings().removeClass('now');
+        api.execScript({
+            name: 'ware',
         // frameName: 'ware_frame',
         script: "addsize('"+datasize+"')"
     });
 
-}
-function color(_this){
-    var datacolor=$api.attr(_this, 'data-color');
-    $(_this).addClass('now').siblings().removeClass('now');
-    api.execScript({
-        name: 'ware',
+    }
+    function color(_this){
+        var datacolor=$api.attr(_this, 'data-color');
+        $(_this).addClass('now').siblings().removeClass('now');
+        api.execScript({
+            name: 'ware',
         // frameName: 'ware_frame',
         script: "addcolor('"+datacolor+"')"
     });
-}
+    }
 </script>
 
 </html>
