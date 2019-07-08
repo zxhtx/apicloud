@@ -250,7 +250,7 @@
             }
           },
           items: [{
-            w: api.winWidth / 3.0,
+            w: api.winWidth / 4.0,
             iconRect: {
               w: 25.0,
               h: 25.0,
@@ -267,8 +267,28 @@
               selected: '#000',
               marginB: 6.0,
             }
-          }, {
-            w: api.winWidth / 3.0,
+          },
+          {
+            w: api.winWidth / 4.0,
+            iconRect: {
+              w: 25.0,
+              h: 25.0,
+            },
+            icon: {
+              normal: 'widget://image/footer/shizhuang.png',
+              highlight: 'widget://image/footer/shizhuang_act.png',
+              selected: 'widget://image/footer/shizhuang_act.png'
+            },
+            title: {
+              text: '时装搭配',
+              size: 12.0,
+              normal: '#696969',
+              selected: '#000',
+              marginB: 6.0,
+            }
+          },
+           {
+            w: api.winWidth / 4.0,
             iconRect: {
               w: 25.0,
               h: 25.0,
@@ -286,7 +306,7 @@
               marginB: 6.0
             }
           },{
-            w: api.winWidth / 3.0,
+            w: api.winWidth / 4.0,
             iconRect: {
               w: 25.0,
               h: 25.0,
@@ -314,11 +334,18 @@
             if (ret.eventType == "click" && ret.index == 0) {
               openmain();
             }
-            if (ret.eventType == "click" && ret.index == 1) {
+            if (ret.eventType == "click" && ret.index == 2) {
              openretui();
            }
-           if (ret.eventType == "click" && ret.index == 2) {
+           if (ret.eventType == "click" && ret.index == 3) {
             openmy();
+          }
+           if (ret.eventType == "click" && ret.index == 1) {
+            api.toast({
+                msg: '正在开发中...',
+                duration: 2000,
+                location: 'bottom'
+            });
           }
 
         }
