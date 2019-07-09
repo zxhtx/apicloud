@@ -478,12 +478,16 @@
     var dizhinull;
     var activity;
     var flowerid1;
-     var flowerid2;
-     var flowerid3;
+    var flowerid2;
+    var flowerid3;
+    var flowerid4;
+    var activity;
     apiready = function() {
+        activity = api.require('UILoading');
         getware();
         getaddress();
         var jiage;
+
 
 
     };
@@ -492,7 +496,7 @@
     };
     var types = ['公司', '住宅', '学校', '其它'];
     function getware(){
-        activity = api.require('UILoading');
+
         activity.flower({
             center: {
                 x: api.winWidth/2,
@@ -569,8 +573,8 @@ function updateWare(_data){
     
 }
 function vip(dataprice){
- activity = api.require('UILoading');
-   activity.flower({
+
+ activity.flower({
     center: {
         x: api.winWidth/2,
         y: api.winHeight/2
@@ -610,10 +614,10 @@ api.ajax({
         activity.closeFlower({
             id:flowerid3 
         });
-      var viptext=$api.byId('viptext');
-      var fanqian=$api.byId('fanqian');
-      var vipprice=dataprice * 0.95;
-      var ceilprice =Math.round(vipprice);
+        var viptext=$api.byId('viptext');
+        var fanqian=$api.byId('fanqian');
+        var vipprice=dataprice * 0.95;
+        var ceilprice =Math.round(vipprice);
             // 存储用户名
             // alert($api.jsonToStr(ret))
             if (jiage>29) {
@@ -658,7 +662,7 @@ api.ajax({
 }
 function getaddress(){
 
-   activity = api.require('UILoading');
+
    activity.flower({
     center: {
         x: api.winWidth/2,
@@ -742,11 +746,26 @@ function updateaddress(_data){
 
 
     function yesadd(){ 
+        var loader=false;
+
+        activity.flower({
+            center: {
+                x: api.winWidth/2,
+                y: api.winHeight/2
+            },
+            mask:'rgba(20,0,0,0.5)',
+            size: 30,
+        }, function(ret) {
+            flowerid4=ret.id;
+        });
         if(dizhinull==null){
             api.toast({
                 msg: '请完善收货地址',
                 duration: 2000,
                 location: 'bottom'
+            });
+            activity.closeFlower({
+                id:flowerid4
             });
             return;
 
@@ -768,8 +787,11 @@ function updateaddress(_data){
     }
 }, function(ret, err) {
     if (ret) {
+      activity.closeFlower({
+        id:flowerid4
+    });
 
-     api.openWin({
+      api.openWin({
          name: 'dindan.html',
          url: './dindan.html',
          pageParam: {

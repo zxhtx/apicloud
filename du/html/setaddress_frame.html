@@ -181,42 +181,45 @@
 <script type="text/javascript" src="../script/SHA1.js"></script>
 
 <script type="text/javascript">
+    var flowerid;
+    var activity;
     apiready = function() {
-        init();
-    };
+     activity = api.require('UILoading');
+     init();
+ };
 
-    var addressInfo = {
-        type: 0
-    };
-    var consignee, mobile, area, focus, house;
+ var addressInfo = {
+    type: 0
+};
+var consignee, mobile, area, focus, house;
 
-    function init() {
-        consignee = $api.byId('consignee');
-        mobile = $api.byId('mobile');
-        focus = $api.byId('focus');
-        house = $api.byId('house');
+function init() {
+    consignee = $api.byId('consignee');
+    mobile = $api.byId('mobile');
+    focus = $api.byId('focus');
+    house = $api.byId('house');
 
-        if (api.pageParam.id) {
-            addressInfo.type = api.pageParam.type;
-            fnSelectAddressType(addressInfo.type);
-            consignee.value = api.pageParam.name;
-            mobile.value = api.pageParam.mobile;
-            focus.innerHTML = api.pageParam.address;
-            house.value = api.pageParam.house;
+    if (api.pageParam.id) {
+        addressInfo.type = api.pageParam.type;
+        fnSelectAddressType(addressInfo.type);
+        consignee.value = api.pageParam.name;
+        mobile.value = api.pageParam.mobile;
+        focus.innerHTML = api.pageParam.address;
+        house.value = api.pageParam.house;
+    }
+}
+
+
+
+function fnOpenSetAddressDetailWin() {
+    api.openWin({
+        name: 'setaddressdetail',
+        url: './setaddressdetail.html',
+        pageParam: {
+            name: 'test'
         }
-    }
-
-
-
-    function fnOpenSetAddressDetailWin() {
-        api.openWin({
-            name: 'setaddressdetail',
-            url: './setaddressdetail.html',
-            pageParam: {
-                name: 'test'
-            }
-        });
-    }
+    });
+}
 
 // 被setaddressdetail_frame中调用
 function setAddressDetail(address_,addresstwo_) {
@@ -242,15 +245,26 @@ function fnSelectAddressType(index_) {
 
 
 function fnSave() {
-    var userInfo = $api.getStorage('userInfo');
+  activity.flower({
+    center: {
+        x: api.winWidth/2,
+        y: api.winHeight/2
+    },
+    mask:'rgba(20,0,0,0.5)',
+    size: 30,
+    // fixed: true,
 
-    addressInfo.name = consignee.value;
-    addressInfo.mobile = mobile.value;
-    addressInfo.address = focus.innerHTML;
-    addressInfo.house = house.value;
-    addressInfo.userId = userInfo.userId;
+}, function(ret) {
+  flowerid=ret.id;
+});
+  var userInfo = $api.getStorage('userInfo');
+  addressInfo.name = consignee.value;
+  addressInfo.mobile = mobile.value;
+  addressInfo.address = focus.innerHTML;
+  addressInfo.house = house.value;
+  addressInfo.userId = userInfo.userId;
 
-    var now = Date.now();
+  var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
       
@@ -270,14 +284,17 @@ function fnSave() {
             timeout: 30
         }, function(ret, err) {
             if (ret) {
-                api.sendEvent({
-                    name: 'updateAddress'
-                });
-                api.closeWin();
-            } else {
-                alert(JSON.stringify(err));
-            }
-        });
+             activity.closeFlower({
+                id:flowerid 
+            });
+             api.sendEvent({
+                name: 'updateAddress'
+            });
+             api.closeWin();
+         } else {
+            alert(JSON.stringify(err));
+        }
+    });
     } else {
         api.ajax({
             url: 'https://d.apicloud.com/mcm/api/address',

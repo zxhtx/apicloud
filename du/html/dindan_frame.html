@@ -288,7 +288,7 @@
 </body>
 <script type="text/template" id="template">
 	{{~it:value:index}}
-	<div class="ware ware-1" >
+	<div class="ware ware-1" id="ware_{{=value.id}}">
 		<div class="content" >
 			<img onload="LoadImage(this,'{{=value.id}}')" data-url="{{=value.url}}" data-wareTypeId="{{=value.wareTypeId}}"  class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
 			<div class="info" tapmode onclick="openWareWin('{{=value.wareid}}','{{=value.wareTypeId}}')">
@@ -354,7 +354,7 @@
 			url: './ware.html',
 			pageParam: {
 				wareId: _wareId,
-				 wareTypeId:_wareTypeId
+				wareTypeId:_wareTypeId
 			},
 			animation: {
 				type: "fade"
@@ -485,7 +485,8 @@
 
       },function(ret, err){
       	if (ret) {
-      		getAddressList();
+      		var ware=$api.byId('ware_'+_data);
+      		ware.style.display='none'
       	} 
       });
 

@@ -52,7 +52,7 @@
     <div class="count"  id="speakcount">0</div>
     <img class="img" src="../image/xiazai.png"  tapmode onclick="xiazai()" alt="" width="30px" height="30px">
     <div class="count" id="downcount">0</div> 
-    <img class="img" src="../image/redbao.png"  tapmode onclick="redmoney()" alt="" width="26px" height="30px"> 
+   
   </div>
 
 </body>
@@ -341,26 +341,6 @@ function adddown(){
 
 }
 
-function  redmoney(){
-  api.openFrame({
-    name: 'redmoney_frame',
-    url: './redmoney_frame.html',
-    rect: {
-      x: 0,
-      y: api.winHeight/2,
-      w: api.winWidth,
-      h: api.winHeight/2
-    },
-    pageParam: {
-      videouserid:belike,
-      videouserprice:videouserprice
-    },
-    animation: {
-      type: "fade"
-    },
-    bgColor: 'rgba(0,0,0,0)',
-  });
-}
 
 function say(){
   api.openFrame({

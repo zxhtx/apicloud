@@ -147,7 +147,10 @@
               }, function(ret, err) {
                 if (ret) {
                     api.sendEvent({
-                        name: 'updateAddress'
+                        name: 'deleteAddress',
+                        extra: {
+                            key1: api.pageParam.id,
+                        }
                     });
                     dialogBox.close();
                     api.closeWin();

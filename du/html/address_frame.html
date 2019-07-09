@@ -175,7 +175,7 @@
 </body>
 <script type="text/template" id="template">
     {{~it:value:index}}
-    <div class="address" tapmode onclick="fnOpenSetAddressWin('{{=index}}');">
+    <div class="address" id="address_{{=value.id}}" tapmode onclick="fnOpenSetAddressWin('{{=index}}');">
         <div class="icon"></div>
         <div class="info">
             <div class="top">
@@ -412,7 +412,16 @@ function initEventListener() {
         name: 'updateAddress'
     }, function(ret, err) {
         getAddressList();
+     
 
+    });
+    api.addEventListener({
+        name: 'deleteAddress'
+    }, function(ret, err){
+        if( ret ){
+            var deleteAddress=$api.byId('address_'+ret.value.key1);
+             deleteAddress.style.display='none'
+        }
     });
 }
 

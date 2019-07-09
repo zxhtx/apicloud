@@ -2,169 +2,169 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>商品</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css" />
-    <style>
-    html,
-    body {
-        height: 100%;
-    }
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+  <title>商品</title>
+  <link rel="stylesheet" type="text/css" href="../css/api.css" />
+  <style>
+  html,
+  body {
+    height: 100%;
+  }
 
-    body {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-flex-flow: column;
-        flex-flow: column;
-    }
-    
-    header {
-        position: relative;
-        width: 100%;
-        height: 40px;
-        background-color: white;
-    }
-    
-    header .back {
-       position: absolute;
-       bottom: 0;
-       left: 0;
-       width: 40px;
-       height: 40px;
-       /*border: 1px solid red;*/
-       background: url(../image/back.png);
-       background-position: 12px 9px;
-       background-size: 11px 18px;
-       background-repeat: no-repeat;
-   }
-   header .share {
-       position: absolute;
-       bottom: 0;
-       right: 0;
-       width: 40px;
-       height: 40px;
-       /*border: 1px solid red;*/
-       background: url(../image/share.png);
-       background-position: 9px 6px;
-       background-size: 28px 28px;
-       background-repeat: no-repeat;
-   }
-
-
-   header h1 {
+  body {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-flex-flow: column;
+    flex-flow: column;
+  }
+  
+  header {
+    position: relative;
     width: 100%;
     height: 40px;
-    line-height: 40px;
-    text-align: center;
-    color: #000;
-    font-size: 16px;
+    background-color: white;
+  }
+  
+  header .back {
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   width: 40px;
+   height: 40px;
+   /*border: 1px solid red;*/
+   background: url(../image/back.png);
+   background-position: 12px 9px;
+   background-size: 11px 18px;
+   background-repeat: no-repeat;
+ }
+ header .share {
+   position: absolute;
+   bottom: 0;
+   right: 0;
+   width: 40px;
+   height: 40px;
+   /*border: 1px solid red;*/
+   background: url(../image/share.png);
+   background-position: 9px 6px;
+   background-size: 28px 28px;
+   background-repeat: no-repeat;
+ }
+
+
+ header h1 {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  color: #000;
+  font-size: 16px;
 }
 
 
 
 section {
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    flex: 1;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
 }
 
 footer {
-    width: 100%;
-    height: 50px;
-    background-color: white;
-    position:relative;
+  width: 100%;
+  height: 50px;
+  background-color: white;
+  position:relative;
 }
 
 .buy-button {
-    width:47px;
-    height: 47px;
-    position: absolute;
-    right: 0;
-    margin-right:18px;
+  width:47px;
+  height: 47px;
+  position: absolute;
+  right: 0;
+  margin-right:18px;
 }
 
 .control {
-    position: absolute;
-    top: 12px;
-    left: 16px;
-    font-size: 16px;
-    color: #2c2c2c;
-    width: 25px;
-    height: 25px;
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  font-size: 16px;
+  color: #2c2c2c;
+  width: 25px;
+  height: 25px;
 }
 .control img{
-    width: 25px;
-    height: 25px;
+  width: 25px;
+  height: 25px;
 }
 
 .minus {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 25px;
-    height: 25px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 25px;
+  height: 25px;
 }
 
 .count {
-    position: relative;
-    top: 0;
-    margin-left: 31px;
-    margin-right: 31px;
-    width: auto;
-    height: 25px;
-    text-align: center;
-    line-height: 25px;
-    color: #444;
-    font-size: 14px;
-    background-image: url(../image/count.png);
-    background-repeat: no-repeat;
-    background-size: 48px 25px;
-    background-position: center center;
+  position: relative;
+  top: 0;
+  margin-left: 31px;
+  margin-right: 31px;
+  width: auto;
+  height: 25px;
+  text-align: center;
+  line-height: 25px;
+  color: #444;
+  font-size: 14px;
+  background-image: url(../image/count.png);
+  background-repeat: no-repeat;
+  background-size: 48px 25px;
+  background-position: center center;
 }
 
 .add {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 25px;
-    height: 25px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25px;
+  height: 25px;
 }
 
 .highlight {
-    opacity: 0.7;
+  opacity: 0.7;
 }
 </style>
 </head>
 
 <body>
-    <header id="header">
-        <div class="back" tapmode onclick="api.closeWin()"></div>
-        <h1>商品详情</h1>
-        <div class="share" tapmode onclick="clip()"></div>
-    </header>
-    <section></section>
-    <footer id="footer">
-      <div class="control" tapmode onclick="lookspeak()">
-        <img src="../image/speak.png">
+  <header id="header">
+    <div class="back" tapmode onclick="api.closeWin()"></div>
+    <h1>商品详情</h1>
+    <div class="share" tapmode onclick="clip()"></div>
+  </header>
+  <section></section>
+  <footer id="footer">
+    <div class="control" tapmode onclick="lookspeak()">
+      <img src="../image/speak.png">
     </div> 
     <img src="../image/buynow.png" class="buy-button" tapmode onclick="oporderWin()">
-</footer>
+  </footer>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
-    var datasize,datacolor;
-    apiready = function() {
-        speaktypeList();
-        shareevent();
+  var datasize,datacolor;
+  apiready = function() {
+    speaktypeList();
+    shareevent();
 
-        var header=$api.byId('header');
-        var footer=$api.byId('footer');
-        
+    var header=$api.byId('header');
+    var footer=$api.byId('footer');
+    
         // 获取header和nav的高
         headerH=$api.offset(header).h
         footerH=$api.offset(footer).h;
@@ -175,201 +175,182 @@ footer {
           name: 'ware_frame',
           url: './ware_frame.html',
           rect: {
-              x: 0,
-              y: headerH,
-              w: 'auto',
-              h: api.winHeight-headerH-footerH 
+            x: 0,
+            y: headerH,
+            w: 'auto',
+            h: api.winHeight-headerH-footerH 
           },
           pageParam: {
-              wareId:api.pageParam.wareId,
-              wareTypeId:api.pageParam.wareTypeId
+            wareId:api.pageParam.wareId,
+            wareTypeId:api.pageParam.wareTypeId
           },
           bounces: true,
 
 
-      }); 
-         // 打开mini购物车Frame
-         api.openFrame({
-            name: 'minicart_frame',
-            url: './minicart_frame.html',
-            rect: {
-                x: 0,
-                y: api.winHeight - 188 - footerH,
-                w: 150,
-                h: 34
-            },
-            animation: {
-                type: "fade"
-            },
-        bounces: false // 关闭弹动
-    });
-
-    // 将mini购物车Frame放置在首页Window所有Frame的最上层
-    api.bringFrameToFront({
-        from: 'minicart_frame'
-    });
-};
-function addcolor(color){
-    datacolor=color;
-    
+        }); 
+         
+       };
+       function addcolor(color){
+        datacolor=color;
+        
 
 
-}
-function shareevent(){
-  api.addEventListener({
-      name: 'updatashare'
-  }, function(ret, err){
-      if( ret ){
-           api.pageParam.wareId=ret.value.key1;
       }
-  });
-}
-function clip(){
-    var clipBoard = api.require('clipBoard');
-    clipBoard.set({
-        value: 'http://www.zxh.yueaa.com/A6099267504667/web_adapter/adapter.html?wid='+api.pageParam.wareId
-    }, function(ret, err) {
-        if (ret) {
-          api.toast({
+      function shareevent(){
+        api.addEventListener({
+          name: 'updatashare'
+        }, function(ret, err){
+          if( ret ){
+           api.pageParam.wareId=ret.value.key1;
+         }
+       });
+      }
+      function clip(){
+        var clipBoard = api.require('clipBoard');
+        clipBoard.set({
+          value: 'http://www.zxh.yueaa.com/A6099267504667/web_adapter/adapter.html?wid='+api.pageParam.wareId
+        }, function(ret, err) {
+          if (ret) {
+            api.toast({
               msg: '成功复制链接',
               duration: 2000,
               location: 'bottom'
-          });
-        } 
-    });
-}
-function addsize(size){
-    datasize=size;
+            });
+          } 
+        });
+      }
+      function addsize(size){
+        datasize=size;
 
 
-}
-function oporderWin(){
-    if (!datacolor) {
-        api.toast({
+      }
+      function oporderWin(){
+        if (!datacolor) {
+          api.toast({
             msg: '还未选择商品颜色',
             duration: 2000,
             location: 'bottom'
+          });
+          return;
+        }else if (!datasize) {
+         api.toast({
+          msg: '还未选择商品尺寸',
+          duration: 2000,
+          location: 'bottom'
         });
-        return;
-    }else if (!datasize) {
-       api.toast({
-        msg: '还未选择商品尺寸',
-        duration: 2000,
-        location: 'bottom'
-    });
-       return;
-   }
-   var userInfo=$api.getStorage('userInfo');
-   if (userInfo==undefined && userInfo==null) {
-    var dialogBox = api.require('dialogBox');
-    dialogBox.alert({
-        texts: {
+         return;
+       }
+       var userInfo=$api.getStorage('userInfo');
+       if (userInfo==undefined && userInfo==null) {
+        var dialogBox = api.require('dialogBox');
+        dialogBox.alert({
+          texts: {
             title: '未登录',
             content: '您还没登录啦[○･｀Д´･ ○]',
             leftBtnTitle: '确认',
-        },
-        styles: {
+          },
+          styles: {
             bg: '#fff',
             w: 300,
             corner:2,
             title: {
-                marginT: 18,
-                titleSize: 14,
-                titleColor: '#000'
+              marginT: 18,
+              titleSize: 14,
+              titleColor: '#000'
             },
             content: {
-                color: '#000',
-                size: 14
+              color: '#000',
+              size: 14
             },
             left: {
-                marginB: 7,
-                marginL: 88,
-                w: 130,
-                h: 35,
-                corner: 8,
-                bg: '#000',
-                size: 12,
-                color: '#fff',
+              marginB: 7,
+              marginL: 88,
+              w: 130,
+              h: 35,
+              corner: 8,
+              bg: '#000',
+              size: 12,
+              color: '#fff',
             },
 
-        }
-    },function(ret) {
-        if (ret.eventType == 'left') {
+          }
+        },function(ret) {
+          if (ret.eventType == 'left') {
             api.openWin({
-                name: 'login',
-                url: './login.html',
-                pageParam: {
-                    ware: api.pageParam.wareId 
-                },
-                animation: {
-                    type: "fade"
-                }
+              name: 'login',
+              url: './login.html',
+              pageParam: {
+                ware: api.pageParam.wareId 
+              },
+              animation: {
+                type: "fade"
+              }
             });
             dialogBox.close();
+          }
+        });  
+
+        return;
+      }
+      api.openWin({
+        name: 'order',
+        url: './order.html',
+        pageParam: {
+          size:datasize,
+          color:datacolor,
+          wareId:api.pageParam.wareId 
+        },
+        animation: {
+          type: "fade"
         }
-    });  
-
-    return;
-}
-api.openWin({
-    name: 'order',
-    url: './order.html',
-    pageParam: {
-        size:datasize,
-        color:datacolor,
-        wareId:api.pageParam.wareId 
-    },
-    animation: {
-        type: "fade"
+      });
     }
-});
-}
 
 
-function lookspeak(){
-    api.toast({
+    function lookspeak(){
+      api.toast({
         msg: '修复中',
         duration: 2000,
         location: 'bottom'
-    });
-    return;
-    api.openWin({
+      });
+      return;
+      api.openWin({
         name: 'lookspeak',
         url: './lookspeak.html',
         pageParam: {
          wareId:api.pageParam.wareId 
-     },
-     animation: {
+       },
+       animation: {
         type: "fade"
-    },
+      },
      bounces: false // 关闭弹动
- });
+   });
 
-}
+    }
 
 
-function speaktypeList(){
-  var speaktypeList=$api.getStorage('speaktypeList');
-  if (!speaktypeList) {
-     speaktypeList=[
-     {
+    function speaktypeList(){
+      var speaktypeList=$api.getStorage('speaktypeList');
+      if (!speaktypeList) {
+       speaktypeList=[
+       {
         "id": "5c3af554612f9a7c35ae1ffb",
         "name": "差评"
-    },
+      },
 
-    {
+      {
         "id": "5c3af54ec2d230f93e257bf2",
         "name": "一般",
-    } ,
-    {
+      } ,
+      {
         "id": "5c3af54042a859df03ce37b9",
         "name": "好评"
+      }
+      ];
     }
-    ];
-}
-getspeaktypeList();
-}
-function getspeaktypeList(){
+    getspeaktypeList();
+  }
+  function getspeaktypeList(){
    var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
@@ -379,21 +360,21 @@ function getspeaktypeList(){
         where:{},
         skip:0,
         limit:3
-    }
-    params=$api.jsonToStr(params);
-    api.ajax({
+      }
+      params=$api.jsonToStr(params);
+      api.ajax({
         url: 'http://d.apicloud.com/mcm/api/speaktype?filter='+params,
         method: 'get',
         headers: {
           "X-APICloud-AppId": "A6099267504667",
           "X-APICloud-AppKey":   appKey
-      },
+        },
 
-  },function(ret, err){
-   $api.setStorage('speaktypeList', ret);
-});
-}
+      },function(ret, err){
+       $api.setStorage('speaktypeList', ret);
+     });
+    }
 
-</script>
+  </script>
 
-</html>
+  </html>
