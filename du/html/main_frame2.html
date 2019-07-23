@@ -2,36 +2,36 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-    <title>title</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css" />
-    <style>
-    html,
-    body {
-        background-color: #F0F0F0;
-    }
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <title>title</title>
+  <link rel="stylesheet" type="text/css" href="../css/api.css" />
+  <style>
+  html,
+  body {
+    background-color: #F0F0F0;
+  }
 
-    #list {
-        padding: 11px;
+  #list {
+    padding: 11px;
 
 
-    }
+  }
 
-    #list>.card {
-      margin-bottom: 18px;
-      position: relative;
-      float: left;
-      padding: 4px;
-      box-sizing: border-box;
-      background-clip: content-box;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-color: white;
-      border-radius: 22px 26px 0px 29px;
-      /*border: 1px solid red;*/
-      /*margin:2px 0px 2px 0px;*/
+  #list>.card {
+    margin-bottom: 18px;
+    position: relative;
+    float: left;
+    padding: 4px;
+    box-sizing: border-box;
+    background-clip: content-box;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: white;
+    border-radius: 22px 26px 0px 29px;
+    /*border: 1px solid red;*/
+    /*margin:2px 0px 2px 0px;*/
   }
 
   .card>img{
@@ -41,151 +41,153 @@
    background-size: cover;
    border-radius: 10px 10px 0px 24px;
    /*border: 1px solid red;*/
-}
-.description{
-    padding-left: 8px;
-    font-size: 13px;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
+ }
+ .description{
+  padding-left: 8px;
+  font-size: 13px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 .price{
-    position: relative;
-    height: 38px;
-    color: #FF2900;
-    line-height: 39px;
-    padding-left:8px;
-    font-size: 16px;
-    /*border: 1px solid red;*/
+  position: relative;
+  height: 38px;
+  color: #FF2900;
+  line-height: 39px;
+  padding-left:8px;
+  font-size: 16px;
+  /*border: 1px solid red;*/
 
 }
 .price span{
-    position: absolute;
-    right: 1px;
-    line-height: 38px;
-    font-size: 12px;
-    color: black;
+  position: absolute;
+  right: 1px;
+  line-height: 38px;
+  font-size: 12px;
+  color: black;
 
 }
 .card .add{
-   position: absolute;
-   bottom: 0;
-   right: 6;
-   width: 28px;
-   height: 28px;
-   /*padding-bottom: 10px;*/
+ position: absolute;
+ bottom: 0;
+ right: 6;
+ width: 28px;
+ height: 28px;
+ /*padding-bottom: 10px;*/
 }
 .card .add img{
-    width: 100%;
+  width: 100%;
 
 }
 
 
 .panel {
-    display: none;
-    height: 23px;
+  display: none;
+  height: 23px;
 }
 
 .control .minus {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 23px;
-    height: 23px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 23px;
+  height: 23px;
 }
 
 .control .count {
-    position: relative;
-    top: 0;
-    margin-left: 31px;
-    margin-right: 31px;
-    width: auto;
-    height: 23px;
-    text-align: center;
-    line-height: 23px;
-    color: #444;
-    font-size: 12px;
-    background-image: url(../image/count.png);
-    background-repeat: no-repeat;
-    background-size: 48px 23px;
+  position: relative;
+  top: 0;
+  margin-left: 31px;
+  margin-right: 31px;
+  width: auto;
+  height: 23px;
+  text-align: center;
+  line-height: 23px;
+  color: #444;
+  font-size: 12px;
+  background-image: url(../image/count.png);
+  background-repeat: no-repeat;
+  background-size: 48px 23px;
 }
 
 </style>
 </head>
 
 <body>
-    <div id="list">
+  <div id="list">
 
-    </div>
+  </div>
 </body>
 <script type="text/template" id="template">
-    {{~it.list:value:index}}
-    <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" onclick="openWareWin('{{=value.id}}')" tapmode>
-        <img src="{{=value.thumbnail}}" style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" >
-        <div class="description">{{=value.description}}</div>
-        <div class="panel" id="panel_{{=value.id}}">
-            <img class="minus" src="../image/jian.png" tapmode onclick="Minus('{{=value.id}}')">
-            <div class="count" id="count_{{=value.id}}">0</div>
-        </div>
-        <div class="price">￥{{=value.price}}<span class='add' tapmode onclick="Add('{{=value.id}}')"><img src="../image/minicart.png" alt=""></span></div>
+  {{~it.list:value:index}}
+  <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" onclick="openWareWin('{{=value.id}}')" tapmode>
+    <img data-original="{{=value.thumbnail}}"  style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" >
+    <div class="description">{{=value.description}}</div>
+    <div class="panel" id="panel_{{=value.id}}">
+      <img class="minus" src="../image/jian.png" tapmode onclick="Minus('{{=value.id}}')">
+      <div class="count" id="count_{{=value.id}}">0</div>
     </div>
-    {{~}}
+    <div class="price">￥{{=value.price}}<span class='add' tapmode onclick="Add('{{=value.id}}')"><img src="../image/minicart.png" alt=""></span></div>
+  </div>
+  {{~}}
 </script>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/zepto/jquery.min.js"></script>
+<script type="text/javascript" src="../script/jquery.lazyload.min.js"></script>
 <script type="text/javascript">
-    var flowerid ;
-    var activity ;
-    var wareTypeList;
-    var skip=0;
-    var LIMIT=18;
-    apiready = function() {
-       init();
-       getWareList();
-       initEventListenter();
-       initRefresh();
+  var flowerid ;
+  var activity ;
+  var wareTypeList;
+  var skip=0;
+  var LIMIT=18;
+  apiready = function() {
+   init();
+   getWareList();
+   initEventListenter();
+   initRefresh();
 
 
-   };
-   function init(){
-     wareTypeList=$api.getStorage('WareTypeList');
+ };
+ function init(){
+   wareTypeList=$api.getStorage('WareTypeList');
 
  }
  function openWareWin(_wareId){
 
-    api.openWin({
-        name: 'ware',
-        url: './ware.html',
-        pageParam: {
-            wareId: _wareId
-        },
-        animation: {
-            type: "fade"
-        }
-    });
+  api.openWin({
+    name: 'ware',
+    url: './ware.html',
+    pageParam: {
+      wareId: _wareId
+    },
+    animation: {
+      type: "fade"
+    }
+  });
 
 }
 
 function getWareList(_LoadMore){
 
-    if (_LoadMore) {
+  if (_LoadMore) {
 
-    }else{
-     activity = api.require('UILoading');
-     activity.flower({
-        center: {
-            x: api.winWidth/2,
-            y: api.winHeight/2
-        },
-        mask:'rgba(20,0,0,0.5)',
-        size: 30,
+  }else{
+   activity = api.require('UILoading');
+   activity.flower({
+    center: {
+      x: api.winWidth/2,
+      y: api.winHeight/2
+    },
+    mask:'rgba(20,0,0,0.5)',
+    size: 30,
     // fixed: true,
 
-}, function(ret) {
-  flowerid=ret.id;
-});
+  }, function(ret) {
+    flowerid=ret.id;
+  });
  }
 
 
@@ -196,116 +198,114 @@ function getWareList(_LoadMore){
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
       if (_LoadMore) {
         skip+=LIMIT;
-    }else{
+      }else{
 
         skip=0;
-    }
-    var params={
+      }
+      var params={
         fields:{},
         fields: {},
         where: {
-            wareTypeId: wareTypeList[3].id
+          wareTypeId: wareTypeList[3].id
         },
         skip:skip,
         limit:LIMIT,
         order:"createdAt DESC"
-    }
-    params=$api.jsonToStr(params);
-    api.ajax({
+      }
+      params=$api.jsonToStr(params);
+      api.ajax({
         url: 'http://d.apicloud.com/mcm/api/ware?filter='+params,
         method: 'get',
         headers: {
-            "X-APICloud-AppId": "A6099267504667",
-            "X-APICloud-AppKey":   appKey
+          "X-APICloud-AppId": "A6099267504667",
+          "X-APICloud-AppKey":   appKey
         },
         
-    },function(ret, err){
+      },function(ret, err){
         if (ret) {
 
-           activity.closeFlower({
-            id:flowerid 
+         activity.closeFlower({
+          id:flowerid 
         });
-           api.refreshHeaderLoadDone()
-           updateWareList(ret,_LoadMore);
+         api.refreshHeaderLoadDone()
+         updateWareList(ret,_LoadMore);
 
 
 
        } 
-   });
-}
-function updateWareList(_data,_LoadMore){
- var param = {
-    list:_data,
-    frameWidth: api.frameWidth,
-};
-var list=$api.byId('list');
-var tempFn=doT.template($api.byId('template').innerHTML);
-var resultText=tempFn(param)
-if (_LoadMore) {
-    $api.append(list, resultText);
-}else{
-    $api.html(list, resultText);
-}
+     });
+    }
+    function updateWareList(_data,_LoadMore){
+     var param = {
+      list:_data,
+      frameWidth: api.frameWidth,
+    };
+    var list=$api.byId('list');
+    var tempFn=doT.template($api.byId('template').innerHTML);
+    var resultText=tempFn(param)
+    if (_LoadMore) {
+      $api.append(list, resultText);
+    }else{
+      $api.html(list, resultText);
+    }
     // 优化
     api.parseTapmode();
-    if (_LoadMore) {
-        if (_data.length<LIMIT) {
-            var pushStatus=$api.byId('pushStatus');
-            pushStatus.innerHTML="我是有底线滴"
-        }
-    }
-    
+   
+    $("img").lazyload();
+    $("img").lazyload({
+      threshold : 200
+    });
     
 
-}
+  }
 // 监听 
 function initEventListenter(){
-    api.addEventListener({
-        name:'scrolltobottom',
-        extra:{
-            threshold:100
-        }
-    }, function(ret, err){        
-     getWareList(true);
+  api.addEventListener({
+    name:'scrolltobottom',
+    extra:{
+      threshold:100
+    }
+  }, function(ret, err){        
+   getWareList(true);
  });
 }
 // 下拉刷新
 function initRefresh(){
-    api.setCustomRefreshHeaderInfo({
-        bgColor: '#C0C0C0',
-        isScale: true
-    }, function() {
-        getWareList();
-        
-    });
+  api.setCustomRefreshHeaderInfo({
+    bgColor: '#C0C0C0',
+    isScale: true
+  }, function() {
+    getWareList();
+
+  });
 
 }
 
 
 
 function Add(_wareId){
-   event.stopPropagation();
-   var count = $api.byId('count_' + _wareId);
-   var panel = $api.byId('panel_' + _wareId);
+ event.stopPropagation();
+ var count = $api.byId('count_' + _wareId);
+ var panel = $api.byId('panel_' + _wareId);
 
     // 更新商品数量及显示状态
     var countNumber = parseInt(count.innerHTML);
     countNumber = 1;
     count.innerHTML = countNumber;
     api.sendEvent({
-        name: 'updateshoppingcart',
-        extra: {
-            wareId:_wareId, 
-            wareCount:countNumber
-        }
+      name: 'updateshoppingcart',
+      extra: {
+        wareId:_wareId, 
+        wareCount:countNumber
+      }
     });
     api.toast({
-       msg: '已加入购物车',
-       duration: 2000,
-       location: 'bottom'
+     msg: '已加入购物车',
+     duration: 2000,
+     location: 'bottom'
    });
     
-}
+  }
 </script>
 
 </html>

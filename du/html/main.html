@@ -27,17 +27,17 @@
         border-radius: 25px;
     }
     .music{
-     -webkit-transition-property: -webkit-transform;
-     -webkit-transition-duration: 1s;
-     -moz-transition-property: -moz-transform;
-     -moz-transition-duration: 1s;
-     -webkit-animation: rotate 8s linear infinite;
-     -moz-animation: rotate 8s linear infinite;
-     -o-animation: rotate 8s linear infinite;
-     animation: rotate 8s linear infinite;
- }
- @-webkit-keyframes rotate{from{-webkit-transform: rotate(0deg)}
- to{-webkit-transform: rotate(360deg)}
+       -webkit-transition-property: -webkit-transform;
+       -webkit-transition-duration: 1s;
+       -moz-transition-property: -moz-transform;
+       -moz-transition-duration: 1s;
+       -webkit-animation: rotate 8s linear infinite;
+       -moz-animation: rotate 8s linear infinite;
+       -o-animation: rotate 8s linear infinite;
+       animation: rotate 8s linear infinite;
+   }
+   @-webkit-keyframes rotate{from{-webkit-transform: rotate(0deg)}
+   to{-webkit-transform: rotate(360deg)}
 }
 @-moz-keyframes rotate{from{-moz-transform: rotate(0deg)}
 to{-moz-transform: rotate(359deg)}
@@ -150,9 +150,9 @@ nav .menu.selected{
     </header>
 
     <div class="gonggao">
-       <marquee id="marquee" scrollamount="6" direction="left" loop="-1"></marquee>
-   </div>
-   <nav id="nav">
+     <marquee id="marquee" scrollamount="6" direction="left" loop="-1"></marquee>
+ </div>
+ <nav id="nav">
     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(0)">男鞋</div>
     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(1)">女鞋</div>
     <div class="menu" tapmode="selected" onclick="setNavMenuIndex(2)">男装</div>
@@ -166,14 +166,16 @@ nav .menu.selected{
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
+<script type="text/javascript" src="../script/zepto/jquery.min.js"></script>
+<script type="text/javascript" src="../script/jquery.lazyload.min.js"></script>
 <script type="text/javascript">
-   var now;
-   var appKey;
-   var moneydian;
-   var musicpath;
-   var demo;
-   var play=0;
-   apiready = function() {
+ var now;
+ var appKey;
+ var moneydian;
+ var musicpath;
+ var demo;
+ var play=0;
+ apiready = function() {
     demo = api.require('uimusic');
     musicpath=[];
     now = Date.now();
@@ -214,7 +216,7 @@ nav .menu.selected{
     }
 }
 function selectmusic(){
-   var params={
+ var params={
     fields:{},
     fields: {},
     order:"createdAt DESC"
@@ -240,16 +242,16 @@ function fnmusic(ret){
     if (ret) {
         for (var i =0; i <ret.length; i++) {
             musicpath.push({
-             name: "music",
-             filename: ret[i].music.url,
-             singer: ret[i].id,
-             icon: "widget://image/chao.png",
-             other : 1,
-             fenxiangSum : 55,
-             downmusicSum : 66,
-             pinglunSum : 233,
-             background : "#800080"
-         });
+               name: "music",
+               filename: ret[i].music.url,
+               singer: ret[i].id,
+               icon: "widget://image/chao.png",
+               other : 1,
+               fenxiangSum : 55,
+               downmusicSum : 66,
+               pinglunSum : 233,
+               background : "#800080"
+           });
         }
     }
 
@@ -282,10 +284,10 @@ function speakcount(){
   dian.style.display='none';
   var userInfo=$api.getStorage('userInfo');
   if (userInfo==undefined && userInfo==null) {
-     dian.style.display='none';
-     return;
- }
- var params={
+   dian.style.display='none';
+   return;
+}
+var params={
     fields:{},
     fields: {},
     where: {
@@ -326,10 +328,10 @@ function moneycount(){
   dian.style.display='none';
   var userInfo=$api.getStorage('userInfo');
   if (userInfo==undefined && userInfo==null) {
-     dian.style.display='none';
-     return;
- }
- var params={
+   dian.style.display='none';
+   return;
+}
+var params={
     fields:{},
     fields: {},
     where: {
@@ -428,16 +430,16 @@ function opencaoshi() {
 
     },function(ret, err){
         if (ret) {
-         var text=$api.byId('marquee');
-         text.innerHTML=ret[0].text;
-     } 
- });
+           var text=$api.byId('marquee');
+           text.innerHTML=ret[0].text;
+       } 
+   });
 }
 
 function openFrames(){
 
- var frames=[];
- for (var i = 0; i <menus.length; i++) {
+   var frames=[];
+   for (var i = 0; i <menus.length; i++) {
     frames.push({
         name:'main_frame_'+i,
         url:'./main_frame.html',
@@ -449,16 +451,16 @@ function openFrames(){
 }
 
 api.
- ({
+({
     name: 'mainFrameGroup',
     scrollEnabled: true,
     rect: {
-     x: 0,
-     y: headerH+navH+20,
-     w: 'auto',
-     h: 'auto'
- },
- frames: frames
+       x: 0,
+       y: headerH+navH+20,
+       w: 'auto',
+       h: 'auto'
+   },
+   frames: frames
 }, function(ret, err){
 
     SetNavMenuselected(ret.index);
@@ -501,17 +503,17 @@ var menus, headerH , navH;
                     location: 'bottom'
                 });
             }else if (_index==5) {
-               api.toast({
+             api.toast({
                 msg: '价格定格于12元(仅限中奖者)/联系客服进抽奖群',
                 duration: 8000,
                 location: 'bottom'
             });
 
-           }
-       }
-   }
+         }
+     }
+ }
 
-   function setNavMenuIndex(_index){
+ function setNavMenuIndex(_index){
         // alert(_index)
         if (_index==4) {
             api.toast({
@@ -520,21 +522,21 @@ var menus, headerH , navH;
                 location: 'bottom'
             });
         }else if (_index==5) {
-           api.toast({
+         api.toast({
             msg: '此展区商品价格定格于12元',
             duration: 6000,
             location: 'bottom'
         });
 
-       }
-       api.setFrameGroupIndex({
+     }
+     api.setFrameGroupIndex({
         name: 'mainFrameGroup',
         index: _index,
         scroll: true
     });
-   }
+ }
 
-   function OpenPersonCenterWin(){
+ function OpenPersonCenterWin(){
     var dian=$api.byId('dian');
     dian.style.display='none';
     var userInfo=$api.getStorage('userInfo');

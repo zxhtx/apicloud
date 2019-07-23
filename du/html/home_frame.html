@@ -429,14 +429,14 @@
     }
 
     .card>img{
-     background-clip: content-box;
-     background-position: center;
-     background-repeat: no-repeat;
-     background-size: cover;
-     border-radius: 10px 10px 0px 24px;
-     /*border: 1px solid red;*/
- }
- .description{
+       background-clip: content-box;
+       background-position: center;
+       background-repeat: no-repeat;
+       background-size: cover;
+       border-radius: 10px 10px 0px 24px;
+       /*border: 1px solid red;*/
+   }
+   .description{
     padding-left: 8px;
     font-size: 13px;
     display: -webkit-box;
@@ -585,7 +585,7 @@
     <script type="text/template" id="template1">
         {{~it.list:value:index}}
         <div class="snapup hightitem section02 open-win" tapmode onclick="openware('{{=value.id}}')">
-            <img src="{{=value.thumbnail}}" class="fl infologo">
+            <img  data-original="{{=value.thumbnail}}" class="fl infologo">
             <div class="shelf2 fl">
                 <div class="shelfcell">
                     <div class="title">{{=value.description}}<span>￥{{=value.price}}</span></div>
@@ -599,19 +599,17 @@
     <script type="text/template" id="template">
         {{~it.list:value:index}}
         <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" onclick="openware('{{=value.id}}')" tapmode>
-          <img src="{{=value.thumbnail}}" style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" >
+          <img  data-original="{{=value.thumbnail}}"  style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" >
           <div class="description">{{=value.description}}</div>
           <div class="price1">￥{{=value.price}}<span>火爆商品</span></div>
       </div>
       {{~}}
   </script>
   <script type="text/javascript" src="../script/api.js"></script>
-  <!-- <script type="text/javascript" src="../script/common.js"></script> -->
-  <!-- <script type="text/javascript" src="../script/swipe.js"></script> -->
   <script type="text/javascript" src="../script/SHA1.js"></script>
   <script type="text/javascript" src="../script/doT.min.js"></script>
-  <!-- <script type="text/javascript" src="../script/remotedb.js"></script> -->
-  <!-- <script type="text/javascript" src="../script/list.js"></script> -->
+  <script type="text/javascript" src="../script/zepto/jquery.min.js"></script>
+  <script type="text/javascript" src="../script/jquery.lazyload.min.js"></script>
   <script type="text/javascript">
       var flowerid ;
       var activity ;
@@ -677,17 +675,17 @@
         if (_index==7) {
             var topname='女鞋'
         }
-         if (_index==8) {
+        if (_index==8) {
             var topname='配件'
         }
         api.openWin({
-           name: 'shoplist',
-           url: './shoplist.html',
-           pageParam: {
-               shoptype: 'main_frame'+_index,
-               topname:topname
-           },
-           animation:{
+         name: 'shoplist',
+         url: './shoplist.html',
+         pageParam: {
+             shoptype: 'main_frame'+_index,
+             topname:topname
+         },
+         animation:{
             type:'fade'
         }
     });
@@ -713,8 +711,8 @@ function getWareList(_LoadMore){
     if (_LoadMore) {
 
     }else{
-     activity = api.require('UILoading');
-     activity.flower({
+       activity = api.require('UILoading');
+       activity.flower({
         center: {
             x: api.winWidth/2,
             y: api.winHeight/2
@@ -726,12 +724,12 @@ function getWareList(_LoadMore){
 }, function(ret) {
   flowerid=ret.id;
 });
- }
+   }
 
 
 
 
- var now = Date.now();
+   var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
       if (_LoadMore) {
@@ -792,7 +790,7 @@ function getWareList(_LoadMore){
 
 
 function updateWareList(_data,_LoadMore){
- var param = {
+   var param = {
     list:_data,
     frameWidth: api.frameWidth,
 };
@@ -837,7 +835,10 @@ function updateWareList1(_data,_LoadMore){
         }
     }
     
-    
+    $("img").lazyload();
+    $("img").lazyload({
+        threshold : 200
+    });
 
 }
 // 监听 
@@ -848,8 +849,8 @@ function initEventListenter(){
             threshold:100
         }
     }, function(ret, err){        
-     getWareList(true);
- });
+       getWareList(true);
+   });
 }
 // 下拉刷新
 function initRefresh(){
@@ -921,8 +922,27 @@ function alert1() {
     }, function(ret, err) {
         if (ret) {
             if (ret.index==0) {
-             clipBoard.set({
+               clipBoard.set({
                 value: '852841974'
+            }, function(ret, err) {
+                if (ret) {
+                    api.toast({
+                        msg: '复制成功',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+
+                }
+            });
+
+
+               dialogBox.close({
+                dialogName: 'scene'
+            });
+
+           }else if (ret.index==1){
+             clipBoard.set({
+                value: 'zxh2764832464'
             }, function(ret, err) {
                 if (ret) {
                     api.toast({
@@ -939,33 +959,14 @@ function alert1() {
                 dialogName: 'scene'
             });
 
-         }else if (ret.index==1){
-           clipBoard.set({
-            value: 'zxh2764832464'
-        }, function(ret, err) {
-            if (ret) {
-                api.toast({
-                    msg: '复制成功',
-                    duration: 2000,
-                    location: 'bottom'
-                });
+         }else{
+             dialogBox.close({
+                dialogName: 'alert'
+            });
+         }
 
-            }
-        });
-
-
-           dialogBox.close({
-            dialogName: 'scene'
-        });
-
-       }else{
-           dialogBox.close({
-            dialogName: 'alert'
-        });
-       }
-
-   } 
-});
+     } 
+ });
 }
 </script>
 

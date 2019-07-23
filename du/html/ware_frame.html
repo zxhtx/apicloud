@@ -132,16 +132,16 @@
       border-radius: 6px;
   }
   .info-discount span.now{
-   padding: 5px 8px 5px 8px;
-   font-size: 12px;
-   color: black;
-   background: gray;
-   background: white;
-   border: 1px solid black;
+     padding: 5px 8px 5px 8px;
+     font-size: 12px;
+     color: black;
+     background: gray;
+     background: white;
+     border: 1px solid black;
 
-}
+ }
 
-.info-color span{
+ .info-color span{
     padding: 5px 8px 5px 8px;
     margin:3px;
     font-size: 12px;
@@ -201,7 +201,7 @@
 <body>
 
     <section id="list">
-        <div id="picture" class="picture"></div>
+        <!-- <div id="picture" class="picture"></div> -->
        <!--  <div class="info-name">
             <div id="wareName" class="name">佳沛绿奇异果</div>
             <div id="description" class="description">享受清爽汁水融入齿间感觉</div>
@@ -216,31 +216,32 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
-<script type="text/javascript" src="../script/zepto/zepto.min.js"></script>
 <script type="text/javascript" src="../script/mui/js/mui.min.js"></script>
+<script type="text/javascript" src="../script/zepto/jquery.min.js"></script>
+<script type="text/javascript" src="../script/jquery.lazyload.min.js"></script>
 <script type="text/x-dot-template" id="template">
     {{~it.list:value:index}}
     <div class="mui-slider">
         <div class="mui-slider-group mui-slider-loop">
-            <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="{{=value.wareInfo.length-1}}" /></a></div>
+            <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img  data-original="{{=value.wareInfo.length-1}}"   /></a></div>
             {{for(var i=0; i< value.wareInfo.length;i++) { }}
-            <div class="mui-slider-item"><a href="#"><img src="{{=value.wareInfo[i]}}" /></a></div>
+            <div class="mui-slider-item"><a href="#"><img  data-original="{{=value.wareInfo[i]}}"  /></a></div>
             {{  }  }}
-            <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="{{=value.wareInfo[0]}}" /></a></div>
+            <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img data-original="{{=value.wareInfo[0]}}"  /></a></div>
         </div>
         <div class="mui-slider-indicator">
-           {{for(var i=0; i< value.wareInfo.length;i++) { }}
-           {{if(i==0) {  }}
-           <div class="mui-indicator mui-active"></div>
-           {{  }else{ }}
+         {{for(var i=0; i< value.wareInfo.length;i++) { }}
+         {{if(i==0) {  }}
+         <div class="mui-indicator mui-active"></div>
+         {{  }else{ }}
 
-              <div class="mui-indicator"></div>
-           {{  } }}
-           {{  }  }}
-       </div>
+         <div class="mui-indicator"></div>
+         {{  } }}
+         {{  }  }}
+     </div>
 
-   </div>
-   <div class="info-name">
+ </div>
+ <div class="info-name">
     <div id="wareName" class="name">{{=value.name}}</div>
     <div id="description" class="description">{{=value.description}}</div>
     <div id="price" class="price">￥{{=value.price}}</div>
@@ -251,9 +252,9 @@
 
 </div>
 <div class="baolist" >
-   <span>全场包邮</span>
-   <span>7天退换</span>
-   <span>24小时发货</span>
+ <span>全场包邮</span>
+ <span>7天退换</span>
+ <span>24小时发货</span>
 
 </div>
 <div class="sizeandcolor">
@@ -276,7 +277,7 @@
 <div id="" style="width: {{=it.frameWidth}}px; margin-top: 28px; ">
   {{for(var i=0; i<it.alllist.length;i++) { }}
   <div tapmode onclick="openware('{{=it.alllist[i].id}}')" style="width: {{=it.frameWidth/4}}px; margin-left:{{=(it.frameWidth/4)/4}}px ;  display: inline-block;">
-    <img src="{{=it.alllist[i].thumbnail}}" style="width:100% ; border-radius:6px ;  " />
+    <img data-original="{{=it.alllist[i].thumbnail}}"  style="width:100% ; border-radius:6px ;  " />
     <span id="sixtext" style="font-size: 10px; ">{{=it.alllist[i].description}}</span>
 </div>
 {{  }  }}
@@ -285,7 +286,7 @@
 
 <div class="imglist">
     {{for(var i= value.imglist.length-1; i>=0 ;i--) { }}
-    <img style="width:{{=it.frameWidth}}px ;" src="{{=value.imglist[i]}}" alt="" />
+    <img style="width:{{=it.frameWidth}}px ;" data-original="{{=value.imglist[i]}}" alt="" />
     {{  }  }}
 </div>
 
@@ -372,13 +373,13 @@ var now = Date.now();
 
                 );
             for(var i=0;i<picture.length;i++){
-               if(picture[i]==null){
-                   picture.splice(i,1)
-               }
+             if(picture[i]==null){
+                 picture.splice(i,1)
+             }
 
-           }
-           ret[0].wareInfo=picture;
-           ret[0].imglist=picture;
+         }
+         ret[0].wareInfo=picture;
+         ret[0].imglist=picture;
            // alert($api.jsonToStr(ret[0]))
 
            getallware(ret);
@@ -395,7 +396,7 @@ var now = Date.now();
 
     function getallware(ret1){
         // alert(1)
-        var suiji=Math.round(Math.random()*600);
+        var suiji=Math.round(Math.random()*300);
         var params={
             fields:{},
             fields: {},
@@ -415,10 +416,10 @@ var now = Date.now();
         },function(ret, err){
             if (ret) {
 
-             fnUpdateWareInfo(ret1,ret);
-         }
+               fnUpdateWareInfo(ret1,ret);
+           }
 
-     });
+       });
     }
 // 更新商品详情展示
 function fnUpdateWareInfo(_ware,_ware2) {
@@ -449,6 +450,10 @@ function fnUpdateWareInfo(_ware,_ware2) {
 
         activity.closeKeyFrame();
         mui('.mui-slider').slider({interval: 3000});
+        $("img").lazyload();
+        $("img").lazyload({
+            failure_limit : 20
+        });
 
     }
     function size(_this){

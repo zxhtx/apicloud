@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../script/mui/css/mui.min.css" />
+	<style>
+	body,html{
+		background-color: transparent;
+	}
+	header {
+		width: 100%;
+		height: 30px;
+		background-color: white
+	}
+
+	header .back {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		width: 40px;
+		height: 30px;
+		background: url(../image/cha.png);
+		background-position: 12px 6px;
+		background-size: 16px 18px;
+		background-repeat: no-repeat;
+	}
+
+	header h1 {
+		width: 100%;
+		height: 30px;
+		line-height: 30px;
+		text-align: center;
+		color: black;
+		font-size: 16px;
+	}
+	
+	#img{
+
+
+	}
+	#list{
+		background-color: white;
+		width: 100%;
+
+	}
+	#list>div{
+		display: inline-block;
+	}
+	.left{
+		margin-left: 16px;
+		padding-bottom: 12px;
+	}
+	
+</style>
+</head>
+<body>
+	<header>
+		<h1>穿搭详情</h1>
+		<div class="back" tapmode onclick="api.closeFrame();"></div>
+	</header>
+	<div id="list">	
+		<div id="img"></div>
+		
+	</div>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
+</script>
+<script type="text/javascript">
+
+	apiready = function() {
+
+		getlist();
+	}
+
+	function getlist(){
+		var img=$api.byId('img');
+		var list=$api.byId('list');
+		img.style.width=api.frameWidth+'px';
+		img.style.height=api.frameHeight-130+'px';
+		// img.style.maxHeight=api.frameHeight-40+'px';
+		img.style.background="url("+api.pageParam.imgsrc+")";
+		img.style.backgroundSize="100%";
+		img.style.backgroundRepeat="no-repeat";
+		if (api.pageParam.warelist) {
+
+			var ware=api.pageParam.warelist.split(",");
+			if (ware.length==3) {
+				var html="<div data-ware="+ware[0]+" class='left' id='yifu'>#衣服</div><div data-ware="+ware[1]+" class='left' id='kuzi'>#裤子</div><div data-ware="+ware[2]+" class='left' id='xiezi' >#鞋子</div>";
+				$api.append(list, html);
+			}else if(ware.length==2){
+				var html="<div data-ware="+ware[0]+" class='left' id='yifu'>#衣服</div><div data-ware="+ware[1]+" class='left' id='kuzi'>#裤子</div>";
+				$api.append(list, html);
+
+			}
+			by();
+		}else{
+			var html="<div data-ware="+api.pageParam.imgsrc+" style='margin-left:42%;width:100px; height:30px; ' class='down' id='down'>保存</div>";
+			$api.append(list, html);
+			down();
+		}
+
+		
+	}
+	function by(){
+		document.getElementById('yifu').onclick=function(){
+			var yifu=$api.byId('yifu');
+			var wareid1=$api.attr(yifu, 'data-ware');
+			api.openWin({
+				name: 'ware',
+				url: './ware.html',
+				pageParam: {
+					wareId: wareid1
+				},
+				animation:{
+					type:'fade'
+				}
+			});
+		}
+		document.getElementById('kuzi').onclick=function(){
+			var kuzi=$api.byId('kuzi');
+			var wareid2=$api.attr(kuzi, 'data-ware');
+			api.openWin({
+				name: 'ware',
+				url: './ware.html',
+				pageParam: {
+					wareId: wareid2
+				},
+				animation:{
+					type:'fade'
+				}
+			});
+		}
+		if (!$api.byId('xiezi')) {
+			return;
+		}
+		document.getElementById('xiezi').onclick=function(){
+			var xiezi=$api.byId('xiezi');
+			var wareid3=$api.attr(xiezi, 'data-ware');
+			api.openWin({
+				name: 'ware',
+				url: './ware.html',
+				pageParam: {
+					wareId: wareid3
+				},
+				animation:{
+					type:'fade'
+				}
+			});
+		}
+
+	}
+
+	function down(){
+		document.getElementById('down').onclick=function(){
+			var down=$api.byId('down');
+			var imgsrc=$api.attr(down, 'data-ware');
+			api.toast({
+				msg: '正在下载',
+				duration: 2000,
+				location: 'bottom'
+			});
+			var myDate=new Date;
+			var h=myDate.getTime(); 
+			var fs='fs://'+h+'.png';
+			api.download({
+				url:imgsrc ,
+				savePath: fs,
+				report: true,
+				cache: false,
+				allowResume: false,
+			}, function(ret, err) {
+				if (ret.state == 1) {
+
+					api.saveMediaToAlbum({
+						path: ret.savePath
+					}, function(ret, err) {
+						if (ret && ret.status) {
+
+							api.toast({
+								msg: '下载成功',
+								duration: 2000,
+								location: 'bottom'
+							});
+							
+						} 
+					});
+				} 
+			});
+		}
+	}
+</script>
+</html>

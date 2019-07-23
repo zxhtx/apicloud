@@ -342,15 +342,30 @@
             openmy();
           }
           if (ret.eventType == "click" && ret.index == 1) {
-            api.toast({
-              msg: '正在开发中...',
-              duration: 2000,
-              location: 'bottom'
-            });
+           openDressing();
+         }
+
+       }
+     });
+      }
+      function openDressing(){
+        api.openFrame({
+          name: 'Dressing_frame',
+          url: './html/Dressing_frame.html',
+          rect: {
+            x: 0,
+            y: 0,
+            w: api.winWidth,
+            h: api.winHeight-54
+          },
+          bounces: false,
+          animation:{
+            type:'fade'
           }
 
-        }
-      });
+        });
+        hiddennewvideo();
+        hiddenhome();
       }
       function openmain(){
         api.openFrame({
@@ -453,6 +468,9 @@
       // });
       api.closeFrame({
         name: 'my_frame'
+      });
+      api.closeFrame({
+        name: 'Dressing_frame'
       });
     }
 
