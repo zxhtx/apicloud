@@ -239,9 +239,9 @@
     api.parseTapmode();
     mui('.mui-slider').slider({interval: 6000});
     $("img").lazyload();
-    // $("img").lazyload({
-    // 	threshold : 600
-    // });
+    $("img").lazyload({
+    	effect : "fadeIn"
+    });
     $("img").lazyload({
     	failure_limit : 20
     });

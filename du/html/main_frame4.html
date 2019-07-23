@@ -121,7 +121,7 @@
 </body>
 <script type="text/template" id="template">
   {{~it.list:value:index}}
-  <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" onclick="openWareWin('{{=value.id}}')" tapmode>
+  <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" onclick="openWareWin('{{=value.id}}')" >
     <img data-original="{{=value.thumbnail}}"  style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" >
     <div class="description">{{=value.description}}</div>
     <div class="panel" id="panel_{{=value.id}}">
@@ -250,7 +250,7 @@ function getWareList(_LoadMore){
     }
     // 优化
     api.parseTapmode();
-   
+
     
     $("img").lazyload();
     $("img").lazyload({

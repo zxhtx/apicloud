@@ -2,36 +2,36 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-    <title>title</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css" />
-    <style>
-    html,
-    body {
-        background-color: #F0F0F0;
-    }
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <title>title</title>
+  <link rel="stylesheet" type="text/css" href="../css/api.css" />
+  <style>
+  html,
+  body {
+    background-color: #F0F0F0;
+  }
 
-    #list {
-        padding: 11px;
+  #list {
+    padding: 11px;
 
 
-    }
+  }
 
-    #list>.card {
-      /*margin-bottom: 0px;*/
-      position: relative;
-      float: left;
-      padding: 4px;
-      box-sizing: border-box;
-      background-clip: content-box;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-color: white;
-      border-radius: 22px 26px 0px 29px;
-      /*border: 1px solid red;*/
-      /*margin:2px 0px 2px 0px;*/
+  #list>.card {
+    /*margin-bottom: 0px;*/
+    position: relative;
+    float: left;
+    padding: 4px;
+    box-sizing: border-box;
+    background-clip: content-box;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: white;
+    border-radius: 22px 26px 0px 29px;
+    /*border: 1px solid red;*/
+    /*margin:2px 0px 2px 0px;*/
   }
 
   .card>img{
@@ -41,99 +41,101 @@
    background-size: cover;
    border-radius: 10px 10px 0px 24px;
    /*border: 1px solid red;*/
-}
-.description{
-    padding-left: 8px;
-    font-size: 13px;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
+ }
+ .description{
+  padding-left: 8px;
+  font-size: 13px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
 }
 .price{
-    height: 38px;
-    color: #FF2900;
-    line-height: 39px;
-    padding-left:8px;
-    font-size: 16px;
+  height: 38px;
+  color: #FF2900;
+  line-height: 39px;
+  padding-left:8px;
+  font-size: 16px;
 }
 .price span{
-    position: absolute;
-    right: 6px;
-    line-height: 38px;
-    font-size: 12px;
-    color: black;
+  position: absolute;
+  right: 6px;
+  line-height: 38px;
+  font-size: 12px;
+  color: black;
 
 }
 </style>
 </head>
 
 <body>
-    <div id="list">
+  <div id="list">
 
-    </div>
+  </div>
 </body>
 <script type="text/template" id="template">
-    {{~it.list:value:index}}
-    <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" onclick="openretuivideo('{{=value.wareid.video.url}}','{{=value.wareid.id}}','{{=value.wareid.description}}','{{=value.wareid.thumbnail}}')" tapmode>
-        <img src="{{=value.wareid.thumbnail}}" style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" >
-        <div class="description">{{=value.wareid.description}}</div>
-        <div class="price">￥{{=value.wareid.price}}<span>{{=value.date}}</span></div>
-    </div>
-    {{~}}
+  {{~it.list:value:index}}
+  <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" onclick="openretuivideo('{{=value.wareid.video.url}}','{{=value.wareid.id}}','{{=value.wareid.description}}','{{=value.wareid.thumbnail}}')">
+    <img  data-original="{{=value.wareid.thumbnail}}" style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" >
+    <div class="description">{{=value.wareid.description}}</div>
+    <div class="price">￥{{=value.wareid.price}}<span>{{=value.date}}</span></div>
+  </div>
+  {{~}}
 </script>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
+<script type="text/javascript" src="../script/zepto/jquery.min.js"></script>
+<script type="text/javascript" src="../script/jquery.lazyload.min.js"></script>
 <script type="text/javascript">
-    var flowerid ;
-    var activity ;
-    var wareTypeList;
-    var skip=0;
-    var LIMIT=8;
-    apiready = function() {
-        getWareList();
-        initEventListenter();
-        initRefresh();
+  var flowerid ;
+  var activity ;
+  var wareTypeList;
+  var skip=0;
+  var LIMIT=8;
+  apiready = function() {
+    getWareList();
+    initEventListenter();
+    initRefresh();
 
-    };
-    function openretuivideo(video,wareid,text,img){
-     api.openFrame({
-         name: 'playvideo_frame',
-         url: './playvideo_frame.html',
-         rect: {
-             x: 0,
-             y: 0,
-             w: api.winWidth,
-             h: api.winHeight
-         },
-         pageParam: {
-             video: video,
-             retui:'ok',
-             wareid:wareid,
-             text:text,
-             img:img
-         },
-     });
+  };
+  function openretuivideo(video,wareid,text,img){
+   api.openFrame({
+     name: 'playvideo_frame',
+     url: './playvideo_frame.html',
+     rect: {
+       x: 0,
+       y: 0,
+       w: api.winWidth,
+       h: api.winHeight
+     },
+     pageParam: {
+       video: video,
+       retui:'ok',
+       wareid:wareid,
+       text:text,
+       img:img
+     },
+   });
 
  }
  function getWareList(_LoadMore){
-    if (_LoadMore) {
+  if (_LoadMore) {
 
-    }else{
-     activity = api.require('UILoading');
-     activity.flower({
-        center: {
-            x: api.winWidth/2,
-            y: api.winHeight/2
-        },
-        mask:'rgba(20,0,0,0.5)',
-        size: 30,
+  }else{
+   activity = api.require('UILoading');
+   activity.flower({
+    center: {
+      x: api.winWidth/2,
+      y: api.winHeight/2
+    },
+    mask:'rgba(20,0,0,0.5)',
+    size: 30,
     // fixed: true,
 
-}, function(ret) {
-  flowerid=ret.id;
-});
+  }, function(ret) {
+    flowerid=ret.id;
+  });
  }
 
 
@@ -144,105 +146,99 @@
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
       if (_LoadMore) {
         skip+=LIMIT;
-    }else{
+      }else{
 
         skip=0;
-    }
-    var params={
+      }
+      var params={
         fields:{},
         fields: {},
         skip:skip,
         limit:LIMIT,
         include: ['wareidPointer'],
         order:"createdAt DESC"
-    }
-    params=$api.jsonToStr(params);
-    api.ajax({
+      }
+      params=$api.jsonToStr(params);
+      api.ajax({
         url: 'http://d.apicloud.com/mcm/api/retuivideo?filter='+params,
         method: 'get',
         headers: {
-            "X-APICloud-AppId": "A6099267504667",
-            "X-APICloud-AppKey":   appKey
+          "X-APICloud-AppId": "A6099267504667",
+          "X-APICloud-AppKey":   appKey
         },
         
-    },function(ret, err){
+      },function(ret, err){
         if (ret) {
 
           // 隐藏下拉刷新
           // api.refreshHeaderLoadDone();
          // 模板渲染
          activity.closeFlower({
-            id:flowerid 
+          id:flowerid 
         });
          api.refreshHeaderLoadDone()
          updateWareList(ret,_LoadMore);
 
 
 
-     } 
- });
-}
-function updateWareList(_data,_LoadMore){
- var param = {
-    list:_data,
-    frameWidth: api.frameWidth,
-};
-var list=$api.byId('list');
-var tempFn=doT.template($api.byId('template').innerHTML);
-var resultText=tempFn(param)
-if (_LoadMore) {
-    $api.append(list, resultText);
-}else{
-    $api.html(list, resultText);
-}
+       } 
+     });
+    }
+    function updateWareList(_data,_LoadMore){
+     var param = {
+      list:_data,
+      frameWidth: api.frameWidth,
+    };
+    var list=$api.byId('list');
+    var tempFn=doT.template($api.byId('template').innerHTML);
+    var resultText=tempFn(param)
+    if (_LoadMore) {
+      $api.append(list, resultText);
+    }else{
+      $api.html(list, resultText);
+    }
     // 优化
     api.parseTapmode();
-    if (_LoadMore) {
-        if (_data.length<LIMIT) {
-            var pushStatus=$api.byId('pushStatus');
-            pushStatus.innerHTML="我是有底线滴"
-        }
-    }
-    
-    
+    $("img").lazyload();
+   
 
-}
+  }
 // 监听 
 function initEventListenter(){
-    api.addEventListener({
-        name:'scrolltobottom',
-        extra:{
-            threshold:100
-        }
-    }, function(ret, err){        
-     getWareList(true);
+  api.addEventListener({
+    name:'scrolltobottom',
+    extra:{
+      threshold:100
+    }
+  }, function(ret, err){        
+   getWareList(true);
  });
 }
 // 下拉刷新
 function initRefresh(){
-    api.setCustomRefreshHeaderInfo({
-        bgColor: '#C0C0C0',
-        isScale: true
-    }, function() {
-        getWareList();
-        
-    });
+  api.setCustomRefreshHeaderInfo({
+    bgColor: '#C0C0C0',
+    isScale: true
+  }, function() {
+    getWareList();
+
+  });
 
 }
 
 function fnLoadCardImage(element){
 
 
-    var eCard = $api.closest(element, '.card');
+  var eCard = $api.closest(element, '.card');
 
-    var url = eCard.dataset['imageurl'];
+  var url = eCard.dataset['imageurl'];
     // api.imageCache({
     //     url: url
     // }, function(ret, err){
-        element.src = url ;
+      element.src = url ;
     // });
 
-}
+  }
 </script>
 
 </html>
