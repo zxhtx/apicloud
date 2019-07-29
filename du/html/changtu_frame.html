@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>title</title>
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="../script/mui/css/mui.min.css" /> -->
+	<style>
+	header{
+		position: fixed;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 40px;
+		background-color: white;
+		z-index: 999;
+	}
+
+	header .back {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 40px;
+		height: 40px;
+		z-index: 2;
+	}
+
+	header .back img {
+		margin-top: 13px;
+		margin-left: 12px;
+		width: 11px;
+		height: 18px;
+	}
+	#list{
+		margin-top: 40px;
+	}
+	
+</style>
+</head>
+<body>
+	<header id="header">
+		<div class="back" tapmode onclick="api.closeFrame();">
+			<img src="../image/back.png">
+		</div>
+
+	</header>
+	<section id="list">
+		
+	</section>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<!-- <script type="text/javascript" src="../script/doT.min.js"></script> -->
+<script type="text/javascript" src="../script/zepto/zepto.min.js"></script>
+<!-- <script type="text/javascript" src="../script/mui/js/mui.min.js"></script> -->
+
+<script type="text/javascript">
+	
+	apiready = function() {
+		updateWareList();
+		
+		
+
+	}
+	
+	function updateWareList(){
+		var imglist=api.pageParam.e;
+		var html;
+		for (var i =0; i <imglist.length; i++) {
+			html+="<img src="+imglist[i]+" data-img="+imglist[i]+"  style='width:100%;display:block;'  class='img'  />";
+				// alert(html)
+			}
+
+			var list=$api.byId('list');
+			html=html.substr(9)
+			$api.append(list, html);
+			api.toast({
+			    msg: '长图',
+			    duration: 6000,
+			    location: 'bottom'
+			});
+			
+			$('.img').on('click',function(e){
+					// var imglist=$api.domAll('.img');
+					// alert(this)
+
+					var _imgsrc=$api.attr(this, 'data-img');
+					var xwid=(api.winWidth-(api.winWidth/1.5))/2;
+					api.openFrame({
+						name: 'selectDressing_frame',
+						url: './selectDressing_frame.html',
+						rect: {
+							x:xwid,
+							y:88,
+							w: api.winWidth/1.5,
+							h: api.winHeight-200
+						},
+						pageParam: {
+							imgsrc: _imgsrc,
+
+						},
+						bounces: false,
+					});
+
+				})
+
+
+		}
+
+	</script>
+	</html>

@@ -50,8 +50,8 @@
 <body>
    <header id="header">
     <div class="back" tapmode onclick="api.closeWin()"></div>
-    <h1>购物认证</h1>
-    <div class="right" tapmode onclick="jietu()">截图</div>
+    <h1>购买信息</h1>
+    <!-- <div class="right" tapmode onclick="jietu()">截图</div> -->
 </header>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
@@ -75,9 +75,9 @@
             pageParam: {
                 shoppingid: api.pageParam.shopping
             },
-            bounces: true
+            bounces: false
         });
-        getware();
+        // getware();
     };
 
     function getware(){
@@ -114,33 +114,33 @@
     });
 
 }
-function jietu(){
-   api.sendEvent({
-       name: 'jietu',
-   });
-   var userInfo = $api.getStorage('userInfo');
-   var now = Date.now();
-   var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-   api.ajax({
-      url: 'https://d.apicloud.com/mcm/api/shoppinginformation/'+shoppingid,
-      method: 'put',
-      data: {
-        values:{
-          "duihuanma":'已失效',
-      }
-  },
-  headers: {
-     "X-APICloud-AppId": "A6099267504667",
-     "X-APICloud-AppKey":   appKey,
- }
-},function(ret, err){
-  if (ret) {
+// function jietu(){
+//    api.sendEvent({
+//        name: 'jietu',
+//    });
+//    var userInfo = $api.getStorage('userInfo');
+//    var now = Date.now();
+//    var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+//    api.ajax({
+//       url: 'https://d.apicloud.com/mcm/api/shoppinginformation/'+shoppingid,
+//       method: 'put',
+//       data: {
+//         values:{
+//           "duihuanma":'已失效',
+//       }
+//   },
+//   headers: {
+//      "X-APICloud-AppId": "A6099267504667",
+//      "X-APICloud-AppKey":   appKey,
+//  }
+// },function(ret, err){
+//   if (ret) {
 
-  } 
+//   } 
   
-});
+// });
 
-}
+// }
 
 </script>
 </html>

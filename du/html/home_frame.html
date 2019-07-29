@@ -13,6 +13,10 @@
         width: 100%;
         background-color: rgb(240, 240, 240);
     }
+    * {
+        box-sizing: border-box;
+    }
+
     /* swipe begin. */
 
     #swipe {
@@ -407,56 +411,36 @@
         opacity: 0.7;
     }
 
-    #list {
-        padding: 11px;
+ 
+#list{
+
+    width:100%;
+    padding: 12px;
 
 
-    }
 
-    #list>.card {
-        position: relative;
-        float: left;
-        padding: 4px;
-        box-sizing: border-box;
-        background-clip: content-box;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-color: white;
-        border-radius: 22px 26px 0px 29px;
-        /*border: 1px solid red;*/
-        /*margin:2px 0px 2px 0px;*/
-    }
+}
 
-    .card>img{
-       background-clip: content-box;
-       background-position: center;
-       background-repeat: no-repeat;
-       background-size: cover;
-       border-radius: 10px 10px 0px 24px;
-       /*border: 1px solid red;*/
-   }
-   .description{
-    padding-left: 8px;
+
+.item {
+ width: calc((100% - 36px)/2);
+ margin-bottom: 18px;
+border-radius: 22px 26px 0px 29px;
+position: relative;
+
+}
+.item>img{
+    width: 100%;
+    display: block;
+    border-radius: 10px 10px 0px 24px;
+}
+.item .description{
+    padding: 6px;
     font-size: 13px;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
 }
-.price1{
-    height: 38px;
-    color: #FF2900;
-    line-height: 38px;
-    padding-left:8px;
-    font-size: 16px;
-}
-.price1 span{
-    position: absolute;
-    right: 6px;
-    line-height: 38px;
-    font-size: 12px;
-    color: black;
+.item .price{
+   padding-left:82%;
+    color: #FF4521;
 
 }
 </style>
@@ -578,7 +562,9 @@
             </div>
         </div> -->
         <div class="guesstitle">热推<img src="../image/competitive_icon.png" alt=""></div>
-        <div id="list" class="home-tuan-list"></div>
+        <ul id="list">
+
+        </ul>
     </body>
 
 
@@ -596,21 +582,15 @@
         </div>
         {{~}}
     </script>
-    <script type="text/template" id="template">
-        {{~it.list:value:index}}
-        <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" onclick="openware('{{=value.id}}')" tapmode>
-          <img  data-original="{{=value.thumbnail}}"  style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" >
-          <div class="description">{{=value.description}}</div>
-          <div class="price1">￥{{=value.price}}<span>火爆商品</span></div>
-      </div>
-      {{~}}
-  </script>
-  <script type="text/javascript" src="../script/api.js"></script>
-  <script type="text/javascript" src="../script/SHA1.js"></script>
-  <script type="text/javascript" src="../script/doT.min.js"></script>
-  <script type="text/javascript" src="../script/zepto/jquery.min.js"></script>
-  <script type="text/javascript" src="../script/jquery.lazyload.min.js"></script>
-  <script type="text/javascript">
+
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/SHA1.js"></script>
+    <script type="text/javascript" src="../script/doT.min.js"></script>
+    <script type="text/javascript" src="../script/zepto/jquery.min.js"></script>
+    <script type="text/javascript" src="../script/jquery.lazyload.min.js"></script>
+    <script type="text/javascript" src="../script/masonry.pkgd.min.js"></script>
+    <script type="text/javascript" src="../script/imagesloaded.pkgd.min.js"></script>
+    <script type="text/javascript">
       var flowerid ;
       var activity ;
       var wareTypeList;
@@ -618,12 +598,14 @@
       var LIMIT=16;
       var dialogBox;
       var clipBoard;
+
       apiready = function() {
         clipBoard = api.require('clipBoard');
         dialogBox = api.require('dialogBox');
-        getWareList();
-        initEventListenter();
-        initRefresh();
+         // initWaterFall();
+         getWareList();
+         initEventListenter();
+         initRefresh();
          // fnInitSwipe();
          // alert1();
          api.openFrame({
@@ -679,13 +661,13 @@
             var topname='配件'
         }
         api.openWin({
-         name: 'shoplist',
-         url: './shoplist.html',
-         pageParam: {
-             shoptype: 'main_frame'+_index,
-             topname:topname
-         },
-         animation:{
+           name: 'shoplist',
+           url: './shoplist.html',
+           pageParam: {
+               shoptype: 'main_frame'+_index,
+               topname:topname
+           },
+           animation:{
             type:'fade'
         }
     });
@@ -708,28 +690,29 @@
 // };
 
 function getWareList(_LoadMore){
-    if (_LoadMore) {
+        // $list.masonry('layout');
+        if (_LoadMore) {
 
-    }else{
-       activity = api.require('UILoading');
-       activity.flower({
-        center: {
-            x: api.winWidth/2,
-            y: api.winHeight/2
-        },
-        mask:'rgba(20,0,0,0.5)',
-        size: 30,
+        }else{
+         activity = api.require('UILoading');
+         activity.flower({
+            center: {
+                x: api.winWidth/2,
+                y: api.winHeight/2
+            },
+            mask:'rgba(20,0,0,0.5)',
+            size: 30,
     // fixed: true,
 
 }, function(ret) {
   flowerid=ret.id;
 });
-   }
+     }
 
 
 
 
-   var now = Date.now();
+     var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
       if (_LoadMore) {
@@ -780,7 +763,7 @@ function getWareList(_LoadMore){
        ret[6],
        ret[2]
        ]
-       updateWareList(ret,_LoadMore);
+       updateWareList(ret);
        updateWareList1(ret1,_LoadMore);
    }
 });
@@ -789,30 +772,52 @@ function getWareList(_LoadMore){
 
 
 
-function updateWareList(_data,_LoadMore){
-   var param = {
-    list:_data,
-    frameWidth: api.frameWidth,
-};
-var list=$api.byId('list');
-var tempFn=doT.template($api.byId('template').innerHTML);
-var resultText=tempFn(param)
-if (_LoadMore) {
-    $api.append(list, resultText);
-}else{
-    $api.html(list, resultText);
+function updateWareList(_data){
+  initWaterFall();   
+  for (var i =0; i <_data.length; i++) {
+
+
+
+    var resultText=$("<li class='item'  data-ware="+_data[i].id+"  style='background:white'><img  data-original="+_data[i].thumbnail+" ><p class='description'>"+_data[i].description+"</p><p class='price'>"+_data[i].price+"</p></li>");
+    $list.append(resultText).masonry('appended',resultText);
+    // $list.imagesLoaded().progress(function(){
+    //     $list.masonry('layout');
+    // })
 }
     // 优化
-    api.parseTapmode();
-    if (_LoadMore) {
-        if (_data.length<LIMIT) {
-            // var pushStatus=$api.byId('pushStatus');
-            // pushStatus.innerHTML="我是有底线滴"
-        }
-    }
-    
-    
+    // api.parseTapmode();
 
+    $("img").lazyload({
+        failurelimit:40,
+
+    });
+
+click()
+}
+function initWaterFall(){
+   $list=$('#list').masonry({
+    itemSelector:'.item',
+    columnWidth:'.item',
+    gutter:12,
+    percentPosition: true
+})
+
+}
+function click(){
+    $('.item').on('click',function(e){
+        var wareid=$api.attr(this, 'data-ware');
+        api.openWin({
+            name: 'ware',
+            url: './ware.html',
+            pageParam: {
+                wareId: wareid
+            },
+            animation:{
+                type:'fade'
+            }
+        });
+
+    })
 }
 function updateWareList1(_data,_LoadMore){
     // alert($api.jsonToStr(_data))
@@ -846,11 +851,11 @@ function initEventListenter(){
     api.addEventListener({
         name:'scrolltobottom',
         extra:{
-            threshold:100
+            threshold:520
         }
     }, function(ret, err){        
-       getWareList(true);
-   });
+     getWareList(true);
+ });
 }
 // 下拉刷新
 function initRefresh(){
@@ -922,7 +927,7 @@ function alert1() {
     }, function(ret, err) {
         if (ret) {
             if (ret.index==0) {
-               clipBoard.set({
+             clipBoard.set({
                 value: '852841974'
             }, function(ret, err) {
                 if (ret) {
@@ -936,37 +941,37 @@ function alert1() {
             });
 
 
-               dialogBox.close({
-                dialogName: 'scene'
-            });
-
-           }else if (ret.index==1){
-             clipBoard.set({
-                value: 'zxh2764832464'
-            }, function(ret, err) {
-                if (ret) {
-                    api.toast({
-                        msg: '复制成功',
-                        duration: 2000,
-                        location: 'bottom'
-                    });
-
-                }
-            });
-
-
              dialogBox.close({
                 dialogName: 'scene'
             });
 
-         }else{
-             dialogBox.close({
-                dialogName: 'alert'
-            });
-         }
+         }else if (ret.index==1){
+           clipBoard.set({
+            value: 'zxh2764832464'
+        }, function(ret, err) {
+            if (ret) {
+                api.toast({
+                    msg: '复制成功',
+                    duration: 2000,
+                    location: 'bottom'
+                });
 
-     } 
- });
+            }
+        });
+
+
+           dialogBox.close({
+            dialogName: 'scene'
+        });
+
+       }else{
+           dialogBox.close({
+            dialogName: 'alert'
+        });
+       }
+
+   } 
+});
 }
 </script>
 

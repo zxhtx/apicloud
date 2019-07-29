@@ -418,17 +418,10 @@
 			<div class="value value-2" id="size">-&nbsp;</div>
 		</div>
 
-		<div class="row">
-				<div class="text">兑换码：</div>
-			<div class="value value-3" id="date">-&nbsp;</div>
-		</div>
 		<div class="row-1">
 			<div class="value value-2">实付款：&nbsp;<span class="color" id="price2">￥24.9</span></div>
 		</div>
 	</section>
-	<footer>
-		<p>点击截图兑换码将失效(谨慎谨慎再谨慎)</p>
-	</footer>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
@@ -486,7 +479,7 @@
   	var price1=$api.byId('price1');
   	var price2=$api.byId('price2');
   	var image=$api.byId('image');    
-  	var date=$api.byId('date');    
+  	// var date=$api.byId('date');    
   	var username=$api.byId('username');
   	var description=$api.byId('description');
   	var color=$api.byId('color');
@@ -499,12 +492,12 @@
   	price1.innerHTML='￥'+_data[0].price;
   	price2.innerHTML='￥'+_data[0].price;
   	image.src=_data[0].url;
-  	if (_data[0].duihuanma==null) {
-  		date.innerHTML=times;
-  	}else{
-  			date.innerHTML=_data[0].duihuanma;
+  	// if (_data[0].duihuanma==null) {
+  	// 	date.innerHTML=times;
+  	// }else{
+  	// 		date.innerHTML=_data[0].duihuanma;
 
-  	}
+  	// }
 
   	username.innerHTML=_data[0].username;
   }

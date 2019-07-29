@@ -29,6 +29,20 @@
 			right: 6px;
 			/*padding-right: 10px;*/
 		}
+		.div2{
+			/*width: 100%;
+			height: 360px;
+			border: 10px solid red;
+			*/
+			background-color: black;
+		}
+		.minimg{
+			position: absolute;
+			right: 10px;
+			top: 52px;
+			width: 26px;
+			height: 26px;
+		}
 	</style>
 </head>
 <body>
@@ -50,21 +64,21 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript" src="../script/doT.min.js"></script>
-<!-- <script type="text/javascript" src="../script/zepto/zepto.min.js"></script> -->
+<script type="text/javascript" src="../script/zepto/zepto.min.js"></script>
 <script type="text/javascript" src="../script/mui/js/mui.min.js"></script>
-<script type="text/javascript" src="../script/zepto/jquery.min.js"></script>
-<script type="text/javascript" src="../script/jquery.lazyload.min.js"></script>
+<!-- <script type="text/javascript" src="../script/zepto/jquery.min.js"></script> -->
+<!-- <script type="text/javascript" src="../script/jquery.lazyload.min.js"></script> -->
 <script type="text/x-dot-template" id="template">
 	{{~it.list:value:index}}
 	{{? value.type==0}}
 	<div class="Dressing">官方推荐 <span>{{=value.date}}</span> </div>
-	<div class="mui-slider">
+	<div class="mui-slider div2">
 		<div class="mui-slider-group mui-slider-loop">
-			<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img data-original="{{=value.imglist.length-1}}"   /></a></div>
+			<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="{{=value.imglist.length-1}}"   /></a></div>
 			{{for(var i=0; i< value.imglist.length;i++) { }}
-			<div class="mui-slider-item"><a  tapmode onclick="openDressing('{{=value.imglist[i]}}','{{=value.warelist[i]}}')" ><img data-original="{{=value.imglist[i]}}"  /></a></div>
+			<div class="mui-slider-item"><a  tapmode onclick="openDressing('{{=value.imglist[i]}}','{{=value.warelist[i]}}')" ><img src="{{=value.imglist[i]}}"  /></a></div>
 			{{  }  }}
-			<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img data-original="{{=value.imglist[0]}}" /></a></div>
+			<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="{{=value.imglist[0]}}" /></a></div>
 		</div>
 		<div class="mui-slider-indicator">
 			{{for(var i=0; i< value.imglist.length;i++) { }}
@@ -81,29 +95,11 @@
 
 
 	{{??}}
-	<div class="Dressing">客官上传 <span>{{=value.date}}</span> </div>
-	<div class="mui-slider">
-		<div class="mui-slider-group mui-slider-loop">
-			<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img data-original="{{=value.imglist.length-1}}" /></a></div>
-			{{for(var i=0; i< value.imglist.length;i++) { }}
-			<div class="mui-slider-item"><a  tapmode onclick="openDressing('{{=value.imglist[i]}}')" ><img data-original="{{=value.imglist[i]}}"  /></a></div>
-			{{  }  }}
-			<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img data-original="{{=value.imglist[0]}}" /></a></div>
-		</div>
-		<div class="mui-slider-indicator">
-			{{for(var i=0; i< value.imglist.length;i++) { }}
-			{{if(i==0) {  }}
-			<div class="mui-indicator mui-active"></div>
-			{{  }else{ }}
-
-			<div class="mui-indicator"></div>
-			{{  } }}
-			{{  }  }}
-		</div>
-
+	<div onclick="openchangtu('{{=value.imglist}}')" style="position: relative">
+		<div class="Dressing">客官上传 <span>{{=value.date}}</span> </div>
+		<img style="width:100%;" src="{{=value.imglist[0]}}" alt="">
+		<img class="minimg" src="../image/loading.png" alt="">
 	</div>
-
-
 	{{?}}
 
 
@@ -114,13 +110,36 @@
 	var now = Date.now();
 	var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
 	var activity;
-	var skip=0;
+	var skip=1;
 	var LIMIT=18;
 	var flowerid ;
 	apiready = function() {
 		getDressing();
 		
+		
 
+	}
+	function openchangtu(e){
+		var e=e.split(',');
+		api.openFrame({
+			name: 'changtu_frame',
+			url: './changtu_frame.html',
+			rect: {
+				x: 0,
+				y: 0,
+				w: api.winWidth,
+				h: api.winHeight
+			},
+			pageParam: {
+				e: e
+			},
+			bounces: false,
+			animation: {
+				type: "fade"
+			}
+			
+		});
+		
 	}
 	function openDressing(_imgsrc,_warelist){
 		var xwid=(api.winWidth-(api.winWidth/1.5))/2;
@@ -223,9 +242,11 @@
 	}
 
 	function updateWareList(_data,_LoadMore){
+		
 		var param = {
 			list:_data,
 			frameWidth: api.frameWidth,
+			// wid:dv.offsetHeight,
 		};
 		var list=$api.byId('list');
 		var tempFn=doT.template($api.byId('template').innerHTML);
@@ -238,15 +259,17 @@
     // 优化
     api.parseTapmode();
     mui('.mui-slider').slider({interval: 6000});
-    $("img").lazyload();
-    $("img").lazyload({
-    	effect : "fadeIn"
-    });
-    $("img").lazyload({
-    	failure_limit : 20
-    });
 
+    // $("img").lazyload();
+    // $("img").lazyload({
+    // 	effect : "fadeIn"
+    // });
+    // $("img").lazyload({
+    // 	failure_limit : 20
+    // });
 
+    // var dv=$api.byId('div2');
+    // alert($api.offset(dv).h)
     
     
 
