@@ -173,30 +173,17 @@
         <h1>购物车</h1>
     </header>
     <section></section>
-    <footer id="footer">
-        <div class="control">
-            <div id="select" class="select"></div>
-            <div class="info">
-                <div class="bottom">已选<span id="count" class="count">0</span>件</div>
-            </div>
-        </div>
-        <div class="panel">
-            <div class="info">
-                <div class="top">总金额:<span id="amount" class="amount">￥0</span></div>
-                <div class="bottom">运费平台付</div>
-            </div>
-        </div>
-    </footer>
+   
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
 apiready = function() {
      var header=$api.byId('header');
-       var footer=$api.byId('footer');
+     
       
         // 获取header和nav的高
         headerH=$api.offset(header).h
-        footerH=$api.offset(footer).h;
+       
 
         api.openFrame({
           name: 'shoppingcart',
@@ -205,7 +192,7 @@ apiready = function() {
               x: 0,
               y: headerH,
               w: 'auto',
-              h: api.winHeight-headerH-footerH 
+              h: api.winHeight-headerH 
           },
           pageParam: {
               wareId:api.pageParam.wareId

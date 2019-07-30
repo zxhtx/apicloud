@@ -411,38 +411,41 @@
         opacity: 0.7;
     }
 
- 
-#list{
 
-    width:100%;
-    padding: 12px;
-
-
-
-}
+    #list{
+        position: relative;
+        width:100%;
+        padding: 12px;
 
 
-.item {
- width: calc((100% - 36px)/2);
- margin-bottom: 18px;
-border-radius: 22px 26px 0px 29px;
-position: relative;
 
-}
-.item>img{
-    width: 100%;
-    display: block;
-    border-radius: 10px 10px 0px 24px;
-}
-.item .description{
-    padding: 6px;
-    font-size: 13px;
-}
-.item .price{
-   padding-left:82%;
-    color: #FF4521;
+    }
 
-}
+
+    .item {
+        position: absolute;
+        width: calc((100% - 32px)/2);
+        margin-left: 16px;
+        border-radius: 22px 26px 0px 29px;
+
+
+    }
+    .item>img{
+        width: 100%;
+        display: block;
+        border-radius: 10px 10px 0px 24px;
+    }
+    .item .description{
+        padding: 6px;
+        font-size: 13px;
+    }
+    .item .price{
+       padding-left:82%;
+       color: #FF4521;
+
+   }
+
+
 </style>
 </head>
 
@@ -562,9 +565,9 @@ position: relative;
             </div>
         </div> -->
         <div class="guesstitle">热推<img src="../image/competitive_icon.png" alt=""></div>
-        <ul id="list">
+        <div id="list">
 
-        </ul>
+        </div>
     </body>
 
 
@@ -588,8 +591,8 @@ position: relative;
     <script type="text/javascript" src="../script/doT.min.js"></script>
     <script type="text/javascript" src="../script/zepto/jquery.min.js"></script>
     <script type="text/javascript" src="../script/jquery.lazyload.min.js"></script>
-    <script type="text/javascript" src="../script/masonry.pkgd.min.js"></script>
-    <script type="text/javascript" src="../script/imagesloaded.pkgd.min.js"></script>
+    <script type="text/javascript" src="../script/pinterest_grid.js"></script>
+
     <script type="text/javascript">
       var flowerid ;
       var activity ;
@@ -598,10 +601,13 @@ position: relative;
       var LIMIT=16;
       var dialogBox;
       var clipBoard;
+      
 
       apiready = function() {
-        clipBoard = api.require('clipBoard');
-        dialogBox = api.require('dialogBox');
+
+
+         clipBoard = api.require('clipBoard');
+         dialogBox = api.require('dialogBox');
          // initWaterFall();
          getWareList();
          initEventListenter();
@@ -773,51 +779,49 @@ function getWareList(_LoadMore){
 
 
 function updateWareList(_data){
-  initWaterFall();   
-  for (var i =0; i <_data.length; i++) {
+   initWaterFall();
+   for (var i =0; i <_data.length; i++) {
 
+       var resultText=$("<div class='item'  data-ware="+_data[i].id+"  style='background:white'><img src='../image/load.png'  data-original="+_data[i].thumbnail+" ><p class='description'>"+_data[i].description+"</p><p class='price'>"+_data[i].price+"</p></div>");
+       $('#list').append(resultText);
 
-
-    var resultText=$("<li class='item'  data-ware="+_data[i].id+"  style='background:white'><img  data-original="+_data[i].thumbnail+" ><p class='description'>"+_data[i].description+"</p><p class='price'>"+_data[i].price+"</p></li>");
-    $list.append(resultText).masonry('appended',resultText);
-    // $list.imagesLoaded().progress(function(){
-    //     $list.masonry('layout');
-    // })
 }
-    // 优化
-    // api.parseTapmode();
+$('.item').on('click',function(e){
 
-    $("img").lazyload({
-        failurelimit:40,
-
+    var wareid=$api.attr(this, 'data-ware');
+    api.openWin({
+        name: 'ware',
+        url: './ware.html',
+        pageParam: {
+            wareId: wareid
+        },
+        animation:{
+            type:'fade'
+        }
     });
 
-click()
+})
+
+    // 优化
+    api.parseTapmode();
+
+    
+
 }
 function initWaterFall(){
-   $list=$('#list').masonry({
-    itemSelector:'.item',
-    columnWidth:'.item',
-    gutter:12,
-    percentPosition: true
-})
+
+$("#list").pinterest_grid({
+    no_columns: 2,
+    padding_x: 10,
+    padding_y: 10,
+    margin_bottom: 50,
+    single_column_breakpoint: 100
+});
+
 
 }
 function click(){
-    $('.item').on('click',function(e){
-        var wareid=$api.attr(this, 'data-ware');
-        api.openWin({
-            name: 'ware',
-            url: './ware.html',
-            pageParam: {
-                wareId: wareid
-            },
-            animation:{
-                type:'fade'
-            }
-        });
 
-    })
 }
 function updateWareList1(_data,_LoadMore){
     // alert($api.jsonToStr(_data))
@@ -840,7 +844,6 @@ function updateWareList1(_data,_LoadMore){
         }
     }
     
-    $("img").lazyload();
     $("img").lazyload({
         threshold : 200
     });
@@ -851,7 +854,7 @@ function initEventListenter(){
     api.addEventListener({
         name:'scrolltobottom',
         extra:{
-            threshold:520
+            threshold:120
         }
     }, function(ret, err){        
      getWareList(true);

@@ -161,12 +161,16 @@
 	.default,.speak{
 		position: absolute;
 		right: 10px;
-		bottom: 8px;
+		bottom: 2px;
 		height: 16px;
 		font-size: 13px;
 		border: 1px solid black;
-		border-radius: 22px;
+		border-radius: 2px;
 		padding: 5px;
+		-moz-box-shadow:1px 1px 1px #999 inset;              
+		-webkit-box-shadow:1px 1px 1px #999 inset;           
+		box-shadow:1px 1px 1px #999 inset; 
+
 	}
 	.speak input{
 		height: 16px;
@@ -179,13 +183,17 @@
 
 	.no{
 		position: absolute;
-		right: 66px;
-		bottom: 8px;
+		right: 76px;
+		bottom: 2px;
 		height: 16px;
 		font-size: 13px;
 		border: 1px solid black;
-		border-radius: 22px;
+		border-radius: 2px;
 		padding: 5px;
+		-moz-box-shadow:1px 1px 1px #999 inset;              
+		-webkit-box-shadow:1px 1px 1px #999 inset;           
+		box-shadow:1px 1px 1px #999 inset; 
+
 	}
 	.no input{
 		height: 16px;
@@ -194,13 +202,17 @@
 	}
 	.shoppingrenzheng{
 		position: absolute;
-		right: 118px;
+		right: 125px;
 		bottom: 2px;
 		height: 20px;
 		font-size: 11px;
 		border: 1px solid black;
-		border-radius: 22px;
+		border-radius: 2px;
 		padding: 3px;
+		-moz-box-shadow:1px 1px 1px #999 inset;              
+		-webkit-box-shadow:1px 1px 1px #999 inset;           
+		box-shadow:1px 1px 1px #999 inset; 
+
 	}
 	.shoppingrenzheng input{
 		height: 20px;
@@ -209,13 +221,16 @@
 	}
 	.lookgengduo{
 		position: absolute;
-		right: 58px;
+		right: 62px;
 		bottom: 2px;
 		height: 20px;
 		font-size: 11px;
 		border: 1px solid black;
-		border-radius: 22px;
+		border-radius: 2px;
 		padding: 3px;
+		-moz-box-shadow:1px 1px 1px #999 inset;              
+		-webkit-box-shadow:1px 1px 1px #999 inset;           
+		box-shadow:1px 1px 1px #999 inset; 
 
 	}
 	.lookgengduo input{
@@ -225,17 +240,19 @@
 	}
 	.ok{
 		position: absolute;
-		right: 8px;
+		right: 1px;
 		bottom: 2px;
 		height: 20px;
 		font-size: 11px;
-		border: 1px solid black;
-		border-radius: 22px;
+		border-radius: 2px;
 		padding: 3px;
+		background-color:#01C5C0;
+
 	}
 	.ok input{
 		height: 20px;
 		line-height: 16px;
+		color: white;
 
 	}
 </style>
@@ -310,10 +327,10 @@
 					<input type="button" value="购买信息">
 				</div>
 				<div class="lookgengduo" tapmode onclick="look('{{=value.id}}')">
-					<input type="button" value="查看物流">
+					<input type="button" value="订单跟踪">
 				</div>
 				<div class="ok" tapmode onclick="qianshou('{{=value.id}}')">
-					<input type="button" value="已签收">
+					<input type="button" value="确认收货">
 				</div>
 				{{?? value.dindantypeid=='5c2a39add37a824c5ac6cc64'}}
 				<div class="speak" tapmode onclick="speak('{{=value.wareid}}','{{=value.id}}','{{=value.speaktype}}')">

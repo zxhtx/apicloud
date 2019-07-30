@@ -59,7 +59,7 @@
     .ware .thumbnail {
         position: absolute;
         top: 14px;
-        left: 32px;
+        left: 12px;
         height: 88px;
         width: 88px;
         border-radius: 20PX;
@@ -68,7 +68,7 @@
     .ware .info {
         position: relative;
         box-sizing: border-box;
-        padding-left: 144px;
+        padding-left: 104px;
         width: 100%;
         height: 114px;
         padding-right: 28px;
@@ -112,9 +112,10 @@
     .ware .control .minus {
         position: absolute;
         top: 0;
-        left: 0;
+        right:  0;
         width: 28px;
         height: 28px;
+        /*border: 1px solid red;*/
     }
   /*  
     .ware .control .count {
@@ -200,7 +201,7 @@
     {{~it:value:index}}
     <div id="ware_{{=value.id}}" class="ware">
         <div class="content" tapmode onclick="fnOpenWareWin('{{=value.id}}');">
-            <div id="select_{{=value.id}}" class="select" onclick="fnSetSelect('{{=value.id}}');"></div>
+
             <img class="thumbnail" src="{{=value.thumbnail}}">
             <div class="info">
                 <div class="name">{{=value.name}}</div>
@@ -211,7 +212,7 @@
             </div>
         </div>
         <div class="control" id="control_{{=value.id}}">
-            <img class="minus" src="../image/jian.png" tapmode onclick="fnMinus('{{=value.id}}');">
+            <img class="minus" src="../image/close.png" tapmode onclick="fnMinus('{{=value.id}}');">
             <div id="count_{{=value.id}}" class="count"></div>
         </div>
     </div>
@@ -222,35 +223,16 @@
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
       apiready = function() {
-        initEventListener();
+        // initEventListener();
         getWareListFromDB();
     };
     var activity;
     var curShoppingCart;
 
-    function initEventListener() {
-    // 监听购物车更新事件(自定义事件)，同步更新列表展示中选定商品的数量
-    api.addEventListener({
-        name: 'updateShoppingCart'
-    }, function(ret, err) {
-        if (ret) {
-            if (ret.value) {
-                // 获取相应商品元素的信息
-                var count = $api.byId('count_' + ret.value.wareId);
-                var ware = $api.byId('ware_' + ret.value.wareId);
-                if (count && ware) {
-                    // 更新商品数量及显示状态
-                    count.innerHTML = ret.value.wareCount;
-                    ware.style.display = (ret.value.wareCount > 0) ? 'block' : 'none';
-                }
-            }
-        }
-    });
-}
 
-function getWareListFromDB() {
-    $db.open();
-    var ret = $db.select();
+    function getWareListFromDB() {
+        $db.open();
+        var ret = $db.select();
     // 购物车中有商品，则显示商品列表
     if (ret && ret.data.length > 0) {
         fnGetWareList(ret.data);
@@ -277,21 +259,34 @@ function fnGetWareList(wareList_) {
         }
     }
 });
- var wares = [];
- for (var i = 0; i < wareList_.length; i++) {
-    if (wareList_[i].wareCount != 0) {
-        wares.push(wareList_[i].wareId);
-    }
+ var cart=$api.getStorage('cart');
+ if (cart==undefined) {
+    // loading.hide();
+    api.toast({
+        msg: '收藏夹没有东西哟o.o~~~',
+        duration: 2000,
+        location: 'bottom'
+    });
+    return;
+}else if (cart.length==0){
+   // loading.hide();
+   api.toast({
+      msg: '收藏夹没有东西哟o.o~~~',
+      duration: 2000,
+      location: 'bottom'
+  });
+   return;
 }
+
 var params = {
     fields: {},
     where: {
         id: {
-            inq: wares
+            inq: cart
         }
     },
     skip: 0,
-    limit: wares.length,
+    limit: cart.length,
     order:"createdAt DESC"
 }
 params = $api.jsonToStr(params);
@@ -303,28 +298,9 @@ api.ajax({
         "X-APICloud-AppKey": appKey
     }
 }, function(ret, err) {
-    if (ret) {
-        for (var i = 0; i < ret.length; i++) {
-            for (var j = 0; j < wareList_.length; j++) {
-                if (ret[i].id == wareList_[j].wareId) {
-                    ret[i].wareCount = wareList_[j].wareCount;
-                }
-            }
-        }
-        api.hideProgress();
-
-            // 显示购物车中的商品列表
-            fnUpdateWareListByShoppingCart(ret);
-
-            // 保存为当前页面的购物车信息，便于在当前页面中添加或删除商品是操作
-            curShoppingCart = ret;
-
-            // 计算购物车中的商品总数及总金额
-            fnGetShoppingCartAmount(ret);
-        } else {
-            alert(JSON.stringify(err));
-        }
-    });
+    fnUpdateWareListByShoppingCart(ret);
+     activity.closeKeyFrame();
+});
 }
 
 function fnUpdateWareListByShoppingCart(data_) {
@@ -336,9 +312,8 @@ function fnUpdateWareListByShoppingCart(data_) {
     // 使用模板函数生成HTML文本
     var resultHTML = tempFn(data_);
     list.innerHTML = resultHTML;
-    activity.closeKeyFrame();
-}
 
+}
 // 计算购物车中的商品总数及总金额
 function fnGetShoppingCartAmount(data_) {
     var amountValue = 0;
@@ -419,102 +394,26 @@ function fnOpenWareWin(wareId_) {
 
 
 // 从购物车删除按钮的监听函数
-function fnMinus(wareId_) { 
- event.stopPropagation();
- var dialogBox = api.require('dialogBox');
- dialogBox.alert({
-    texts: {
-        title: '收货地址',
-        content: '您真的要删除此商品么ლ(′◉❥◉｀ლ)',
-        leftBtnTitle: '取消',
-        rightBtnTitle: '确认'
-    },
-    styles: {
-        bg: '#fff',
-        w: 300,
-        corner:2,
-        title: {
-            marginT: 18,
-            titleSize: 14,
-            titleColor: '#000'
-        },
-        content: {
-            color: '#000',
-            size: 14
-        },
-        right: {
-            marginB: 7,
-            marginL: 10,
-            w: 130,
-            h: 35,
-            corner: 8,
-            bg: '#000',
-            size: 12,
-            color: '#fff',
-        },
-        left: {
-            marginB: 7,
-            marginL: 20,
-            w: 130,
-            h: 35,
-            corner: 8,
-            bg: '#000',
-            size: 12,
-            color: '#fff',
-        },
-
-    }
-}, function(ret, err){
-    if (ret) {
-        if (ret.eventType == 'right') {
-
-          var count = $api.byId('count_' + wareId_);
-          var control = $api.byId('control_' + wareId_);
-          var countNumber = parseInt(count.innerHTML);
-          countNumber = 0;
-          count.innerHTML = countNumber;
-          control.style.display = (countNumber > 0) ? 'block' : 'none';
-          fnUpdateWareCount(wareId_, countNumber);
-          api.sendEvent({
-            name: 'updateShoppingCart',
-            extra: {
-                wareId: wareId_,
-                wareCount: countNumber
-            }
-        });
-          dialogBox.close();
-      }else{
-       dialogBox.close();
-   }
-}
-});
-
-
-}
-
-// 设置商品是否选中
-function fnSetSelect(wareId_) {
-    // 阻止事件继续向上冒泡
-    event.stopPropagation();
-
-    var wareSelect = $api.byId('select_' + wareId_);
-    if (!$api.hasCls(wareSelect, 'select-off')) {
-        $api.addCls(wareSelect, 'select-off');
-        fnUpdateWareState(wareId_, 'off');
-    } else {
-        $api.removeCls(wareSelect, 'select-off');
-        fnUpdateWareState(wareId_, 'on');
-    }
-}
-
-// 单购物车中没有商品的时候，点击关闭当前窗口
-function fnCloseWin() {
-    api.closeWin({
-        animation: {
-            type: 'fade' // 指定窗口关闭的动画为淡入淡出
+function fnMinus(wareid){
+    var ware=$api.byId('ware_'+wareid);
+    // console.log(ware);
+    ware.style.display='none';
+    var cart=$api.getStorage('cart');
+    for (var i = 0; i <cart.length; i++) {
+        if (cart[i]==wareid) {
+            cart.splice(i,1);
+            $api.setStorage('cart', cart);
+            api.toast({
+                msg: '移除成功',
+                duration: 2000,
+                location: 'bottom'
+            });
         }
-    });
+        
+    }
 }
+
+
 </script>
 
 </html>
