@@ -366,6 +366,7 @@
         });
         hiddennewvideo();
         hiddenhome();
+        hiddenmy();
       }
       function openmain(){
         api.openFrame({
@@ -373,14 +374,14 @@
           url: './html/home_frame.html',
           rect: {
             x: 0,
-            y: headerH,
+            y: 0,
             w: api.winWidth,
-            h: api.winHeight-54-headerH
+            h: api.winHeight-54
           },
           pageParam: {
             name: 'test'
           },
-            bounces: false,
+          bounces: false,
           animation:{
             type:'fade'
           }
@@ -390,6 +391,7 @@
         // NVTabBar.bringToFront();
         hiddennewvideo();
         hiddenmy();
+        hiddenDressing();
       }
       function openretui(){
        api.openFrame({
@@ -397,9 +399,9 @@
         url: './html/newvideo.html',
         rect: {
           x: 0,
-          y: headerH,
+          y: 0,
           w: api.winWidth,
-          h: api.winHeight-54-headerH
+          h: api.winHeight-54
         },
         bounces: true,
         pageParam: {
@@ -414,6 +416,7 @@
        // NVTabBar.bringToFront();
        hiddenhome();
        hiddenmy();
+       hiddenDressing();
 
      }
      function openmy(){
@@ -435,10 +438,10 @@
         }
 
       });
-       // var NVTabBar = api.require('NVTabBar');
-       // NVTabBar.bringToFront();
+       
        hiddenhome();
        hiddennewvideo();
+       hiddenDressing();
 
 
      }
@@ -448,37 +451,36 @@
         name: 'home_frame',
         hidden: true
       });
-      // api.closeFrame({
-      //   name: 'home_frame'
-      // });
+      
     }
     function hiddennewvideo(){
       api.setFrameAttr({
         name: 'newvideo',
         hidden: true
       });
-      // api.closeFrame({
-      //   name: 'newvideo'
-      // });
+      
     }
 
     function hiddenmy(){
-      // api.setFrameAttr({
-      //   name: 'my_frame',
-      //   hidden: true
-      // });
-      api.closeFrame({
-        name: 'my_frame'
-      });
-      api.closeFrame({
-        name: 'Dressing_frame'
-      });
-    }
+     api.setFrameAttr({
+      name: 'my_frame',
+      hidden: true
+    });
 
+     
+     
+   }
+   function hiddenDressing(){
+    api.setFrameAttr({
+      name: 'Dressing_frame',
+      hidden: true
+    });
 
-    function initWareTypeList() {
+  }
 
-      var now = Date.now();
+  function initWareTypeList() {
+
+    var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
 

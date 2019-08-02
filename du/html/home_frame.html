@@ -2,528 +2,565 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-    <title>APICloud APP</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css" />
-    <style>
-    html,
-    body {
-        height: 100%;
-        width: 100%;
-        background-color: rgb(240, 240, 240);
-    }
-    * {
-        box-sizing: border-box;
-    }
-
-    /* swipe begin. */
-
-    #swipe {
-        position: relative;
-        overflow: hidden;
-        width: 100%;
-        background-color: #fff;
-        /*border: 1px solid red;*/
-    }
-
-
-    .swipe-page-item {
-        float: left;
-        width: 25%;
-        text-align: center;
-    }
-
-    .swipe-page-item>img {
-        width: 60%;
-        margin-top: 10px;
-    }
-
-    .swipe-page-item>span {
-        display: block;
-        font-size: 13px;
-        margin-top: 5px;
-    }
-
-    #swipeIndicator {
-        position: absolute;
-        left: 50%;
-        bottom: 0px;
-        -webkit-transform: translateX(-50%);
-        transform: translateX(-50%);
-    }
-
-    #swipeIndicator li {
-        height: 24px;
-        line-height: 24px;
-        width: 16px;
-        float: left;
-        background: url(../image/swipe/indicator.png) no-repeat center center;
-        background-color: transparent;
-        background-size: 8px 8px;
-    }
-
-    #swipeIndicator li.active {
-        background: url(../image/swipe/indicator_act.png) no-repeat center center;
-        background-color: transparent;
-        background-size: 8px 8px;
-    }
-    /* swipe end. */
-
-    .h80 {
-        height: 80px;
-    }
-
-    .h40 {
-        height: 40px;
-    }
-
-    .h20 {
-        height: 20px;
-    }
-
-    .h10 {
-        height: 10px;
-        background: #f0f0f0;
-    }
-
-    .h1 {
-        height: 1px;
-        margin-left: 15px;
-        background: #f0f0f0;
-    }
-
-    .fr {
-        float: right;
-    }
-
-    .fl {
-        float: left;
-    }
-
-    .hightitem {
-        background-color: #fff;
-    }
-    /* 抢购样式 */
-
-    .snapup {
-        height: 80px;
-    }
-
-    .snapup .infologo {
-        height: 60px;
-        margin: 10px;
-        border-radius: 10px;
-    }
-
-    .snapup .shelf2 {
-        display: table;
-        height: inherit;
-        margin-left: 10px;
-    }
-
-    .snapup .shelfcell {
-        display: table-cell;
-        vertical-align: middle;
-    }
-
-    .snapup .shelfcell .title {
-        margin-bottom: 10px;
-        width: 200px;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 1;
-        overflow: hidden;
-    }
-
-    .snapup .arrow {
-        width: 20px;
-        padding-top: 30px;
-        padding-right: 10px;
-    }
-    /* 2X2样式 */
-
-    .row {
-        display: -webkit-box;
-        display: -webkit-flex;
-    }
-
-    .col {
-        -webkit-box-flex: 1;
-        -webkit-flex: 1;
-        flex: 1;
-        position: relative;
-    }
-
-    .col img {
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 80px;
-    }
-    .pinzhi{
-        width: 53px;
-        height: 62px;
-    }
-    .col .matrixcell {
-        display: table-cell;
-        vertical-align: middle;
-        padding-left: 10px;
-    }
-
-    .col .matrixcell .title {
-        margin-bottom: 10px;
-    }
-
-    .matrix {
-        display: table;
-        height: inherit;
-    }
-    /* 猜你喜欢 */
-
-    .guesstitle {
-        height: 20px;
-        line-height: 20px;
-        padding-left: 10px;
-        vertical-align: top;
-        font-size: 12px;
-        color: #999;
-    }
-
-    .guesstitle img {
-        height: 15px;
-        padding-top: px;
-        padding-left: 10px;
-    }
-
-    .home-tuan-list .item {
-        position: relative;
-        display: block;
-        padding-left: 10px;
-        border-bottom: 1px solid #e0e0e0;
-    }
-
-    .home-tuan-list .cnt {
-        padding: 7px 10px 10px 0;
-        display: box;
-        display: -webkit-box;
-        min-height: 78px;
-        background-size: auto 1px;
-    }
-
-    .home-tuan-list .pic {
-        margin-right: 10px;
-        background: center;
-    }
-
-    .home-tuan-list img {
-        width: 90px;
-        height: 66px;
-        margin-top: 7px;
-        margin-bottom: 5px;
-        border-radius: 3px;
-    }
-
-    .home-tuan-list .wrap {
-        -webkit-box-flex: 1;
-    }
-
-    .home-tuan-list .wrap2 {
-        display: table;
-        height: 88px;
-        width: 100%;
-    }
-
-    .home-tuan-list .content {
-        -webkit-box-flex: 1;
-        box-flex: 1;
-        display: table-cell;
-        vertical-align: middle;
-    }
-
-    .home-tuan-list .shopname {
-        color: #333;
-        /*line-height: 16px;*/
-        font-size: 17px;
-        max-width: 11em;
-        white-space: nowrap;
-        word-wrap: normal;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        min-height: 10px;
-        padding-bottom: 2px;
-        padding-top: 3px;
-        display: inline-block;
-    }
-
-    .home-tuan-list .title {
-        color: #666;
-        line-height: 16px;
-        font-size: 13px;
-        max-height: 30px;
-        overflow: hidden;
-        padding-top: 3px;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-    }
-
-    .home-tuan-list .hot-title {
-        margin-bottom: 8px;
-    }
-
-    .home-tuan-list .hot-subtitle {
-        margin-bottom: 9px;
-    }
-
-    .home-tuan-list .info {
-        margin-top: 9px;
-        /*margin-bottom: 11px;*/
-        color: #666;
-        font-size: 12px;
-        position: relative;
-        line-height: 15px;
-        display: box;
-        display: -webkit-box;
-        height: 15px;
-    }
-
-    .home-tuan-list .symbol {
-        font-size: 14px;
-        color: #f60;
-        display: block;
-        margin-top: 1px;
-    }
-
-    .home-tuan-list .price {
-        color: #f60;
-        font-size: 20px;
-        line-height: 15px;
-        margin-right: 5px;
-        margin-top: 1px;
-    }
-
-    .home-tuan-list .o-price {
-        color: #999;
-        margin-top: 5px;
-        line-height: 10px;
-    }
-
-    .home-tuan-list .sale {
-        color: #f63;
-        border: solid 1px #ff916e;
-        padding: 3px 2px 2px;
-        font-size: 10px;
-        border-radius: 2px;
-        -webkit-border-radius: 2px;
-        margin-left: 5px;
-        line-height: 10px;
-        height: 10px;
-    }
-
-    .home-tuan-list .distance {
-        -webkit-box-flex: 1;
-        box-flex: 1;
-        -ms-box-flex: 1;
-        -ms-flex: 1;
-        text-align: right;
-        line-height: 10px;
-        margin-top: 5px;
-        color: #999;
-        float: right;
-        font-size: 12px;
-    }
-
-    .home-tuan-list .price,
-    .index-rec .home-tuan-list .o-price,
-    .index-rec .home-tuan-list .distance,
-    .index-rec .home-tuan-list .sale {
-        display: block;
-        line-height: 15px;
-        font-size: 12px;
-    }
-
-    .Fix:after {
-        display: block;
-        content: '';
-        height: 0;
-        clear: both;
-    }
-    /* 3. */
-
-    .section03 .col img {
-        width: 60px;
-        top: 10px;
-    }
-
-    .section03 .title01 .title {
-        color: #000;
-    }
-
-    .section03 .title02 .title {
-        color: #000;
-    }
-
-    .section03 .title03 .title {
-        color: #000;
-    }
-
-    .section03 .title04 .title {
-        color: #000;
-    }
-
-    .section03 .matrixcell .info {
-        color: #666;
-    }
-    /* 2. */
-
-    .section02 .shelfcell .title span {
-        color: #ff6633;
-    }
-
-    .section02 .shelfcell .subtitel {
-        color: #666;
-        font-size: 14px;
-    }
-
-    .swiper-container {
-        background-color: #fff;
-    }
-
-    .item-hov {
-        background-color: #FAFAFA;
-    }
-
-    .brb {
-        border-bottom: 1px solid #e0e0e0;
-        border-right: 1px solid #e0e0e0;
-    }
-
-    .bb {
-        border-bottom: 1px solid #e0e0e0;
-    }
-
-    .br {
-        border-right: 1px solid #e0e0e0;
-    }
-
-    .highlight {
-        opacity: 0.7;
-    }
-
-
-    #list{
-        position: relative;
-        width:100%;
-        padding: 12px;
-
-
-
-    }
-
-
-    .item {
-        position: absolute;
-        width: calc((100% - 32px)/2);
-        margin-left: 16px;
-        border-radius: 22px 26px 0px 29px;
-
-
-    }
-    .item>img{
-        width: 100%;
-        display: block;
-        border-radius: 10px 10px 0px 24px;
-    }
-    .item .description{
-        padding: 6px;
-        font-size: 13px;
-    }
-    .item .price{
-       padding-left:82%;
-       color: #FF4521;
-
-   }
-
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <title>APICloud APP</title>
+  <link rel="stylesheet" type="text/css" href="../css/api.css" />
+  <style>
+  html,
+  body {
+    height: 100%;
+    width: 100%;
+    background-color:#F4F7F9;
+  }
+  * {
+    box-sizing: border-box;
+    font-family: Georgia;
+  }
+
+  /* swipe begin. */
+
+
+  header {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 999;
+    height: 40px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    line-height: 44px;
+    font-size: 20px;
+    background: white;
+  }
+  .home-search {
+    position: absolute;
+    left: 9px;
+    right: 9px;
+    top: 5px;
+    bottom: 2px;
+    height: 32px;
+    line-height: 32px;
+    background-color:#F4F4F4;
+    border-radius: 34px;
+    color:#999999;
+    font-size: 14px;
+  }
+
+  .home-search>img {
+    height: 20px;
+    /*padding-top: 8px;*/
+    /*padding-left: 10px;*/
+    padding-right: 10px;
+    vertical-align: middle;
+  }
+  .h80 {
+    height: 80px;
+  }
+
+  .h40 {
+    height: 40px;
+  }
+
+  .h20 {
+    height: 20px;
+  }
+
+  .h10 {
+    height: 10px;
+    background: #f0f0f0;
+  }
+
+  .h1 {
+    height: 1px;
+    margin-left: 15px;
+    background: #f0f0f0;
+  }
+
+  .fr {
+    float: right;
+  }
+
+  .fl {
+    float: left;
+  }
+
+  .hightitem {
+
+  }
+  /* 抢购样式 */
+
+  .snapup {
+    height: 80px;
+  }
+
+  .snapup .infologo {
+    height: 60px;
+    margin: 10px;
+    border-radius: 10px;
+  }
+
+  .snapup .shelf2 {
+    display: table;
+    height: inherit;
+    margin-left: 10px;
+  }
+
+  .snapup .shelfcell {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .snapup .shelfcell .title {
+    margin-bottom: 10px;
+    width: 200px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+  }
+
+  .snapup .arrow {
+    width: 20px;
+    padding-top: 30px;
+    padding-right: 10px;
+  }
+  /* 2X2样式 */
+
+  .row {
+    display: -webkit-box;
+    display: -webkit-flex;
+  }
+
+  .col {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    position: relative;
+  }
+
+  .col img {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 80px;
+  }
+  .pinzhi{
+    width: 53px;
+    height: 62px;
+  }
+  .col .matrixcell {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 10px;
+  }
+
+  .col .matrixcell .title {
+    margin-bottom: 10px;
+  }
+
+  .matrix {
+    display: table;
+    height: inherit;
+  }
+  /* 猜你喜欢 */
+
+  .guesstitle {
+    height: 20px;
+    line-height: 20px;
+    padding-left: 10px;
+    vertical-align: top;
+    font-size: 12px;
+    color: #999;
+    /*margin-top: 30px;*/
+  }
+
+  .guesstitle img {
+    height: 15px;
+    padding-top: px;
+    padding-left: 10px;
+  }
+
+  .home-tuan-list .item {
+    position: relative;
+    display: block;
+    padding-left: 10px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .home-tuan-list .cnt {
+    padding: 7px 10px 10px 0;
+    display: box;
+    display: -webkit-box;
+    min-height: 78px;
+    background-size: auto 1px;
+  }
+
+  .home-tuan-list .pic {
+    margin-right: 10px;
+    background: center;
+  }
+
+  .home-tuan-list img {
+    width: 90px;
+    height: 66px;
+    margin-top: 7px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+  }
+
+  .home-tuan-list .wrap {
+    -webkit-box-flex: 1;
+  }
+
+  .home-tuan-list .wrap2 {
+    display: table;
+    height: 88px;
+    width: 100%;
+  }
+
+  .home-tuan-list .content {
+    -webkit-box-flex: 1;
+    box-flex: 1;
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .home-tuan-list .shopname {
+    color: #333;
+    /*line-height: 16px;*/
+    font-size: 17px;
+    max-width: 11em;
+    white-space: nowrap;
+    word-wrap: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    min-height: 10px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    display: inline-block;
+  }
+
+  .home-tuan-list .title {
+    color: #666;
+    line-height: 16px;
+    font-size: 13px;
+    max-height: 30px;
+    overflow: hidden;
+    padding-top: 3px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .home-tuan-list .hot-title {
+    margin-bottom: 8px;
+  }
+
+  .home-tuan-list .hot-subtitle {
+    margin-bottom: 9px;
+  }
+
+  .home-tuan-list .info {
+    margin-top: 9px;
+    /*margin-bottom: 11px;*/
+    color: #666;
+    font-size: 12px;
+    position: relative;
+    line-height: 15px;
+    display: box;
+    display: -webkit-box;
+    height: 15px;
+  }
+
+  .home-tuan-list .symbol {
+    font-size: 14px;
+    color: #f60;
+    display: block;
+    margin-top: 1px;
+  }
+
+  .home-tuan-list .price {
+    color: #f60;
+    font-size: 20px;
+    line-height: 15px;
+    margin-right: 5px;
+    margin-top: 1px;
+  }
+
+  .home-tuan-list .o-price {
+    color: #999;
+    margin-top: 5px;
+    line-height: 10px;
+  }
+
+  .home-tuan-list .sale {
+    color: #f63;
+    border: solid 1px #ff916e;
+    padding: 3px 2px 2px;
+    font-size: 10px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    margin-left: 5px;
+    line-height: 10px;
+    height: 10px;
+  }
+
+  .home-tuan-list .distance {
+    -webkit-box-flex: 1;
+    box-flex: 1;
+    -ms-box-flex: 1;
+    -ms-flex: 1;
+    text-align: right;
+    line-height: 10px;
+    margin-top: 5px;
+    color: #999;
+    float: right;
+    font-size: 12px;
+  }
+
+  .home-tuan-list .price,
+  .index-rec .home-tuan-list .o-price,
+  .index-rec .home-tuan-list .distance,
+  .index-rec .home-tuan-list .sale {
+    display: block;
+    line-height: 15px;
+    font-size: 12px;
+  }
+
+  .Fix:after {
+    display: block;
+    content: '';
+    height: 0;
+    clear: both;
+  }
+  /* 3. */
+
+  .section03 .col img {
+    width: 60px;
+    top: 10px;
+  }
+
+  .section03 .title01 .title {
+    color: #000;
+  }
+
+  .section03 .title02 .title {
+    color: #000;
+  }
+
+  .section03 .title03 .title {
+    color: #000;
+  }
+
+  .section03 .title04 .title {
+    color: #000;
+  }
+
+  .section03 .matrixcell .info {
+    color: #666;
+  }
+  /* 2. */
+
+  .section02 .shelfcell .title span {
+    color: #ff6633;
+  }
+
+  .section02 .shelfcell .subtitel {
+    color: #666;
+    font-size: 14px;
+  }
+
+  .swiper-container {
+    background-color: #fff;
+  }
+
+  .item-hov {
+    background-color: #FAFAFA;
+  }
+
+  .brb {
+    border-bottom: 1px solid #F5F5F5;
+    border-right: 1px solid #F5F5F5;
+  }
+
+  .bb {
+    border-bottom: 1px solid #F5F5F5;
+  }
+
+  .br {
+    border-right: 1px solid #F5F5F5;
+  }
+
+  .highlight {
+    opacity: 0.7;
+  }
+
+
+  #list{
+    position: relative;
+    width:100%;
+    padding: 12px;
+    background: #F4F7F9;
+
+
+
+  }
+
+
+  .item {
+    position: absolute;
+    width: calc(100%/2);
+    margin-left: 16px;
+    border-radius: 22px 26px 0px 29px;
+    transition:all 0.3s ease-in-out;
+
+
+  }
+  .item>img{
+    width: 100%;
+    display: block;
+    border-radius: 10px 10px 0px 24px;
+  }
+  .item .description{
+    padding: 6px;
+    font-size: 13px;
+  }
+  .item .price{
+    padding-left:69%;
+    color: #FF4521;
+
+  }
+
+  .gezi{
+    margin-top: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background: #fff;
+    border-radius: 20px;
+  }
+  #list1{
+    background: white;
+  }
+  .bg{
+    background: url("../image/swipe/4.jpg");
+    background-repeat: no-repeat;
+    background-size: 96px 160px;
+    background-position: 100px 0;
+  }
+
+  nav{
+    display: -webkit-box ;
+    display: -webkit-flex ;
+    display: flex ;
+    -webkit-box-orient: horizontal;
+    -webkit-flex-flow: row;
+    flex-flow: row;
+    position: relative;
+    width: 100%;
+    height: 52px;
+    background-color: #F4F7F9;
+  }
+  nav .menu{
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    width: 100%;
+    height: 52px;
+    line-height: 52px;
+    font-size: 13px;
+    color: #999999;
+    text-align: center;
+
+  }
+  nav .menu.selected{
+    font-size: 14px;
+    color: black;
+    font-weight: bold;
+  }
+  .top{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+    width: 32px;
+    height: 32px;
+    background-color: gray;
+    opacity: 0.5;
+    border-radius: 30px;
+    display:none;
+  }
+  .top>a{
+    line-height: 32px;
+    text-align: center;
+    color: white;
+
+  }
 </style>
 </head>
 
 <body>
-    <div class="h1"></div>
-    <section id="swipe" class="section01">
-        <div class="swipe-page-item open-win" tapmode onclick="shop(1)" >
-            <img src="../image/swipe/around.png">
-            <span>男装</span>
-        </div>
-        <div class="swipe-page-item open-win" tapmode onclick="shop(2)" >
-            <img src="../image/swipe/beauty.png">
-            <span>女装</span>
-        </div>
-        
-
+  <div class="h1"></div>
+  <header>
+    <div class="home-search open-win" tapmode onclick="opensearch()">
+      <img src="../image/search_home.png">
+      <span>搜索其实很简单</span>
     </div>
-    <div class="swipe-page-row">
+  </header>
+  <!-- <div class="h20"></div> -->
+  <div class="gezi">
 
-        <div class="swipe-page-item open-win" tapmode onclick="shop(6)" >
-            <img src="../image/swipe/discount.png">
-            <span>男鞋</span>
-        </div>
-        <div class="swipe-page-item open-win" tapmode onclick="shop(7)" >
-            <img src="../image/swipe/food.png">
-            <span>女鞋</span>
-        </div>
-        
-    </section>
-    <div class="h20"></div>
-    <div class="guesstitle">火爆四专区<img src="../image/competitive_icon.png" alt=""></div>
+
     <div class="row hightitem section03">
-        <div class="col h80 brb open-win"tapmode onclick="shop(3)" >
-            <div class="matrix">
-                <div class="matrixcell title01">
-                    <div class="title">12元购全场</div>
-                    <div class="info" style="font-size: 12px">低价潮装中的战斗机</div>
-                </div>
-            </div>
-            <img src="../image/swipe/decorate.png" class="fl">
+      <div class="col h80 brb open-win"tapmode onclick="shop(3)" >
+        <div class="matrix">
+          <div class="matrixcell title01">
+            <div class="title">12元购全场</div>
+            <div class="info" style="font-size: 12px">低价潮装中的战斗机</div>
+          </div>
         </div>
-        <div class="col h80 bb open-win" tapmode onclick="shop(8)">
-            <div class="matrix">
-                <div class="matrixcell title02">
-                    <div class="title">配件</div>
-                    <div class="info">潮流首饰/包包</div>
-                </div>
-            </div>
-            <img src="../image/swipe/peijian.png" class="fl">
+        <img src="../image/swipe/decorate.png" class="fl">
+      </div>
+      <div class="col h80 bb open-win" tapmode onclick="shop(8)">
+        <div class="matrix">
+          <div class="matrixcell title02">
+            <div class="title">配件</div>
+            <div class="info">潮流首饰/包包</div>
+          </div>
         </div>
+        <img src="../image/swipe/peijian.png" class="fl">
+      </div>
     </div>
     <div class="row hightitem section03">
-        <div class="col h80 br open-win" tapmode onclick="shop(4)" >
-            <div class="matrix">
-                <div class="matrixcell title03">
-                    <div class="title">高品质</div>
-                    <div class="info">潮流又有范儿</div>
-                </div>
-            </div>
-            <img src="../image/swipe/children.png" class="fl pinzhi">
+      <div class="col h80 br open-win" tapmode onclick="shop(4)" style="background: #050007; border-radius:0 0 0 20px; " >
+        <div class="matrix">
+          <div class="matrixcell title03">
+            <div class="title" style="color: white;">海量潮图</div>
+            <div class="info" style="font-size: 12px;color: white;">本站潮图随你看</div>
+          </div>
         </div>
-        <div class="col h80 open-win" tapmode onclick="shop(5)">
-            <div class="matrix">
-                <div class="matrixcell title04">
-                    <div class="title">优惠购</div>
-                    <div class="info" style="font-size: 12px">全场30元以内随你买</div>
-                </div>
-            </div>
-            <img src="../image/swipe/dessert.png" class="fl">
+        <img src="../image/swipe/3.jpg" class="fl pinzhi">
+      </div>
+      <div class="col h80 bg open-win" tapmode onclick="shop(5)" >
+        <div class="matrix">
+          <div class="matrixcell title04" >
+            <div class="title">个性穿搭</div>
+            <div class="info" style="font-size: 12px">教你最时尚的穿搭</div>
+          </div>
         </div>
-    </div>
-    <div class="h20"></div>
-    <div class="guesstitle">抢手货<img src="../image/competitive_icon.png" alt=""></div>
-    <div id="list1">
-
+        <!-- <img src="" class="fl"> -->
+      </div>
     </div>
 
-    <div class="h10"></div>
+  </div>
+  <!-- <div class="h20"></div> -->
+  <div class="guesstitle">抢手货<img src="../image/competitive_icon.png" alt=""></div>
+  <div id="list1">
+
+  </div>
+
+  <div class="h10"></div>
        <!--  <div class="row hightitem section03">
             <div class="col h80 brb open-win" win="shoplist" param='{"type":0,"shopType":8}'>
                 <div class="matrix">
@@ -563,271 +600,234 @@
                 </div>
                 <img src="../image/home/cover_04.png" class="fl">
             </div>
-        </div> -->
-        <div class="guesstitle">热推<img src="../image/competitive_icon.png" alt=""></div>
-        <div id="list">
+          </div> -->
+          <nav id="nav">
+            <div class="menu selected" tapmode="selected" onclick="setNavMenuIndex(2,this)">男装</div>
+            <div class="menu" tapmode="selected" onclick="setNavMenuIndex(3,this)">女装</div>
+            <div class="menu" tapmode="selected" onclick="setNavMenuIndex(0,this)">男鞋</div>
+            <div class="menu" tapmode="selected" onclick="setNavMenuIndex(1,this)">女鞋</div>
+            <div class="menu" tapmode="selected" onclick="setNavMenuIndex(4,this)">优惠购</div>
+            <div class="menu" tapmode="selected" onclick="setNavMenuIndex(5,this)">12元购</div>
 
-        </div>
-    </body>
+          </nav>
+          <div id="list">
+
+          </div>
+          <div class="top">
+            <a href="#">Top</a>
+          </div>
+        </body>
 
 
-    <script type="text/template" id="template1">
-        {{~it.list:value:index}}
-        <div class="snapup hightitem section02 open-win" tapmode onclick="openware('{{=value.id}}')">
+        <script type="text/template" id="template1">
+          {{~it.list:value:index}}
+          <div class="snapup hightitem section02 open-win" tapmode onclick="openware('{{=value.id}}')">
             <img  data-original="{{=value.thumbnail}}" class="fl infologo">
             <div class="shelf2 fl">
-                <div class="shelfcell">
-                    <div class="title">{{=value.description}}<span>￥{{=value.price}}</span></div>
-                    <span class="subtitel">周计火爆商品</span>
-                </div>
+              <div class="shelfcell">
+                <div class="title">{{=value.description}}<span>￥{{=value.price}}</span></div>
+                <span class="subtitel">周计火爆商品</span>
+              </div>
             </div>
             <img src="../image/arrow.png" class="arrow fr">
-        </div>
-        {{~}}
-    </script>
+          </div>
+          {{~}}
+        </script>
 
-    <script type="text/javascript" src="../script/api.js"></script>
-    <script type="text/javascript" src="../script/SHA1.js"></script>
-    <script type="text/javascript" src="../script/doT.min.js"></script>
-    <script type="text/javascript" src="../script/zepto/jquery.min.js"></script>
-    <script type="text/javascript" src="../script/jquery.lazyload.min.js"></script>
-    <script type="text/javascript" src="../script/pinterest_grid.js"></script>
+        <script type="text/javascript" src="../script/api.js"></script>
+        <script type="text/javascript" src="../script/SHA1.js"></script>
+        <script type="text/javascript" src="../script/doT.min.js"></script>
+        <script type="text/javascript" src="../script/zepto/jquery.min.js"></script>
+        <script type="text/javascript" src="../script/jquery.lazyload.min.js"></script>
+        <script type="text/javascript" src="../script/pinterest_grid.js"></script>
 
-    <script type="text/javascript">
-      var flowerid ;
-      var activity ;
-      var wareTypeList;
-      var skip=0;
-      var LIMIT=16;
-      var dialogBox;
-      var clipBoard;
-      
+        <script type="text/javascript">
+          var wareindex;
+          var wareindex2=2;
 
-      apiready = function() {
+          var flowerid ;
+          var activity ;
+          var wareTypeList;
+          var skip=0;
+          var LIMIT=22;
+          var dialogBox;
+          var clipBoard;
+          var wareTypeList;
 
+          //监听top回到顶部
+          window.addEventListener("scroll", function (){
+           if ( $(".top").offset().top>'666'){
+             $(".top").css('display','block');
+           }else{
+             $(".top").css('display','none');
 
-         clipBoard = api.require('clipBoard');
-         dialogBox = api.require('dialogBox');
-         // initWaterFall();
-         getWareList();
-         initEventListenter();
-         initRefresh();
-         // fnInitSwipe();
-         // alert1();
-         api.openFrame({
-            name: 'minicart_frame',
-            url: './minicart_frame.html',
-            rect: {
-                x: 0,
-                y: api.winHeight - 55,
-                w: 0,
-                h: 0
-            },
-        bounces: false // 关闭弹动
-    });
+           }
 
+         })
+          apiready = function() {
+            wareTypeList=$api.getStorage('WareTypeList');
 
-     };
-     function openware(id){
-        api.openWin({
-            name: 'ware',
-            url: './ware.html',
-            pageParam: {
+            clipBoard = api.require('clipBoard');
+            dialogBox = api.require('dialogBox');
+            getWareList(2);
+            wareindex=2;
+            initEventListenter();
+
+           
+
+          };
+          function openware(id){
+            api.openWin({
+              name: 'ware',
+              url: './ware.html',
+              pageParam: {
                 wareId: id
-            },
-            animation:{
+              },
+              animation:{
                 type:'fade'
-            }
-        });
+              }
+            });
 
-    }
-    function shop(_index){
-        if (_index==1) {
-            var topname='男装'
-        }
-        if (_index==2) {
-            var topname='女装'
-        }
-        if (_index==4) {
-            var topname='高品质'
-        }
-        if (_index==3) {
-            var topname='12元购'
-        }
-        if (_index==5) {
-            var topname='优惠购'
-        }
-        if (_index==6) {
-            var topname='男鞋'
-        }
-        if (_index==7) {
-            var topname='女鞋'
-        }
-        if (_index==8) {
-            var topname='配件'
-        }
-        api.openWin({
-           name: 'shoplist',
-           url: './shoplist.html',
-           pageParam: {
-               shoptype: 'main_frame'+_index,
-               topname:topname
-           },
-           animation:{
-            type:'fade'
-        }
-    });
-    }
-//  function fnInitSwipe() {
-//     var swipe = $api.byId('swipe'),
-//     indicators = $api.domAll(swipe, 'li');
+          }
 
-//     new Swipe(swipe, {
-//         callback: function(index) {
-//             for (var i = 0; i < indicators.length; i++) {
-//                 if (index == i) {
-//                     $api.addCls(indicators[i], 'active');
-//                 } else {
-//                     $api.removeCls(indicators[i], 'active');
-//                 }
-//             }
-//         }
-//     });
-// };
 
-function getWareList(_LoadMore){
-        // $list.masonry('layout');
-        if (_LoadMore) {
+          function setNavMenuIndex(_index,_this){
+            wareindex=_index;
+            $(_this).addClass('selected').siblings().removeClass('selected');
+            _this.style.transition="all 0.3s ease-in-out";
+            getWareList(_index,false);
 
-        }else{
-         activity = api.require('UILoading');
-         activity.flower({
-            center: {
-                x: api.winWidth/2,
-                y: api.winHeight/2
-            },
-            mask:'rgba(20,0,0,0.5)',
-            size: 30,
-    // fixed: true,
+          }
+          function getWareList(_index,_LoadMore){
 
-}, function(ret) {
-  flowerid=ret.id;
-});
-     }
+       // alert(_index)
 
 
 
-
-     var now = Date.now();
+       var now = Date.now();
       //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
       var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
       if (_LoadMore) {
+
         skip+=LIMIT;
-    }else{
+      }else{
 
         skip=0;
-    }
-    var params={
+        activity = api.require('UILoading');
+        activity.flower({
+          center: {
+            x: api.winWidth/2,
+            y: api.winHeight/2
+          },
+          mask:'rgba(20,0,0,0.5)',
+          size: 30,
+
+
+        }, function(ret) {
+          flowerid=ret.id;
+        });
+      }
+      var params={
         fields:{},
-        fields: {},
-        skip:skip,
-        limit:LIMIT,
-        order:"createdAt DESC",
+        where:{
+         wareTypeId:wareTypeList[_index].id
+       },
+       skip:skip,
+       limit:LIMIT,
+       order:"createdAt DESC",
         // include: ['wareidPointer'],
         
-    }
-    params=$api.jsonToStr(params);
-    api.ajax({
+      }
+      params=$api.jsonToStr(params);
+      api.ajax({
         url: 'http://d.apicloud.com/mcm/api/ware?filter='+params,
         method: 'get',
         headers: {
-            "X-APICloud-AppId": "A6099267504667",
-            "X-APICloud-AppKey":   appKey
+          "X-APICloud-AppId": "A6099267504667",
+          "X-APICloud-AppKey":   appKey
         },
         
-    },function(ret, err){
+      },function(ret, err){
         if (ret) {
 
-          // 隐藏下拉刷新
-          // api.refreshHeaderLoadDone();
-         // 模板渲染
          activity.closeFlower({
-            id:flowerid 
+          id:flowerid 
         });
-         api.refreshHeaderLoadDone();
-       //   for (var i =0; i <ret.length-1; i++) {
-       //      for (var j = i+1; j <ret.length; j++) {
-       //          if (ret[i].wareid.id==ret[j].wareid.id) {
-       //             ret.splice(j,1);  
-       //         }
-       //     }
 
-       // }
-
-       var ret1=[
-       ret[3],
-       ret[6],
-       ret[2]
-       ]
-       updateWareList(ret);
-       updateWareList1(ret1,_LoadMore);
-   }
-});
-}
+         var ret1=[
+         ret[3],
+         ret[6],
+         ret[2]
+         ]
+         updateWareList(ret,_index);
+         updateWareList1(ret1,_LoadMore);
+       }
+     });
+    }
 
 
 
 
-function updateWareList(_data){
-   initWaterFall();
-   for (var i =0; i <_data.length; i++) {
+    function updateWareList(_data,_index){
+     initWaterFall();
+     var resultText=0;
+     for (var i =0; i <_data.length; i++) {
 
-       var resultText=$("<div class='item'  data-ware="+_data[i].id+"  style='background:white'><img src='../image/load.png'  data-original="+_data[i].thumbnail+" ><p class='description'>"+_data[i].description+"</p><p class='price'>"+_data[i].price+"</p></div>");
+      resultText+="<div class='item'  data-ware="+_data[i].id+"  style='background:white'><img src='../image/load.png'  data-original="+_data[i].thumbnail+" ><p class='description'>"+_data[i].description+"</p><p class='price'>￥"+_data[i].price+"</p></div>";
+
+
+    }
+     // alert($api.jsonToStr(resultText))
+     resultText=resultText.substr(1);
+     if (_index==wareindex2){
        $('#list').append(resultText);
+     }else{
+       $('#list').html(resultText);
+     }
 
-}
-$('.item').on('click',function(e){
+     $('.item').on('click',function(e){
 
-    var wareid=$api.attr(this, 'data-ware');
-    api.openWin({
+      var wareid=$api.attr(this, 'data-ware');
+      api.openWin({
         name: 'ware',
         url: './ware.html',
         pageParam: {
-            wareId: wareid
+          wareId: wareid
         },
         animation:{
-            type:'fade'
+          type:'fade'
         }
-    });
+      });
 
-})
+    })
 
     // 优化
     api.parseTapmode();
+    wareindex2=_index;
 
     
 
-}
-function initWaterFall(){
+  }
+  function initWaterFall(){
 
-$("#list").pinterest_grid({
-    no_columns: 2,
-    padding_x: 10,
-    padding_y: 10,
-    margin_bottom: 50,
-    single_column_breakpoint: 100
-});
+    $("#list").pinterest_grid({
+      no_columns: 2,
+      padding_x: 8,
+      padding_y: 8,
+      margin_bottom: 50,
+      single_column_breakpoint: 100
+    });
 
 
-}
-function click(){
+  }
+  function click(){
 
-}
-function updateWareList1(_data,_LoadMore){
+  }
+  function updateWareList1(_data,_LoadMore){
     // alert($api.jsonToStr(_data))
     var param = {
-        list:_data,
-        frameWidth: api.frameWidth,
+      list:_data,
+      frameWidth: api.frameWidth,
     };
     var list=$api.byId('list1');
     var tempFn=doT.template($api.byId('template1').innerHTML);
@@ -837,144 +837,140 @@ function updateWareList1(_data,_LoadMore){
 
     // 优化
     api.parseTapmode();
-    if (_LoadMore) {
-        if (_data.length<LIMIT) {
-            // var pushStatus=$api.byId('pushStatus');
-            // pushStatus.innerHTML="我是有底线滴"
-        }
-    }
     
+
     $("img").lazyload({
-        threshold : 200
+      threshold : 200
     });
 
-}
+  }
 // 监听 
 function initEventListenter(){
-    api.addEventListener({
-        name:'scrolltobottom',
-        extra:{
-            threshold:120
-        }
-    }, function(ret, err){        
-     getWareList(true);
- });
+  api.addEventListener({
+    name:'scrolltobottom',
+    extra:{
+      threshold:120
+    }
+  }, function(ret, err){        
+    // alert(wareindex)
+    getWareList(wareindex,true);
+  });
 }
 // 下拉刷新
-function initRefresh(){
-    api.setCustomRefreshHeaderInfo({
-        bgColor: '#C0C0C0',
-        isScale: true
-    }, function() {
-        getWareList();
-        
-    });
+// function initRefresh(){
+//   api.setCustomRefreshHeaderInfo({
+//     bgColor: '#C0C0C0',
+//     isScale: true
+//   }, function() {
+//     getWareList();
 
-}
+//   });
+
+// }
 
 function alert1() {
-    dialogBox.evaluation({
-        styles: {
-            bg: '#fff',
-            w: 300,
-            title: {
-                marginT: 20,
-                size: 15,
-                color: '#000',
-                bold: true
-            },
-            content: {
-                marginT: 20,
-                color: '#111',
-                size: 12
-            },
-            buttons: [{
-                marginB: 0,
-                marginL: 0,
-                w: 300,
-                h: 35,
-                bg: '#fff',
-                color: '#000',
-                size: 12
-            }, {
-                marginB: 0,
-                marginL: 0,
-                w: 300,
-                h: 35,
-                bg: '#fff',
-                color: '#000',
-                size: 12
-            },
-            {
-                marginB: 0,
-                marginL: 0,
-                w: 300,
-                h: 35,
-                bg: '#fff',
-                color: '#000000',
-                size: 12
-            }
-            ]
-        },
-        texts: {
-            title: '内部价来啦!!!',
-            content: '快进群,领福利内部价购买全场啦!!!',
-            buttons: [{
-                text: '复制qq群'
-            }, {
-                text: '复制客服微信邀请进群'
-            },{
-                text:'取消'
-            }]
-        }
-    }, function(ret, err) {
+  dialogBox.evaluation({
+    styles: {
+      bg: '#fff',
+      w: 300,
+      title: {
+        marginT: 20,
+        size: 15,
+        color: '#000',
+        bold: true
+      },
+      content: {
+        marginT: 20,
+        color: '#111',
+        size: 12
+      },
+      buttons: [{
+        marginB: 0,
+        marginL: 0,
+        w: 300,
+        h: 35,
+        bg: '#fff',
+        color: '#000',
+        size: 12
+      }, {
+        marginB: 0,
+        marginL: 0,
+        w: 300,
+        h: 35,
+        bg: '#fff',
+        color: '#000',
+        size: 12
+      },
+      {
+        marginB: 0,
+        marginL: 0,
+        w: 300,
+        h: 35,
+        bg: '#fff',
+        color: '#000000',
+        size: 12
+      }
+      ]
+    },
+    texts: {
+      title: '内部价来啦!!!',
+      content: '快进群,领福利内部价购买全场啦!!!',
+      buttons: [{
+        text: '复制qq群'
+      }, {
+        text: '复制客服微信邀请进群'
+      },{
+        text:'取消'
+      }]
+    }
+  }, function(ret, err) {
+    if (ret) {
+      if (ret.index==0) {
+       clipBoard.set({
+        value: '852841974'
+      }, function(ret, err) {
         if (ret) {
-            if (ret.index==0) {
-             clipBoard.set({
-                value: '852841974'
-            }, function(ret, err) {
-                if (ret) {
-                    api.toast({
-                        msg: '复制成功',
-                        duration: 2000,
-                        location: 'bottom'
-                    });
+          api.toast({
+            msg: '复制成功',
+            duration: 2000,
+            location: 'bottom'
+          });
 
-                }
-            });
+        }
+      });
 
 
-             dialogBox.close({
-                dialogName: 'scene'
-            });
+       dialogBox.close({
+        dialogName: 'scene'
+      });
 
-         }else if (ret.index==1){
-           clipBoard.set({
-            value: 'zxh2764832464'
-        }, function(ret, err) {
-            if (ret) {
-                api.toast({
-                    msg: '复制成功',
-                    duration: 2000,
-                    location: 'bottom'
-                });
+     }else if (ret.index==1){
+       clipBoard.set({
+        value: 'zxh2764832464'
+      }, function(ret, err) {
+        if (ret) {
+          api.toast({
+            msg: '复制成功',
+            duration: 2000,
+            location: 'bottom'
+          });
 
-            }
-        });
+        }
+      });
 
 
-           dialogBox.close({
-            dialogName: 'scene'
-        });
+       dialogBox.close({
+        dialogName: 'scene'
+      });
 
-       }else{
-           dialogBox.close({
-            dialogName: 'alert'
-        });
-       }
+     }else{
+       dialogBox.close({
+        dialogName: 'alert'
+      });
+     }
 
    } 
-});
+ });
 }
 </script>
 

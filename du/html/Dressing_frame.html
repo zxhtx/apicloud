@@ -23,6 +23,7 @@
 			font-size: 16px;
 			padding-left: 8px;
 			line-height: 40px;
+			border-top: 1px solid black;
 		}
 		.Dressing span{
 			position: absolute;
@@ -74,7 +75,7 @@
 	<div class="Dressing">官方推荐 <span>{{=value.date}}</span> </div>
 	<div class="mui-slider div2">
 		<div class="mui-slider-group mui-slider-loop">
-			<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="{{=value.imglist.length-1}}"   /></a></div>
+			<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="{{=value.imglist[value.imglist.length-1]}}"   /></a></div>
 			{{for(var i=0; i< value.imglist.length;i++) { }}
 			<div class="mui-slider-item"><a  tapmode onclick="openDressing('{{=value.imglist[i]}}','{{=value.warelist[i]}}')" ><img src="{{=value.imglist[i]}}"  /></a></div>
 			{{  }  }}
@@ -258,7 +259,7 @@
 		}
     // 优化
     api.parseTapmode();
-    mui('.mui-slider').slider({interval: 6000});
+    mui('.mui-slider').slider();
 
     // $("img").lazyload();
     // $("img").lazyload({

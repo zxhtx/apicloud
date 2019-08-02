@@ -223,7 +223,7 @@
     {{~it.list:value:index}}
     <div class="mui-slider">
         <div class="mui-slider-group mui-slider-loop">
-            <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img  data-original="{{=value.wareInfo.length-1}}"   /></a></div>
+            <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img  data-original="{{=value.wareInfo[value.wareInfo.length-1]}}"   /></a></div>
             {{for(var i=0; i< value.wareInfo.length;i++) { }}
             <div class="mui-slider-item"><a href="#"><img  data-original="{{=value.wareInfo[i]}}"  /></a></div>
             {{  }  }}
