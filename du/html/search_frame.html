@@ -214,7 +214,7 @@ function searchval(val,_LoadMore){
         fields:{},
         fields: {},
         where: {
-            "description":{"like":val},
+            "description":{"like":'%'+val+'%'},
         },
         skip:skip,
         limit:LIMIT,
@@ -222,7 +222,7 @@ function searchval(val,_LoadMore){
     }
     params=$api.jsonToStr(params);
     api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/ware?filter='+params,
+        url: 'http://d.apicloud.com/mcm/api/shoppinginformation?filter='+params,
         method: 'get',
         headers: {
             "X-APICloud-AppId": "A6099267504667",
@@ -239,7 +239,8 @@ function searchval(val,_LoadMore){
          activity.closeFlower({
             id:flowerid 
         });
-         updateWareList(ret,_LoadMore);
+         alert(ret.length);
+         // updateWareList(ret,_LoadMore);
      } 
  });
 }

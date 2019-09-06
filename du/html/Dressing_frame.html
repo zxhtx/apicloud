@@ -229,9 +229,7 @@
 		},function(ret, err){
 			if (ret) {
 				// alert(ret[0].warelist[0])
-				activity.closeFlower({
-					id:flowerid 
-				});
+				
 				// api.refreshHeaderLoadDone()
 				updateWareList(ret,_LoadMore);
 
@@ -260,7 +258,9 @@
     // 优化
     api.parseTapmode();
     mui('.mui-slider').slider();
-
+    activity.closeFlower({
+    	id:flowerid 
+    });
     // $("img").lazyload();
     // $("img").lazyload({
     // 	effect : "fadeIn"

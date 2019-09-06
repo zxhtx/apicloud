@@ -54,12 +54,12 @@
 </head>
 
 <body class="wrap">
-  <header>
+<!--   <header>
     <div class="home-search open-win" tapmode onclick="opensearch()">
       <img src="./image/search_home.png">
       <span>搜索其实很简单</span>
     </div>
-  </header>
+  </header> -->
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
 <script type="text/javascript" src="./script/SHA1.js"></script>
@@ -70,8 +70,8 @@
   var status = false;
   apiready = function() {
 
-        var header = $api.dom('header'); // 获取 header 标签元素
-        headerH=$api.offset(header).h;
+        // var header = $api.dom('header'); // 获取 header 标签元素
+        // headerH=$api.offset(header).h;
         fnNVTabBar_open();
         kouling();
         fnInitListener();
@@ -196,18 +196,7 @@
           }
         });
       }
-      function opensearch(){
-        api.openWin({
-          name: 'search',
-          url: './html/search.html',
-          pageParam: {
-            name: 'test'
-          },
-          animation:{
-            type:'fade'
-          }
-        });
-      }
+  
       function fnInitListener() {
         var flag = false;
         api.addEventListener({
@@ -250,25 +239,7 @@
               centerY: 2
             }
           },
-          items: [{
-            w: api.winWidth / 4.0,
-            iconRect: {
-              w: 25.0,
-              h: 25.0,
-            },
-            icon: {
-              normal: 'widget://image/footer/home.png',
-              highlight: 'widget://image/footer/home_act.png',
-              selected: 'widget://image/footer/home_act.png'
-            },
-            title: {
-              text: '首页',
-              size: 12.0,
-              normal: '#696969',
-              selected: '#000',
-              marginB: 6.0,
-            }
-          },
+          items: [
           {
             w: api.winWidth / 4.0,
             iconRect: {
@@ -282,6 +253,25 @@
             },
             title: {
               text: '时装搭配',
+              size: 12.0,
+              normal: '#696969',
+              selected: '#000',
+              marginB: 6.0,
+            }
+          },
+          {
+            w: api.winWidth / 4.0,
+            iconRect: {
+              w: 25.0,
+              h: 25.0,
+            },
+            icon: {
+              normal: 'widget://image/footer/home.png',
+              highlight: 'widget://image/footer/home_act.png',
+              selected: 'widget://image/footer/home_act.png'
+            },
+            title: {
+              text: '商城',
               size: 12.0,
               normal: '#696969',
               selected: '#000',
@@ -330,10 +320,10 @@
           if (ret) {
 
             if (ret.eventType == "show") {
-              openmain();
+              openDressing();
             }
             if (ret.eventType == "click" && ret.index == 0) {
-              openmain();
+             openDressing();
             }
             if (ret.eventType == "click" && ret.index == 2) {
              openretui();
@@ -342,7 +332,7 @@
             openmy();
           }
           if (ret.eventType == "click" && ret.index == 1) {
-           openDressing();
+            openmain();
          }
 
        }

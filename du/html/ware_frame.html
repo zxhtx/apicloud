@@ -195,13 +195,41 @@
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
+.back {
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 40px;
+ height: 40px;
+ /*border: 1px solid red;*/
+ background: url(../image/back.png);
+ background-position: 12px 9px;
+ background-size: 16px 22px;
+ background-repeat: no-repeat;
+ z-index: 999;
+}
+.share {
+ position: absolute;
+ top: 0;
+ right: 0;
+ width: 40px;
+ height: 40px;
+ /*border: 1px solid red;*/
+ background: url(../image/share.png);
+ background-position: 9px 6px;
+ background-size: 28px 28px;
+ background-repeat: no-repeat;
+ z-index: 999;
+}
+
 </style>
 </head>
 
 <body>
-
-    <section id="list">
-        <!-- <div id="picture" class="picture"></div> -->
+   <div class="back" tapmode onclick="api.closeWin()"></div>
+   <div class="share" tapmode onclick="clip()"></div>
+   <section id="list">
+    <!-- <div id="picture" class="picture"></div> -->
        <!--  <div class="info-name">
             <div id="wareName" class="name">佳沛绿奇异果</div>
             <div id="description" class="description">享受清爽汁水融入齿间感觉</div>
@@ -223,25 +251,26 @@
     {{~it.list:value:index}}
     <div class="mui-slider">
         <div class="mui-slider-group mui-slider-loop">
-            <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img  data-original="{{=value.wareInfo[value.wareInfo.length-1]}}"   /></a></div>
-            {{for(var i=0; i< value.wareInfo.length;i++) { }}
-            <div class="mui-slider-item"><a href="#"><img  data-original="{{=value.wareInfo[i]}}"  /></a></div>
-            {{  }  }}
-            <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img data-original="{{=value.wareInfo[0]}}"  /></a></div>
-        </div>
-        <div class="mui-slider-indicator">
-           {{for(var i=0; i< value.wareInfo.length;i++) { }}
-           {{if(i==0) {  }}
-           <div class="mui-indicator mui-active"></div>
-           {{  }else{ }}
 
-           <div class="mui-indicator"></div>
-           {{  } }}
-           {{  }  }}
-       </div>
+          <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img  data-original="{{=value.wareInfo[value.wareInfo.length-1]}}"   /></a></div>
+          {{for(var i=0; i< value.wareInfo.length;i++) { }}
+          <div class="mui-slider-item"><a href="#"><img  data-original="{{=value.wareInfo[i]}}"  /></a></div>
+          {{  }  }}
+          <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img data-original="{{=value.wareInfo[0]}}"  /></a></div>
+      </div>
+      <div class="mui-slider-indicator">
+       {{for(var i=0; i< value.wareInfo.length;i++) { }}
+       {{if(i==0) {  }}
+       <div class="mui-indicator mui-active"></div>
+       {{  }else{ }}
 
+       <div class="mui-indicator"></div>
+       {{  } }}
+       {{  }  }}
    </div>
-   <div class="info-name">
+
+</div>
+<div class="info-name">
     <div id="wareName" class="name">{{=value.name}}</div>
     <div id="description" class="description">{{=value.description}}</div>
     <div id="price" class="price">￥{{=value.price}}</div>
@@ -396,7 +425,7 @@ var now = Date.now();
 
     function getallware(ret1){
         // alert(1)
-        var suiji=Math.round(Math.random()*300);
+        var suiji=Math.round(Math.random()*600);
         var params={
             fields:{},
             fields: {},
@@ -449,7 +478,7 @@ function fnUpdateWareInfo(_ware,_ware2) {
 
 
         activity.closeKeyFrame();
-        mui('.mui-slider').slider({interval: 3000});
+        mui('.mui-slider').slider();
         $("img").lazyload();
         $("img").lazyload({
             effect : "fadeIn"

@@ -443,6 +443,13 @@
   #list1{
     background: white;
   }
+  .bb{
+    background: url("../image/swipe/2.png");
+    background-repeat: no-repeat;
+    background-size: 200px 200px;
+    /*background-position: 0px 20px;*/
+    background-origin: 10px 180px;
+  }
   .bg{
     background: url("../image/swipe/4.jpg");
     background-repeat: no-repeat;
@@ -504,7 +511,7 @@
   <div class="h1"></div>
   <header>
     <div class="home-search open-win" tapmode onclick="opensearch()">
-      <img src="../image/search_home.png">
+      <img src="../image/search_groupbuy.png">
       <span>搜索其实很简单</span>
     </div>
   </header>
@@ -516,20 +523,20 @@
       <div class="col h80 brb open-win"tapmode onclick="shop(3)" >
         <div class="matrix">
           <div class="matrixcell title01">
-            <div class="title">12元购全场</div>
-            <div class="info" style="font-size: 12px">低价潮装中的战斗机</div>
+            <div class="title">高品质</div>
+            <div class="info" style="font-size: 12px">全站火爆商品</div>
           </div>
         </div>
-        <img src="../image/swipe/decorate.png" class="fl">
+        <img src="../image/swipe/1.png" class="fl">
       </div>
       <div class="col h80 bb open-win" tapmode onclick="shop(8)">
         <div class="matrix">
           <div class="matrixcell title02">
-            <div class="title">配件</div>
-            <div class="info">潮流首饰/包包</div>
+            <div class="title" style="color: white;">配件</div>
+            <div class="info" style="font-size: 12px;color: white;">潮流首饰/背包</div>
           </div>
         </div>
-        <img src="../image/swipe/peijian.png" class="fl">
+        <img src="../image/swipe/2.png" class="fl">
       </div>
     </div>
     <div class="row hightitem section03">
@@ -673,9 +680,21 @@
             wareindex=2;
             initEventListenter();
 
-           
+
 
           };
+          function opensearch(){
+            api.openWin({
+              name: 'search',
+              url: './search.html',
+              pageParam: {
+                name: 'test'
+              },
+              animation:{
+                type:'fade'
+              }
+            });
+          }
           function openware(id){
             api.openWin({
               name: 'ware',
@@ -773,33 +792,41 @@
      var resultText=0;
      for (var i =0; i <_data.length; i++) {
 
-      resultText+="<div class='item'  data-ware="+_data[i].id+"  style='background:white'><img src='../image/load.png'  data-original="+_data[i].thumbnail+" ><p class='description'>"+_data[i].description+"</p><p class='price'>￥"+_data[i].price+"</p></div>";
+      resultText+="<div class='item'  data-ware="+_data[i].id+"  style='background:white'><img src='../image/loading.png'  data-original="+_data[i].thumbnail+" ><p class='description'>"+_data[i].description+"</p><p class='price'>￥"+_data[i].price+"</p></div>";
 
 
     }
-     // alert($api.jsonToStr(resultText))
-     resultText=resultText.substr(1);
-     if (_index==wareindex2){
-       $('#list').append(resultText);
-     }else{
-       $('#list').html(resultText);
-     }
+    if (resultText==0) {
+     api.toast({
+       msg: '没有资源了~~~~(>_<)~~~~ ',
+       duration: 3000,
+       location: 'bottom'
+     });
+     return;
+   }
 
-     $('.item').on('click',function(e){
+   resultText=resultText.substr(1);
+   if (_index==wareindex2){
+     $('#list').append(resultText);
+   }else{
+     $('#list').html(resultText);
+   }
 
-      var wareid=$api.attr(this, 'data-ware');
-      api.openWin({
-        name: 'ware',
-        url: './ware.html',
-        pageParam: {
-          wareId: wareid
-        },
-        animation:{
-          type:'fade'
-        }
-      });
+   $('.item').on('click',function(e){
 
-    })
+    var wareid=$api.attr(this, 'data-ware');
+    api.openWin({
+      name: 'ware',
+      url: './ware.html',
+      pageParam: {
+        wareId: wareid
+      },
+      animation:{
+        type:'fade'
+      }
+    });
+
+  })
 
     // 优化
     api.parseTapmode();
