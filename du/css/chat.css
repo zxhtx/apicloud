@@ -1,0 +1,291 @@
+html{
+	display: block;
+	position: relative;
+}
+h5{
+	margin: 0;
+}
+img{
+	max-width: 100%;
+    vertical-align: middle
+}
+input{
+	outline: none;	
+}
+body{
+    max-width: 720px;
+    margin: 0 auto;
+    background: #F5F7F9;
+    color:#333;
+    font-size: 0.26rem;
+}
+.header{
+    border-bottom: 1px solid #dfdfdf;
+    padding:0 0.2rem;
+    height: 1rem;
+    line-height: 1rem;
+    background: #fff;
+    position: fixed;
+    width: 100%;
+    max-width: 720px;
+    box-sizing: border-box;
+    z-index: 100;
+}
+.back{
+  position: absolute;
+  top: 0px;
+  left: 0.1rem;
+  background:url(../image/back.png) no-repeat;
+  width: 0.4rem;
+  height:0.6rem;
+  margin-top: 0.2rem;
+  background-size: cover;
+}
+ 
+.header .right{
+	position: absolute;
+	right: 0.3rem;
+	top: 0;
+	float: none;
+	font-size: 0.24rem;
+	line-height: 1rem;
+}
+.message{
+    background-color: #f1f1f1;
+	padding: 1.2rem 0.3rem 1rem 0.3rem;	
+}
+
+
+.footer{
+	position: fixed;
+	position: ;
+	bottom: 0;
+    min-height:30px;
+    background-color:#F7F7F7;
+    width: 100%;
+    max-width: 720px;
+    border-top: 1px solid #ddd;
+    z-index: 11;
+}
+.footer img{
+
+    width: 0.8rem;
+}
+.imgup{
+	width: 52px;
+	height: 39px;
+}
+.footer .text{
+	padding-left: 6px;
+	vertical-align: middle;
+	width: 66%;
+	display: inline-block;
+	min-height: 30px;
+	max-height: 88px;
+	overflow: hidden;
+	border:2px solid #fff;
+	background: #fff;
+	outline: 0px;
+	font-size:18px ;
+	/* margin-bottom: 3px; */
+	margin-left: 3px;
+	border-radius: 10px;
+	
+}
+.footer p{
+	display: inline-block;
+	width:1.2rem;
+    /* height:0.68rem; */
+    font-size:0.3rem;
+    color:#fff;
+    line-height:0.68rem;
+    text-align:center;
+    background-color:#606060;
+    border-radius: 0.1rem;
+    /* margin-top:0.2rem; */
+    /* margin-right:0.2rem; */
+	margin: 0px;
+	margin-top:6px;
+
+}
+.send:after,.show:after,.msg:after{
+	content: "";
+	clear: both;
+	display: table;	
+}
+
+.msg>.head_img{
+	/*width: 0.8rem;*/
+	float: left;
+}
+.msg>p{
+	float: left;
+	margin:0  0.4rem;
+	padding: 0.25rem;
+	background: #fff;
+	font-size: 0.3rem;
+	position: relative;
+	border-radius: 0.2rem;
+	max-width:4.8rem ;
+	box-sizing: border-box;
+    word-wrap: break-word;
+word-break:break-all;
+}
+
+.msg_input{
+	position: absolute;
+	background: url(./images/msg-input.png) no-repeat;
+	background-size: 0.31rem auto;
+	width: 0.31rem;
+	height: 0.51rem;
+	left: -0.31rem;
+	top: 0.25rem;
+}
+.show .msg .head_img,.show .msg p,.show .msg{
+	float: right;
+}
+
+
+.show .msg_input{
+	left: auto;
+	right: -0.11rem;
+	transform:rotate(180deg);
+	-ms-transform:rotate(180deg); 	/* IE 9 */
+	-moz-transform:rotate(180deg); 	/* Firefox */
+	-webkit-transform:rotate(180deg); /* Safari 和 Chrome */
+	-o-transform:rotate(180deg); 	/* Opera */
+}
+.send,.show{
+	padding-bottom: 0.3rem;
+}
+.alert_novip,.flower_num,.give_flower{
+	display: none;
+	padding: 0.3rem 0.5rem;
+	font-size: 0.28rem;
+}
+.alert_novip p,.flower_num  p{
+	margin-bottom: 0.45rem;
+
+.layui-layer-wrap button{
+	font-size: 0.28rem;
+	padding: 0.2rem 0.3rem;
+	margin-top: 0.1rem;
+	background: #f8f8f8;
+	border-radius: 10px;
+}
+}
+.flower_num button{
+	padding: 0.2rem 0.5rem;
+	border-radius: 10px;
+}
+.layui-layer-wrap button:first-child{
+	float: left;
+}
+.layui-layer-wrap button:last-child{
+	float: right;
+	background: #FF7171;
+	color: #fff;
+}
+.alert_novip button{
+	padding: 0.2rem 0.3rem;
+    border-radius: 10px
+}
+.flower{
+	width: 0.8rem;
+	margin: 0 auto;
+}
+.give_flower{
+	text-align: center;
+}
+.give_flower p{
+	text-align: center;
+	line-height: 1.5;
+}
+.give_flower input{
+	width: 1rem;
+	margin-right: 0.1rem;
+	margin-top: 0.2rem;
+}
+.give_flower button{
+	display: block;
+	width: 3rem;
+	font-size: 0.28rem;
+	margin: 0 auto;
+	margin-top: 0.6rem;
+	float: none!important;
+	line-height: 0.65rem;
+	border-radius: 10px;
+}
+.userinfo{
+	height: 50px;
+	text-align: center;
+	width: 100%;
+}
+.tit{
+	display: inline-block;
+    font-size: 0.32rem;
+    vertical-align: middle;
+    text-align: center;
+    height: 1rem;
+    line-height: 1rem;
+    font-weight: normal;
+
+}
+.line{
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	background-color: green;
+	border-radius: 25px;
+	vertical-align: middle;
+	text-align: center;
+}
+.chatbox{
+
+	
+    overflow-y:scroll;height:100%;width:100%;position:fixed;top:0;left:0;
+}
+.message{
+    margin-bottom:38px;
+	overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    background-color: #F5F7F9;
+    /*z-index:66;*/
+}
+.head_img{
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-position: center center;
+	background-size: cover; 
+
+}
+.snedbtn{
+	display:inline-black;
+	/* vertical-align: middle; */
+	}
+
+.send,.show{
+	position: relative;
+	margin-bottom:18px;
+}
+.show .time{
+	position: absolute;
+	bottom: -19px;
+	right: 8px;
+	/*margin-top: 20px;*/
+    font-size:0.24rem;
+    color:#999;
+    margin-bottom: 0.3rem;
+    text-align: center;
+}
+.send .time{
+	position: absolute;
+	bottom: -19px;
+	left: 8px;
+	/*margin-top: 20px;*/
+    font-size:0.24rem;
+    color:#999;
+    margin-bottom: 0.3rem;
+    text-align: center;
+}

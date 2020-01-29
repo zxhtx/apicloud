@@ -1,0 +1,38 @@
+.lt_tabs{
+    z-index: 99999;
+    width: 100%;
+    height: 50px;
+    background: white;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+  }
+  .lt_tabs a{
+    float: left;
+    width: 25%;
+    text-align: center;
+    color: darkgray;
+       height: 50px;
+        margin:0px;
+  }
+
+  .lt_tabs a span{
+    padding-top:10px;
+
+  }
+
+  .lt_tabs a p{
+    margin-bottom: 0;
+    color: darkgray;
+    font-size: 12px;
+    padding-top: 6px;
+  }
+
+  .lt_tabs a.now{
+    color: black;
+    font-weight: bold;
+  }
+  .lt_tabs a.now p{
+    color: black;
+    font-weight: bold;
+  }

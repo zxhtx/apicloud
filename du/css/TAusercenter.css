@@ -1,0 +1,220 @@
+body,html{
+	margin: 0px;
+	padding: 0px;
+	background-color: #FAFAFA;
+}
+header{
+	width: 100%;
+	height: 50px;
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 1px solid #E6E6E6;
+	background-color: #fff;
+}
+header .back{
+	margin-top:8px;
+	margin-left: 6px;
+	width: 28px;
+	height: 34px;
+	background-image: url('../image/back.png');
+	background-size: cover;
+	background-position: center center;
+	vertical-align: middle;
+}
+header .share{
+	margin-top: 8px;
+	margin-right: 6px;
+	width: 30px;
+	height: 36px;
+	background-image: url('../image/share.png');
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center center;
+}
+header .username{
+	margin: 0 auto;
+	/* border: 1px solid red; */
+}
+header .username .name{
+	text-align: center;
+	font-size: 16px;
+	margin-top: 5px;
+}
+header .username .usern{
+	text-align: center;
+	font-size: 13px;
+	color: #A4A4A4;
+}
+
+.userinfo .head{
+	width: 100%;
+	height: 128px;
+	/* border: 1px solid red; */
+	display: flex;
+	justify-content: space-between;
+}
+
+.userinfo .head .headimg{
+	width: 32%;
+	/* border: 1px solid red; */
+	background-color: #fff;
+}
+.userinfo .head .headimg .img{
+
+	background-position: center center;
+	background-size: cover;
+	width: 88px;
+	height: 88px;
+	border-radius: 50%;
+	margin: 0 auto;
+	margin-top: 22px;
+	border: 1px solid #ddd;
+}
+.userinfo .head .headinfo{
+	width: 68%;
+	/* border: 1px solid black; */
+	background-color: #fff;
+}
+
+.userinfo .head .headinfo .userlist{
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	margin-top: 22px;
+	font-size: 15px;
+	/* border: 1px solid red; */
+	
+}
+.userinfo .head .headinfo .userlist .list{
+	width: calc(100%/3);
+	text-align: center;
+}
+.userinfo .head .headinfo .userlist .list .text{
+	text-align: center;
+	font-size: 14px;
+	font-weight: bold;
+}
+.userinfo .head .headinfo .is_dinyueandchat{
+	width: 100%;
+	/* border: 1px solid red; */
+	margin-top: 20px;
+	margin-left: 3px;
+}
+
+.userinfo .head .headinfo .is_dinyueandchat .is_dinyue{
+	width: 69%;
+	height: 28px;
+	border-radius: 20px;
+	text-align: center;
+	line-height: 28px;
+	display: inline-block;
+	vertical-align: middle;
+	color: #fff;
+	background-color: #46D8AB;
+	vertical-align: middle;
+	display: inline-block;
+}
+.userinfo .head .headinfo .is_dinyueandchat .chat{
+	display: inline-block;
+	width:20%;
+	border: 1px solid #ddd;
+	border-radius:20px ;
+	height: 28px;
+	vertical-align: middle;
+	margin-left: 3px;
+}
+.userinfo .head .headinfo .is_dinyueandchat .chat .chat_img{
+	background-image: url('../image/chat_img.png');
+	width:28px;
+	height: 28px;
+	background-position: center;
+	background-size: cover;
+	margin: 0 auto;
+	vertical-align: middle;
+}
+
+.userinfo .textinfo{
+	width: 100%;
+	min-height: 52x;
+	border-bottom: 1px solid #ddd;
+	background-color: #fff;
+	
+}
+.userinfo .textinfo .sex{
+	background-image: url('../image/boy.png');
+	background-size: cover;
+	background-position: center center;
+	width: 22px;
+	height: 22px;
+	margin-left: 16px;
+	margin-top: 6px;
+	display: inline-block;
+}
+.line{
+	border-right:1px solid #ddd ;
+	display: inline-block;
+	height: 18px;
+}
+.userinfo .textinfo .authority{
+	background-image: url('../image/noauthority.png');
+	background-size: cover;
+	background-position: center center;
+	width: 18px;
+	height: 18px;
+	display: inline-block;
+	font-size: 14px;
+	margin-left: 5px;
+	
+	
+}
+
+.userinfo .textinfo .autograph{
+	line-height: 22px;
+	margin-bottom: 1px;
+	margin-left: 16px;
+	margin-top: 6px;
+	font-size: 14px;
+}
+
+
+
+.cdslist {
+	
+	  width: 100%;
+	  margin-left: 0px;
+	  margin-top: 6px;
+	  height: auto;
+	  line-height: 0px;
+}
+.cdslist  .cdsimg{
+	background-position: center;
+	background-size: cover;
+	 width:calc(100%/3);
+	 height: 112px;
+	 display: inline-block;
+	padding: 0px;
+	margin: 0px;
+	line-height: 0px;
+	border: 0px;
+	outline: 0px;
+	position: relative;
+	 /* line-height: 0px; */
+}
+.cdslist  .cdsimg img{
+	position:absolute;
+	top: 6px;
+	right: 6px;
+	width: 22px;
+	height: 23px;
+}
+.loading{
+	background-image: url('../image/icon/loading.gif');
+	width: 16px;
+	height: 16px;
+	background-size: cover;
+	background-position: center;
+	vertical-align: middle;
+	display: inline-block;
+	margin-right: 6px;
+	margin-bottom: 3px;
+}

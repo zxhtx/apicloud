@@ -1,0 +1,395 @@
+ html,
+    body {
+        height: 100%;
+        background-color: #fff;
+        padding: 0;
+        margin: 0;
+
+    }
+  
+
+    .h10 {
+        height: 10px;
+        background: #FAFAFA;
+    }
+
+    .h1 {
+        height: 1px;
+        margin-left: 15px;
+        background: #EAEAEA;
+    }
+
+    .fr {
+        float: right;
+    }
+
+    .hint {
+        color: #666;
+        font-size: 12px;
+        margin-right: 5px;
+    }
+
+    .firstblock,
+    .secondblock,
+    .thirdblock {
+        background-color: #fff;
+    }
+
+    .login {
+        /*background-image: url(../image/my/personal_bkg.jpg);*/
+        /*background-repeat: no-repeat;*/
+        /*background-size: contain;*/
+        position: relative;
+        height: 208px;
+        /*height: 38%;*/
+        /*border: 1px solid red;*/
+
+        background: #fff;
+        
+    }
+
+    .loginbg {
+        width: 100%;
+    }
+
+    .login .personal_logo {
+        position: absolute;
+        top: 18px;
+        width: 88px;
+        height: 88px;
+        left: 12px;
+        border-radius: 42px;
+        margin-top:20px;
+        background-image: url('../image/empty_page_nothing.png');
+        background-size: cover;
+        background-position: center center;  
+    }
+
+    .person_arrow {
+        position: absolute;
+        height: 20px;
+        right: 10px;
+        top: 90px;
+    }
+
+    .login .userinfo {
+        position: absolute;
+        top: 120px;
+        /*margin-left: 109px;*/
+        display: block;
+        
+    }
+
+    
+
+    .login .userinfo .subtitle {
+        /*display: block;*/
+        font-weight: bold;
+        font-size: 15px
+        color: #000;
+        /*padding: 3px;*/
+        border-radius: 4px;
+        /*margin-top: 5px;*/
+        padding-left: 18px;
+        padding-top: 16px;
+
+    }
+    .login .userinfo .vip {
+        display: inline-block;
+        font-size: 14px;
+        color: #000;
+        display: block;
+        /*padding: 3px;*/
+        border-radius: 4px;
+        margin-top: 5px;
+    }
+    .login .dingyueandfensi{
+        position: absolute;
+        bottom: 12px;
+        width: 100%;
+        height: 20px;
+        text-align: center;
+    }
+    .login .dingyueandfensi .dingyue {
+        font-size: 14px;
+        color: #000;
+        display: inline-block;
+        border-radius: 4px;
+        margin-right: 58px;
+    }
+    .login .dingyueandfensi .fensi {
+        margin-left: 58px;
+        font-size: 14px;
+        color: #000;
+        display: inline-block;
+        border-radius: 4px;
+
+    }
+
+    .item {
+        height: 50px;
+        line-height: 50px;
+        padding-left: 15px;
+        background-color: #fff;
+    }
+
+    .item_ico {
+        float: left;
+        width: 30px;
+        padding: 10px 10px 10px 0;
+    }
+
+    .item_arrow {
+        float: right;
+        width: 16px;
+        padding: 17px 15px 15px 0;
+    }
+
+    .item-hov {
+        background-color: #E8E8E8;
+    }
+    .logout{
+    	text-align: center;
+    	color: red;
+    	border-radius: 6px;
+        margin-bottom: 38px;
+    }
+
+.setuser{
+    width: 92%;
+    height: 30px;
+    line-height: 30px;
+    text-align:center;
+    background: #fff;
+    border: 0.5px solid #DBDBDB;
+    border-radius: 5px;
+    position: absolute;
+    bottom:12px;
+    /*left:calc(100%/100);*/
+    margin-left: 16px;
+    font-weight: bold;
+
+}
+*{
+    font-size: 15px;
+}
+#userAccount{
+    /*border: 1px solid red;*/
+    font-weight: bold;
+    font-size: 16px;
+    padding-left: 18px;
+    padding-top: 8px;
+
+}
+#userAvatar{
+ 
+}
+.userlist{
+    position: absolute;
+    left: 108px;
+    width: 66%;
+    height:120px;
+
+}
+.lists{
+    margin-left:8%;
+    margin-top: 35px;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    font-size: 16px;
+    display: inline-block;
+
+}
+.count{
+    font-weight: bold;
+    font-size: 16px;
+}
+.text{
+    /* font-weight: bold; */
+    font-size: 14px;
+}
+.wareandcds{
+	height: 166px;
+	width: 95%;
+	margin: 0 auto;
+	border-radius: 3px;
+	  box-shadow:0px 0px 6px black;
+	background-color: #fff;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	
+}
+.wareandcds .warelist{
+	display: flex;
+	justify-content: flex-start;
+	align-content: space-between;
+	width: 100%;
+	height: 83px;
+	
+}
+
+.wareandcds .warelist .list{
+	height: 100%;
+	width: calc(100%/4);
+	/* border: 1px solid black; */
+	text-align: center;
+}
+.wareandcds .warelist .text{
+	padding-top: 6px;
+	color: black;
+	font-size: 15px;
+	
+}
+.wareandcds .warelist .daifukuan .daifukuanpng{
+	background-image: url('../image/ware_daifukuan.png');
+	background-size: cover;
+	background-position: center center;
+	width: 32px;
+	height: 32px;
+	margin: 0 auto;
+	vertical-align: bottom;
+	margin-top: 12px;
+	position: relative;
+}
+.wareandcds .warelist .daishouhuo .daishouhuopng{
+	background-image: url('../image/ware_daishouhuo.png');
+	background-size: cover;
+	background-position: center center;
+	width: 32px;
+	height: 32px;
+	margin: 0 auto;
+	vertical-align: bottom;
+	margin-top: 12px;
+	position: relative;
+}
+.wareandcds .warelist .qianshou .yiqianshoupng{
+	background-image: url('../image/ware_yiqianshou.png');
+	background-size: cover;
+	background-position: center center;
+	width: 31px;
+	height: 31px;
+	margin: 0 auto;
+	vertical-align: bottom;
+	margin-top: 13px;
+}
+.wareandcds .warelist .shouhuodz .shouhuodzpng{
+	background-image: url('../image/ware_shouhuodz.png');
+	background-size: cover;
+	background-position: center center;
+	width: 32px;
+	height: 32px;
+	margin: 0 auto;
+	vertical-align: bottom;
+	margin-top: 12px;
+}
+.wareandcds .setlist{
+	display: flex;
+	justify-content: space-between;
+	align-content: space-between;
+	width: 100%;
+	height: 83px;
+
+}
+.wareandcds .setlist .list{
+	height: 100%;
+	width: 33%;
+	/* border: 1px solid black; */
+	text-align: center;
+}
+.wareandcds .setlist .text{
+	padding-top: 6px;
+	color: black;
+	font-size: 15px;
+	
+}
+.wareandcds .setlist .downapp .downappimg{
+	background-image: url(../image/downAPP.png);
+	background-size: cover;
+	background-position: center center;
+	width: 32px;
+	height: 32px;
+	margin: 0 auto;
+	vertical-align: bottom;
+	margin-top: 12px;
+	
+}
+.wareandcds .setlist .getVIP .getVIPimg{
+	background-image: url(../image/shareVIP.png);
+	background-size: cover;
+	background-position: center center;
+	width: 32px;
+	height: 32px;
+	margin: 0 auto;
+	vertical-align: bottom;
+	margin-top: 12px;
+}
+.wareandcds .setlist .kefu .kefuimg{
+	background-image: url(../image/kefu.png);
+	background-size: cover;
+	background-position: center center;
+	width: 32px;
+	height: 32px;
+	margin: 0 auto;
+	vertical-align: bottom;
+	margin-top: 12px;
+}
+
+
+.cdslist {
+	
+	  width: 100%;
+	  margin-left: 0px;
+	  margin-top: 0px;
+	  height: auto;
+	  line-height: 0px;
+	  margin-bottom: 52px;
+}
+.cdslist  .cdsimg{
+	background-position: center;
+	background-size: cover;
+	 width:calc(100%/3);
+	 height: 112px;
+	 display: inline-block;
+	 
+	 /* float: left; */
+	 /* margin-left: 1px; */
+	padding: 0px;
+	margin: 0px;
+	line-height: 0px;
+	border: 0px;
+	outline: 0px;
+	position: relative;
+	 /* line-height: 0px; */
+}
+.cdslist  .cdsimg img{
+	position:absolute;
+	top: 6px;
+	right: 6px;
+	width: 22px;
+	height: 23px;
+}
+.dfkcount{
+	position:absolute;
+	right: -10px;
+	top: -10px;
+	width: 16px;
+	height: 16px;
+	font-size:11px;
+	border-radius: 50%;
+	background-color:#F74C31;
+	color: #fff;
+	display: none;
+}
+.dshcount{
+	position:absolute;
+	right: -10px;
+	top: -10px;
+	display: none;
+	width: 16px;
+	height: 16px;
+	font-size:11px;
+	border-radius: 50%;
+	background-color:#F74C31;
+	color: #fff;
+}
