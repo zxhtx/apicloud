@@ -230,6 +230,7 @@
 				</div>
 			{{~}}
 		</script>
+    <script type="text/javascript" src="../script/api.js"></script>
         <script type="text/javascript">
 			var skip=0;
 			var limit=6;
@@ -394,11 +395,16 @@ function fnUpdateWareListByShoppingCart(data_,_LoadMore) {
          click: function(e){
         // alert('你碰了Swiper');
         // console.log();
+          // alert(1)
+
         api.openWin({
             name: 'Dressingdetails',
             url: './Dressingdetails.html',
             pageParam: {
                 articleid: e.target.dataset.articleid
+            },
+             animation: {
+                type: "fade"
             }
         });
          // window.location.href='./Dressingdetails_frame.html?'+window.btoa(encodeURI('articleid='+));
@@ -585,7 +591,18 @@ function dinyue(articleuserid){
    
 }
 function opendetails(_id){
-    window.location.href='./Dressingdetails_frame.html?'+window.btoa(encodeURI('articleid='+_id));
+  // alert(1)
+   api.openWin({
+            name: 'Dressingdetails',
+            url: './Dressingdetails.html',
+            pageParam: {
+                articleid:_id
+            },
+            animation: {
+                type: "fade"
+            }
+        });
+    // window.location.href='./Dressingdetails_frame.html?'+window.btoa(encodeURI('articleid='+_id));
 }
 
 function headphoto(){

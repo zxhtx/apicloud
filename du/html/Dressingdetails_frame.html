@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="shortcut icon" href="../image/chao.ico" />
+		<!-- <link rel="shortcut icon" href="../image/chao.ico" /> -->
 		<meta charset="utf-8">
 		<meta content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" name="viewport" />
 		<meta content="telephone=no,email=no,date=no,address=no" name="format-detection">
@@ -13,10 +13,11 @@
 		</script>
 		<link href="https://cdn.bootcss.com/Swiper/4.5.0/css/swiper.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="../css/Dressingdetails_frame.css">
+		<link rel="stylesheet" type="text/css" href="../css/api.css">
 		<script src="https://cdn.bootcss.com/Swiper/4.5.0/js/swiper.min.js"></script>
 		<script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
 		<script src="https://cdn.bootcss.com/clipboard.js/2.0.4/clipboard.min.js"></script>
-
+		<!-- <script type="text/javascript" src="../script/api.js"></script> -->
 		</meta>
 		</meta>
 		<style>
@@ -53,9 +54,8 @@
 		<div class="commentBox">
 
 		</div>
-
-
-		<script id="template" type="text/template">
+	</body>
+	<script id="template" type="text/template">
 			{{~it.list:value:index}}
           <div class="box" >
                <input id="copyInput" value="https://chaodashe.com/html/Dressingdetails_frame.html?{{!sharetle()}}" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
@@ -267,9 +267,14 @@
 				</div>
 			{{~}}
 		</script>
-		<!-- <script type="text/javascript" src="../script/api.js"></script> -->
+		
 		<script type="text/javascript">
 			// $(window).height()=0;
+			 apiready = function() {
+			 	getchaodashe();
+			getcomment();
+
+			 }
 			var wareid;
 			var fnwarelists;
 			var music;
@@ -286,9 +291,7 @@
 			var liketime = 0;
 			var musicname;
 		
-			getchaodashe();
-			getcomment();
-
+			
 			function sharetle() {
 				// return window.btoa(encodeURI("articleid=" + getQueryString(0)));
 
@@ -355,8 +358,9 @@
 				$("body").on('touchstart', function() {
 					$("#audio").get(0).play();
 				})
-				alert(api.pageParam.articleid)
-				var articleid =api.pageParam.articleID;
+				// alert('傻逼')
+				 // =api.pageParam.articleID;
+				 var articleid=api.pageParam.hel;
 
 
 				if (userInfo) {
@@ -989,5 +993,4 @@
 				toast('此功能暂时还未开发', 'bottom');
 			}
 		</script>
-	</body>
 </html>
