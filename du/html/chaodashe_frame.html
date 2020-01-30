@@ -394,7 +394,14 @@ function fnUpdateWareListByShoppingCart(data_,_LoadMore) {
          click: function(e){
         // alert('你碰了Swiper');
         // console.log();
-         window.location.href='./Dressingdetails_frame.html?'+window.btoa(encodeURI('articleid='+e.target.dataset.articleid));
+        api.openWin({
+            name: 'Dressingdetails',
+            url: './Dressingdetails.html',
+            pageParam: {
+                articleid: e.target.dataset.articleid
+            }
+        });
+         // window.location.href='./Dressingdetails_frame.html?'+window.btoa(encodeURI('articleid='+));
 
         },
        },

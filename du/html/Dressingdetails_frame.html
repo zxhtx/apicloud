@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="shortcut icon" href="../image/chao.ico" />
+		<meta charset="utf-8">
+		<meta content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" name="viewport" />
+		<meta content="telephone=no,email=no,date=no,address=no" name="format-detection">
+		<meta name="referrer" content="no-referrer" />
+		<title>
+			潮搭社,用户动态
+		</title>
+		<script src="../script/commonjs.js">
+		</script>
+		<link href="https://cdn.bootcss.com/Swiper/4.5.0/css/swiper.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="../css/Dressingdetails_frame.css">
+		<script src="https://cdn.bootcss.com/Swiper/4.5.0/js/swiper.min.js"></script>
+		<script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+		<script src="https://cdn.bootcss.com/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+		</meta>
+		</meta>
+		<style>
+			[contentEditable=true]:empty::before{
+			        content:'添加评论';
+					color:gray;
+					
+			    }
+				.swiper-container{
+					 background-color: #E1F0F9;
+				}
+				.swiper-slide{
+					/* border: 1px solid black; */
+					 background-size: contain !important;
+					  -webkit-background-size: contain !important;
+					  -o-background-size: contain !important;
+					  background-position: center center;
+					  background-repeat: no-repeat !important;
+					 height: 29rem !important;
+					
+				}
+				/* .swiper-slide-active,.swiper-slide-duplicate-active{
+				      transform: scale(1);
+					} */
+		</style>
+	</head>
+
+	<body>
+
+		<section class="list" id="list">
+
+		</section>
+		<audio id="audio" loop="loop" autoplay src="">不支持</audio>
+		<div class="commentBox">
+
+		</div>
+
+
+		<script id="template" type="text/template">
+			{{~it.list:value:index}}
+          <div class="box" >
+               <input id="copyInput" value="https://chaodashe.com/html/Dressingdetails_frame.html?{{!sharetle()}}" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
+                {{if(value.showimgtype=='0'){ }}
+                 <div class="Dressing" style="position: fixed;">
+                    {{if(value.type=='0'){ }}
+                      <div class="buytoast buytoasthidden">√点击钟意的穿搭图片进入穿搭详情</div>
+                    {{ } }}
+                    <!-- <img class="headimg" src="{{=it.imgurl}}{{=value.userheadimg}}"> -->
+					<div class="headimg" onclick="TAuser({{=value.userid}})" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
+                    <div class="back">
+						<div class="backimg"  tap onclick="goback()"></div>
+					</div>
+					
+                     {{if(value.like_userid==0)}}
+                         <img onclick="belike({{=value.id}},this,{{=value.userid}})" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likeb_white.png">
+                        {{ else{ }}
+                         <img onclick="belike({{=value.id}},this,{{=value.userid}})" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likea_red.png">
+                        {{ } }}
+
+                    <img class="share" onclick="share()" src="../image/share_white.png">
+                     <img class="home" src="../image/home.png" tap onclick="gohome()">
+                 </div>
+                <div class="swiper-container" style="height:auto">
+                     <div class="swiper-wrapper"  style="height:auto" >
+                     {{for(var i=0; i< value.imglist.length;i++) { }}
+                          <div class="swiper-slide"  style=" width:100%;height: 20rem;background-image: url({{=it.imgurl}}{{=value.imglist[i]}});"   data-articleid="{{=value.id}}" data-like_userid="{{=value.like_userid}}"  data-likeid="like{{=value.id}}" data-userid="{{=value.userid}}" data-Dressingimg="{{=value.imglist[i]}}"  >
+						
+                          </div>
+                          
+                        
+                    {{  }  }}
+                 </div>
+                   <div class="swiper-pagination"></div>
+                </div>
+				<div class="warelists">
+					<div id="xuanzhun" class="xz1 " style="width:30px; height: 30px; margin:0 auto; margin-top:12px;border-bottom:1px solid #FF4466;"></div>
+				</div>
+                <div class="footbox">
+                    <div class="duogongneng" >
+                       
+                        {{if(value.shuqian_userid==0){ }}
+                        <img onclick="beshuqian({{=value.id}},this,{{=value.userid}})" data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqianb.png">
+                        {{ }else{ }}
+                        <img onclick="beshuqian({{=value.id}},this,{{=value.userid}})"  data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqiana.png">
+                        {{ } }}
+                    </div>
+					
+                    <div class="textanduser">
+						{{if(value.musicname){ }}
+						<div class="musicpng"></div>
+						<div class="musicname" onclick="openmusic()">{{#musicname}}</div>
+						{{ } }}
+						<div></div>
+						<div class="shuxiepng"></div>
+                        <span class="user" style="margin-left:2px;">{{=value.uname}}</span>
+                        <p class="text arttext" style="word-break: break-all;word-wrap: break-word;">{{#chaodashetext}}</p>
+						{{ if(value.text.length>88){ }}
+						<span class="showbtn" style="margin:6px; display: inline-block; color: #0062CC;" data-showall=0 onclick="showalltext()">显示更多</span>
+						{{ } }}
+						<div class="likesmall"></div>
+                         <div class="likecount" id="likecount_{{=value.id}}" data-likecount="{{=value.like}}">{{=value.like}}个赞</div>
+						 <div></div>
+						 <div class="shuqiansmall"></div>
+						 <div class="sqcount" id="sqcount_{{=value.id}}" data-sqcount="{{=value.shuqian}}">{{=value.shuqian}}次收入书签</div>
+						 <div onclick="comment()" style="margin-left: 5px;font-weight: bold;">评论该动态</div>
+                    </div>
+                    <div class="keybox">
+                      <div class="myheadimg" style="background-image:url(../image/empty_page_nothing.png)"></div>
+					  <div contenteditable="true" class="keyboard" id="text" onblur="jiaodian()" ></div>
+                      <div class="keybtn"  onclick="sendbtn()">发布</div>
+                    </div>
+
+
+                </div>
+                {{ }else{ }}
+                        <div class="Dressing" style="position: fixed;" >
+                          {{if(value.type=='0'){ }}
+                            <div  class="buytoast buytoasthidden">√点击钟意的穿搭图片进入穿搭详情</div>
+                          {{ } }}
+                        <!-- <img  src=""> -->
+						<div class="headimg" onclick="TAuser({{=value.userid}})" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
+                       <div class="back">
+                       	<div class="backimg"  tap onclick="goback()"></div>
+                       </div>
+                       
+                         {{if(value.like_userid==0)}}
+                             <img onclick="belike({{=value.id}},this,{{=value.userid}})" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likeb_white.png">
+                            {{ else{ }}
+                             <img onclick="belike({{=value.id}},this,{{=value.userid}})" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likea_red.png">
+                            {{ } }}
+
+                            <img class="share"  onclick="share()"  src="../image/share_white.png">
+                         <img class="home" src="../image/home.png" tap onclick="gohome()">
+                        </div>
+                        {{for(var i=0;i<value.imglist.length;i++){ }}
+						<div class="dongtaiimglist">
+                        
+						<img style="width:100%;" style="" data-original="{{=it.imgurl}}{{=value.imglist[i]}}" class="lazy" onclick="Dressingimg('{{=value.imglist[i]}}')" >
+                        </div>
+						{{ } }}
+						<div class="warelists">
+							
+							<div id="xuanzhun" class="xz1" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px;border-bottom:1px solid #FF4466; "></div>
+						</div>
+                         <div class="footbox">
+                            <div class="duogongneng" >
+                       
+                        {{if(value.shuqian_userid==0){ }}
+                        <img onclick="beshuqian({{=value.id}},this,{{=value.userid}})" data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqianb.png">
+                        {{ }else{ }}
+                        <img onclick="beshuqian({{=value.id}},this,{{=value.userid}})"  data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqiana.png">
+                        {{ } }}
+                    </div>
+					
+                    <div class="textanduser">
+					{{if(value.musicname){ }}
+						<div class="musicpng"></div>
+						
+						<div class="musicname" onclick="openmusic()">{{#musicname}}</div>
+						{{ } }}
+						<div></div>
+						
+						<div class="shuxiepng"></div>
+                        <span class="user" style="margin-left:2px;">{{=value.uname}}</span>
+                        <p class="text arttext" style="word-break: break-all;word-wrap: break-word;">{{#chaodashetext}}</p>
+						{{ if(value.text.length>88){ }}
+						<span class="showbtn" style="margin:6px; display: inline-block; color: #0062CC;" data-showall=0 onclick="showalltext()">显示更多...</span>
+						{{ } }}
+						<div class="likesmall"></div>
+                         <div class="likecount" id="likecount_{{=value.id}}" data-likecount="{{=value.like}}">{{=value.like}}个赞</div>
+						<div></div>
+						 <div class="shuqiansmall"></div>
+						 <div class="sqcount" id="sqcount_{{=value.id}}" data-sqcount="{{=value.shuqian}}">{{=value.shuqian}}次收入书签</div>
+						 <div onclick="comment()" style="margin-left: 5px;font-weight: bold;">评论该动态</div>
+                    </div>
+                      <div class="keybox">
+                      <div class="myheadimg" style="background-image:url(../image/empty_page_nothing.png)"></div>
+                        <div contenteditable="true" class="keyboard" id="text"  onblur="jiaodian()" >
+							
+						</div>
+                       <div class="keybtn" onclick="sendbtn()">发布</div>
+                    </div>
+
+
+
+                </div>
+                        
+              
+
+                {{ } }}
+         
+        </div>
+        {{~}}
+        </script>
+
+		<script id="template2" type="text/template">
+			{{~it.list:value:index}}
+				<div class="li" >
+				 <div class="icon">
+				  <div class="head_img" onclick="TAuser({{=value.userinfo.id}})" style="background-image:url({{=it.imgurl}}{{=value.userinfo.headimg}})"></div>
+				 </div>
+				 <div class="content" onclick="reply('{{=value.userinfo.id}}','{{=value.userinfo.name}}','{{=value.superiorid}}')">
+					 <div class="name">{{=value.userinfo.name}}</div>
+					 <div class = "text" >{{=value.msg}}<div class = "time" >{{!timestampFormat('{{=value.time}}')}}</div></div>
+				</div>
+					{{if(value.sonmsg){ }}
+					<div class="sonbox sonbox_{{=value.superiorid}}">
+						{{for(var i=0;i<value.sonmsg.length;i++){ }}
+						<div class="son"   onclick="reply('{{=value.sonmsg[i].frominfo.id}}','{{=value.sonmsg[i].frominfo.name}}','{{=value.sonmsg[i].msg.superiorid}}')">
+							<div class="son_head" onclick="TAuser({{=value.sonmsg[i].frominfo.id}})" style="background-image:url({{=it.imgurl}}{{=value.sonmsg[i].frominfo.headimg}})" ></div>
+							<div class="comm">
+								<div class="sonname"><div class="fromname">{{=value.sonmsg[i].frominfo.name}}</div>&nbsp;{{if(value.sonmsg[i].toinfo){ }} 回复 &nbsp;<div class="toname" onclick="TAuser({{=value.sonmsg[i].toinfo.id}})"> {{=value.sonmsg[i].toinfo.name}}</div>{{ } }}</div>
+								<div class="text">{{=value.sonmsg[i].msg.msg}} <div class="time">{{!timestampFormat('{{=value.sonmsg[i].msg.time}}')}}</div></div>
+							</div>
+						</div>
+						{{ } }}
+						</div>
+						{{ if(value.sonmsg.length>1){ }}
+						<div class="loading load_reply_{{=value.superiorid}}">
+							<img src="../image/icon/loading.gif" class="loadimghide loadimg_{{=value.superiorid}}" style="width: 18px;height: 18px;vertical-align: middle;" >
+							<span data-skip=2 data-limit=3 onclick="getload({{=value.superiorid}},{{=value.userinfo.id}},this)">加载更多</span>
+						</div>
+						{{ } }}
+					{{ } }}
+				</div>
+			{{~}}
+		</script>
+		<script id="template3" type="text/template">
+			{{~it.list:value:index}}
+			<div class="son"   onclick="reply('{{=value.frominfo.id}}','{{=value.frominfo.name}}','{{=value.msg.superiorid}}')">
+				<div class="son_head" onclick="TAuser({{=value.frominfo.id}})"  style="background-image:url({{=it.imgurl}}{{=value.frominfo.headimg}})" ></div>
+				<div class="comm">
+					<div class="sonname"><div class="fromname">{{=value.frominfo.name}}</div>&nbsp;{{if(value.toinfo){ }} 回复 &nbsp;<div class="toname" onclick="{{=value.toinfo.id}}"> {{=value.toinfo.name}}</div>{{ } }}</div>
+					<div class="text">{{=value.msg.msg}} <div class="time">{{!timestampFormat('{{=value.msg.time}}')}}</div></div>
+				</div>
+			</div>
+			{{~}}
+		</script>
+		<script id="template4" type="text/template">
+			{{~it:value:index}}
+				<div class="wareitem" onclick="openware('{{=value.id}}')">
+				 <div class="wareimg wareimgs" data-original="{{=value.thumbnail}}"></div>
+				 <div class="wareinfo">
+					 <div class="waretext">{{=value.description}}</div>
+					 <div class="wareprice">￥{{=value.price}}</div>
+				 </div>
+				
+				</div>
+			{{~}}
+		</script>
+		<!-- <script type="text/javascript" src="../script/api.js"></script> -->
+		<script type="text/javascript">
+			// $(window).height()=0;
+			var wareid;
+			var fnwarelists;
+			var music;
+			var artid;
+			var touid;
+			var fromuid;
+			var superiorid = 0;
+			var commentskip = 0;
+			var commentlimit = 6;
+			var off_on = false;
+			var chaodashetext;
+			var allchaodashetext;
+			var sqtime = 0;
+			var liketime = 0;
+			var musicname;
+		
+			getchaodashe();
+			getcomment();
+
+			function sharetle() {
+				// return window.btoa(encodeURI("articleid=" + getQueryString(0)));
+
+			}
+
+			function showalltext() {
+				var show = $('.arttext').attr('data-showall');
+
+				if (show == '1') {
+
+					$('.arttext').html(chaodashetext);
+					$('.arttext').attr('data-showall', '0');
+					$('.showbtn').html('显示更多...');
+				} else {
+
+					$('.arttext').html(allchaodashetext);
+					$('.arttext').attr('data-showall', '1');
+					$('.showbtn').html('隐藏...');
+
+				}
+
+
+			}
+			//上拉加载
+			window.addEventListener("scroll", function() {
+
+				if ($(".box").height() - 100 < $(window).scrollTop()) {
+					$("Dressing").css({
+						translate: [60, 30]
+					});
+					$('.Dressing').css("background-color", "#E1E8EE");
+
+
+				} else {
+					$("Dressing").css({
+						translate: [60, 30]
+					});
+					$('.Dressing').css("background-color", "transparent");
+
+
+				} //当时滚动条离底部0px时开始加载下一页的内容
+				if (($(window).height() + $(window).scrollTop() + 100) >= $(document).height()) {
+
+					if (off_on) {
+						off_on = false;
+						getcomment(true);
+						$('.commentBox').append(
+							'<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; ">')
+
+
+					}
+
+
+				}
+			});
+			// 缩短音乐名
+			function submusicname(_musicname) {
+				musicname = _musicname.substring(6, 16) + '...';
+			}
+
+			function getchaodashe() {
+				dialog('动态加载中');
+
+				$("body").on('touchstart', function() {
+					$("#audio").get(0).play();
+				})
+				alert(api.pageParam.articleid)
+				var articleid =api.pageParam.articleID;
+
+
+				if (userInfo) {
+					var params = {
+						articleid: articleid,
+						userid: userInfo.id,
+					}
+					$('.myheadimg').css({
+						'background-image': 'url(' + imgurl + userInfo.headimg + ')'
+					})
+				} else {
+					var params = {
+						articleid: articleid,
+					}
+					$('.myheadimg').css({
+						'background-image': 'url(../image/empty_page_nothing.png)'
+					})
+				}
+
+
+				postajax(url + 'getdetails', params, function(ret) {
+					if (ret.code == '200') {
+						// console.log(ret.data[0].warelist);
+						var ware=ret.data[0].warelist;
+						wareid= ware;
+						fnwarelists =$.extend(true,{},ware);
+						
+						if (ret.data[0].music) {
+							$('#audio').attr('src', imgurl + ret.data[0].music);
+							music = ret.data[0].music;
+							var fry_audio = $('#audio').get('0');
+							fry_audio.load();
+						}
+						// console.log(warelist);
+						
+						chaodashetext = ret.data[0].text.substr(0, 99);
+						allchaodashetext = ret.data[0].text;
+						if(ret.data[0].musicname){
+							submusicname(ret.data[0].musicname);
+						}
+						
+						fnUpdateWareListByShoppingCart(ret.data);
+						if(ret.data[0].warelist!=0){
+							fnwarelist(ret.data[0].imglist);
+						}else{
+							$('.warelists').remove();
+						}
+						
+						touid = ret.data[0].userid;
+						artid = articleid;
+						touid2 = ret.data[0].userid;
+						artid2 = articleid;
+
+
+
+					}
+				})
+
+			}
+
+			function fnUpdateWareListByShoppingCart(data_) {
+				// 编译模板函数
+				var param = {
+					list: data_,
+					imgurl: imgurl,
+
+				};
+
+				var tempFn = doT.template($('#template').text());
+				// 使用模板函数生成HTML文本
+				var resultHTML = tempFn(param);
+				$("#list").html(resultHTML);
+				setTimeout(function() {
+					$(".buytoast").addClass('buytoastshow').removeClass('buytoasthidden');
+				}, 1000);
+				setTimeout(function() {
+					$(".buytoast").fadeOut();
+				}, 6000);
+
+				dl.close();
+				$("img.lazy").lazyload({
+					effect: "fadeIn",
+					threshold: 88,
+				});
+				// fnMinus();
+				// fnOpenWareWin();
+				key();
+				var userInfo = JSON.parse(localStorage.getItem('userInfo'));
+				if (userInfo) {
+
+					$('.myheadimg').css({
+						'background-image': 'url(' + imgurl + userInfo.headimg + ')'
+					})
+				} else {
+
+					$('.myheadimg').css({
+						'background-image': 'url(../image/empty_page_nothing.png)'
+					})
+				}
+				var swiper = new Swiper('.swiper-container', {
+					slidesPerView: 1.5,
+					spaceBetween: 16,
+					centeredSlides: true,
+					speed:666,
+					pagination: {
+						el: '.swiper-pagination',
+						dynamicBullets: true,
+					},
+					// autoHeight: true,
+					lazy: true,
+					loop: true, //循环 最后面一个往后面滑动会滑到第一个
+					// loadPrevNext: true,
+					on: {
+						doubleTap: function(e) {
+							if (!userInfo) {
+								window.location.href = "./login_frame.html";
+								return;
+							}
+							if (liketime == 0) {
+								liketime = 1;
+								setTimeout(function() {
+									liketime = 0;
+								}, 3000)
+							} else {
+								toast('不能连续点赞哟', 'bottom');
+								return;
+							}
+							var likeid = e.target.dataset.likeid;
+							var touid = e.target.dataset.userid;
+							if ($('#' + likeid).attr('data-like_userid') == '0') {
+								$('#' + likeid).fadeOut();
+								$('#' + likeid).fadeIn();
+								setTimeout(function() {
+									$('#' + likeid).attr('src', '../image/likea_red.png');
+									$('#' + likeid).attr('data-like_userid', '1');
+								}, 300);
+								addlike(1, e.target.dataset.articleid, likeid, touid);
+
+							} else {
+								$('#' + likeid).fadeOut();
+								$('#' + likeid).fadeIn();
+								setTimeout(function() {
+									$('#' + likeid).attr('src', '../image/likeb_white.png');
+									$('#' + likeid).attr('data-like_userid', '0');
+								}, 300);
+
+								addlike(0, e.target.dataset.articleid, likeid, touid);
+							}
+
+
+						},
+						click: function(e) {
+							// dom里面的大写的通过swiper转成小写(坑)
+							var Dressingimg = e.target.dataset.dressingimg;
+							var imgsrc = Dressingimg.split('/')[1].split('.')[0];
+							var src = imgsrc.replace(/\-|\@|\=|\+|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\?|\{|\}|\:|\;|\'|\"|\/|\<|\>|\[|\]/g,
+								'');
+							if (wareid[src]) {
+								
+								window.location.href = "./chaodashedetails_frame.html?" + window.btoa(encodeURI('warelistid=' + wareid[src] +
+									'&img=' + Dressingimg + '&music=' + music));
+							} else {
+								toast('此图片没有穿搭链接', 'center', 1000);
+							}
+
+
+						}
+
+					}
+				});
+			}
+
+			function subtext() {
+				// return chaodashetext.substr(0,100);
+
+			}
+			// 点赞
+
+			function belike(articleid, _this, touid) {
+				// 判断这条动态是否被点赞
+				if (!userInfo) {
+					window.location.href = "./login_frame.html";
+					return;
+				}
+				if (liketime == 0) {
+					liketime = 1;
+					setTimeout(function() {
+						liketime = 0;
+					}, 3000)
+				} else {
+					toast('不能连续点赞哟', 'bottom');
+					return;
+				}
+
+				var like_userid = $(_this).attr('data-like_userid');
+				if (like_userid == '0') {
+					$(_this).fadeOut();
+					$(_this).fadeIn();
+					setTimeout(function() {
+						$(_this).attr('src', '../image/likea_red.png');
+						$(_this).attr('data-like_userid', '1');
+					}, 300);
+					addlike(1, articleid, _this.id, touid);
+					// console.log(_this.id)
+				} else {
+					$(_this).fadeOut();
+					$(_this).fadeIn();
+					setTimeout(function() {
+						$(_this).attr('src', '../image/likeb_white.png');
+						$(_this).attr('data-like_userid', '0');
+					}, 300);
+					// console.log(_this.id)
+					addlike(0, articleid, _this.id, touid)
+				}
+
+			}
+			// 加入书签
+			function beshuqian(articleid, _this, touid) {
+				if (sqtime == 0) {
+					sqtime = 1;
+					setTimeout(function() {
+						sqtime = 0;
+					}, 3000)
+				} else {
+					toast('不能连续操作哟', 'bottom');
+					return;
+				}
+				var shuqian_userid = $(_this).attr('data-shuqian_userid');
+				if (shuqian_userid == '0') {
+					$(_this).fadeOut();
+					$(_this).fadeIn();
+					setTimeout(function() {
+						$(_this).attr('src', '../image/shuqiana.png');
+						$(_this).attr('data-shuqian_userid', '1');
+					}, 300);
+					addshuqian(1, articleid, _this.id, touid);
+					// console.log(_this.id);
+				} else {
+					$(_this).fadeOut();
+					$(_this).fadeIn();
+					setTimeout(function() {
+						$(_this).attr('src', '../image/shuqianb.png');
+						$(_this).attr('data-shuqian_userid', '0');
+					}, 300);
+					addshuqian(0, articleid, _this.id, touid)
+					// console.log(_this.id);
+				}
+
+
+			}
+			// 加入书签
+			function addshuqian(index, articleid, sqid, touid) {
+				if (!userInfo) {
+					window.location.href = "./login_frame.html";
+					return;
+				}
+				// console.log(likeid)
+				if (index == '1') {
+					var params = {
+						userid: userInfo.id,
+						fatherid: articleid,
+						type: '1',
+						touid: touid,
+					}
+
+					postajax(url + 'addshuqian', params, function(ret) {
+						if (ret.code == '400') {
+
+							toast('服务器在开小差', 'bottom', 800);
+						} else {
+
+							toast('已加入书签', 'bottom', 800);
+							$('#' + sqid).attr('data-shuqian_userid', '1');
+
+							var sqcount = $('#sqcount_' + articleid).attr('data-sqcount');
+							var sqcount = ++sqcount;
+							$('#sqcount_' + articleid).attr('data-sqcount', sqcount);
+							$('#sqcount_' + articleid).html(sqcount + '次收入书签');
+						}
+					});
+				} else {
+					var params = {
+						userid: userInfo.id,
+						fatherid: articleid,
+						type: '0',
+						touid: touid,
+					}
+					postajax(url + 'addshuqian', params, function(ret) {
+						if (ret.code == '400') {
+							toast('服务器在开小差', 'bottom', 800);
+						} else {
+
+							toast('已移出书签', 'bottom', 800);
+							$('#' + sqid).attr('data-shuqian_userid', '0');
+							var sqcount = $('#sqcount_' + articleid).attr('data-sqcount');
+							var sqcount = --sqcount;
+
+							$('#sqcount_' + articleid).attr('data-sqcount', sqcount);
+							$('#sqcount_' + articleid).html(sqcount + '次收入书签');
+						}
+					});
+				}
+			}
+			// 点赞入库
+			function addlike(index, articleid, likeid, touid) {
+
+				if (index == '1') {
+					var params = {
+						userid: userInfo.id,
+						fatherid: articleid,
+						type: '1',
+						touid: touid,
+					}
+
+					postajax(url + 'addlike', params, function(ret) {
+						if (ret.code == '400') {
+
+							toast('服务器在开小差', 'bottom', 800);
+
+						} else {
+							$('#' + likeid).attr('data-like_userid', '1');
+							var likecount = $('#likecount_' + articleid).attr('data-likecount');
+							var likecount = ++likecount;
+							$('#likecount_' + articleid).attr('data-likecount', likecount);
+							$('#likecount_' + articleid).html(likecount + '个赞');
+						}
+					});
+				} else {
+					var params = {
+						userid: userInfo.id,
+						fatherid: articleid,
+						type: '0',
+						touid: touid,
+					}
+					postajax(url + 'addlike', params, function(ret) {
+						if (ret.code == '400') {
+
+							toast('服务器在开小差', 'bottom', 800);
+						} else {
+							$('#' + likeid).attr('data-like_userid', '0');
+							var likecount = $('#likecount_' + articleid).attr('data-likecount');
+							var likecount = --likecount;
+							$('#likecount_' + articleid).attr('data-likecount', likecount);
+							$('#likecount_' + articleid).html(likecount + '个赞');
+						}
+					});
+				}
+			}
+			// 长图点击
+			function Dressingimg(Dressingimg) {
+				// alert(1);
+
+				var imgsrc = Dressingimg.split('/')[1].split('.')[0];
+				var src = imgsrc.replace(/\-|\@|\=|\+|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\?|\{|\}|\:|\;|\'|\"|\/|\<|\>|\[|\]/g, '');
+				// console.log(src)
+				// console.log(wareid)
+				// return;
+				if (wareid[src]) {
+					
+					window.location.href = "./chaodashedetails_frame.html?" + window.btoa(encodeURI('warelistid=' + wareid[src] +
+						'&img=' + Dressingimg + '&music=' + music));
+				} else {
+					toast('此图片没有穿搭链接', 'bottom', 1500);
+					// toast({
+					//   message:'此图片没有穿搭链接',
+					//   time:2000
+					// });
+				}
+
+			}
+
+			function gohome() {
+				window.location.href = "./chaodashe_frame.php";
+			}
+
+			function goback() {
+				window.history.back(-1);
+			}
+
+			function getcomment(_loadMore) {
+				if (_loadMore) {
+					commentskip += commentlimit;
+				} else {
+					commentskip = 0;
+				}
+				postajax(url + 'getcomment', {
+					"artid": getQueryString(0),
+					"skip": commentskip,
+					"limit": commentlimit
+				}, function(e) {
+					if (e.code == '200') {
+						fnupdate(e.data, _loadMore);
+					} else {
+						$('.xz').remove();
+						$('.commentBox').append(
+							'<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-暂无数据-</p>');
+					}
+
+				})
+			}
+
+			function fnupdate(ret, _loadMore) {
+				var param = {
+					list: ret,
+					imgurl: imgurl,
+				};
+				var tempFn = doT.template($('#template2').text());
+				// 使用模板函数生成HTML文本
+				var resultHTML = tempFn(param);
+				if (_loadMore) {
+					$(".commentBox").append(resultHTML);
+				} else {
+					$(".commentBox").html(resultHTML);
+				}
+				// console.log(ret)
+				if (ret.length < 1) {
+					toast('没有资源了', 'bottom', 800);
+				} else {
+					off_on = true;
+				}
+
+				$('.xz').remove();
+			}
+
+			function key() {
+				$('.keyboard').focus(function() {
+					this.scrollIntoViewIfNeeded();
+
+					if ($('.keyboard').text().length >= 1) {
+						$('.keybtn').css('color', 'black');
+					} else {
+						$('.keybtn').css('color', 'gray');
+					}
+				})
+				$('.keyboard').on("keyup paste", function() {
+					if ($('.keyboard').text().length >= 1) {
+						$('.keybtn').css('color', 'black');
+					} else {
+						$('.keybtn').css('color', 'gray');
+					}
+				})
+
+			}
+
+			function reply(id, name, superior, type) {
+				$('.keyboard').text('');
+				touid2 = id;
+				superiorid = superior;
+				sonboxcls = 'sonbox_' + superior;
+				toname = name;
+				$('<style>[contentEditable=true]:empty::before{content:"回复:' + name + '";color:gray;}</style>').appendTo('head');
+				$('.keyboard').focus();
+			}
+
+			function sendbtn() {
+				if (!userInfo) {
+					window.location.href = './login_frame.html';
+					return;
+				}
+				var value = $('.keyboard').text();
+				fromuid = userInfo.id;
+				if (superiorid == 0) {
+					$('.commentBox').prepend(
+						'<div class="li"><div class="icon"><div class="head_img" style="background-image:url(' + imgurl + userInfo.headimg +
+						')"></div></div><div class="content"><div class="name">' + userInfo.name + ' </div> <div class = "text" >' +
+						value +
+						'<div class = "time" >' + timestampFormat(new Date().getTime()) + '</div> </div></div></div>'
+					);
+					postajax(url + 'addcomment', {
+						"artid": artid,
+						"fromuid": fromuid,
+						"touid": touid2,
+						"superiorid": 0,
+						"msg": value
+					}, function(e) {
+						if (e.code == '200') {
+							getcomment();
+						}
+
+					})
+				} else {
+					$('.' + sonboxcls).prepend('<div class="son"><div class="son_head" style="background-image:url(' + imgurl +
+						userInfo.headimg +
+						')">></div><div class="comm"><div class="sonname"><div class="fromname">' + userInfo.name +
+						'</div>&nbsp; 回复 &nbsp;<div class="toname">' + toname + '</div></div><div class="text">' + value +
+						'<div class="time">' + timestampFormat(new Date().getTime()) + '</div></div></div></div>');
+					postajax(url + 'addreply', {
+						"artid": artid,
+						"fromuid": fromuid,
+						"touid": touid2,
+						"superiorid": superiorid,
+						"msg": value
+					}, function(e) {
+						if (e.code == '200') {
+							getcomment();
+						}
+					})
+				}
+
+				$('.keyboard').text('').blur();
+				superiorid = 0;
+
+			}
+
+			function jiaodian() {
+
+				$('.keybtn').css('color', 'gray');
+				// touid2=touid;
+				// superiorid=0;
+				$('<style>[contentEditable=true]:empty::before{content:"添加评论";color:gray;}</style>').appendTo('head');
+
+			}
+
+			function comment() {
+				touid2 = touid;
+				superiorid = 0;
+				$('<style>[contentEditable=true]:empty::before{content:"评论该动态";color:gray;}</style>').appendTo('head');
+				$('.keyboard').focus();
+			}
+
+			function getload(superiorid, bossuid, _this) {
+				$('.loadimg_' + superiorid).removeClass('loadimghide').addClass('loadimgshow');
+				sonboxcls = 'sonbox_' + superiorid;
+				var skip = parseInt($(_this).attr('data-skip'));
+				var limit = parseInt($(_this).attr('data-limit'));
+
+
+				postajax(url + 'loadingreply', {
+					"superiorid": superiorid,
+					"bossuid": bossuid,
+					"skip": skip,
+					"limit": limit
+				}, function(e) {
+					if (e.code = '200') {
+						uploadreply(e.data);
+						skip += limit;
+						$(_this).attr('data-skip', skip);
+						// 如果加载回复数据没有超过5条则表示没有更多数据了 可以隐藏"加载更多"字样了
+						if (e.data.length < 3) {
+							$('.load_reply_' + superiorid).css('display', 'none');
+						}
+						$('.loadimg_' + superiorid).removeClass('loadimgshow').addClass('loadimghide');
+					}
+				})
+			}
+
+			function uploadreply(ret) {
+				var param = {
+					list: ret,
+					imgurl: imgurl,
+				};
+				var tempFn = doT.template($('#template3').text());
+				// 使用模板函数生成HTML文本
+				var resultHTML = tempFn(param);
+				$("." + sonboxcls).append(resultHTML);
+			}
+
+			function TAuser(uid) {
+				window.location.href = './TAusercenter.html?' + window.btoa(encodeURI('uid=' + uid));
+			}
+
+			function fnwarelist(imglist) {
+					var warearray=[];
+				for (var i = 0; i < imglist.length; i++) {
+					
+					var imgsrc = imglist[i].split('/')[1].split('.')[0];
+					var src = imgsrc.replace(/\-|\@|\=|\+|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\?|\{|\}|\:|\;|\'|\"|\/|\<|\>|\[|\]/g, '');
+					if (fnwarelists[src]) {
+					
+						var warestr = fnwarelists[src];
+						warearray.push(warestr);
+					}
+				}
+
+				for (var i = 1; i < warearray.length; i++) {
+					warearray[0].push.apply(warearray[0],warearray[i]);
+				}
+				
+				ajaxwarelist(warearray);
+			}
+
+			function ajaxwarelist(warearray) {
+
+				var params = {
+
+					where: {
+						id: {
+							inq: warearray[0]
+						}
+					},
+					skip: 0,
+					limit: warearray[0].length,
+					order: "createdAt DESC"
+				}
+				apigetajax('https://d.apicloud.com/mcm/api/ware', params, function(ret) {
+					if (ret) {
+						dotwarelist(ret);
+						// console.log(ret);
+					}
+				})
+			}
+			
+			function dotwarelist(ret){
+				var tempFn = doT.template($('#template4').text());
+				// 使用模板函数生成HTML文本
+				var resultHTML = tempFn(ret);
+				// console.log(resultHTML)
+				$(".warelists").html(resultHTML);
+				
+				$(".wareimgs").lazyload({
+					container:$('.warelists'),
+					 effect: 'fadeIn',
+				});
+				
+				
+			}
+			function openware(wareid){
+				 window.location.href="./ware_frame.html?"+window.btoa(encodeURI("wareId="+wareid));
+			}
+			function share() {
+				var copyInput = document.getElementById('copyInput')
+				copyInput.select(); // 选择对象
+				document.execCommand("Copy"); // 执行浏览器复制命令
+
+				toast('成功复制链接', 'center', 2000);
+
+			}
+
+			function openmusic() {
+				toast('此功能暂时还未开发', 'bottom');
+			}
+		</script>
+	</body>
+</html>
