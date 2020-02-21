@@ -18,7 +18,9 @@
 
  	<access origin="*" />
  	<preference name="customRefreshHeader" value="UIPullRefreshFlash"/>
-
+	
+	<preference name="checkSslTrusted" value="false" />
+	<preference name="appCertificateVerify" value="false" />
  	<preference name="pageBounce" value="true"/>
 
  	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>

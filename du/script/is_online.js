@@ -12,6 +12,7 @@ apiready = function(){
             name:'online' // 已经连上网络
         }, function(ret, err){
             alert('已连接到网络');
+			location.reload()
         });
 
 
@@ -19,4 +20,8 @@ apiready = function(){
     //       style: 'light'
     // });
 
+        api.setStatusBarStyle({
+        style: 'dark',
+        color:'#fff',
+    });
 }
