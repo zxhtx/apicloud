@@ -1,8 +1,8 @@
 
  // var url='http://www.chaoxi.com/';
- var url='https://api.chaodashe.com/index.php/';
+ var url='http://api.chaodashe.com/index.php/';
  
- var imgurl='https://img.chaodashe.com/';
+ var imgurl='http://img.chaodashe.com/';
   // var headimgurl='http://www.666.com/chaoxiapi/';
   var now = Date.now();
   var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
@@ -116,7 +116,7 @@ function dialog(text){
   var doc=window;
    dl=$(doc).dialog({
         type : 'toast',
-        infoIcon: '../image/icon/load3.gif',
+        infoIcon: '../image/icon/loading.gif',
         infoText: text,
 
     });

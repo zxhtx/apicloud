@@ -29,7 +29,7 @@
     </head>
     <body>
        
-        <header id="header">
+        <header id="header" class="header" >
             <a class="title">
                 Chaodashe
 
@@ -100,7 +100,7 @@
                 <div class="swiper-container" >
                      <div class="swiper-wrapper"   >
                      {{for(var i=0; i< value.imglist.length;i++) { }}
-                          <div class="swiper-slide"  style="background-image: url({{=it.imgurl}}{{=value.imglist[i]}});" data-articleid="{{=value.id}}" data-like_userid="{{=value.like_userid}}" data-userid="{{=value.userid}}" data-likeid="like{{=value.id}}" style="width:100%;">
+                          <div class="swiper-slide"  style="background-image: url({{=it.imgurl}}{{=value.imglist[i]}});" data-articleid="{{=value.id}}" data-like_userid="{{=value.like_userid}}" data-userid="{{=value.userid}}" data-likeid="like{{=value.id}}" >
                            
                           </div>
                           
@@ -339,7 +339,7 @@ function fnUpdateWareListByShoppingCart(data_,_LoadMore) {
  $('.xz').remove();
   
      var swiper = new Swiper('.swiper-container', {
-		 slidesPerView:1.9,
+		 slidesPerView:1.2,
 		spaceBetween : 6,
 		centeredSlides:true,
      pagination: {

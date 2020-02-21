@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- <link rel="shortcut icon" href="../image/chao.ico" /> -->
+		<link rel="shortcut icon" href="../image/chao.ico" />
 		<meta charset="utf-8">
 		<meta content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" name="viewport" />
 		<meta content="telephone=no,email=no,date=no,address=no" name="format-detection">
@@ -13,11 +13,11 @@
 		</script>
 		<link href="https://cdn.bootcss.com/Swiper/4.5.0/css/swiper.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="../css/Dressingdetails_frame.css">
-		<link rel="stylesheet" type="text/css" href="../css/api.css">
 		<script src="https://cdn.bootcss.com/Swiper/4.5.0/js/swiper.min.js"></script>
 		<script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
 		<script src="https://cdn.bootcss.com/clipboard.js/2.0.4/clipboard.min.js"></script>
-		<!-- <script type="text/javascript" src="../script/api.js"></script> -->
+		<script type="text/javascript" src=" ../script/pinterest_grid.js"></script>
+
 		</meta>
 		</meta>
 		<style>
@@ -27,8 +27,14 @@
 					
 			    }
 				.swiper-container{
-					 background-color: #E1F0F9;
-				}
+					 /* background-color: #E1F0F9; */
+					 /* background-size: cover; */
+					 /* background-image: url("../image/login/2_bg.jpg"); */
+					background-color: rgba(0, 0, 0, 0.3);
+					}
+				.swiper-wrapper{
+					 /* background-color: rgba(0, 0, 0, 0.4); */
+				}	
 				.swiper-slide{
 					/* border: 1px solid black; */
 					 background-size: contain !important;
@@ -42,11 +48,60 @@
 				/* .swiper-slide-active,.swiper-slide-duplicate-active{
 				      transform: scale(1);
 					} */
+				
+					/* * { padding: 0; margin: 0; } */
+					.am-share {background-color: rgba(0, 0, 0, 0.3);font-size: 14px; border-radius: 0; bottom: 0; left: 0; position: fixed; text-align: center; -webkit-transform: translateY(100%); -ms-transform: translateY(100%); transform: translateY(100%); -webkit-transition: -webkit-transform 300ms; transition: transform 300ms ; width: 100%; height: 100%; z-index: 1110; }
+					.am-modal-active { transform: translateY(0px);  -webkit-transform: translateY(0); -ms-transform: translateY(0); transform: translateY(0) }
+					.am-modal-out { z-index: 1109; -webkit-transform: translateY(100%); -ms-transform: translateY(100%); transform: translateY(100%) }
+					
+					.am-share-title { background-color: #fff; font-weight: bold; border-bottom: 1px solid #fff; border-top-left-radius: 6px; border-top-right-radius: 6px; color: #555; margin: 0px; padding: 10px 0 0; text-align: center; }
+					.am-share-title::after { border-bottom: 1px solid #dfdfdf; content: ""; display: block; height: 0; margin-top: 10px; width: 100%; }
+				
+					.am-share-sns { background-color: rgba(0, 0, 0, 0.6);padding: 0px; border-radius: 0 0 2px 2px; margin: 0px;  height:auto; overflow:scroll; }
+			
+					
+					.sharebg { background-color: rgba(0, 0, 0, 0.6); bottom: 0; height: 100%; left: 0; opacity: 0; position: fixed; right: 0; top: 0; width: 100%; z-index: 1100; display:none; }
+					.sharebg-active { opacity: 111; display:block; }
+					.am-share-sns::-webkit-scrollbar {display:none}
+				
 		</style>
+		<script type="text/javascript">
+			function toshare(){
+				$(".am-share").addClass("am-modal-active");	
+					// alert($(".sharebg").length)
+				if($(".sharebg").length>0){
+					// alert(1)
+				
+					$(".sharebg").addClass("sharebg-active");
+				}else{
+				
+					$("body").append('<div class="sharebg"></div>');
+					$(".sharebg").addClass("sharebg-active");
+				}
+				$(".sharebg-active,.share_btn").click(function(){
+					// alert('关闭了')
+					$(".am-share").removeClass("am-modal-active");	
+					setTimeout(function(){
+						$(".sharebg-active").removeClass("sharebg-active");	
+						$(".sharebg").remove();	
+						$('.item').remove();
+					},300);
+				})
+			}	
+		</script>
 	</head>
 
 	<body>
-
+		<div class="am-share">
+		  <h3 class="am-share-title">链接直达</h3>
+		 <ul class="am-share-sns" >
+				<div id="Dressinglist">
+					
+				</div>
+		 </ul>
+		 
+		</div>
+		
 		<section class="list" id="list">
 
 		</section>
@@ -54,6 +109,8 @@
 		<div class="commentBox">
 
 		</div>
+	
+		
 	</body>
 	<script id="template" type="text/template">
 			{{~it.list:value:index}}
@@ -290,7 +347,12 @@
 			var sqtime = 0;
 			var liketime = 0;
 			var musicname;
-		
+			$(function(){
+				$('.am-share').height( $(window).height()/1.6+'px');
+				$('.am-share-sns').height($(window).height()/1.6+'px');
+				$('#Dressinglist').height($(window).height()/1.6+'px');
+				// $('.am-share').height($(window).height())
+			})
 			
 			function sharetle() {
 				// return window.btoa(encodeURI("articleid=" + getQueryString(0)));
@@ -461,8 +523,8 @@
 					})
 				}
 				var swiper = new Swiper('.swiper-container', {
-					slidesPerView: 1.5,
-					spaceBetween: 16,
+					slidesPerView: 1.2,
+					spaceBetween: 6,
 					centeredSlides: true,
 					speed:666,
 					pagination: {
@@ -712,16 +774,39 @@
 			// 长图点击
 			function Dressingimg(Dressingimg) {
 				// alert(1);
-
+				
 				var imgsrc = Dressingimg.split('/')[1].split('.')[0];
 				var src = imgsrc.replace(/\-|\@|\=|\+|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\?|\{|\}|\:|\;|\'|\"|\/|\<|\>|\[|\]/g, '');
-				// console.log(src)
-				// console.log(wareid)
-				// return;
+				
+				
+				$('.am-share-sns').css({
+							'background': 'url(' + imgurl + Dressingimg + ')',
+							'background-size': 'cover',
+				});
 				if (wareid[src]) {
+					// $('#Dressinglist').append('<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; border-bottom:1px solid #FF4466; ">');
+					 toshare();
+					var params = {
+					    fields: {},
+					    where: {
+					        id: {
+					            inq: wareid[src]
+					        }
+					    },
+					    skip: 0,
+					    limit: wareid.length,
+					    order:"createdAt DESC"
+					}
+					apigetajax('https://d.apicloud.com/mcm/api/ware',params,function(ret){
+					    if (ret) {
+					       updateWareList(ret);
+						 // $('.xz').remove();
+					    }
+					})
 					
-					window.location.href = "./chaodashedetails_frame.html?" + window.btoa(encodeURI('warelistid=' + wareid[src] +
-						'&img=' + Dressingimg + '&music=' + music));
+					
+						
+						// console.log(wareid[src])
 				} else {
 					toast('此图片没有穿搭链接', 'bottom', 1500);
 					// toast({
@@ -732,12 +817,16 @@
 
 			}
 
+
 			function gohome() {
 				window.location.href = "./chaodashe_frame.php";
 			}
 
 			function goback() {
-				window.history.back(-1);
+				// window.history.back(-1);
+				api.closeWin({
+				    name: 'Dressingdetails'
+				});
 			}
 
 			function getcomment(_loadMore) {
@@ -991,6 +1080,49 @@
 
 			function openmusic() {
 				toast('此功能暂时还未开发', 'bottom');
+			}
+
+			// 渲染单张图片的穿搭链接
+			function updateWareList(_data){
+			     initWaterFall();
+			     var resultText='';
+			     for (var i =0; i <_data.length; i++) {
+			
+			      resultText+="<div class='item'  data-ware="+_data[i].id+"  style='background:white'><img class='lazytwo'  data-original="+_data[i].thumbnail+" ><span class='description'>"+_data[i].description+"</span><span class='price'>￥"+_data[i].price+"</span></div>";
+			
+			
+			    }
+			    if (resultText==0) {
+			      toast("没有资源啦",'center',1000)
+			      return;
+			    } 
+			     $('#Dressinglist').html(resultText);
+			  
+				$("img.lazytwo").lazyload({
+					effect: "fadeIn",
+					threshold: 88,
+				});
+			   $('.item').on('click',function(e){
+			    var wareid=$(this).attr('data-ware');
+			    var url='./ware_frame.html?'+window.btoa(encodeURI('wareId='+wareid));
+			    window.location.href=url;
+			
+			
+			  })
+			
+			
+			 }
+			 function initWaterFall(){
+			
+			  $("#Dressinglist").pinterest_grid({
+			    no_columns: 2,
+			    padding_x: 2,
+			    padding_y: 8,
+			    margin_bottom: 10,
+			    single_column_breakpoint: 100
+			  });
+			
+			  
 			}
 		</script>
 </html>
