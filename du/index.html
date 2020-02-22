@@ -68,6 +68,7 @@
   var clipBoard;
   var dialogBox ;
   var status = false;
+
   apiready = function() {
 
         // var header = $api.dom('header'); // 获取 header 标签元素
@@ -81,6 +82,7 @@
         // openretui()
       };
       function kouling(){
+      var re=/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\*\+,;=.]+$/;
         clipBoard= api.require('clipBoard');
         api.addEventListener({
           name: 'resume'
@@ -92,7 +94,13 @@
             if(status==true){
               return;
             }else{
-              alertkouling(ret.value);
+              // alert(ret);
+
+              if(re.test(ret.value) && ret.value.match(/chaodashe.com/)){
+                // alert(1);
+                alertkouling(ret.value);
+              }
+              
             }
 
             clipBoard.set({value: ""}, function() {})
@@ -103,9 +111,13 @@
 
         clipBoard.get(function(ret, err) {
           if (ret && ret.value && ret.value != "" && ret.type =="url") {
-
-            alertkouling(ret.value);
-            clipBoard.set({value: ""}, function() {})
+               // alert(ret);
+               if(re.test(ret.value) && ret.value.match(/chaodashe.com/)){
+                // alert(1);
+                  alertkouling(ret.value);
+                clipBoard.set({value: ""}, function() {})
+               }
+          
           }
         });
 
@@ -164,24 +176,47 @@
             dialogBox.close({
               dialogName: 'alert'
             });
-            
+             
           }else{
             var url=val;
-            var arr=url.split('?');
-            var canshu=arr[1].substring(4);
+            var arr=url.split('/');
+            // alert(arr[arr.length-1].split('_')[0]);
+            var canshu=window.atob(decodeURI(arr[arr.length-1].split('?')[1]));
+            
+            var wintype=arr[arr.length-1].split('_')[0];
+            var wname=canshu.split('=')[0];
+            var wvalue=canshu.split('=')[1];
+            // var canshu=arr[1].substring(4);
+            // alert(wvalue)
+            https://chaodashe.com/html/Dressingdetails_frame.html?YXJ0aWNsZWlkPTc1
             status = false;
-            if (canshu.length==24){
+            if (wintype=='ware'){
 
               api.openWin({
                 name: 'ware',
                 url: './html/ware.html',
                 pageParam: {
-                  wareId: canshu,
+                  wareId:wvalue,
                 },
                 animation:{
                   type:'fade'
                 }
               });
+            }else if(wintype=='Dressingdetails'){
+
+
+              api.openWin({
+                name: 'Dressingdetails',
+                url: './html/Dressingdetails.html',
+                pageParam: {
+                  articleid:wvalue,
+                },
+                animation:{
+                  type:'fade'
+                }
+              });
+            
+
             }else{
               api.toast({
                 msg: '链接不是本站链接',

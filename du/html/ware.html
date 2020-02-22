@@ -141,36 +141,13 @@ footer {
 </head>
 
 <body>
-  <header id="header">
-    <div class="back" tapmode onclick="api.closeWin()"></div>
-    <h1>商品详情</h1>
-    <div class="share" tapmode onclick="clip()"></div>
-  </header>
-  <section></section>
-  <footer id="footer">
-    <div class="control" tapmode onclick="lookspeak()">
-      <img src="../image/speak.png">
-    </div> 
-    <img src="../image/buynow.png" class="buy-button" tapmode onclick="oporderWin()">
-  </footer>
+  
 </body>
-<script type="text/javascript" src="../script/api.js"></script>
-<script type="text/javascript" src="../script/SHA1.js"></script>
+
 <script type="text/javascript">
-  var datasize,datacolor;
+
   apiready = function() {
-    speaktypeList();
-    shareevent();
-
-    var header=$api.byId('header');
-    var footer=$api.byId('footer');
-    
-        // 获取header和nav的高
-        headerH=$api.offset(header).h
-        footerH=$api.offset(footer).h;
-         // 更新商品数量
-         
-
+   
          api.openFrame({
           name: 'ware_frame',
           url: './ware_frame.html',
@@ -178,11 +155,11 @@ footer {
             x: 0,
             y: 0,
             w: 'auto',
-            h: api.winHeight-footerH 
+            h: 'auto'
           },
           pageParam: {
             wareId:api.pageParam.wareId,
-            wareTypeId:api.pageParam.wareTypeId
+            // wareTypeId:api.pageParam.wareTypeId
           },
           bounces: false,
 
@@ -190,190 +167,7 @@ footer {
         }); 
          
        };
-       function addcolor(color){
-        datacolor=color;
-        
-
-
-      }
-      function shareevent(){
-        api.addEventListener({
-          name: 'updatashare'
-        }, function(ret, err){
-          if( ret ){
-           api.pageParam.wareId=ret.value.key1;
-         }
-       });
-      }
-      function clip(){
-        var clipBoard = api.require('clipBoard');
-        clipBoard.set({
-          value: 'http://www.zxh.yueaa.com/A6099267504667/web_adapter/adapter.html?wid='+api.pageParam.wareId
-        }, function(ret, err) {
-          if (ret) {
-            api.toast({
-              msg: '成功复制链接',
-              duration: 2000,
-              location: 'bottom'
-            });
-          } 
-        });
-      }
-      function addsize(size){
-        datasize=size;
-
-
-      }
-      function oporderWin(){
-        if (!datacolor) {
-          api.toast({
-            msg: '还未选择商品颜色',
-            duration: 2000,
-            location: 'bottom'
-          });
-          return;
-        }else if (!datasize) {
-         api.toast({
-          msg: '还未选择商品尺寸',
-          duration: 2000,
-          location: 'bottom'
-        });
-         return;
-       }
-       var userInfo=$api.getStorage('userInfo');
-       if (userInfo==undefined && userInfo==null) {
-        var dialogBox = api.require('dialogBox');
-        dialogBox.alert({
-          texts: {
-            title: '未登录',
-            content: '您还没登录啦[○･｀Д´･ ○]',
-            leftBtnTitle: '确认',
-          },
-          styles: {
-            bg: '#fff',
-            w: 300,
-            corner:2,
-            title: {
-              marginT: 18,
-              titleSize: 14,
-              titleColor: '#000'
-            },
-            content: {
-              color: '#000',
-              size: 14
-            },
-            left: {
-              marginB: 7,
-              marginL: 88,
-              w: 130,
-              h: 35,
-              corner: 8,
-              bg: '#000',
-              size: 12,
-              color: '#fff',
-            },
-
-          }
-        },function(ret) {
-          if (ret.eventType == 'left') {
-            api.openWin({
-              name: 'login',
-              url: './login.html',
-              pageParam: {
-                ware: api.pageParam.wareId 
-              },
-              animation: {
-                type: "fade"
-              }
-            });
-            dialogBox.close();
-          }
-        });  
-
-        return;
-      }
-      api.openWin({
-        name: 'order',
-        url: './order.html',
-        pageParam: {
-          size:datasize,
-          color:datacolor,
-          wareId:api.pageParam.wareId 
-        },
-        animation: {
-          type: "fade"
-        }
-      });
-    }
-
-
-    function lookspeak(){
-      api.toast({
-        msg: '修复中',
-        duration: 2000,
-        location: 'bottom'
-      });
-      return;
-      api.openWin({
-        name: 'lookspeak',
-        url: './lookspeak.html',
-        pageParam: {
-         wareId:api.pageParam.wareId 
-       },
-       animation: {
-        type: "fade"
-      },
-     bounces: false // 关闭弹动
-   });
-
-    }
-
-
-    function speaktypeList(){
-      var speaktypeList=$api.getStorage('speaktypeList');
-      if (!speaktypeList) {
-       speaktypeList=[
-       {
-        "id": "5c3af554612f9a7c35ae1ffb",
-        "name": "差评"
-      },
-
-      {
-        "id": "5c3af54ec2d230f93e257bf2",
-        "name": "一般",
-      } ,
-      {
-        "id": "5c3af54042a859df03ce37b9",
-        "name": "好评"
-      }
-      ];
-    }
-    getspeaktypeList();
-  }
-  function getspeaktypeList(){
-   var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
-
-      var params={
-        fields:{},
-        where:{},
-        skip:0,
-        limit:3
-      }
-      params=$api.jsonToStr(params);
-      api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/speaktype?filter='+params,
-        method: 'get',
-        headers: {
-          "X-APICloud-AppId": "A6099267504667",
-          "X-APICloud-AppKey":   appKey
-        },
-
-      },function(ret, err){
-       $api.setStorage('speaktypeList', ret);
-     });
-    }
+       
 
   </script>
 
