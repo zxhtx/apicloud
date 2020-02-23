@@ -128,10 +128,10 @@
         dialogBox = api.require('dialogBox');
         dialogBox.alert({
           texts: {
-            title: '是否根据链接查找商品',
+            title: '检测到您复制了潮搭社网站的链接',
             content:val ,
             leftBtnTitle: '取消',
-            rightBtnTitle: '确认'
+            rightBtnTitle: '看看'
           },
           styles: {
             bg: '#fff',
@@ -497,7 +497,7 @@
    }
    function hiddenDressing(){
     api.setFrameAttr({
-      name: 'Dressing_frame',
+      name: 'chaodashe_frame',
       hidden: true
     });
 

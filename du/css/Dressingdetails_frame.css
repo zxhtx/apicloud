@@ -68,16 +68,25 @@ a {
 	width: 100%;
 	background-color: transparent;
 }
-
-.Dressing .headimg {
+.Dressing .icon{
 	position: absolute;
 	right: 8px;
-	width: 38px;
-	height: 38px;
+	width: 43px;
+	height: 43px;
+	border-radius: 50%;
+	margin-top: 5px;
+	 display: inline-block;
+}
+
+.Dressing .icon .headimg {
+	
+	width: 39px;
+	height: 39px;
 	background-size: cover;
 	background-position: center center;
 	border-radius: 50%;
-	margin-top: 7px;
+	margin:0 auto;
+		border: 2px solid #fff;
 }
 .Dressing .back{
 	width: 38px;
@@ -135,6 +144,7 @@ a {
 	padding-top: 6px;
 	margin-bottom: 8px;
 	min-height: 30px;
+	border-bottom: 1px solid #DFDFDF;
 }
 
 .footbox .textanduser .user {
@@ -222,12 +232,17 @@ a {
 
 .keybox {
 	width: 100%;
-	padding-top: 6px;
+	padding-top: 3px;
+	padding-bottom: 3px;
 	max-height: 88px;
 	background: #F7F7F7;
 	/*border: 1px solid red;*/
-
-
+	position: fixed;
+	bottom: 0px;
+	display: none;
+	border-top-left-radius: 12px;
+	border-top-right-radius: 12px;
+	z-index: 6666;
 }
 
 .myheadimg {
@@ -279,7 +294,8 @@ a {
 }
 
 .commentBox{
-	
+	/* padding-bottom: 50px; */
+	margin-bottom: 50px;
 }
 /* 评论显示 */
 .commentBox .li{
@@ -304,19 +320,32 @@ height: 20px;
 	/*position: absolute;*/
 	/*left: 0;*/
 	/*width: 100px;*/
-	width: 50px;
-	/*float: left;*/
-	/*height: 100%;*/
-	vertical-align: top;
+	width: 43px;
+	height: 43px;
+	border-radius: 50%;
+
+	
+}
+.iconnoauthority{
+	border: 2px solid #D5D5D5;
+}
+.iconauthority{
+		border: 2px transparent solid;
+	background-image: linear-gradient(to bottom left,#B50C82, #FDA641);
 }
 .commentBox .icon .head_img{
 	margin: 5px;
 	width: 39px;
-	height: 39px;
+	height:39px;
 	background-position: center center;
 	background-size: cover;
-	border-radius: 30px;
-	border: 1px solid #BBBBBB;
+	border-radius: 50%;
+	/* padding: 2px; */
+	margin: 0 auto;
+	/* margin-top: 2px; */
+	border: 2px solid #fff;
+	
+	
 }
 
 .commentBox .content{
@@ -365,13 +394,24 @@ height: 20px;
 	margin-left: 8%;
 	
 }
-.commentBox .li .son .son_head{
+.commentBox .li .son .icon{
+	display: inline-block;
+	/*position: absolute;*/
+	/*left: 0;*/
+	/*width: 100px;*/
+	width: 36px;
+	height: 36px;
+	vertical-align: top;
+	border-radius: 50%;
+}
+.commentBox .li .son .icon .son_head{
 	width: 32px;
 	height: 32px;
 	border-radius: 50%;
-	border: 1px solid #BBBBBB;
-	display: inline-block;
-	vertical-align: top;
+	border: 2px solid #fff;
+	/* display: inline-block; */
+	/* vertical-align: center; */
+	margin:0 auto;
 	background-size: cover;
 	background-position: center center; 
 }
@@ -382,6 +422,8 @@ height: 20px;
 	display: inline-block;
 	/* padding: 5px; */
 	margin-bottom: 10px;
+	padding-top: 10px;
+	border-top: 1px solid #D5D5D5;
 }
 
 .commentBox .li .son .comm .sonname{
@@ -520,7 +562,6 @@ display: inline-block;
 	font-weight: bold;
 	margin-left: 2px;
 }
-
   #Dressinglist{
     position: relative;
 	/* bottom: 0px; */

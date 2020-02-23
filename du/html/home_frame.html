@@ -811,16 +811,11 @@
 			dialog('商品加载中');
             }
             var params={
-              fields:{},
-              where:{
-               wareTypeId:wareTypeList[_index].id
-             },
+               wareTypeId:wareTypeList[_index].id,
              skip:skip,
              limit:LIMIT,
-             order:"createdAt DESC",
-
            };
-           apigetajax('https://d.apicloud.com/mcm/api/ware',params,function(ret){
+           getajax(url+'allware',params,function(ret){
              var ret1=[
              ret[3],
              ret[6],
@@ -872,9 +867,12 @@
            url: './ware.html',
            pageParam: {
                wareId: wareid
-           }
+           },
+            animation: {
+                type: "fade"
+            }
        });
-          window.location.href=url;
+          // window.location.href=url;
 
 
         })
@@ -919,7 +917,10 @@
            url: './ware.html',
            pageParam: {
                wareId: wareid
-           }
+           },
+            animation: {
+                type: "fade"
+            }
        });
 
 
@@ -956,7 +957,11 @@ function openware(wareid){
            url: './ware.html',
            pageParam: {
                wareId: wareid
-           }
+           },
+             animation: {
+                type: "fade"
+            }
+
        });
 		}
 
@@ -968,7 +973,10 @@ function opencart(){
       url: './shoppingcart.html',
       pageParam: {
           name: 'test'
-      }
+      },
+        animation: {
+                type: "fade"
+            }
   });
 }
 </script>

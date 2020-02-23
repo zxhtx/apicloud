@@ -11,17 +11,17 @@
                 <title>
                     我的穿搭,才够范儿
                 </title>
-				<link rel="stylesheet" href="../css/chaodashe_frame.css">
+        <link rel="stylesheet" href="../css/chaodashe_frame.css">
                 <script src="../script/commonjs.js">    
                 </script>
-				  <!--   <script src="../script/footcom.js">    
-					</script> -->
+            <script src="../script/footcom.js">    
+          </script>
 
-               <link href="https://cdn.bootcss.com/Swiper/4.5.1/css/swiper.min.css" rel="stylesheet">
-                <script src="https://cdn.bootcss.com/Swiper/4.5.1/js/swiper.min.js"></script>
-				<script src="https://cdn.bootcss.com/clipboard.js/2.0.4/clipboard.min.js"></script>
+               <link href="https://cdn.bootcss.com/Swiper/4.5.0/css/swiper.min.css" rel="stylesheet">
+               <script src="https://cdn.bootcss.com/Swiper/4.5.0/js/swiper.min.js"></script>
+        <script src="https://cdn.bootcss.com/clipboard.js/2.0.4/clipboard.min.js"></script>
                 <!-- <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script> -->
-				<script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+        <script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
 
                
             </meta>
@@ -29,7 +29,7 @@
     </head>
     <body>
        
-        <header id="header" class="header" >
+        <header id="header">
             <a class="title">
                 Chaodashe
 
@@ -61,21 +61,25 @@
             </div>
         </div>         -->
         </section>
-         <?php
-          require("../comm/html/footer.html");
-         ?>
+         
         <section class="empty" id="empty">
         </section>
         <script id="template" type="text/template">
             {{~it.list:value:index}}
           <div class="box" >
-			<input id="copyInput" value="https://chaodashe.com" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
+      <input id="copyInput" value="https://chaodashe.com" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
                 {{if(value.showimgtype=='0'){ }}
 
                  <div class="Dressing"  >
-                   
-                    <div class='headimg' onclick="TAuser({{=value.userid}})" style="background-image:url({{=it.imgurl}}{{=value.userheadimg}})"></div>
-                  
+          {{if(value.uauthority==1){ }}
+          <div class="icon iconauthority">
+                     <div class='headimg lazy ' onclick="TAuser({{=value.userid}})" data-original="{{=it.imgurl}}{{=value.userheadimg}}" ></div>
+          </div>
+          {{ }else{ }}
+          <div class="icon iconnoauthority">
+           <div class='headimg lazy' onclick="TAuser({{=value.userid}})" data-original="{{=it.imgurl}}{{=value.userheadimg}}" ></div>
+          </div>
+          {{ } }}
                     {{if(value.uauthority=='1'){ }}
                     <div class="uname">
                      <span class="unametext">{{=value.uname}}</span>
@@ -96,11 +100,11 @@
                     </div>
                     {{ } }}
                  </div>
-				
+        
                 <div class="swiper-container" >
                      <div class="swiper-wrapper"   >
                      {{for(var i=0; i< value.imglist.length;i++) { }}
-                          <div class="swiper-slide"  style="background-image: url({{=it.imgurl}}{{=value.imglist[i]}});" data-articleid="{{=value.id}}" data-like_userid="{{=value.like_userid}}" data-userid="{{=value.userid}}" data-likeid="like{{=value.id}}" >
+                          <div class="swiper-slide"  style="background-image: url({{=it.imgurl}}{{=value.imglist[i]}});" data-original="{{=it.imgurl}}{{=value.imglist[i]}}" data-articleid="{{=value.id}}" data-like_userid="{{=value.like_userid}}" data-userid="{{=value.userid}}" data-likeid="like{{=value.id}}">
                            
                           </div>
                           
@@ -110,7 +114,7 @@
                     <div class="swiper-pagination"></div>
                 </div>
                 <div class="footbox">
-					<div class="warelists warelists_{{=value.id}}"></div>
+          <div class="warelists warelists_{{=value.id}}"></div>
                     <div class="duogongneng" >
                         {{if(value.like_userid==0)}}
                          <img onclick="belike({{=value.id}},this,{{=value.userid}})" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likeb.png">
@@ -118,9 +122,9 @@
                          <img onclick="belike({{=value.id}},this,{{=value.userid}})" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likea.png">
                         {{ } }}
                         <img class="Cspeak" onclick="opendetails({{=value.id}})" src="../image/Cspeak.png">
-						{{if(value.type=='0'){ }}
-						<img src="../image/lianjie.png" class="lianjie  lianjie_{{=value.id}}"   onclick=lianjie({{=value.id}},"{{=value.imglist}}",{{=value.warelist}}) alt="">
-						{{ } }}
+            {{if(value.type=='0'){ }}
+            <img src="../image/lianjie.png" class="lianjie  lianjie_{{=value.id}}"   onclick=lianjie({{=value.id}},"{{=value.imglist}}",{{=value.warelist}}) alt="">
+            {{ } }}
                         {{if(value.shuqian_userid==0){ }}
                         <img onclick="beshuqian({{=value.id}},this,{{=value.userid}})" id="shuqian{{=value.id}}" data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" src="../image/shuqianb.png">
                         {{ }else{ }}
@@ -134,21 +138,30 @@
                     <span class="chaodashetype" style="margin-left:6px;">动态类型:潮图</span>
                     {{ } }}
                     <div class="textanduser">
-						<div class="shuxiepng"></div>
+            <div class="shuxiepng"></div>
                         <span class="user" style="margin-left:2px;">{{=value.uname}}</span>
                         <span class="text" style="word-break: break-all;word-wrap: break-word;">{{=value.text}}</span>
                     </div>
-					<div class="likesmall"></div>
+          <div class="likesmall"></div>
                     <span class="likecount" id="likecount_{{=value.id}}" data-likecount="{{=value.like}}">{{=value.like}}个赞</span>
-					
-					
+          
+          
                 </div>
                 {{ }else{ }}
                     <div  style="position: relative">
                        
                         <div class="Dressing" >
-                          <div class='headimg' onclick="TAuser({{=value.userid}})" style="background-image:url({{=it.imgurl}}{{=value.userheadimg}})"></div>
-                       
+              
+                        {{if(value.uauthority==1){ }}
+                        <div class="icon iconauthority">
+                         <div class='headimg lazy ' onclick="TAuser({{=value.userid}})" data-original="{{=it.imgurl}}{{=value.userheadimg}}" ></div>
+                        </div>
+                        {{ }else{ }}
+                        <div class="icon iconnoauthority">
+                         <div class='headimg lazy' onclick="TAuser({{=value.userid}})" data-original="{{=it.imgurl}}{{=value.userheadimg}}" ></div>
+                        </div>
+                        {{ } }}
+            
                         {{if(value.uauthority=='1'){ }}
                         <div class="uname">
                          <span class="unametext">{{=value.uname}}</span>
@@ -169,17 +182,17 @@
                             </div>
                         {{ } }}
                         </div>
-						
+            
                          <div class="swiper-container " style="height: auto;" >
                        <div class="swiper-wrapper" style="height: auto;" >
-						    <div class="imglistone"  style=" width:100%;height: 20rem;background-image: url({{=it.imgurl}}{{=value.imglist[0]}});"  data-like_userid="{{=value.like_userid}}"  data-articleid="{{=value.id}}" data-likeid="like{{=value.id}}"  >
+                <div class="imglistone lazy"  style=" width:100%;height: 20rem;" data-original="{{=it.imgurl}}{{=value.imglist[0]}}"  data-like_userid="{{=value.like_userid}}"  data-articleid="{{=value.id}}" data-likeid="like{{=value.id}}"  >
                        
                         <img class="minimg" src="../image/longimg.png" alt="">
                     </div>
                 </div>
                      </div>
                   <div class="footbox">
-					  <div class="warelists warelists_{{=value.id}}"></div>
+            <div class="warelists warelists_{{=value.id}}"></div>
                     <div class="duogongneng" >
                         {{if(value.like_userid==0)}}
                          <img onclick="belike({{=value.id}},this,{{=value.userid}})" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likeb.png">
@@ -187,9 +200,9 @@
                          <img onclick="belike({{=value.id}},this,{{=value.userid}})" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likea.png">
                         {{ } }}
                         <img class="Cspeak" onclick="opendetails({{=value.id}})" src="../image/Cspeak.png">
-						{{if(value.type=='0'){ }}
-						<img src="../image/lianjie.png" class="lianjie lianjie_{{=value.id}}" onclick=lianjie({{=value.id}},"{{=value.imglist}}",{{=value.warelist}}) alt="">
-						{{ } }}
+            {{if(value.type=='0'){ }}
+            <img src="../image/lianjie.png" class="lianjie lianjie_{{=value.id}}" onclick=lianjie({{=value.id}},"{{=value.imglist}}",{{=value.warelist}}) alt="">
+            {{ } }}
                         {{if(value.shuqian_userid==0){ }}
                         <img onclick="beshuqian({{=value.id}},this,{{=value.userid}})" id="shuqian{{=value.id}}" data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" src="../image/shuqianb.png">
                         {{ }else{ }}
@@ -203,14 +216,14 @@
                     <span class="chaodashetype" style="margin-left:6px;">动态类型:潮图</span>
                     {{ } }}
                     <div class="textanduser">
-						<div class="shuxiepng"></div>
+            <div class="shuxiepng"></div>
                         <span class="user" style="margin-left:2px;">{{=value.uname}}</span>
                         <span class="text" style="word-break: break-all;word-wrap: break-word;">{{=value.text}}</span>
                     </div>
-					<div class="likesmall"></div>
+          <div class="likesmall"></div>
                      <span class="likecount" id="likecount_{{=value.id}}" data-likecount="{{=value.like}}">{{=value.like}}个赞</span>
 
-					
+          
                 </div>
 
                 {{ } }}
@@ -218,49 +231,49 @@
         </div>
         {{~}}
         </script>
-		<script id="template4" type="text/template">
-			{{~it:value:index}}
-				<div class="wareitem" onclick="openware('{{=value.id}}')">
-				 <div class="wareimg wareimgs" data-original="{{=value.thumbnail}}"></div>
-				 <div class="wareinfo">
-					 <div class="waretext">{{=value.description}}</div>
-					 <div class="wareprice">￥{{=value.price}}</div>
-				 </div>
-				
-				</div>
-			{{~}}
-		</script>
-    <script type="text/javascript" src="../script/api.js"></script>
+    <script id="template4" type="text/template">
+      {{~it:value:index}}
+        <div class="wareitem" onclick="openware('{{=value.id}}')">
+         <div class="wareimg wareimgs" data-original="{{=value.thumbnail}}"></div>
+         <div class="wareinfo">
+           <div class="waretext">{{=value.description}}</div>
+           <div class="wareprice">￥{{=value.price}}</div>
+         </div>
+        
+        </div>
+      {{~}}
+    </script>
         <script type="text/javascript">
-			var skip=0;
-			var limit=6;
-			var off_on=false;
-			var warelist;
-			var imglist;
-			var warearray=[];
-			var sqtime = 0;
-			var liketime = 0;
+      var skip=0;
+      var limit=6;
+      var off_on=false;
+      var warelist;
+      var imglist;
+      var warearray=[];
+      var sqtime = 0;
+      var liketime = 0;
+      var clicki= 0;
              $(function(){
                 $('.chaodashe').addClass('now').siblings().removeClass('now');
-				getchaodashe();
+        getchaodashe();
             })
             
 
           
  //上拉加载
-		 window.addEventListener("scroll", function (){
-		      //当时滚动条离底部0px时开始加载下一页的内容
-		      if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
-					if(off_on){
-						off_on=false;
-						getchaodashe(true);
-						// toast("动态加载中...",'bottom',1000);
-						$('.list').append('<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>')
-					}
-		            
-		         
-		      }
-		  });
+     window.addEventListener("scroll", function (){
+          //当时滚动条离底部0px时开始加载下一页的内容
+          if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+          if(off_on){
+            off_on=false;
+            getchaodashe(true);
+            // toast("动态加载中...",'bottom',1000);
+            $('.list').append('<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>')
+          }
+                
+             
+          }
+      });
 
     function getchaodashe(_LoadMore) {
     // toast=$(document).dialog({
@@ -268,12 +281,12 @@
     //     infoIcon: '../image/icon/load.gif',
     //     infoText: '动态加载中',
     // });
-	if(_LoadMore){
-		skip+=limit;
-	}else{
-		skip=0;
-		dialog('动态加载中');
-	}
+  if(_LoadMore){
+    skip+=limit;
+  }else{
+    skip=0;
+    dialog('动态加载中');
+  }
     
 
      if(userInfo){
@@ -296,16 +309,16 @@
     
     postajax(url+'getchaodashe',params,function(ret){
         if (ret.code=='200') {
-			for(var i=0;i<ret.data.length;i++){
-				ret.data[i].warelist=JSON.stringify(ret.data[i].warelist);
-			}
-			
+      for(var i=0;i<ret.data.length;i++){
+        ret.data[i].warelist=JSON.stringify(ret.data[i].warelist);
+      }
+      
             fnUpdateWareListByShoppingCart(ret.data,_LoadMore);
-			
+      
         }else{
-			$('.list').append('<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-木有动态了-</p>');
-			$('.xz').remove();
-		}
+      $('.list').append('<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-木有动态了-</p>');
+      $('.xz').remove();
+    }
     })
 
 }
@@ -326,92 +339,108 @@ function fnUpdateWareListByShoppingCart(data_,_LoadMore) {
     var tempFn = doT.template($('#template').text());
     // 使用模板函数生成HTML文本
     var resultHTML = tempFn(param);
-	if(_LoadMore){
-		  $("#list").append(resultHTML);
-	}else{
-		  $("#list").html(resultHTML);
-	}
-	if(data_.length<1){
-		toast('没有动态了...','bottom',800);
-	}else{
-		   off_on=true;
-	}
- $('.xz').remove();
+  if(_LoadMore){
+      $("#list").append(resultHTML);
+  }else{
+      $("#list").html(resultHTML);
+  }
+  if(data_.length<1){
+    toast('没有动态了...','bottom',800);
+  }else{
+       off_on=true;
+  }
+  $('.xz').remove();
+  $(".lazy").lazyload({
+     effect: 'fadeIn',
+  });
+  
+  // $('.swiper-container').click(function(){
+  //    clicki++;
+  //          setTimeout(function () {
+  //              clicki = 0;
+  //          }, 500);
+  //          if (clicki > 1) {
+  //              // if (!userInfo){
+  //              //    window.location.href="./login_frame.html";
+  //              //    return;
+  //              //   }
+  //        alert('双击')
+  //              clicki = 0;
+  //          }
+  // })
   
      var swiper = new Swiper('.swiper-container', {
-		 slidesPerView:1.2,
-		spaceBetween : 6,
-		centeredSlides:true,
+     slidesPerView:1.2,
+    spaceBetween : 6,
+    centeredSlides:true,
      pagination: {
          el: '.swiper-pagination',
-		 dynamicBullets: true,
+     dynamicBullets: true,
        },
-		speed:666,
-		// autoHeight:true,
-		
-		 loop:true,//循环 最后面一个往后面滑动会滑到第一个
-		   // loadOnTransitionStart:true,
-		 // loadPrevNext: true,
-	  
+    // speed:666,
+    // autoHeight:true,
+    
+     loop:true,//循环 最后面一个往后面滑动会滑到第一个
+       // loadOnTransitionStart:true,
+     // loadPrevNext: true,
+    
        on:{
-        doubleTap:function(e){
-            if (!userInfo){
-               window.location.href="./login_frame.html";
-               return;
-            }
-			if (liketime == 0) {
-				liketime = 1;
-				setTimeout(function() {
-					liketime = 0;
-				}, 3000)
-			} else {
-				toast('不能连续点赞哟', 'bottom');
-				return;
-			}
-			
-             var likeid=e.target.dataset.likeid;
-			 var touid=e.target.dataset.userid;
-            if ($('#'+likeid).attr('data-like_userid')=='0'){
-               $('#'+likeid).fadeOut();
-                $('#'+likeid).fadeIn();
-                setTimeout(function(){
-                 $('#'+likeid).attr('src','../image/likea.png');
-                 $('#'+likeid).attr('data-like_userid','1');
-                },300);
-                 addlike(1,e.target.dataset.articleid,likeid);
-
-            }else{
-                 $('#'+likeid).fadeOut();
-                $('#'+likeid).fadeIn();
-                  setTimeout(function(){
-                    $('#'+likeid).attr('src','../image/likeb.png');
-                    $('#'+likeid).attr('data-like_userid','0');
-                  },300);
-             
-              addlike(0,e.target.dataset.articleid,likeid);
-            }
-         
-        },
-         click: function(e){
-        // alert('你碰了Swiper');
-        // console.log();
-          // alert(1)
-
+       click: function(e){
+       // alert('你碰了Swiper');
+       // console.log();
+        // window.location.href='./Dressingdetails_frame.html?'+window.btoa(encodeURI('articleid='+e.target.dataset.articleid));
         api.openWin({
-            name: 'Dressingdetails',
-            url: './Dressingdetails.html',
-            pageParam: {
-                articleid: e.target.dataset.articleid
-            },
-             animation: {
-                type: "fade"
-            }
-        });
-         // window.location.href='./Dressingdetails_frame.html?'+window.btoa(encodeURI('articleid='+));
-
-        },
+           name: 'Dressingdetails',
+           url: './Dressingdetails.html',
+           pageParam: {
+               articleid:e.target.dataset.articleid
+           },
+           animation:{
+            type:"fade"
+           }
+       });
        },
-	  
+   //      doubleTap:function(e){
+   //          if (!userInfo){
+   //             window.location.href="./login_frame.html";
+   //             return;
+   //          }
+      // if (liketime == 0) {
+      //  liketime = 1;
+      //  setTimeout(function() {
+      //    liketime = 0;
+      //  }, 3000)
+      // } else {
+      //  toast('不能连续点赞哟', 'bottom');
+      //  return;
+      // }
+      
+   //           var likeid=e.target.dataset.likeid;
+      //  var touid=e.target.dataset.userid;
+   //          if ($('#'+likeid).attr('data-like_userid')=='0'){
+   //             $('#'+likeid).fadeOut();
+   //              $('#'+likeid).fadeIn();
+   //              setTimeout(function(){
+   //               $('#'+likeid).attr('src','../image/likea.png');
+   //               $('#'+likeid).attr('data-like_userid','1');
+   //              },300);
+   //               addlike(1,e.target.dataset.articleid,likeid);
+
+   //          }else{
+   //               $('#'+likeid).fadeOut();
+   //              $('#'+likeid).fadeIn();
+   //                setTimeout(function(){
+   //                  $('#'+likeid).attr('src','../image/likeb.png');
+   //                  $('#'+likeid).attr('data-like_userid','0');
+   //                },300);
+             
+   //            addlike(0,e.target.dataset.articleid,likeid);
+   //          }
+         
+   //      },
+        
+       },
+    
     });
      dl.close();
 }
@@ -423,15 +452,16 @@ function belike(articleid,_this,touid){
         window.location.href="./login_frame.html";
          return;
     }
-	if (liketime == 0) {
-		liketime = 1;
-		setTimeout(function() {
-			liketime = 0;
-		}, 3000)
-	} else {
-		toast('不能连续点赞哟', 'bottom');
-		return;
-	}
+  // console.log($('#like'+))
+  if (liketime == 0) {
+    liketime = 1;
+    setTimeout(function() {
+      liketime = 0;
+    }, 3000)
+  } else {
+    toast('不能连续点赞哟', 'bottom');
+    return;
+  }
 
     var like_userid=$(_this).attr('data-like_userid');
     if (like_userid=='0'){
@@ -456,15 +486,15 @@ function belike(articleid,_this,touid){
 // 加入书签
 function beshuqian(articleid,_this,touid){
         var shuqian_userid=$(_this).attr('data-shuqian_userid');
-		if (sqtime == 0) {
-			sqtime = 1;
-			setTimeout(function() {
-				sqtime = 0;
-			}, 3000)
-		} else {
-			toast('不能连续操作哟', 'bottom');
-			return;
-		}
+    if (sqtime == 0) {
+      sqtime = 1;
+      setTimeout(function() {
+        sqtime = 0;
+      }, 3000)
+    } else {
+      toast('不能连续操作哟', 'bottom');
+      return;
+    }
     if (shuqian_userid=='0'){
        $(_this).fadeOut();
         $(_this).fadeIn();
@@ -496,7 +526,7 @@ function addshuqian(index,articleid,shuqianid,touid){
             userid:userInfo.id,
             fatherid:articleid,
             type:'1',
-			touid:touid,
+      touid:touid,
         }
 
         postajax(url+'addshuqian',params,function(ret){
@@ -514,7 +544,7 @@ function addshuqian(index,articleid,shuqianid,touid){
             userid:userInfo.id,
             fatherid:articleid,
             type:'0',
-			touid:touid
+      touid:touid
         }
         postajax(url+'addshuqian',params,function(ret){
             if (ret.code=='400') {
@@ -536,7 +566,7 @@ function addlike(index,articleid,likeid,touid){
             userid:userInfo.id,
             fatherid:articleid,
             type:'1',
-			touid:touid,
+      touid:touid,
         }
 
         postajax(url+'addlike',params,function(ret){
@@ -558,7 +588,7 @@ function addlike(index,articleid,likeid,touid){
             userid:userInfo.id,
             fatherid:articleid,
             type:'0',
-			touid:touid,
+      touid:touid,
         }
         postajax(url+'addlike',params,function(ret){
             if (ret.code=='400') {
@@ -591,18 +621,17 @@ function dinyue(articleuserid){
    
 }
 function opendetails(_id){
-  // alert(1)
-   api.openWin({
-            name: 'Dressingdetails',
-            url: './Dressingdetails.html',
-            pageParam: {
-                articleid:_id
-            },
-            animation: {
-                type: "fade"
-            }
-        });
     // window.location.href='./Dressingdetails_frame.html?'+window.btoa(encodeURI('articleid='+_id));
+     api.openWin({
+           name: 'Dressingdetails',
+           url: './Dressingdetails.html',
+           pageParam: {
+               articleid:_id
+           },
+           animation:{
+            type:"fade"
+           }
+       });
 }
 
 function headphoto(){
@@ -619,82 +648,91 @@ function loadImage(){
 }
 
 function TAuser(uid){
-	window.location.href='./TAusercenter.html?'+window.btoa(encodeURI('uid='+uid));
+  window.location.href='./TAusercenter.html?'+window.btoa(encodeURI('uid='+uid));
 }
 function lianjie(id,imglists,warelists){
-	$('.warelists_'+id).append('<div id="xuanzhun" class="xz1" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; border-bottom:1px solid #FF4466; ">')
-	
-	var arrimg=imglists.split(',');
-	fnwarelist(arrimg,warelists,id);
-		
+  $('.warelists_'+id).append('<div id="xuanzhun" class="xz1" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; border-bottom:1px solid #FF4466; ">')
+  
+  var arrimg=imglists.split(',');
+  fnwarelist(arrimg,warelists,id);
+    
 }
 
-		function fnwarelist(imglist,warelists,_id) {
-				for (var i = 0; i < imglist.length; i++) {
-					var imgsrc = imglist[i].split('/')[1].split('.')[0];
-					var src = imgsrc.replace(/\-|\@|\=|\+|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\?|\{|\}|\:|\;|\'|\"|\/|\<|\>|\[|\]/g, '');
-					if (warelists[src]) {
-						var warestr = warelists[src];
-						warearray.push(warestr);
-					}
-				}
-				
-				for (var i = 1; i < warearray.length; i++) {
-					warearray[0].push.apply(warearray[0], warearray[i]);
-				}
+    function fnwarelist(imglist,warelists,_id) {
+        for (var i = 0; i < imglist.length; i++) {
+          var imgsrc = imglist[i].split('/')[1].split('.')[0];
+          var src = imgsrc.replace(/\-|\@|\=|\+|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\?|\{|\}|\:|\;|\'|\"|\/|\<|\>|\[|\]/g, '');
+          if (warelists[src]) {
+            var warestr = warelists[src];
+            warearray.push(warestr);
+          }
+        }
+        
+        for (var i = 1; i < warearray.length; i++) {
+          warearray[0].push.apply(warearray[0], warearray[i]);
+        }
 
-				ajaxwarelist(_id);
-			}
+        ajaxwarelist(_id);
+      }
 
-			function ajaxwarelist(_id) {
+      function ajaxwarelist(_id) {
 
-				var params = {
+        var params = {
 
-					where: {
-						id: {
-							inq: warearray[0]
-						}
-					},
-					skip: 0,
-					limit: warearray[0].length,
-					order: "createdAt DESC"
-				}
-				apigetajax('https://d.apicloud.com/mcm/api/ware', params, function(ret) {
-					if (ret) {
-						dotwarelist(ret,_id);
-						warearray=[];
-						
-					}
-				})
-			}
-			
-			function dotwarelist(ret,_id){
-				var tempFn = doT.template($('#template4').text());
-				// 使用模板函数生成HTML文本
-				var resultHTML = tempFn(ret);
-				// console.log(resultHTML)
-				$('.warelists_'+_id).css('border-bottom','0.0125rem solid #F1F1F1')
-				$(".warelists_"+_id).html(resultHTML);
-				
-				$(".wareimgs").lazyload({
-					container:$('.warelists_'+_id),
-					 effect: 'fadeIn',
-				});
-				
-				
-			}
-			
-		function share() {
-				var copyInput = document.getElementById('copyInput')
-				copyInput.select(); // 选择对象
-				document.execCommand("Copy"); // 执行浏览器复制命令
+          where: {
+            id: {
+              inq: warearray[0]
+            }
+          },
+          skip: 0,
+          limit: warearray[0].length,
+          order: "createdAt DESC"
+        }
+        apigetajax('https://d.apicloud.com/mcm/api/ware', params, function(ret) {
+          if (ret) {
+            dotwarelist(ret,_id);
+            warearray=[];
+            
+          }
+        })
+      }
+      
+      function dotwarelist(ret,_id){
+        var tempFn = doT.template($('#template4').text());
+        // 使用模板函数生成HTML文本
+        var resultHTML = tempFn(ret);
+        // console.log(resultHTML)
+        $('.warelists_'+_id).css('border-bottom','0.0125rem solid #F1F1F1')
+        $(".warelists_"+_id).html(resultHTML);
+        
+        $(".wareimgs").lazyload({
+          container:$('.warelists_'+_id),
+           effect: 'fadeIn',
+        });
+        
+        
+      }
+      
+    function share() {
+        var copyInput = document.getElementById('copyInput')
+        copyInput.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
 
-				toast('成功复制链接', 'center', 2000);
+        toast('成功复制链接', 'center', 2000);
 
-			}
-		function openware(wareid){
-			 window.location.href="./ware_frame.html?"+window.btoa(encodeURI("wareId="+wareid));
-		}
+      }
+    function openware(wareid){
+       // window.location.href="./ware_frame.html?"+window.btoa(encodeURI("wareId="+wareid));
+       api.openWin({
+           name: 'ware',
+           url: './ware.html',
+           pageParam: {
+               wareId:wareid
+           }
+       });
+    }
+    
+    
 </script>
 </body>
 </html>

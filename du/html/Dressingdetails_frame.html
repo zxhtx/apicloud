@@ -22,7 +22,7 @@
 		</meta>
 		<style>
 			[contentEditable=true]:empty::before{
-			        content:'添加评论';
+			        content:'发布评论';
 					color:gray;
 					
 			    }
@@ -110,19 +110,30 @@
 
 		</div>
 	
+		<div class="keybox">
+		   <div class="myheadimg" style="background-image:url(../image/empty_page_nothing.png)"></div>
+							  <div contenteditable="true" class="keyboard" id="text" onblur="jiaodian()" ></div>
+		   <div class="keybtn"  onclick="sendbtn()">发布</div>
+		 </div>
 		
-	</body>
-	<script id="template" type="text/template">
+		<script id="template" type="text/template">
 			{{~it.list:value:index}}
           <div class="box" >
-               <input id="copyInput" value="http://chaodashe.com/html/Dressingdetails_frame.html?{{!sharetle()}}" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
+               <input id="copyInput" value="https://chaodashe.com/html/Dressingdetails_frame.html?{{!sharetle()}}" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
                 {{if(value.showimgtype=='0'){ }}
                  <div class="Dressing" style="position: fixed;">
                     {{if(value.type=='0'){ }}
                       <div class="buytoast buytoasthidden">√点击钟意的穿搭图片进入穿搭详情</div>
                     {{ } }}
-                    <!-- <img class="headimg" src="{{=it.imgurl}}{{=value.userheadimg}}"> -->
-					<div class="headimg" onclick="TAuser({{=value.userid}})" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
+					{{if(value.uauthority==1){ }}
+						<div class="icon iconauthority">
+							<div class="headimg" onclick="TAuser({{=value.userid}})" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
+						</div>
+					{{ }else{ }}
+						<div class="icon iconnoauthority">
+							<div class="headimg" onclick="TAuser({{=value.userid}})" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
+						</div>	
+					{{ } }}	
                     <div class="back">
 						<div class="backimg"  tap onclick="goback()"></div>
 					</div>
@@ -139,7 +150,7 @@
                 <div class="swiper-container" style="height:auto">
                      <div class="swiper-wrapper"  style="height:auto" >
                      {{for(var i=0; i< value.imglist.length;i++) { }}
-                          <div class="swiper-slide"  style=" width:100%;height: 20rem;background-image: url({{=it.imgurl}}{{=value.imglist[i]}});"   data-articleid="{{=value.id}}" data-like_userid="{{=value.like_userid}}"  data-likeid="like{{=value.id}}" data-userid="{{=value.userid}}" data-Dressingimg="{{=value.imglist[i]}}"  >
+                          <div class="swiper-slide"  style=" width:100%;height: 20rem;background-image: url({{=it.imgurl}}{{=value.imglist[i]}});"   data-articleid="{{=value.id}}" data-like_userid="{{=value.like_userid}}"  data-likeid="like{{=value.id}}" data-userid="{{=value.userid}}" onclick="Dressingimg('{{=value.imglist[i]}}')" data-Dressingimg="{{=value.imglist[i]}}"  >
 						
                           </div>
                           
@@ -178,14 +189,9 @@
 						 <div></div>
 						 <div class="shuqiansmall"></div>
 						 <div class="sqcount" id="sqcount_{{=value.id}}" data-sqcount="{{=value.shuqian}}">{{=value.shuqian}}次收入书签</div>
-						 <div onclick="comment()" style="margin-left: 5px;font-weight: bold;">评论该动态</div>
+						 <!-- <div onclick="comment()" style="margin-left: 5px;font-weight: bold;">评论该动态</div> -->
                     </div>
-                    <div class="keybox">
-                      <div class="myheadimg" style="background-image:url(../image/empty_page_nothing.png)"></div>
-					  <div contenteditable="true" class="keyboard" id="text" onblur="jiaodian()" ></div>
-                      <div class="keybtn"  onclick="sendbtn()">发布</div>
-                    </div>
-
+                 
 
                 </div>
                 {{ }else{ }}
@@ -194,7 +200,16 @@
                             <div  class="buytoast buytoasthidden">√点击钟意的穿搭图片进入穿搭详情</div>
                           {{ } }}
                         <!-- <img  src=""> -->
-						<div class="headimg" onclick="TAuser({{=value.userid}})" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
+						{{if(value.uauthority==1){ }}
+							<div class="icon iconauthority">
+								<div class="headimg" onclick="TAuser({{=value.userid}})" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
+							</div>
+						{{ }else{ }}
+							<div class="icon iconnoauthority">
+								<div class="headimg" onclick="TAuser({{=value.userid}})" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
+							</div>	
+						{{ } }}	
+						
                        <div class="back">
                        	<div class="backimg"  tap onclick="goback()"></div>
                        </div>
@@ -247,15 +262,15 @@
 						<div></div>
 						 <div class="shuqiansmall"></div>
 						 <div class="sqcount" id="sqcount_{{=value.id}}" data-sqcount="{{=value.shuqian}}">{{=value.shuqian}}次收入书签</div>
-						 <div onclick="comment()" style="margin-left: 5px;font-weight: bold;">评论该动态</div>
+						 <!-- <div onclick="comment()" style="margin-left: 5px;font-weight: bold;">评论该动态</div> -->
                     </div>
-                      <div class="keybox">
+                     <!-- <div class="keybox">
                       <div class="myheadimg" style="background-image:url(../image/empty_page_nothing.png)"></div>
                         <div contenteditable="true" class="keyboard" id="text"  onblur="jiaodian()" >
 							
 						</div>
                        <div class="keybtn" onclick="sendbtn()">发布</div>
-                    </div>
+                    </div> -->
 
 
 
@@ -272,9 +287,15 @@
 		<script id="template2" type="text/template">
 			{{~it.list:value:index}}
 				<div class="li" >
-				 <div class="icon">
-				  <div class="head_img" onclick="TAuser({{=value.userinfo.id}})" style="background-image:url({{=it.imgurl}}{{=value.userinfo.headimg}})"></div>
+				{{if(value.userinfo.authority==1){ }}
+				 <div class="icon iconauthority">
+				  <div class="head_img " onclick="TAuser({{=value.userinfo.id}})" style="background-image:url({{=it.imgurl}}{{=value.userinfo.headimg}})"></div>
 				 </div>
+				 {{ }else{ }}
+					<div class="icon iconnoauthority">
+					 <div class="head_img" onclick="TAuser({{=value.userinfo.id}})" style="background-image:url({{=it.imgurl}}{{=value.userinfo.headimg}})"></div>
+					</div>
+				 {{ } }}
 				 <div class="content" onclick="reply('{{=value.userinfo.id}}','{{=value.userinfo.name}}','{{=value.superiorid}}')">
 					 <div class="name">{{=value.userinfo.name}}</div>
 					 <div class = "text" >{{=value.msg}}<div class = "time" >{{!timestampFormat('{{=value.time}}')}}</div></div>
@@ -283,7 +304,15 @@
 					<div class="sonbox sonbox_{{=value.superiorid}}">
 						{{for(var i=0;i<value.sonmsg.length;i++){ }}
 						<div class="son"   onclick="reply('{{=value.sonmsg[i].frominfo.id}}','{{=value.sonmsg[i].frominfo.name}}','{{=value.sonmsg[i].msg.superiorid}}')">
-							<div class="son_head" onclick="TAuser({{=value.sonmsg[i].frominfo.id}})" style="background-image:url({{=it.imgurl}}{{=value.sonmsg[i].frominfo.headimg}})" ></div>
+							{{ if(value.sonmsg[i].frominfo.authority==1){ }}
+							<div class="icon iconauthority">
+								<div class="son_head" onclick="TAuser({{=value.sonmsg[i].frominfo.id}})" style="background-image:url({{=it.imgurl}}{{=value.sonmsg[i].frominfo.headimg}})" ></div>
+							</div>
+							{{ }else{ }}
+								<div class="icon iconnoauthority">
+									<div class="son_head" onclick="TAuser({{=value.sonmsg[i].frominfo.id}})" style="background-image:url({{=it.imgurl}}{{=value.sonmsg[i].frominfo.headimg}})" ></div>
+								</div>
+							{{ } }}
 							<div class="comm">
 								<div class="sonname"><div class="fromname">{{=value.sonmsg[i].frominfo.name}}</div>&nbsp;{{if(value.sonmsg[i].toinfo){ }} 回复 &nbsp;<div class="toname" onclick="TAuser({{=value.sonmsg[i].toinfo.id}})"> {{=value.sonmsg[i].toinfo.name}}</div>{{ } }}</div>
 								<div class="text">{{=value.sonmsg[i].msg.msg}} <div class="time">{{!timestampFormat('{{=value.sonmsg[i].msg.time}}')}}</div></div>
@@ -304,7 +333,17 @@
 		<script id="template3" type="text/template">
 			{{~it.list:value:index}}
 			<div class="son"   onclick="reply('{{=value.frominfo.id}}','{{=value.frominfo.name}}','{{=value.msg.superiorid}}')">
+			{{ if(value.frominfo.authority==1){ }}
+			  <div class="icon iconauthority">
 				<div class="son_head" onclick="TAuser({{=value.frominfo.id}})"  style="background-image:url({{=it.imgurl}}{{=value.frominfo.headimg}})" ></div>
+			  </div>
+			{{ }else{ }}
+				
+				<div class="icon iconnoauthority">
+					<div class="son_head" onclick="TAuser({{=value.frominfo.id}})"  style="background-image:url({{=it.imgurl}}{{=value.frominfo.headimg}})" ></div>
+				</div>
+			
+			{{ } }}
 				<div class="comm">
 					<div class="sonname"><div class="fromname">{{=value.frominfo.name}}</div>&nbsp;{{if(value.toinfo){ }} 回复 &nbsp;<div class="toname" onclick="{{=value.toinfo.id}}"> {{=value.toinfo.name}}</div>{{ } }}</div>
 					<div class="text">{{=value.msg.msg}} <div class="time">{{!timestampFormat('{{=value.msg.time}}')}}</div></div>
@@ -324,14 +363,8 @@
 				</div>
 			{{~}}
 		</script>
-		
 		<script type="text/javascript">
 			// $(window).height()=0;
-			 apiready = function() {
-			 	getchaodashe();
-			getcomment();
-
-			 }
 			var wareid;
 			var fnwarelists;
 			var music;
@@ -347,18 +380,36 @@
 			var sqtime = 0;
 			var liketime = 0;
 			var musicname;
+			apiready = function(){
+			    getchaodashe();
+			getcomment();
+			}
+			    
+			
 			$(function(){
 				$('.am-share').height( $(window).height()/1.6+'px');
 				$('.am-share-sns').height($(window).height()/1.6+'px');
 				$('#Dressinglist').height($(window).height()/1.6+'px');
 				// $('.am-share').height($(window).height())
 			})
+			 $(window).scroll(function(event){
 			
+				if($(window).scrollTop()>$('#list').height()-$(window).height()){
+					$('.keybox').fadeIn();
+					// console.log(1);
+				}else{
+					$('.keybox').fadeOut()
+				}
+				// console.log($(window).scrollTop())
+				 // console.log($('#list').height()-$(window).height())
+			 });
 			function sharetle() {
-				// return window.btoa(encodeURI("articleid=" + getQueryString(0)));
+				return window.btoa(encodeURI("articleid=" + api.pageParam.articleid));
 
 			}
-
+				// 底部弹窗
+			
+			
 			function showalltext() {
 				var show = $('.arttext').attr('data-showall');
 
@@ -420,11 +471,7 @@
 				$("body").on('touchstart', function() {
 					$("#audio").get(0).play();
 				})
-				// alert('傻逼')
-				 // =api.pageParam.articleID;
-				 var articleid=api.pageParam.hel;
-
-
+				var articleid = api.pageParam.articleid;
 				if (userInfo) {
 					var params = {
 						articleid: articleid,
@@ -445,11 +492,12 @@
 
 				postajax(url + 'getdetails', params, function(ret) {
 					if (ret.code == '200') {
+						// alert(JSON.stringify(ret))
 						// console.log(ret.data[0].warelist);
-						var ware=ret.data[0].warelist;
-						wareid= ware;
-						fnwarelists =$.extend(true,{},ware);
-						
+						var ware = ret.data[0].warelist;
+						wareid = ware;
+						fnwarelists = $.extend(true, {}, ware);
+
 						if (ret.data[0].music) {
 							$('#audio').attr('src', imgurl + ret.data[0].music);
 							music = ret.data[0].music;
@@ -457,20 +505,20 @@
 							fry_audio.load();
 						}
 						// console.log(warelist);
-						
+
 						chaodashetext = ret.data[0].text.substr(0, 99);
 						allchaodashetext = ret.data[0].text;
-						if(ret.data[0].musicname){
+						if (ret.data[0].musicname) {
 							submusicname(ret.data[0].musicname);
 						}
-						
+
 						fnUpdateWareListByShoppingCart(ret.data);
-						if(ret.data[0].warelist!=0){
+						if (ret.data[0].warelist != 0) {
 							fnwarelist(ret.data[0].imglist);
-						}else{
+						} else {
 							$('.warelists').remove();
 						}
-						
+
 						touid = ret.data[0].userid;
 						artid = articleid;
 						touid2 = ret.data[0].userid;
@@ -526,7 +574,7 @@
 					slidesPerView: 1.2,
 					spaceBetween: 6,
 					centeredSlides: true,
-					speed:666,
+					// speed:666,
 					pagination: {
 						el: '.swiper-pagination',
 						dynamicBullets: true,
@@ -574,22 +622,35 @@
 
 
 						},
-						click: function(e) {
-							// dom里面的大写的通过swiper转成小写(坑)
-							var Dressingimg = e.target.dataset.dressingimg;
-							var imgsrc = Dressingimg.split('/')[1].split('.')[0];
-							var src = imgsrc.replace(/\-|\@|\=|\+|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\?|\{|\}|\:|\;|\'|\"|\/|\<|\>|\[|\]/g,
-								'');
-							if (wareid[src]) {
-								
-								window.location.href = "./chaodashedetails_frame.html?" + window.btoa(encodeURI('warelistid=' + wareid[src] +
-									'&img=' + Dressingimg + '&music=' + music));
-							} else {
-								toast('此图片没有穿搭链接', 'center', 1000);
-							}
+						// touchEnd: function(event){
+						//       //你的事件
+						// 	  console.log(data_[0].imglist[swiper.activeIndex]);
+						// 		// $('.swiper-container').attr('backgorund-image',"url("+imgurl+data_[0].imglist[swiper.activeIndex]+")");
+						// 		console.log(imgurl+data_[0].imglist[swiper.activeIndex])
+						// 		$(".swiper-container").css({
+						// 			'background': 'url(' + imgurl + data_[0].imglist[swiper.activeIndex] + ')',
+						// 			'background-size': 'cover',
+						// 		});
+						//     },
+						// tap: function(e) {
+						// 	// alert(1);
+						// 	toshare();
+						// 	// return;
+						// 	// dom里面的大写的通过swiper转成小写(坑)
+						// 	// var Dressingimg = e.target.dataset.dressingimg;
+						// 	// var imgsrc = Dressingimg.split('/')[1].split('.')[0];
+						// 	// var src = imgsrc.replace(/\-|\@|\=|\+|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\?|\{|\}|\:|\;|\'|\"|\/|\<|\>|\[|\]/g,
+						// 	// 	'');
+						// 	// if (wareid[src]) {
+
+						// 	// 	window.location.href = "./chaodashedetails_frame.html?" + window.btoa(encodeURI('warelistid=' + wareid[src] +
+						// 	// 		'&img=' + Dressingimg + '&music=' + music));
+						// 	// } else {
+						// 	// 	toast('此图片没有穿搭链接', 'center', 1000);
+						// 	// }
 
 
-						}
+						// }
 
 					}
 				});
@@ -785,7 +846,7 @@
 				});
 				if (wareid[src]) {
 					// $('#Dressinglist').append('<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; border-bottom:1px solid #FF4466; ">');
-					 toshare();
+					  toshare();
 					var params = {
 					    fields: {},
 					    where: {
@@ -796,6 +857,7 @@
 					    skip: 0,
 					    limit: wareid.length,
 					    order:"createdAt DESC"
+
 					}
 					apigetajax('https://d.apicloud.com/mcm/api/ware',params,function(ret){
 					    if (ret) {
@@ -817,16 +879,12 @@
 
 			}
 
-
 			function gohome() {
 				window.location.href = "./chaodashe_frame.php";
 			}
 
 			function goback() {
-				// window.history.back(-1);
-				api.closeWin({
-				    name: 'Dressingdetails'
-				});
+				api.closeWin();
 			}
 
 			function getcomment(_loadMore) {
@@ -836,7 +894,7 @@
 					commentskip = 0;
 				}
 				postajax(url + 'getcomment', {
-					"artid": getQueryString(0),
+					"artid": api.pageParam.articleid,
 					"skip": commentskip,
 					"limit": commentlimit
 				}, function(e) {
@@ -1012,63 +1070,72 @@
 			}
 
 			function fnwarelist(imglist) {
-					var warearray=[];
+				var warearray = [];
 				for (var i = 0; i < imglist.length; i++) {
-					
+
 					var imgsrc = imglist[i].split('/')[1].split('.')[0];
 					var src = imgsrc.replace(/\-|\@|\=|\+|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\?|\{|\}|\:|\;|\'|\"|\/|\<|\>|\[|\]/g, '');
 					if (fnwarelists[src]) {
-					
+
 						var warestr = fnwarelists[src];
 						warearray.push(warestr);
 					}
 				}
 
 				for (var i = 1; i < warearray.length; i++) {
-					warearray[0].push.apply(warearray[0],warearray[i]);
+					warearray[0].push.apply(warearray[0], warearray[i]);
 				}
-				
+
 				ajaxwarelist(warearray);
 			}
 
 			function ajaxwarelist(warearray) {
 
-				var params = {
+				// var params = {
 
-					where: {
-						id: {
-							inq: warearray[0]
-						}
-					},
+				// 	where: {
+				// 		id: {
+				// 			inq: warearray[0]
+				// 		}
+				// 	},
+				// 	skip: 0,
+				// 	limit: warearray[0].length,
+				// 	order: "createdAt DESC"
+				// }
+				var params = {
+					inq:JSON.stringify(warearray[0]),
 					skip: 0,
 					limit: warearray[0].length,
-					order: "createdAt DESC"
+					
 				}
-				apigetajax('https://d.apicloud.com/mcm/api/ware', params, function(ret) {
+				getajax(url+'Dressingware', params, function(ret) {
 					if (ret) {
 						dotwarelist(ret);
+						
 						// console.log(ret);
 					}
 				})
 			}
-			
-			function dotwarelist(ret){
+
+			function dotwarelist(ret) {
 				var tempFn = doT.template($('#template4').text());
 				// 使用模板函数生成HTML文本
 				var resultHTML = tempFn(ret);
 				// console.log(resultHTML)
 				$(".warelists").html(resultHTML);
-				
+
 				$(".wareimgs").lazyload({
-					container:$('.warelists'),
-					 effect: 'fadeIn',
+					container: $('.warelists'),
+					effect: 'fadeIn',
 				});
-				
-				
+
+
 			}
-			function openware(wareid){
-				 window.location.href="./ware_frame.html?"+window.btoa(encodeURI("wareId="+wareid));
+
+			function openware(wareid) {
+				window.location.href = "./ware_frame.html?" + window.btoa(encodeURI("wareId=" + wareid));
 			}
+
 			function share() {
 				var copyInput = document.getElementById('copyInput')
 				copyInput.select(); // 选择对象
@@ -1081,7 +1148,7 @@
 			function openmusic() {
 				toast('此功能暂时还未开发', 'bottom');
 			}
-
+			
 			// 渲染单张图片的穿搭链接
 			function updateWareList(_data){
 			     initWaterFall();
@@ -1125,4 +1192,5 @@
 			  
 			}
 		</script>
+	</body>
 </html>

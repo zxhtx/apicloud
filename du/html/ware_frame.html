@@ -373,7 +373,7 @@ footer{
 
 
 
-          <input id="copyInput" value="http://chaodashe.com/html/ware_frame.html?{{!sharetle()}}" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
+          <input id="copyInput" value="http://www.chaodashe.com/html/ware_frame.html?{{!sharetle()}}" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
           <div class="info-discount">
             <div class="name">尺码</div>
             {{for(var i=0; i<value.size.length ;i++) { }}
@@ -408,6 +408,7 @@ footer{
       var shoppingid;
       var loading;
       apiready = function(){
+           dialog('商品加载中')
           getWareInfo(api.pageParam.wareId);
       }
           
@@ -415,7 +416,10 @@ footer{
       // getQueryString(0);
       // return;
       function goback(){
-        api.closeWin();
+        // api.closeWin();
+        api.closeWin({
+            name: 'ware'
+        });
       }
       function sharetle() {
         return window.btoa(encodeURI("wareId=" +api.pageParam.wareId));
@@ -425,16 +429,13 @@ footer{
       function getWareInfo(_wareId) {
 
         var params = {
-          fields: {},
-          where: {
-            id: _wareId
-          },
+          id: _wareId,
           skip: 0,
           limit: 1,
-          include: ['wareInfoPointer']
+          include: 'wareInfoPointer'
         }
 
-        apigetajax('http://d.apicloud.com/mcm/api/ware', params, function(ret) {
+        getajax(url+'oneware', params, function(ret) {
           if (ret) {
             // 更新商品详情展示
             shoppingid = ret[0].id;
@@ -466,16 +467,14 @@ footer{
       }
 
       function getallware(ret1) {
-        dialog('商品加载中')
+     
         var suiji = Math.round(Math.random() * 600);
         var params = {
-          fields: {},
-          fields: {},
           skip: suiji,
           limit: 6,
 
         }
-        apigetajax('https://d.apicloud.com/mcm/api/ware', params, function(ret) {
+        getajax(url+'sjware', params, function(ret) {
           fnUpdateWareInfo(ret1, ret);
         });
       }
