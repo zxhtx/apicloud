@@ -1,0 +1,211 @@
+body,
+html,
+div,
+a,
+span,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+ul,
+li,
+input,
+button {
+  margin: 0;
+  padding: 0;
+  
+}
+
+a,
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: black;
+  -webkit-tap-highlight-color:transparent;
+
+}
+/*
+登录界面--start*/
+.login-bg {
+ height: 100%;
+  background-image: url("../image/login/2_bg.jpg");
+   background-color: rgba(0, 0, 0, 0.4);
+  background-size: cover;
+  color: #ffffff;
+   /* box-sizing: border-box ; */
+  
+	
+  
+  
+}
+.login-contain {
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+.login-header {
+  padding: 5%;
+}
+.login-header p {
+  font-size: 20px;
+  color: #ffffff;
+  text-align: center;
+}
+.login-logo {
+  padding: 5%;
+}
+.zhpwd{
+	width: 100%;
+	position: relative;
+	height: 19px;
+	/* border: 1px solid red; */
+}
+.zhpwd div{
+	position: absolute;
+	right: 19px;
+	margin-top: 6px;
+	/* margin-left:18px; */
+}
+.login-logo img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+}
+.login-logo p {
+  color: #ffffff;
+  font-size: 14px;
+  text-align: center;
+  letter-spacing: 2px;
+  margin-top: 2%;
+}
+.form-group {
+  padding: 5%;
+}
+.form-group .form-item {
+  border-bottom: 1px #ffffff solid;
+  margin-top: 5%;
+}
+
+.form-group .form-item input {
+  outline: 0px;
+  border: 0px;
+  cursor:pointer;
+  background-color: transparent;
+   background:none;
+  color: #ffffff;
+  height: 40px;
+  font-size: 18px;
+  width: 63%;
+  margin-left: 12%;
+}
+
+.form-group .form-item input::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: #ffffff;
+  font-size: 16px;
+}
+.form-group .form-item input:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #ffffff;
+  font-size: 16px;
+}
+.form-group .form-item input::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #ffffff;
+  font-size: 16px;
+}
+.form-group .form-item input:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: #ffffff;
+  font-size: 16px;
+}
+.form-group .form-item label img {
+  width: 25px;
+  position: absolute;
+  margin-top: 2%;
+}
+.form-group .form-item button {
+  outline: none;
+  border: 0;
+  background: transparent;
+  /* border: 1px #00cc99 dashed; */
+  color: #ffffff;
+  height: 30px;
+  /* border-radius: 5px; */
+  float: right;
+  /* padding: 1%; */
+}
+.button-group {
+  padding: 5%;
+}
+.button-group button {
+  outline: none;
+  border: 0;
+  width: 90%;
+  height: 35px;
+  margin-top: 8%;
+  border-radius: 20px;
+  margin-left: 4%;
+  color: #ffffff;
+  font-size: 18px;
+}
+.button-group .login-btn {
+  background-color: #00cc99;
+}
+.button-group .login-register {
+  background: transparent;
+  border: 1px #ffffff solid;
+}
+
+
+.copyright {
+  text-align: center;
+  padding: 2%;
+}
+/*
+注册页面--start*/
+.bg-register {
+ height: 100%;
+  background-image: url("../image/login/2_bg.jpg");
+   background-color: rgba(0, 0, 0, 0.4);
+  background-size: cover;
+  color: #ffffff;
+}
+.register-contain{
+	background-color: rgba(0, 0, 0, 0.4);
+	height: 100%;
+	width: 100%;
+	position: absolute;
+}
+.register-header {
+  padding: 5%;
+}
+.register-header a {
+  font-size: 20px;
+  color: #f2f2f2;
+  font-weight: bold;
+}
+.register-header a span {
+  font-size: 18px;
+  margin-left: 2%;
+}
+.authorization {
+  padding: 0 5%;
+  font-size: 14px;
+}
+.authorization input {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  margin-left: 6%;
+}
+
+  /* .disable{ */
+        /* pointer-events:none; */
+        /* color:#666; */
+    /* } */

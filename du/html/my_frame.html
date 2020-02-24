@@ -1,654 +1,290 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 
 <head>
+      <link rel="shortcut icon" href="../image/chao.ico" />
     <meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-    <title>APICloud APP</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <title>个人中心</title>
+    <link rel="stylesheet" type="text/css" href="../css/my_frame.css">
+    <script src="../script/commonjs.js"></script>
+    <script src="../script/footcom.js">
+    </script>
+    <script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
     <style>
-    html,
-    body {
-        height: 100%;
-        background-color: #f0f0f0;
-    }
-
-    .h10 {
-        height: 10px;
-        background: #f0f0f0;
-    }
-
-    .h1 {
-        height: 1px;
-        margin-left: 15px;
-        background: #f0f0f0;
-    }
-
-    .fr {
-        float: right;
-    }
-
-    .hint {
-        color: #666;
-        font-size: 12px;
-        margin-right: 5px;
-    }
-
-    .firstblock,
-    .secondblock,
-    .thirdblock {
-        background-color: #fff;
-    }
-
-    .login {
-        background-image: url(../image/my/personal_bkg.jpg);
-        background-repeat: no-repeat;
-        background-size: contain;
-        position: relative;
-        height: 166px;
-        /*border: 1px solid red;*/
-    }
-
-    .loginbg {
-        width: 100%;
-    }
-
-    .login .personal_logo {
-        position: absolute;
-        top: 50px;
-        width: 64px;
-        height: 64px;
-        left: 20px;
-        border-radius: 32px;
-    }
-
-    .person_arrow {
-        position: absolute;
-        height: 20px;
-        right: 10px;
-        top: 90px;
-    }
-
-    .login .userinfo {
-        position: absolute;
-        top: 50px;
-        margin-left: 100px;
-    }
-
-    .login .userinfo .title {
-        font-size: 14px;
-        color: black;
-    }
-
-    .login .userinfo .subtitle {
-        font-size: 14px;
-        color: #000;
-        border: 1px solid #fff;
-        display: inline-block;
-        padding: 3px;
-        border-radius: 4px;
-        margin-top: 5px;
-    }
-    .login .userinfo .vip {
-        font-size: 14px;
-        color: #000;
-        display: block;
-        /*padding: 3px;*/
-        border-radius: 4px;
-        margin-top: 5px;
-    }
-    .login .dingyueandfensi{
-        position: absolute;
-        bottom: 12px;
-        width: 100%;
-        height: 20px;
-        text-align: center;
-    }
-    .login .dingyueandfensi .dingyue {
-        font-size: 14px;
-        color: #000;
-        display: inline-block;
-        border-radius: 4px;
-        margin-right: 58px;
-    }
-    .login .dingyueandfensi .fensi {
-        margin-left: 58px;
-        font-size: 14px;
-        color: #000;
-        display: inline-block;
-        border-radius: 4px;
-
-    }
-
-    .item {
-        height: 50px;
-        line-height: 50px;
-        padding-left: 15px;
-        background-color: #fff;
-    }
-
-    .item_ico {
-        float: left;
-        width: 30px;
-        padding: 10px 10px 10px 0;
-    }
-
-    .item_arrow {
-        float: right;
-        width: 16px;
-        padding: 17px 15px 15px 0;
-    }
-
-    .item-hov {
-        background-color: #E8E8E8;
-    }
+   
 </style>
 </head>
 
 <body>
     <div class="login open-win" win="person_info">
-      
-        <img id="userAvatar" src="../image/empty_page_nothing.png" tapmode onclick="setAvatar()" class="personal_logo">
+        <div id="userAccount" class="title" tapmode onclick="login()">点击登录</div>
+        <!-- <img id="userAvatar" src="../image/empty_page_nothing.png"  class="personal_logo"> -->
+        <div class="personal_logo" tapmode onclick="setAvatar()" ></div>
+        <div class="userlist">
+            <div class="lists" onclick="opendinyue()">
+                <div class="dinyuecount" >0</div>
+                <div class="text">已订阅</div>
+            </div>
+            <div class="lists"  onclick="openfensi()">
+                <div class="fensicount">0</div>
+                <div class="text">粉丝</div>
+            </div>
+            <div class="lists" onclick="opensq()">
+                <div class="sqcount">0</div>
+                <div class="text">书签</div>
+            </div>
+        </div>
         <div class="userinfo">
-            <div id="userAccount" class="title" tapmode onclick="login()">点击登录</div>
             <div id="userRegion" class="subtitle" tapmode onclick="updatauser()">用户名：未设置</div>
             <div id="vip" class="vip"></div>
 
             
         </div>
-        <div class="dingyueandfensi">
-            <div id="dingyue" class="dingyue" tapmode onclick="guanzhu()" >订阅/0</div>
-            <div id="fensi" class="fensi"  tapmode onclick="fensi()" >粉丝/0</div>
-        </div>
+        <div class="setuser" onclick="setuser()">编辑主页</div>
     </div>
-    <div class="h10"></div>
-    <div class="firstblock">
-        <div class="item open-win" tapmode onclick="openchaoshi()">
-            <img src="../image/video2.png" alt="" class="item_ico">
-            <span>潮视短视频</span>
-            <img src="../image/arrow.png" class="item_arrow">
-        </div>
-        <div class="h1"></div>
-        <div class="item open-win" tapmode onclick="openmevideo()">
-            <img src="../image/video.png" alt="" class="item_ico">
-            <span>我的视频</span>
-            <img src="../image/arrow.png" class="item_arrow">
-        </div>
-        <div class="h1"></div>
-        <div class="item open-win" tapmode onclick="openlikevideo()">
-            <img src="../image/likeimage.png" alt="" class="item_ico">
-            <span>喜欢的视频</span>
-            <img src="../image/arrow.png" class="item_arrow">
-        </div>
-        <div class="h1"></div>
-    </div>
-    <div class="h10"></div>
-    <div class="secondblock">
-        <div class="item open-win" tapmode onclick="opendindan()">
-            <img src="../image/dindan.png" class="item_ico">
-            <span>我的订单</span>
-            <img src="../image/arrow.png" class="item_arrow">
-        </div>
-        <div class="h1"></div>
-        <div class="item open-win" tapmode onclick="opencity()">
-            <img src="../image/dizhi.png" class="item_ico">
-            <span>收货地址</span>
-            <img src="../image/arrow.png" class="item_arrow">
-        </div>
-        <div class="h1"></div>
-        <div class="item open-win" tapmode onclick="openshoppingcart()">
-            <img src="../image/minicart.png" class="item_ico">
-            <span>购物车</span>
-            <img src="../image/arrow.png" class="item_arrow">
-        </div>
-    </div>
-    <div class="h10"></div>
-    <div class="thirdblock">
-        <div class="h1"></div>
-        <div class="item open-win" tapmode onclick="share()">
-            <img src="../image/share.png" class="item_ico">
-            <span>分享应用得vip打9.5折</span>
-            <img src="../image/arrow.png" class="item_arrow">
-        </div>
-        <div class="h1"></div>
-        <div class="item open-win" tapmode onclick="opensetting()">
-            <img src="../image/setting.png" class="item_ico">
-            <span>设置</span>
-            <img src="../image/arrow.png" class="item_arrow">
-        </div>
-        <div class="h1"></div>
-        <div class="item open-win" tapmode onclick="kefu()">
-            <img src="../image/kefu.png" class="item_ico">
-            <span>客服</span>
-            <img src="../image/arrow.png" class="item_arrow">
-        </div>
-    </div>
-    <div class="h10"></div>
-    <div class="h10"></div>
+   <div class="wareandcds">
+       <div class="warelist">
+           <div class="daifukuan list" onclick="daifukuan()">
+               
+               <div class="daifukuanpng"><div class="dfkcount"></div></div>
+               <div class="text">待付款</div>
+           </div>
+           <div class="daishouhuo list" onclick="daishouhuo()">
+               <div class="daishouhuopng"><div class="dshcount"></div></div>
+               <div class="text">待收货</div>
+           </div>
+           <div class="qianshou list" onclick="qianshou()">
+               <div class="yiqianshoupng"></div>
+               <div class="text">已签收</div>
+           </div>
+           <div class="shouhuodz list" onclick="meaddress()">
+                       <div class="shouhuodzpng"></div>
+                       <div class="text">收货地址</div>
+           </div>
+       </div>
+       <div class="setlist">
+           <div class="downapp list">
+            <div class="downappimg"></div>
+              <div class="text">APP下载</div> 
+               
+            </div>
+           <div class="getVIP list"  onclick="share()">
+            <div class="getVIPimg"></div>
+            <div class="text">分享获取VIP</div>   
+            </div>
+           <div class="kefu list">
+            <div class="kefuimg"></div>
+            <div class="text">官方客服</div>  
+            </div>
+       </div>
+   </div>
+  <div class="cdslist">
+    
+  </div>
+      
 </body>
-<script type="text/javascript" src="../script/api.js"></script>
-<script type="text/javascript" src="../script/SHA1.js"></script>
+
+<script id="template" type="text/template">
+    {{~it.list:value:index}}
+        <div onclick="openDressing({{=value.id}})" class="cdsimg "  data-original="{{=it.imgurl}}{{=value.imglist}}">
+            {{if(value.showimgtype=='1'){}}
+             <img src="../image/longimg.png" alt="">
+            {{ }else{ }}
+             <img src="../image/lunbo_white.png" alt="">
+            {{ } }}
+        </div>
+    {{~}}
+</script>
+
 <script type="text/javascript">
-    var userInfo=$api.getStorage('userInfo');
-    var now = Date.now();
-    var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+      $(function(){
+                $('.my').addClass('now').siblings().removeClass('now');
+
+            })
     var myDate = new Date();
     var Y=myDate.getFullYear();
     var M=myDate.getMonth()+1;
-    var D=myDate.getDate();
+    var D=myDate.getDate();  
     var dialogBox;
     var clipBoard;
-    apiready = function() {
-        clipBoard = api.require('clipBoard');
-        dialogBox = api.require('dialogBox');
-        fnInitEvent();
-        getUsername();
-        dingyuecount();
-        fensicount();
+    var skip=0;
+    var limit=9;
+    var off_on=false;
+    
+    getUsername();
+    getcdslist();
+    shoppingcount();
+    function setuser(){
+      var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+      if (!userInfo) {
+      openlogin();
+        return;
+    }
+    window.location.href="./set_frame.html"; 
+}
 
+function setAvatar(){
+    var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+  window.open(imgurl+userInfo.headimg);
+}
+
+function daifukuan(){
+  var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+  if (!userInfo) {
+   openlogin();
+}else{
+    window.location.href="./dindan_frame.html?"+window.btoa(encodeURI('nav=0'));
+}
+
+}
+
+function daishouhuo(){
+  var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+  if (!userInfo) {
+    openlogin();
+}else{
+   window.location.href="./dindan_frame.html?"+window.btoa(encodeURI('nav=1'));;
+}
+
+} 
+function shoppingcount(){
+      var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+    if (!userInfo) {
+      return;
+    }
+    var params={
+         userid:userInfo.id
     };
-    function fnInitEvent(){
-        api.addEventListener({
-            name: 'setuserinfo'
-        }, function(ret, err) {
-            getUsername();
-            dingyuecount();
-            fensicount();
-        });
-        api.addEventListener({
-            name: 'logout'
-        }, function(ret, err) {
-            var dingyue=$api.byId('dingyue');
-            var fensicount=$api.byId('fensi');
-            var userAccount=$api.byId('userAccount');
-            var userRegion=$api.byId('userRegion');
-            var  userAvatar=$api.byId('userAvatar');
-            var vip=$api.byId('vip');
-            vip.innerHTML='';
-            dingyue.innerHTML='订阅/0';
-            fensi.innerHTML='粉丝/0';
-            userAccount.innerHTML='点击登录';
-            userRegion.innerHTML='用户名：未设置';
-            userAvatar.src="../image/empty_page_nothing.png";
-
-
-        });
-
-    }
-
-    function updatauser(){
-        userInfo=$api.getStorage('userInfo');
-        if (userInfo) {
-         input();
-     }else{
-         api.openWin({
-            name: 'login',
-            url: './login.html',
-            pageParam: {
-                name: 'test'
+    
+    postajax(url+'shoppingcount',params,function(e){
+        if(e.code=='200'){
+            console.log(e.data)
+            if(e.data.dfk){
+                $('.dfkcount').html(e.data.dfk).css('display','block');
+            }else{
+                $('.dfkcount').remove();
             }
-        });
-
-     }
- }
- function input(){
-  dialogBox.input({
-    keyboardType: 'default',
-    texts: {
-      title: '潮视',
-      placeholder: '修改用户名',
-      leftBtnTitle: '取消',
-      rightBtnTitle: '确定'
-  },
-  styles: {
-      bg: '#fff',
-      corner: 2,
-      w: 300,
-      h: 240,
-      title: {
-        h: 60,
-        alignment: 'center',
-        size: 14,
-        color: '#000',
-        marginT:30,
-    },
-    input: {
-        h: 60,
-        y:30,
-        marginT:15,
-        marginLeft: 10,
-        marginRight:10,
-        textSize: 14,
-        textColor: '#000'
-    },
-    dividingLine: {
-        width: 0.5,
-        color: '#696969'
-    },
-    left: {
-        bg: 'rgba(0,0,0,0)',
-        color: '#000',
-        size: 12
-    },
-    right: {
-        bg: 'rgba(0,0,0,0)',
-        color: '#000',
-        size: 12
-    }
-}
-}, function(ret) {
-
-    if (ret.eventType == 'left') {
-        dialogBox.close({
-            dialogName: 'input'
-        });
-
-    }else{
-        if (ret.text!='') {
-            updatausername(ret.text);
+            if(e.data.dsh){
+                $('.dshcount').html(e.data.dsh).css('display','block');
+            }else{
+                $('.dshcount').remove();
+            }
         }
-        dialogBox.close({
-            dialogName: 'input'
-        });
-    }
-});
+    })
 }
-function updatausername(user){
-   userInfo=$api.getStorage('userInfo');
-   var userRegion=$api.byId('userRegion');
-   api.ajax({
-      url: 'https://d.apicloud.com/mcm/api/user/'+userInfo.userId,
-      method: 'put',
-      headers: {
-        "X-APICloud-AppId": "A6099267504667",
-        "X-APICloud-AppKey":   appKey,
-    },
-    data: {
-        values: { 
-          chaoshiuser: user
-      }
-
-  }
-},function(ret, err){
-
-    userRegion.innerHTML='用户名：'+user;
-    if (ret) {
-        api.toast({
-          msg: '修改成功',
-          duration: 2000,
-          location: 'bottom'
-      });
+function qianshou(){
+    var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+      if (!userInfo) {
+         openlogin();
+    }else{
+       window.location.href="./dindan_frame.html?"+window.btoa(encodeURI('nav=2'));;
     }
-});
+    
+}
+function meaddress(){
+  var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+  if (!userInfo) {
+    openlogin();
+}else{
+  window.location.href="./address_frame.html";
+}
 
 }
+
+
+function updatauser(){
+    // userInfo=$api.getStorage('userInfo');
+    if (userInfo) {
+       input();
+   }else{
+        openlogin();
+
+   }
+}
+
 
 function login(){
-    userInfo=$api.getStorage('userInfo');
+    // userInfo=$api.getStorage('userInfo');
     if (userInfo) {
         return;
     }else{
-     api.openWin({
-        name: 'login',
-        url: './login.html',
-        pageParam: {
-            name: 'test'
-        }
-    });
-
- }
-}
-
-function dingyuecount(){
-   userInfo=$api.getStorage('userInfo');
-   if (!userInfo) {
-    return;
-}
-var dingyue=$api.byId('dingyue');
-var params={
-    fields:{},
-    fields: {},
-    where: {
-        focus:userInfo.userId
-    }
-}
-params=$api.jsonToStr(params);
-api.ajax({
-    url: 'http://d.apicloud.com/mcm/api/guanzhu/count?filter='+params,
-    method: 'get',
-    headers: {
-        "X-APICloud-AppId": "A6099267504667",
-        "X-APICloud-AppKey":   appKey,
-    },
-},function(ret, err){
-    if (ret) {
-
-        dingyue.innerHTML='订阅/'+ret.count;
-    }
-});
-}
-function fensicount(){
-    userInfo=$api.getStorage('userInfo');
-    if (!userInfo) {
-        return;
-    }
-    var fensicount=$api.byId('fensi');
-    var params={
-        fields:{},
-        fields: {},
-        where: {
-            bewatched:userInfo.userId
-        }
-    }
-    params=$api.jsonToStr(params);
-    api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/guanzhu/count?filter='+params,
-        method: 'get',
-        headers: {
-            "X-APICloud-AppId": "A6099267504667",
-            "X-APICloud-AppKey":   appKey,
-        },
-    },function(ret, err){
-        if (ret) {
-            fensicount.innerHTML='粉丝/'+ret.count;
-        }
-    });
-}
-        // 在个人中心中显示头像
-        function setAvatar(){
-            userInfo=$api.getStorage('userInfo');
-            if (!userInfo) {
-                api.openWin({
-                    name: 'login',
-                    url: './login.html',
-                    pageParam: {
-                        name: 'test'
-                    }
-                });
-                return;
-            }
-            api.getPicture({
-                sourceType: 'album',
-                encodingType: 'jpg',
-                mediaValue: 'pic',
-                destinationType: 'url',
-                allowEdit: true,
-                quality: 50,
-    // targetWidth: 100,
-    // targetHeight: 100,
-    saveToPhotoAlbum: false
-}, function(ret, err) {
-    if (ret) {
-        if (ret.data=='') {
-            api.toast({
-                msg: '未选择图片',
-                duration: 2000,
-                location: 'bottom'
-            });
-        }else{
-           uploadAtavar(ret.data)
-       }
-
+        openlogin();
    }
-
-});
-
-        }
-// 上传头像 
-function uploadAtavar(_data){
-
-
-  api.ajax({
-    url: 'https://d.apicloud.com/mcm/api/file',
-    method: 'post',
-    data: {
-        values: { 
-            filename: 'icon'
-        },
-        files: { 
-            file: _data
-        }
-    },
-    headers: {
-        "X-APICloud-AppId": "A6099267504667",
-        "X-APICloud-AppKey":   appKey
-    },
-},function(ret, err){
-    if (ret) {
-
-        updateUserAtavar(ret)
-    } else {
-        api.toast({
-            msg: err.msg,
-            duration: 2000,
-            location: 'bottom'
-        });
-    }
-});
 }
-// 更改头像
-function updateUserAtavar(_data){
-    // alert($api.jsonToStr(_data))
-    var now = Date.now();
-    var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-    
-    api.ajax({
-        url: 'https://d.apicloud.com/mcm/api/user/'+userInfo.userId,
-        method: 'put',
-        headers: {
-            "X-APICloud-AppId": "A6099267504667",
-            "X-APICloud-AppKey":   appKey,
-            "Authorization":userInfo.id
-        },
-        data: {
-            values: { 
-                avatar: _data
-            }
 
-        }
-    },function(ret, err){
-        if (ret) {
-           updateLocalAvatar(ret)
-       } else {
-        api.toast({
-            msg: err.msg,
-            duration: 2000,
-            location: 'bottom'
-        });
-    }
-});
-}   
-// 改变头像路径
-function updateLocalAvatar(_data){
-   var  userAvatar=$api.byId('userAvatar');
-   if (!_data.avatar) {
-    return;
-}
-api.imageCache({
-    url: _data.avatar.url
-}, function(ret, err){
-    if( ret ){
-       userAvatar.src=ret.url;
-     // userAvatar.style.backgroundSize='108px 108px';
- }else{
-    api.toast({
-        msg: err.msg,
-        duration: 2000,
-        location: 'bottom'
-    });
 
-}
-});
-
-}
+//上拉加载
+         window.addEventListener("scroll", function (){
+              //当时滚动条离底部0px时开始加载下一页的内容
+              if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+                    if(off_on){
+                        off_on=false;
+                        getcdslist(true);
+                        $('.cdslist').append('<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; ">')
+                    }
+                    
+                 
+              }
+          });
 
 
 // 在个人中心中显示用户名
 function getUsername(){
- userInfo=$api.getStorage('userInfo');
- if (!userInfo) {
+     dialog('努力加载中');
+   if (!userInfo) {
+     dl.close();
     return;
+    
 }
-var userAccount=$api.byId('userAccount');
-var userRegion=$api.byId('userRegion');
-var  userAvatar=$api.byId('userAvatar');
-var vip=$api.byId('vip');
 
-var now = Date.now();
-var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+var userAccount=$('#userAccount');
+var userRegion=$('#userRegion');
+var  userAvatar=$('#userAvatar');
+var vip=$('#vip');
+
 var params={
-    fields: {},
-    where:{
-        id:userInfo.userId
-    },
-    skip: 0,
+    id:userInfo.id
 }
-params=$api.jsonToStr(params);
-api.ajax({
-    url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
-    method: 'get',
-    headers: {
-        "X-APICloud-AppId": "A6099267504667",
-        "X-APICloud-AppKey":   appKey
-    },
-
-},function(ret, err){
-    if (ret) {
-            // 存储用户名
-            $api.setStorage('user', ret);
-            userAccount.innerHTML='账号：'+ret[0].username;
-            if (ret[0].avatar) {
-                userAvatar.src=ret[0].avatar.url;
-            }else{
-                userAvatar.src='../image/empty_page_nothing.png';
-            }
-
-            if (ret[0].chaoshiuser==undefined) {
-               userRegion.innerHTML='用户名：未设置';
-           }else{
-              userRegion.innerHTML='用户名:'+ret[0].chaoshiuser;
-          }
-
-
-          var now=Y+"-"+M+"-"+D;
-          var vipday=datedifference(ret[0].date,now)
-          vipday=99-vipday;
-          if (ret[0].vip==1) {
-            vip.innerHTML='vip'+'(仅剩'+ vipday +'天)';
-
+postajax(url+'getuser',params,function(ret){
+    dl.close();
+    if (ret.code==200) {
+        
+        var data=ret.data;
+        // console.log(data);
+        $('.dinyuecount').html(data.dycount);
+        $('.fensicount').html(data.bdycount);
+        $('.sqcount').html(data.sqcount);
+        localStorage.setItem('userInfo',JSON.stringify( ret.data.user));
+        var data=ret.data.user;
+        userAccount.html(data.username);
+        if (data.headimg!=0) {
+            // console.log(headimgurl)
+        $('.personal_logo').css({'background':'url('+imgurl+data.headimg+')','background-size':'cover','background-position':'center center'})
         }else{
-            vip.innerHTML=''
+            userAvatar.attr('src','../image/empty_page_nothing.png');
         }
-        date(ret[0].date);
+        if (data.name==0) {
+         userRegion.html('用户名：未设置');
+     }else{
+      userRegion.html(data.name);
+  }
+  var now=Y+"-"+M+"-"+D;
+  var vipday=datedifference(data.viptime,now)
+  vipday=99-vipday;
+  if (data.vip==1) {
+    $(".sharespan").html('vip'+'还有'+ vipday +'天过期');
 
-    } else {
-        api.toast({
-            msg: err.msg,
-            duration: 2000,
-            location: 'bottom'
-        });
-    }
-});
+  }else{
+        vip.html('');
+  }
+if (data.viptime!=0) {
+ date(data.viptime);
+}
+
+
+}
+})
 
 }   
 
@@ -676,8 +312,8 @@ function date(_date){
 
 }
 function updatevip(){
- var usernameinfo=$api.getStorage('userInfo');
- api.ajax({
+   var usernameinfo=$api.getStorage('userInfo');
+   api.ajax({
     url: 'http://d.apicloud.com/mcm/api/user/'+usernameinfo.userId,
     method: 'put',
     headers: {
@@ -694,9 +330,9 @@ function updatevip(){
 
 },function(ret, err){
     if (ret) {
-       var vip=$api.byId('vip');  
-       vip.innerHTML='普通用户';
-   } else {
+     var vip=$api.byId('vip');  
+     vip.innerHTML='普通用户';
+ } else {
     api.toast({
         msg: err.msg,
         duration: 2000,
@@ -706,90 +342,75 @@ function updatevip(){
 });
 
 }
-function opensetting(){
-    api.openWin({
-        name: 'setting',
-        url: './setting.html',
-        pageParam: {
-            name: 'test'
-        },
-        animation: {
-            type: "fade"
-        }
-    });
-}
-function openchaoshi(){
-    userInfo=$api.getStorage('userInfo');
-    if (userInfo) {
-        api.openFrame({
-           name: 'caoshi_frame',
-           url: './caoshi_frame.html',
-           rect: {
-               x: 0,
-               y: 0,
-               w:'auto',
-               h: 'auto'
-           },
-           pageParam: {
-               name: 'test'
-           },
 
-       });
+function getcdslist(_LoadMore){
+    if (!userInfo) {
+        return;
+    }
+    if(_LoadMore){
+        skip+=limit;
     }else{
-        api.openWin({
-            name: 'login',
-            url: './login.html',
-            pageParam: {
-                name: 'test'
-            },
-            animation: {
-                type: "fade"
-            }
+        skip=0; 
+    }
+    postajax(url+'getusercdslist',{"limit":limit,"skip":skip,"uid":userInfo.id},function(e){
+        // console.log(e)
+        // return;
+         if(e.code=='200'){
+             update(e.data,_LoadMore);
+         }else{
+             $('.xz').remove();
+             $('.cdslist').append('<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px; ">-暂无动态-</p>');
+         }
+    })
+}
+
+
+function update(ret,_LoadMore){
+    var param = {
+      list:ret,
+      imgurl:imgurl,
+    };
+      var tempFn = doT.template($('#template').text());
+      // 使用模板函数生成HTML文本
+      var resultHTML = tempFn(param);
+     
+      
+        if(_LoadMore){
+              $(".cdslist").append(resultHTML);
+        }else{
+              $(".cdslist").html(resultHTML);
+        }
+        off_on=true;
+        $(".cdsimg").lazyload({
+          threshold : 200,
+          // effect: "fadeIn",
         });
+        $('.xz').remove();
+}
+
+function openDressing(id){
+         window.location.href='./Dressingdetails_frame.html?'+window.btoa(encodeURI('articleid='+id));
     }
 
-}
-
 function opendindan(){
-    userInfo=$api.getStorage('userInfo');
+   var userInfo=JSON.parse(localStorage.getItem('userInfo'));
     if (!userInfo) {
-        api.openWin({
-            name: 'login',
-            url: './login.html',
-            pageParam: {
-                name: 'test'
-            },
-            animation: {
-                type: "fade"
-            }
-        });
+        openlogin();
         return;
     }
     api.openWin({
-        name: 'dindan',
-        url: './dindan.html',
-        pageParam: {
-            name: 'test'
-        },
-        animation: {
-            type: "fade"
-        }
-    });
+     name: 'dindan',
+     url: './dindan.html',
+     pageParam: {
+         name: 'test'
+     }
+ });
 }
 
 function opencity(){
-  userInfo=$api.getStorage('userInfo');
+ var userInfo=JSON.parse(localStorage.getItem('userInfo'));
   if (!userInfo) {
-    api.openWin({
-        name: 'login',
-        url: './login.html',
-        pageParam: {
-            name: 'test'
-        },
-        animation: {
-            type: "fade"
-        }
-    });
+    openlogin();
     return;
 }
 api.openWin({
@@ -804,137 +425,50 @@ api.openWin({
 });
 }
 
-function openshoppingcart(){
- userInfo=$api.getStorage('userInfo');
- if (!userInfo) {
-    api.openWin({
-        name: 'login',
-        url: './login.html',
-        pageParam: {
-            name: 'test'
-        },
-        animation: {
-            type: "fade"
-        }
-    });
-    return;
-}
-api.openWin({
-    name: 'shoppingcart',
-    url: './shoppingcart.html',
-    pageParam: {
-        name: 'test'
-    },
-    animation: {
-        type: "fade"
-    }
-});
-}
-
-function openmevideo(){
-    userInfo=$api.getStorage('userInfo');
-    if (!userInfo) {
-        api.openWin({
-            name: 'login',
-            url: './login.html',
-            pageParam: {
-                name: 'test'
-            },
-            animation: {
-                type: "fade"
-            }
-        });
-        return;
-    }
-    api.openFrame({
-        name: 'caoshi_frame',
-        url: './caoshi_frame.html',
-        rect: {
-            x: 0,
-            y: 0,
-            w: api.winWidth,
-            h: api.winHeight
-        },
-        pageParam: {
-            name: 'mevideo'
-        },
-
-        bgColor: 'rgba(0,0,0,0)',
-    });
-}
 
 
-function openlikevideo(){
-    userInfo=$api.getStorage('userInfo');
-    if (!userInfo) {
-        api.openWin({
-            name: 'login',
-            url: './login.html',
-            pageParam: {
-                name: 'test'
-            },
-            animation: {
-                type: "fade"
-            }
-        });
-        return;
-    }
-    api.openFrame({
-        name: 'caoshi_frame',
-        url: './caoshi_frame.html',
-        rect: {
-            x: 0,
-            y: 0,
-            w: api.winWidth,
-            h: api.winHeight
-        },
-        pageParam: {
-            like: 'likevideo'
-        },
-            // bounces: true,
-            bgColor: 'rgba(0,0,0,0)',
-        });
-}
+
+
 
 
 
 function share(){
+   toast('此功能暂时不支持网页版','bottom',800);
+// var sharedModule = api.require('shareAction');
+// sharedModule.share({
+//  text: '【你要的潮装都在这里】 http://www.zxh.yueaa.com/ 点击链接 有你想不到的低价潮装 分享应用领取3个月vip 第一单返8元',
+//  type: 'text'
+//});
+// var userInfo=$api.getStorage('userInfo');
+//     // alert(userInfo.userId)
+//     var params={
+//      fields:{},
+//      fields: {},
+//      where: {
+//          id:userInfo.userId
+//      }
+//  }
+//  params=$api.jsonToStr(params);
+//  api.ajax({
+//      url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
+//      method: 'get',
+//      headers: {
+//          "X-APICloud-AppId": "A6099267504667",
+//          "X-APICloud-AppKey":   appKey
+//      },
+//
+//  },function(ret, err){
+//      if (ret) {
+//          // alert(ret[0].vip)
+//          if (ret[0].vip!=1) {
+//              // alert(1)
+//              sharevip()
+//
+//          }
+//      } 
+//  });
 
- var sharedModule = api.require('shareAction');
- sharedModule.share({
-    text: '【你要的潮装都在这里】 http://www.zxh.yueaa.com/ 点击链接 有你想不到的低价潮装 分享应用领取3个月vip 第一单返8元',
-    type: 'text'
-});
- var userInfo=$api.getStorage('userInfo');
-       // alert(userInfo.userId)
-       var params={
-        fields:{},
-        fields: {},
-        where: {
-            id:userInfo.userId
-        }
-    }
-    params=$api.jsonToStr(params);
-    api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
-        method: 'get',
-        headers: {
-            "X-APICloud-AppId": "A6099267504667",
-            "X-APICloud-AppKey":   appKey
-        },
 
-    },function(ret, err){
-        if (ret) {
-            // alert(ret[0].vip)
-            if (ret[0].vip!=1) {
-                // alert(1)
-                sharevip()
-
-            }
-        } 
-    });
-
-    
 
 
 
@@ -942,15 +476,15 @@ function share(){
 
 }
 function sharevip(){
-   var myDate = new Date();
-   var Y=myDate.getFullYear();
-   var M=myDate.getMonth()+1;
-   var D=myDate.getDate();  
-   var shijian=Y+'-'+M+'-'+D;
+ var myDate = new Date();
+ var Y=myDate.getFullYear();
+ var M=myDate.getMonth()+1;
+ var D=myDate.getDate();  
+ var shijian=Y+'-'+M+'-'+D;
 
-   userInfo=$api.getStorage('userInfo');
+ userInfo=$api.getStorage('userInfo');
 
-   api.ajax({
+ api.ajax({
     url: 'https://d.apicloud.com/mcm/api/user/'+userInfo.userId,
     method: 'put',
     headers: {
@@ -975,7 +509,7 @@ function sharevip(){
 
 
 function kefu(){
-   dialogBox.scene({
+ dialogBox.scene({
     rect: {
         w: 280,
         h: 388
@@ -1025,13 +559,13 @@ function kefu(){
     }, ]
 }, function(ret, err) {
     if (ret) {
-       if (ret.eventType=='ok') {
-           dialogBox.close({
+     if (ret.eventType=='ok') {
+         dialogBox.close({
             dialogName: 'scene'
         });
-       }
-       if (ret.index==0) {
-          
+     }
+     if (ret.index==0) {
+
         clipBoard.set({
             value: '852841974'
         }, function(ret, err) {
@@ -1051,7 +585,7 @@ function kefu(){
         });
     }else if (ret.index==1) {
 
-     
+
       clipBoard.set({
         value: 'zxh2764832464'
     }, function(ret, err) {
@@ -1075,48 +609,85 @@ function kefu(){
 });
 }
 
-function guanzhu(){
+
+
+function logout(){
+    localStorage.removeItem('userInfo');
+    var userAccount=$('#userAccount');
+    var userRegion=$('#userRegion');
+    var  userAvatar=$('#userAvatar');
+    //         var vip=$api.byId('vip');
+    //         vip.innerHTML='';
+    userAccount.html('点击登录');
+    userRegion.html('用户名：未设置');
+    $('.personal_logo').css({'background':'url(../image/empty_page_nothing.png)','background-size':'cover','background-position':'center center'})
+    // userAvatar.attr('src',"../image/empty_page_nothing.png");
+    $(".sharespan").html('分享应用得vip打9.5折');
+    $('.dinyuecount').html('0');
+    $('.fensicount').html('0');
+    $('.sqcount').html('0');
+
+}
+function downApp(){
+  location.href='http://www.zxh.yueaa.com'
+}
+function opendinyue(){
+  var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+    if (!userInfo){
+        window.location.href="./login_frame.html";
+    }else{
+        if (parseInt($('.dinyuecount').text())<1) {
+            toast('您还没有订阅任何账户','center',1000);
+        }else{
+         window.location.href="./dinyue_frame.html";
+        }
+    }
+   
+}
+
+function openfensi(){
+  var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+    if (!userInfo){
+        openlogin();
+    }else{
+        if (parseInt($('.fensicount').text())<1) {
+            toast('您还没有粉丝','center',1000);
+        }else{
+           window.location.href="./fensi_frame.html";
+        }
+         
+    }
+
+}
+function opensq(){
+    var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+    if (!userInfo){
+        window.location.href="./shuqian_frame.html";
+    }else{
+         if (parseInt($('.sqcount').text())<1) {
+            toast('您还没有添加动态到书签','center',1000);
+        }else{
+            window.location.href="./shuqian_frame.html";
+        }
+        
+    }
+}
+function meshouc(){
+    window.location.href="./shoppingcart_frame.php"
+}
+
+function openlogin(){
     api.openWin({
-        name: 'guanzhulist',
-        url: './guanzhulist.html',
-        rect: {
-            x: 0,
-            y: 0,
-            w: api.winWidth,
-            h: api.winHeight
-        },
+        name: 'login',
+        url: './login.html',
         pageParam: {
-            name: 'test'
-        },
-        animation: {
-            type: "fade"
+            page:'my_frame',
+        },animation:{
+            type:'fade'
         }
     });
-
-
-
+    return;
 }
-
-function fensi(){
-
-  api.openWin({
-    name: 'fensi',
-    url: './fensi.html',
-    rect: {
-        x: 0,
-        y: 0,
-        w: api.winWidth,
-        h: api.winHeight
-    },
-    pageParam: {
-        name: 'test'
-    },
-    animation: {
-        type: "fade"
-    }
-});
-}
-
 </script>
 
 </html>

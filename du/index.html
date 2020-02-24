@@ -325,7 +325,7 @@
               selected: 'widget://image/footer/groupbuy_act.png'
             },
             title: {
-              text: '热推短视频',
+              text: '说一说',
               size: 12.0,
               normal: '#696969',
               selected: '#eb4f38',
@@ -361,7 +361,7 @@
              openDressing();
             }
             if (ret.eventType == "click" && ret.index == 2) {
-             openretui();
+             opensaybug();
            }
            if (ret.eventType == "click" && ret.index == 3) {
             openmy();
@@ -389,7 +389,7 @@
           }
 
         });
-        hiddennewvideo();
+        hiddensaybug();
         hiddenhome();
         hiddenmy();
       }
@@ -414,14 +414,14 @@
         });
         // var NVTabBar = api.require('NVTabBar');
         // NVTabBar.bringToFront();
-        hiddennewvideo();
+        hiddensaybug();
         hiddenmy();
         hiddenDressing();
       }
-      function openretui(){
+      function opensaybug(){
        api.openFrame({
-        name: 'newvideo',
-        url: './html/newvideo.html',
+        name: 'saybug_frame',
+        url: './html/saybug_frame.html',
         rect: {
           x: 0,
           y: 0,
@@ -465,7 +465,7 @@
       });
        
        hiddenhome();
-       hiddennewvideo();
+       hiddensaybug();
        hiddenDressing();
 
 
@@ -478,9 +478,9 @@
       });
       
     }
-    function hiddennewvideo(){
+    function hiddensaybug(){
       api.setFrameAttr({
-        name: 'newvideo',
+        name: 'saybug_frame',
         hidden: true
       });
       

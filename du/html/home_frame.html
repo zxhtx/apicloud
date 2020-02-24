@@ -517,6 +517,7 @@
 
     .nav{
       margin-top: 3px;
+   
       height: 50px;
       /*border: 1px solid red;*/
 	  background-color: #fff;
@@ -531,6 +532,8 @@
       margin-left: 0.1rem;
       text-align: center;
       font-size: 13px;
+      margin-top: 8px;
+      /*border: 1px solid red;*/
 
     }
     .nav .active{
@@ -688,9 +691,7 @@
 
 
           </div>
-         <?php
-          require("../comm/html/footer.html");
-         ?>
+     
           <div class="top">
             <a href="#">Top</a>
           </div>
@@ -731,12 +732,12 @@
           //监听top回到顶部
           window.addEventListener("scroll", function (){
             scrollTop = $(this).scrollTop();
-           if ( scrollTop>'452'){
+           if ( scrollTop>'422'){
              $(".top").css('display','block');
              $(".nav").css({translate: [60,30] });
              $(".nav").addClass("navfixed");
 
-           }else if(scrollTop<'452'){
+           }else if(scrollTop<'422'){
              $(".top").css('display','none');
              $(".nav").removeClass("navfixed");
 

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="shortcut icon" href="../image/chao.ico" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>bug建议说一说</title>
+		<script src="../script/commonjs.js">
+		</script>
+		<script src="../script/footcom.js">
+		</script>
+
+		<style type="text/css">
+			html,body{
+				margin: 0px;
+				padding: 0px;
+				
+			}
+			
+			header{
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				width: 100%;
+				z-index: 12;
+				background-color: #fff;
+			}
+			header h1 {
+			    width: 100%;
+			    height: 40px;
+			    text-align: center;
+			    color: #000;
+			    font-size: 18px;
+			    line-height: 40px;
+			    margin: 0px;
+				box-shadow:0px 6px 6px -6px black;
+			}
+			.inp{
+				margin-top: 56px;
+				text-align: center;
+			}
+			.inp textarea{
+				outline: 0px;
+				border: 0px;
+				width: 96%;
+				margin: 0 auto;
+				height: 66px;
+				/* border: 1px solid red; */
+				font-size: 16px;
+				overflow-x: hidden;
+				overflow-y: hidden;
+				resize: none;
+				border: 1px solid #CBE4F3;
+			}
+			textarea[class='text']::-webkit-input-placeholder {
+			   color:#9D9D9D;
+			}
+			
+			.inp div{
+				width: 98%;
+				height: 38px;
+				text-align: center;
+				line-height: 38px;
+				margin: 0 auto;
+				border-radius: 3px;
+				color: #fff;
+				background: #CBE4F3;
+			}
+			.commentBox{
+				margin-bottom: 50px;
+			}
+
+			.commentBox .li{
+				padding: 5px;
+				/*position: relative;*/
+				 display: -webkit-flex;
+				  /*display: table;*/
+				border-bottom: 1px solid #f2f4f5;
+			}
+
+			.commentBox .icon{
+				display: table-cell;
+				/*position: absolute;*/
+				/*left: 0;*/
+				/*width: 100px;*/
+				width: 60px;
+				/*float: left;*/
+				/*height: 100%;*/
+
+			}
+			.commentBox .icon .headimg{
+				margin: 6px;
+				margin-top: 18px;
+				width: 39px;
+				height: 39px;
+				background-position: center;
+				background-size: cover;
+				border-radius: 50%;
+				border: 1px solid #BBBBBB;
+				vertical-align: middle;
+			}
+
+			.commentBox .content{
+				display: table-cell;
+				width: auto;
+				/*position: absolute;*/
+				/*float: right;*/
+				/*width: 80%;*/
+				/*right: 0;*/
+				/*top: 0;*/
+			}
+
+			.commentBox .name{
+				color: #acb0b3;
+				font-family: "微软雅黑";
+				font-size: 16px;
+				margin-top: 5px;
+
+			}
+
+			.commentBox .time{
+				margin-top: 2px;
+				font-family: "微软雅黑";
+				color: #d6d8da;
+				font-size: 10px;
+			}
+
+			.commentBox .text{
+				margin-top: 8px;
+				margin-bottom: 8px;
+				font-family: "微软雅黑";
+				color: #656b70;
+
+
+			}
+			.is_ok{
+				font-size: 13px;
+				color: #1DB81D;
+			}
+
+
+		</style>
+	</head>
+	<body>
+		<header>
+			<h1>说一说</h1>
+		</header>
+		<div class="inp">
+			<textarea name="" class="text" placeholder="说一说您在本站遇到的BUG以及您对我们的建议或者需要我们新增功能(您的评价就是我们前进的动力)"></textarea>
+			<div class="btn" onclick="sendbtn()">发表看法</div>
+		</div>
+			<div class="commentBox">
+				
+			</div>
+
+		
+		  <script id="template" type="text/template">
+		  	{{~it.list:value:index}}
+		  		<div class="li">
+		  			<div class="icon">
+						<div class="headimg" onclick="TAuser({{=value.userid}})" style="background-image: url({{=it.imgurl}}{{=value.headimg}});"></div>
+						{{if(value.type=='1'){ }}
+						<div class="is_ok">√已采纳</div>
+						{{ } }}
+		  			</div>
+		  			<div class="content">
+		  				<div class="name">
+		  					{{=value.name}}
+		  				</div>
+		  				<div class="time">
+							{{!timestampFormat('{{=value.time}}')}}
+		  				</div>
+		  				<div class="text">
+		  					{{=value.comment}}
+		  				</div>
+		  			</div>
+		  		</div>
+		  	{{~}}
+		  </script>
+		<script type="text/javascript">
+			var skip=0;
+			var limit=18;
+			var off_on=false;
+			$(function() {
+				getsaybug();
+				$('.saybug').addClass('now').siblings().removeClass('now');
+				$('.text').on("keyup paste", function() {
+					// console.log($('.text').val().length)
+					if ($('.text').val().length >= 1) {
+						$('.btn').css('background', '#6AB3DD');
+					} else {
+						$('.btn').css('background', '#CBE4F3');
+					}
+				})
+			})
+			
+			//上拉加载
+					 window.addEventListener("scroll", function (){
+					      //当时滚动条离底部0px时开始加载下一页的内容
+					      if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+								if(off_on){
+									off_on=false;
+									getsaybug(true);
+									// toast("加载中...",'bottom',1000);
+								}
+					            
+					         
+					      }
+					  });
+			
+			function sendbtn(){
+				var comment=$('.text').val();
+				if(!userInfo){
+					window.location.href='./login_frame.html';
+				}else if(comment.length<1){
+					toast('请填写您对我们要说的内容');
+				}
+				 $('.text').val('');
+				 postajax(url+'addsaybug',{'uid':userInfo.id,'text':comment},function(e){
+					 if(e.code=='200'){
+						 toast('您的建议发表成功','center');
+						 var html='<div class="li"><div class="icon"><div class="headimg" style="background-image: url('+imgurl+userInfo.headimg+');"></div></div><div class="content"><div class="name">'+userInfo.name+'</div><div class="time">'+timestampFormat(new Date().getTime())+'</div><div class="text">'+comment+'</div></div></div>'
+						$('.commentBox').prepend(html);
+					 }
+				 })
+			}
+			
+			function getsaybug(_loadMore){
+					if(_loadMore){
+						skip+=limit;
+					}else{
+						skip=0;
+						dialog('正在加载潮友建议');
+					}
+					postajax(url+'getsaybug',{'skip':skip,'limit':limit},function(e){
+						if(e.code=='200'){
+							updatelist(e.data);
+						}else{
+							
+						}
+					})
+					}
+					function updatelist(ret){
+						var param = {
+							list: ret,
+							imgurl: imgurl,
+						};
+						var tempFn = doT.template($('#template').text());
+						// 使用模板函数生成HTML文本
+						var resultHTML = tempFn(param);
+						$('.commentBox').append(resultHTML);
+						dl.close();
+						off_on=true;
+					}
+					function TAuser(uid){
+						window.location.href='./TAusercenter.html?'+window.btoa(encodeURI('uid='+uid));
+					}
+		</script>
+	</body>
+</html>
