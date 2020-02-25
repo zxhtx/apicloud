@@ -100,8 +100,9 @@ a {
   color: #ffffff;
   height: 40px;
   font-size: 18px;
-  width: 63%;
+  width: 78%;
   margin-left: 12%;
+  /*border: 1px solid red;*/
 }
 
 .form-group .form-item input::-webkit-input-placeholder {

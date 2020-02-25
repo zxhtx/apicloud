@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0, user-scalable=no">
     <title>登录</title>
+   <!-- <link rel="stylesheet" type="text/css" href="../css/api.css" /> -->
     <link rel="stylesheet" href="../css/login.css">
-    <script src="../script/commonjs.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="../script/SHA1.js"></script> 
+   <script type="text/javascript" src="../script/ajax.js"></script>
+   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
     <script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
 </head>
 <body class="login-bg">
@@ -55,8 +58,10 @@
         if(yanzheng()){
             postajax(url+'login',addInfo,function(e){
                 if(e.code==200){
-                    localStorage.setItem('userInfo',JSON.stringify(e.data));
-                    window.location.href="./my_frame.php";
+                    // localStorage.setItem('userInfo',JSON.stringify(e.data));
+                    // window.location.href="./my_frame.php";
+                    $api.setStorage('userInfo', e.data);
+                    alert($api.jsonToStr($api.getStorage('userInfo')))
                 }else{
                     toast(e.message);
                 }
