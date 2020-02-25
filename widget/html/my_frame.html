@@ -111,26 +111,42 @@
     var skip=0;
     var limit=9;
     var off_on=false;
-    
+    apiready = function(){
+            event();
+    }
+        
+
     getUsername();
     getcdslist();
     shoppingcount();
     function setuser(){
-      var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+     var userInfo=$api.getStorage('userInfo');
       if (!userInfo) {
       openlogin();
         return;
     }
-    window.location.href="./set_frame.html"; 
+    // window.location.href="./set_frame.html"; 
+    api.openWin({
+        name: 'set',
+        url: './set.html',
+        pageParam: {
+            name: 'test'
+        },
+        animation:{
+          type:'fade'
+        }
+    });
 }
 
 function setAvatar(){
-    var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+    // var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+    var userInfo=$api.getStorage('userInfo');
   window.open(imgurl+userInfo.headimg);
 }
 
 function daifukuan(){
-  var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+  // var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+  var userInfo=$api.getStorage('userInfo');
   if (!userInfo) {
    openlogin();
 }else{
@@ -139,8 +155,18 @@ function daifukuan(){
 
 }
 
+function event(){
+
+api.addEventListener({
+    name: 'resmy'
+}, function(ret, err) {
+    if (ret) {
+       location.reload()
+    } 
+});
+}
 function daishouhuo(){
-  var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+  var userInfo=$api.getStorage('userInfo');
   if (!userInfo) {
     openlogin();
 }else{
@@ -149,7 +175,7 @@ function daishouhuo(){
 
 } 
 function shoppingcount(){
-      var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+     var userInfo=$api.getStorage('userInfo');
     if (!userInfo) {
       return;
     }
@@ -174,7 +200,7 @@ function shoppingcount(){
     })
 }
 function qianshou(){
-    var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+   var userInfo=$api.getStorage('userInfo');
       if (!userInfo) {
          openlogin();
     }else{
@@ -183,7 +209,7 @@ function qianshou(){
     
 }
 function meaddress(){
-  var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+  var userInfo=$api.getStorage('userInfo');
   if (!userInfo) {
     openlogin();
 }else{
@@ -255,7 +281,8 @@ postajax(url+'getuser',params,function(ret){
         $('.dinyuecount').html(data.dycount);
         $('.fensicount').html(data.bdycount);
         $('.sqcount').html(data.sqcount);
-        localStorage.setItem('userInfo',JSON.stringify( ret.data.user));
+        // localStorage.setItem('userInfo',JSON.stringify( ret.data.user));
+        $api.setStorage('userInfo', ret.data.user);
         var data=ret.data.user;
         userAccount.html(data.username);
         if (data.headimg!=0) {
@@ -312,7 +339,8 @@ function date(_date){
 
 }
 function updatevip(){
-   var usernameinfo=$api.getStorage('userInfo');
+   // var usernameinfo=$api.getStorage('userInfo');
+   var userInfo=$api.getStorage('userInfo');
    api.ajax({
     url: 'http://d.apicloud.com/mcm/api/user/'+usernameinfo.userId,
     method: 'put',
@@ -393,7 +421,7 @@ function openDressing(id){
     }
 
 function opendindan(){
-   var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+   var userInfo=$api.getStorage('userInfo');
     if (!userInfo) {
         openlogin();
         return;
@@ -408,7 +436,7 @@ function opendindan(){
 }
 
 function opencity(){
- var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+ var userInfo=$api.getStorage('userInfo');
   if (!userInfo) {
     openlogin();
     return;
@@ -646,7 +674,7 @@ function opendinyue(){
 }
 
 function openfensi(){
-  var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+var userInfo=$api.getStorage('userInfo');
     if (!userInfo){
         openlogin();
     }else{
@@ -660,7 +688,7 @@ function openfensi(){
 
 }
 function opensq(){
-    var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+    var userInfo=$api.getStorage('userInfo');
     if (!userInfo){
         window.location.href="./shuqian_frame.html";
     }else{

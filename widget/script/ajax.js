@@ -10,7 +10,10 @@
    "X-APICloud-AppId": "A6099267504667",
    "X-APICloud-AppKey":   appKey
  }
- var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+ // if ($api.getStorage('userInfo')) {
+   var userInfo=$api.getStorage('userInfo');
+ // }
+
  
  // apicloud数据库数据
 function apigetajax( url, data, callback) { //封装ajax的一些常用参数  //data数据可以为空

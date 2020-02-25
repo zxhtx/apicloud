@@ -1,0 +1,436 @@
+<!doctype html>
+<html>
+
+    <head>
+        <link rel="shortcut icon" href="../image/chao.ico" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>个人中心</title>
+                    <meta name="referrer" content="no-referrer" />
+        <script src="../script/commonjs.js"></script>
+        
+        <style>
+            html,
+    body {
+        height: 100%;
+        background-color: white;
+        padding: 0;
+        margin: 0;
+
+    }
+    header{
+        width: 100%;
+        height: 40px;
+        background: white;
+        border-bottom: 0.3px solid #F1F1F1;
+        /*border-style: ridge;*/
+    }
+    header .back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 40px;
+        height: 40px;
+        z-index: 2;
+    }
+
+    header .back img {
+        margin-top: 5px;
+        margin-left: 5px;
+        width: 28px;
+        height: 32px;
+    }
+    header a{
+        display: block;
+        text-align: center;
+        line-height: 40px;
+        font-size: 16px;
+        font-weight: bold;
+
+    }
+    header .ok{
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        width: 50px;
+        height: 40px;
+        /*background: red;*/
+        z-index: 999;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 40px;
+    }
+    .headimglist{
+        width: 100%;
+        height: 118px;
+        /*border: 1px solid red;*/
+        position: relative;
+        background: white;
+    }
+    #headimg{
+        width: 98px;
+        height: 98px;
+        background-image: url('../image/empty_page_nothing.png');
+        border-radius: 50px;
+        background-size: cover;
+        background-position: center center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -49px;
+        margin-left: -49px;
+    }
+    .inp{
+        width: 100%;
+        /*border: 1px solid red;*/
+    }
+    .row {
+        width: auto;
+        height: 30px;
+        box-sizing: border-box;
+        margin-left: 18px;
+        margin-right: 18px;
+        /*padding-top: 40px;*/
+        border-bottom: 1px solid #888;
+        /*border: 1px solid red;*/
+    }
+
+    .input {
+        width: 100%;
+        height: 20px;
+        border: none;
+        font-size: 16px;
+        line-height: 20px;
+        outline:none;
+        background: white;
+
+    }
+    p{
+        /*width: 100px;*/
+        height: 20px;
+        margin-left: 18px;
+        color: #999999;
+        margin-bottom: 8px;
+        margin-top: 8px;
+
+        /*border: 1px solid red;*/
+    }
+    ::-webkit-input-placeholder { color:#C7C7C7; }
+    ::-moz-placeholder { color:#C7C7C7; } /* firefox 19+ */
+    :-ms-input-placeholder { color:#C7C7C7; } /* Internet Explorer 10+ */
+    :-moz-placeholder { color:#C7C7C7; } /* firefox 14-18 */
+    #file{
+        opacity:0;
+        filter:alpha(opacity=0);
+        height: 88px;
+        width: 88px;
+        position: absolute;
+        top: 38px;
+        left: 152px;
+        z-index: 9;
+        border: 1px solid red;
+    }
+    .sex{
+        width: 100%;
+        height: 66px;
+        display: flex;
+        justify-content: center;
+    }
+    .sex .boy{
+        background-image: url('../image/boy.png');
+        width: 38px;
+        height: 38px;
+        background-size: cover;
+        background-position: center center;
+        margin-top: 14px;
+        margin-right: 26px;
+        background-color:#fff;
+        border-radius: 3px;
+        
+    }
+    .sex .girl{
+        background-image: url('../image/girl.png');
+        width: 38px;
+        height: 38px;
+        background-size: cover;
+        background-position: center center;
+            margin-top: 15px;
+            margin-left: 26px;
+            background-color: #fff;
+            border-radius: 3px;
+            
+    }
+    .logout{
+        width: 100%;
+        height: 52px;
+        /* border: 1px solid red; */
+        margin-top: 24px;
+    }
+    .logoutbtn{
+        margin: 0 auto;
+        width: 88%;
+        text-align: center;
+        height: 40px;
+        color: #fff;
+        line-height: 40px;
+        background-color: #FF5555;
+        border-radius: 3px;
+    }
+</style>
+    </head>
+
+    <body>
+        <header>
+            <div class="back" tapmode onclick="goback()">
+                <img src="../image/back.png">
+            </div>
+            <div class="ok" onclick="isok()">确定</div>
+            <a>编辑主页</a>
+        </header>
+        <div class="headimglist">
+            <input type="file" id="file" enctype="multipart/form-data" style="display: none;">
+            <div id="headimg" onclick="upperCase()"></div>
+        </div>
+        <div class="inp">
+            <p>用户名</p>
+            <div class="row">
+                <input id="name" autocomplete="off" class="input" type="text" placeholder="用户名更容易让人记住">
+            </div>
+            <p>个性签名</p>
+            <div class="row">
+                <input id="autograph" autocomplete="off" class="input" type="text" placeholder="个性签名只为自己代言">
+            </div>
+
+            <p>密码</p>
+            <div class="row">
+                <input id="password" onfocus=this.blur() onclick="updatepwd()" autocomplete="off" class="input" type="text"
+                 placeholder="修改密码">
+            </div>
+
+            <p>手机/QQ/微信</p>
+            <div class="row">
+                <input id="qqorwx" onfocus=this.blur() onclick="updateqqorwx()" autocomplete="off" class="input" type="text"
+                 placeholder="找回密码凭证">
+            </div>
+        </div>
+        <div class="sex">
+            <div class="boy" onclick="selectsex(0,this)"></div>
+            <div class="girl" onclick="selectsex(1,this)"></div>
+        </div>
+        <div class="logout">
+            <div class="logoutbtn" onclick="logout()">
+                退出登录
+            </div>
+        </div>
+    </body>
+
+
+    <script type="text/javascript">
+        var userInfo =  $api.getStorage('userInfo');
+        getuser();
+        var sex=0;
+        
+
+        function upperCase() {
+
+            $('#file').click();
+
+        }
+        $('#file').change(function() {
+            if (!userInfo) {
+                window.location.href = "./login_frame.html";
+                return;
+            }
+            var formData = new FormData();
+            var file = $('#file')[0].files[0];
+            if (!file) {
+                toast('没有检测到路径', 'bottom', 800)
+                return;
+            }
+            formData.append("img", file);
+            formData.append("userid", userInfo.id);
+            toast('请稍等...', 'center', 2000);
+            $.ajax({
+                type: 'post',
+                url: url + 'uploadshead',
+                dataType: 'json',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if(data.code==200){
+                        getUsername();
+                    }else{
+                        toast(data.message,'center', 2000);
+                    }
+                    
+
+                },
+                error: function(data) {
+                    console.log(data);
+                },
+            });
+        })
+
+        function isok() {
+            var notice = $(document).dialog({
+                type: 'notice',
+                infoIcon: '../image/icon/loading.gif',
+                infoText: '修改加载中'
+            });
+            var name = $("#name").val();
+            var autograph=$("#autograph").val();
+            if(!autograph){
+                autograph='null';
+            }
+            var params = {
+                id: userInfo.id,
+                name: name,
+                autograph:autograph,
+                sex:sex
+            }
+            postajax(url + 'updateuserinfo', params, function(ret) {
+                if (ret.code == 200) {
+                    // self.location=document.referrer;
+                    notice.update({
+                        infoIcon: '../image/icon/success.png',
+                        infoText: '修改成功！！',
+                        autoClose: 1000
+                    });
+                    setTimeout(function() {
+                        window.location.href="./my_frame.php";
+                    }, 1000);
+                    
+                }
+            })
+        }
+
+        function getuser() {
+            var userInfo =  $api.getStorage('userInfo');
+            if (userInfo.headimg != '0') {
+                $("#headimg").css({
+                    'background': 'url(' + imgurl + userInfo.headimg + ')',
+                    'background-size': 'cover',
+                    'background-position': 'center center'
+                });
+
+            } else {
+                $("#headimg").css({
+                    'background': 'url(../image/empty_page_nothing.png)',
+                    'background-size': 'cover',
+                    'background-position': 'center center'
+                })
+            }
+            if (userInfo.name != '0') {
+                $("#name").val(userInfo.name);
+            } else {
+                $("#name").val('未设置');
+            }
+            
+            if (userInfo.autograph != '0' && userInfo.autograph !=0) {
+                $("#autograph").val(userInfo.autograph);
+            } else {
+                $("#autograph").val('未设置');
+            }
+            if (userInfo.sex == '0') {
+                $(".boy").css('background-color','#DBEEFF');
+            } else {
+                $(".girl").css('background-color','#FFE1DF');
+            }
+            
+
+
+
+        }
+
+        function updatepwd() {
+            window.location.href = "./update_frame.html?" + window.btoa(encodeURI('title=密码'));
+        }
+
+        function updateqqorwx() {
+            window.location.href = "./update_frame.html?" + window.btoa(encodeURI('title=凭证'));
+        }
+
+        function getUsername() {
+
+            var userInfo = $api.getStorage('userInfo');
+            var params = {
+                id: userInfo.id
+            }
+            postajax(url + 'getuser', params, function(ret) {
+                if (ret.code == 200) {
+                    $("#headimg").css({
+                        'background': 'url(' + imgurl + ret.data.user.headimg + ')',
+                        'background-size': 'cover',
+                        'background-position': 'center center'
+                    });
+                    toast('头像更新成功', 'center', 1000)
+
+                    // localStorage.setItem('userInfo', JSON.stringify());
+                    $api.setStorage('userInfo',ret.data.user );
+                    getuser();
+                }
+            })
+
+        }
+
+        function goback() {
+           api.sendEvent({
+               name: 'resmy',
+           });
+            api.closeWin();
+        }
+
+        pushHistory();
+        window.addEventListener("popstate", function(e) {
+            window.location.href = "./my_frame.php"
+        }, false);
+
+        function pushHistory() {
+            var state = {
+                title: "title",
+                url: "#"
+            };
+            window.history.pushState(state, "title", "#");
+        }
+        
+        function selectsex(_index,_this){
+            if(_index=='0'){
+                $(_this).css('background-color','#DBEEFF');
+            }else{
+                $(_this).css('background-color','#FFE1DF');
+            }
+            $(_this).siblings().css('background-color','#fff');
+            sex=_index;
+        }
+        function logout(){
+            $(document).dialog({
+                type: 'confirm',
+                style: 'ios',
+                titleText: '退出登录',
+                content: '确定退出此账号吗?',
+                buttons: [{
+                        name: '取消',
+                        callback: function() {
+                            
+                        }
+                    },
+                    {
+                        name: '确定',
+                        callback: function() {
+                        // clearStorage
+                        $api.clearStorage('userInfo');
+                            // $api.setStorage('userInfo', '');
+                            // window.location.href="./my_frame.php";
+                            goback();
+                        }
+                    },
+                    
+                    
+                ]
+            });
+            
+        }
+    </script>
+
+</html>
