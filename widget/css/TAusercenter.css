@@ -3,7 +3,7 @@ body,html{
 	padding: 0px;
 	background-color: #FAFAFA;
 }
-header{
+#head{
 	width: 100%;
 	height: 50px;
 	display: flex;
@@ -11,7 +11,7 @@ header{
 	border-bottom: 1px solid #E6E6E6;
 	background-color: #fff;
 }
-header .back{
+#head .back{
 	margin-top:8px;
 	margin-left: 6px;
 	width: 28px;
@@ -21,7 +21,7 @@ header .back{
 	background-position: center center;
 	vertical-align: middle;
 }
-header .share{
+#head .share{
 	margin-top: 8px;
 	margin-right: 6px;
 	width: 30px;
@@ -31,16 +31,16 @@ header .share{
 	background-size: contain;
 	background-position: center center;
 }
-header .username{
+#head .username{
 	margin: 0 auto;
 	/* border: 1px solid red; */
 }
-header .username .name{
+#head .username .name{
 	text-align: center;
 	font-size: 16px;
 	margin-top: 5px;
 }
-header .username .usern{
+#head .username .usern{
 	text-align: center;
 	font-size: 13px;
 	color: #A4A4A4;
@@ -198,6 +198,7 @@ header .username .usern{
 	border: 0px;
 	outline: 0px;
 	position: relative;
+	background-color: #D5D5D5;
 	 /* line-height: 0px; */
 }
 .cdslist  .cdsimg img{

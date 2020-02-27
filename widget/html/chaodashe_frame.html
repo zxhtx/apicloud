@@ -14,8 +14,7 @@
         <link rel="stylesheet" href="../css/chaodashe_frame.css">
                 <script src="../script/commonjs.js">    
                 </script>
-            <script src="../script/footcom.js">    
-          </script>
+  
 
                <link href="https://cdn.bootcss.com/Swiper/4.5.0/css/swiper.min.css" rel="stylesheet">
                <script src="https://cdn.bootcss.com/Swiper/4.5.0/js/swiper.min.js"></script>
@@ -448,8 +447,18 @@ function fnUpdateWareListByShoppingCart(data_,_LoadMore) {
 
 function belike(articleid,_this,touid){
     // 判断这条动态是否被点赞
+var userInfo=$api.getStorage('userInfo');
  if (!userInfo){
-        window.location.href="./login_frame.html";
+        api.openWin({
+          name: 'login',
+          url: './login.html',
+          pageParam: {
+              page: 'chaodashe_frame'
+          },
+          animation:{
+              type:'fade'
+          }
+      });
          return;
     }
   // console.log($('#like'+))
@@ -485,6 +494,20 @@ function belike(articleid,_this,touid){
 }
 // 加入书签
 function beshuqian(articleid,_this,touid){
+  var userInfo=$api.getStorage('userInfo');
+ if (!userInfo){
+        api.openWin({
+          name: 'login',
+          url: './login.html',
+          pageParam: {
+              page: 'chaodashe_frame'
+          },
+          animation:{
+              type:'fade'
+          }
+      });
+         return;
+    }
         var shuqian_userid=$(_this).attr('data-shuqian_userid');
     if (sqtime == 0) {
       sqtime = 1;
@@ -517,10 +540,7 @@ function beshuqian(articleid,_this,touid){
 }
 // 加入书签
 function addshuqian(index,articleid,shuqianid,touid){
-     if (!userInfo){
-               window.location.href="./login_frame.html";
-               return;
-    }
+    var userInfo=$api.getStorage('userInfo');
      if (index=='1'){
         var params={
             userid:userInfo.id,
@@ -560,13 +580,13 @@ function addshuqian(index,articleid,shuqianid,touid){
 }
 // 点赞入库
 function addlike(index,articleid,likeid,touid){
-    
+    var userInfo=$api.getStorage('userInfo');
     if (index=='1'){
         var params={
             userid:userInfo.id,
             fatherid:articleid,
             type:'1',
-      touid:touid,
+        touid:touid,
         }
 
         postajax(url+'addlike',params,function(ret){
@@ -606,6 +626,20 @@ function addlike(index,articleid,likeid,touid){
 }
 
 function dinyue(articleuserid){
+   var userInfo=$api.getStorage('userInfo');
+ if (!userInfo){
+        api.openWin({
+          name: 'login',
+          url: './login.html',
+          pageParam: {
+              page: 'chaodashe_frame'
+          },
+          animation:{
+              type:'fade'
+          }
+      });
+         return;
+    }
        var params={
             Subscribeman:userInfo.id,
             beSubscribeman:articleuserid,
@@ -648,7 +682,15 @@ function loadImage(){
 }
 
 function TAuser(uid){
-  window.location.href='./TAusercenter.html?'+window.btoa(encodeURI('uid='+uid));
+  // window.location.href='./TAusercenter.html?'+window.btoa(encodeURI('uid='+uid));
+  api.openWin({
+      name: 'TAusercenter',
+      url: './TAusercenter.html',
+      pageParam: {
+          uid:uid
+      },
+      animation:{type:'fade'}
+  });
 }
 function lianjie(id,imglists,warelists){
   $('.warelists_'+id).append('<div id="xuanzhun" class="xz1" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; border-bottom:1px solid #FF4466; ">')

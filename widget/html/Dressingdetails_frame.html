@@ -1066,7 +1066,14 @@
 			}
 
 			function TAuser(uid) {
-				window.location.href = './TAusercenter.html?' + window.btoa(encodeURI('uid=' + uid));
+				// window.location.href = './TAusercenter.html?' + window.btoa(encodeURI('uid=' + uid));
+				api.openWin({
+				    name: 'TAusercenter',
+				    url: './TAusercenter.html',
+				    pageParam: {
+				        name:uid
+				    }
+				});
 			}
 
 			function fnwarelist(imglist) {

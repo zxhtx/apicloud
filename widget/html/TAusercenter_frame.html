@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" name="viewport" />
+		<meta content="telephone=no,email=no,date=no,address=no" name="format-detection">
+		<meta charset="utf-8">
+		<meta name="referrer" content="no-referrer" />
+		<title>TA的个人中心</title>
+		<link rel="stylesheet" type="text/css" href="../css/TAusercenter.css" />
+		<script src="../script/commonjs.js"></script>
+		<script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+	</head>
+	<body>
+		<header id="head">
+			<div class="back" tapmode onclick="back()"></div>
+			<div class="username">
+				<div class="name">...</div>
+				<div class="usern">潮袭号：...</div>
+			</div>
+			<div class="share"></div>
+		</header>
+		<div class="userinfo">
+			<div class="head">
+
+				<div class="headimg">
+					<!-- 该用户的头像 -->
+					<div class="img"></div>
+				</div>
+				<div class="headinfo">
+					<div class="userlist">
+						<!-- 该用户的已订阅的用户的数量以及粉丝数量等等 -->
+						<div class="list">
+							<div class="dinyuecount">0</div>
+							<div class="text">已订阅</div>
+						</div>
+						<div class="list">
+							<div class="fensicount">0</div>
+							<div class="text">粉丝</div>
+						</div>
+						<div class="list">
+							<div class="sqcount">0</div>
+							<div class="text">书签</div>
+						</div>
+					</div>
+					<div class="is_dinyueandchat">
+						<!-- 我的账号是否关注此账号 -->
+						<div class="is_dinyue" data-is_dy='0' onclick="dinyue()">订阅</div>
+						<div class="chat" onclick="openchat()">
+							<!-- 私信 -->
+							<div class="chat_img"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="textinfo">
+				<div class="sex"></div>
+				<div class="line"></div>
+				<div class="authority" onclick="isauthority()"></div>
+				<div class="autograph"></div>
+			</div>
+			<div class="cdslist">
+
+			</div>
+		</div>
+		<script id="template" type="text/template">
+			{{~it.list:value:index}}
+				<div onclick="openDressing({{=value.id}})" class="cdsimg "  data-original="{{=it.imgurl}}{{=value.imglist}}">
+					{{if(value.showimgtype=='1'){}}
+					 <img src="../image/longimg.png" alt="">
+					{{ }else{ }}
+					 <img src="../image/lunbo_white.png" alt="">
+					{{ } }}
+				</div>
+			{{~}}
+		</script>
+		<script type="text/javascript">
+			var authority;
+			var authoritytext;
+			var off_on = false;
+			var skip = 0;
+			var limit = 12;
+			var uid;
+			apiready = function(){
+				uid =api.pageParam.uid;
+			    TAusercenter();
+			}
+			    
+			function back(){
+				api.closeWin();
+			}
+
+			function TAusercenter(_LoadMore) {
+				var userInfo=$api.getStorage('userInfo');
+				if (!userInfo) {
+					api.openWin({
+					    name: 'login',
+					    url: './login.html',
+					    pageParam: {
+					        page:'TAusercenter',
+					        TAusercenteruid:api.pageParam.uid
+					    },
+					    animation:{
+					    	type:'fade'
+					    }
+					});
+					api.closeWin();
+					return;
+				}
+				if (_LoadMore) {
+					skip += limit;
+				} else {
+					skip = 0;
+					dialog('加载中...');
+				}
+				postajax(url + 'getTAusercenter', {
+					'uid': uid,
+					'meid': userInfo.id,
+					'skip': skip,
+					'limit': limit
+				}, function(e) {
+					if (e.code == '200') {
+						if (_LoadMore) {
+							dotupdate(e.data.cdslist, _LoadMore);
+						} else {
+							dotupdate(e.data.cdslist, _LoadMore);
+							updatehtml(e.data);
+						}
+
+
+					} else if (e.code == '201') {
+						if (_LoadMore) {
+							dotupdate(e.data.cdslist, _LoadMore);
+						} else {
+							dotupdate(e.data.cdslist, _LoadMore);
+							updatehtml(e.data);
+						}
+						$('.cdslist').append(
+							'<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-暂无数据-</p>'
+						);
+					} else {
+						$('.xz').remove();
+						$('.cdslist').append(
+							'<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-暂无数据-</p>'
+						);
+					}
+				})
+			}
+
+			function updatehtml(data) {
+				if(data.user.id==userInfo.id){
+					$('.head').css('height','92px');
+					$('.headimg>.img').css('margin-top','5px')
+					$('.is_dinyueandchat').css('display','none')
+					$('.userlist').css('margin-top','38px')
+				}
+				authority = data.user.authority;
+				authoritytext = data.user.authoritytext;
+				$('.name').html(data.user.name);
+				$('.usern').html('潮袭号：' + data.user.username);
+				$('.dinyuecount').html(data.dycount);
+				$('.fensicount').html(data.bdycount);
+				$('.sqcount').html(data.sqcount);
+				$('.headimg .img').css('background-image', 'url(' + imgurl + data.user.headimg + ')');
+				if (data.user.autograph != 'null') {
+					$('.autograph').html(data.user.autograph);
+				}
+				if (data.user.sex == '0') {
+					$('.textinfo .sex').css('background-image', 'url(../image/boy.png)');
+				} else {
+					$('.textinfo .sex').css('background-image', 'url(../image/girl.png)');
+				}
+
+				if (authority == '1') {
+					$('.authority').css('background-image', 'url(../image/authority.png)');
+				} else {
+					$('.authority').css('background-image', 'url(../image/noauthority.png)');
+				}
+				if (data.isdy == '1') {
+					$('.is_dinyue').html('取消订阅');
+					$('.is_dinyue').attr('data-is_dy', '1');
+				} else {
+					$('.is_dinyue').html('订阅');
+				}
+			}
+
+			function dotupdate(ret, _LoadMore) {
+				var param = {
+					list: ret,
+					imgurl: imgurl,
+				};
+				var tempFn = doT.template($('#template').text());
+				// 使用模板函数生成HTML文本
+				var resultHTML = tempFn(param);
+
+				if (_LoadMore) {
+					$(".cdslist").append(resultHTML);
+				} else {
+					$(".cdslist").html(resultHTML);
+				}
+				off_on = true;
+				$(".cdsimg").lazyload({
+					threshold: 200
+				});
+				dl.close();
+				$('.xz').remove();
+			}
+
+			function isauthority() {
+				if (authority == '1') {
+					toast(authoritytext, 'center', 800);
+				} else {
+					toast('未认证', 'center', 800);
+				}
+			}
+
+			window.addEventListener("scroll", function() {
+				//当时滚动条离底部0px时开始加载下一页的内容
+				if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+					if (off_on) {
+						off_on = false;
+						TAusercenter(true);
+						$('.cdslist').append('<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>')
+					}
+
+
+				}
+			});
+
+			function openDressing(id) {
+				window.location.href = './Dressingdetails_frame.html?' + window.btoa(encodeURI('articleid=' + id));
+			}
+
+			function dinyue() {
+				$('.is_dinyue').prepend('<div class="loading"></div>');
+				// return;
+				var dy = $('.is_dinyue').attr('data-is_dy');
+				if (dy=='1') {
+                 var  type='0';
+				} else {
+				var	type='1';
+				}
+				var params = {
+					Subscribeman: userInfo.id,
+					beSubscribeman: uid,
+					type: type
+				}
+				postajax(url + 'dinyue', params, function(ret) {
+					if (ret.code == '400') {
+						toast('服务器在开小差', 'bottom', 800)
+					} else {
+						if(type=='1'){
+							$('.is_dinyue').html('取消订阅');
+							$('.is_dinyue').attr('data-is_dy', '1');
+						}else{
+							$('.is_dinyue').html('订阅');
+							$('.is_dinyue').attr('data-is_dy', '0');
+						}
+						
+						
+					}
+				});
+
+			}
+			function openchat(){
+				window.location.href="./chat.html?"+window.btoa(encodeURI("fromid="+userInfo.id+"&toid="+uid));
+			}
+			
+		</script>
+	</body>
+</html>

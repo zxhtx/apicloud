@@ -8,160 +8,41 @@
     <title>添加收货地址</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
     <style>
-    header {
-        position: relative;
-        width: 100%;
-        height: 40px;
-        background-color: white
-    }
-    
-    header .back {
-          position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 40px;
-        height: 40px;
-        /*border: 1px solid red;*/
-        background: url(../image/back.png);
-        background-position: 12px 9px;
-        background-size: 11px 18px;
-        background-repeat: no-repeat;
-    }
-    
-    header h1 {
-        width: 100%;
-        height: 40px;
-        line-height: 40px;
-        text-align: center;
-        color: black;
-        font-size: 18px;
-    }
-    
-    header .right {
-        display: none;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 50px;
-        height: 50px;
-        line-height: 50px;
-        color: black;
-        font-size: 15px;
-        text-align: center;
-    }
+   
 </style>
 </head>
 
 <body>
-    <header id="header">
-        <div class="back" tapmode onclick="api.closeWin();"></div>
-        <h1>收货地址</h1>
-        <div id="right" class="right" tapmode onclick="fnDelete()">删除</div>
-    </header>
+  
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
     apiready = function() {
-        if (api.pageParam.id) {
-            var right = $api.byId('right');
-            right.style.display = 'block';
-        }
-
-        var header = $api.byId('header');
-      
-        var headerH = $api.offset(header).h;
         api.openFrame({
             name: 'setaddress_frame',
             url: './setaddress_frame.html',
             rect: {
                 x: 0,
-                y: headerH,
+                y: 0,
                 w: 'auto',
                 h: 'auto'
             },
-            pageParam: api.pageParam,
+            pageParam:{
+                 address:api.pageParam.address,
+                default:api.pageParam.default,
+                house:api.pageParam.house,
+                id:api.pageParam.id,
+                mobile:api.pageParam.mobile,
+                name:api.pageParam.name,
+                type:api.pageParam.type,
+                userId:api.pageParam.userId,
+            },
             bounces: false
         });
     };
 
-    function fnDelete() {
-     var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-      var userInfo = $api.getStorage('userInfo');
-      var dialogBox = api.require('dialogBox');
-      dialogBox.alert({
-        texts: {
-            title: '收货地址',
-            content: '您真的要删除收货地址么ლ(′◉❥◉｀ლ)',
-            leftBtnTitle: '取消',
-            rightBtnTitle: '确认'
-        },
-        styles: {
-            bg: '#fff',
-            w: 300,
-            corner:2,
-            title: {
-                marginT: 18,
-                titleSize: 14,
-                titleColor: '#000'
-            },
-            content: {
-                color: '#000',
-                size: 14
-            },
-             right: {
-                marginB: 7,
-                marginL: 10,
-                w: 130,
-                h: 35,
-                corner: 8,
-                bg: '#000',
-                size: 12,
-                color: '#fff',
-            },
-            left: {
-                marginB: 7,
-                marginL: 20,
-                w: 130,
-                h: 35,
-                corner: 8,
-                bg: '#000',
-                size: 12,
-                color: '#fff',
-            },
-            
-        }
-    }, function(ret, err) {
-        if (ret) {
-            if (ret.eventType == 'right') {
-                api.ajax({
-                    url: 'https://d.apicloud.com/mcm/api/address/' + api.pageParam.id,
-                    method: 'delete',
-                    headers: {
-                      "X-APICloud-AppId": "A6099267504667",
-                      "X-APICloud-AppKey":   appKey,
-                      "Authorization": userInfo.id
-                  }
-              }, function(ret, err) {
-                if (ret) {
-                    api.sendEvent({
-                        name: 'deleteAddress',
-                        extra: {
-                            key1: api.pageParam.id,
-                        }
-                    });
-                    dialogBox.close();
-                    api.closeWin();
-                }
-            });
-            }else{
-               dialogBox.close();
-           }
-       }
-   });
-  }
+    
 </script>
 
 </html>

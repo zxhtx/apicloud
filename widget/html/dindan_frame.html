@@ -1,338 +1,409 @@
 <!doctype html>
 <html>
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-	<title>首页Frame</title>
-	<link rel="stylesheet" type="text/css" href="../css/api.css" />
-	<style type="text/css">
+	<head>
+		<link rel="shortcut icon" href="../image/chao.ico" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>我的订单</title>
+		<script src="../script/commonjs.js"></script>
+		<style type="text/css">
+			body,
+			html {
+				padding: 0;
+				margin: 0;
+			}
 
-	section {
-		position: relative;
-		width: 100%;
-		height: auto;
-		box-sizing: border-box;
-		padding: 0 8px;
-	}
-
-	.content {
-		width: 100%;
-		height: 100%;
-		/*border: 1px solid red*/
-	}
+			.content {
+				width: 100%;
+				height: 100%;
+				/*border: 1px solid red*/
+			}
 
 
 
-	.ware-1 {
-		position: relative;
-		width: 100%;
-		height: 105px;
-		box-sizing: border-box;
-		padding-top: 15px;
-		/*border: 1px solid red;*/
-		padding-bottom: 15px;
-		border-bottom: 1px solid #d1d1d1;
-	}
+			.ware-1 {
+				position: relative;
+				width: 100%;
+				height: 105px;
+				box-sizing: border-box;
+				padding-top: 8px;
+				/*border: 1px solid red;*/
+				padding-bottom: 8px;
+				border-bottom: 0.5px solid #ddd;
+				
+			}
 
-	.ware-1 .thumbnail {
-		position: absolute;
-		top: 20px;
-		left: 0px;
-		height: 50px;
-		width: 50px;
-		border-radius: 10px;
-	}
+			.ware-1 .thumbnail {
+				position: absolute;
+				top: 20px;
+				left: 6px;
+				height: 58px;
+				width: 58px;
+				border-radius: 10px;
+			}
 
-	.ware-1 .info {
-		width: 100%;
-		height: 114px;
-		box-sizing: border-box;
-		padding-left: 66px;
-		padding-right: 28px;
+			.ware-1 .info {
+				width: 100%;
+				height: 114px;
+				margin-top: 8px;
+				box-sizing: border-box;
+				padding-left: 66px;
+				padding-right: 28px;
 
-	}
+			}
 
-	.ware-1 .info .name {
-		width: 100%;
-		height: 15px;
-		color: #555555;
-		/*margin-top: 14px;*/
-		font-size: 15px;
-	}
+			.ware-1 .info .name {
+				width: 100%;
+				height: 15px;
+				color: #555555;
+				/*margin-top: 14px;*/
+				font-size: 15px;
+			}
 
-	.ware-1 .info .description {
-		margin-top: 10px;
-		width: 100%;
-		height: 15px;
-		font-size: 13px;
-		color: #9d9d9d;
-		overflow: hidden;
-	}
+			.ware-1 .info .description {
+				margin-top: 10px;
+				width: 100%;
+				height: 15px;
+				font-size: 13px;
+				color: #9d9d9d;
+				overflow: hidden;
+			}
 
-	.ware-1 .info .price-tag {
-		margin-top: 10px;
-		width: 100%;
-		height: 12px;
-		font-size: 12px;
-		vertical-align: top;
-	}
+			.ware-1 .info .price-tag {
+				margin-top: 10px;
+				width: 100%;
+				height: 12px;
+				font-size: 12px;
+				vertical-align: top;
+			}
 
-	.ware-1 .info .price-tag .price {
-		color: black;
-		font-size: 16px;
-	}
+			.ware-1 .info .price-tag .price {
+				color: black;
+				font-size: 16px;
+			}
 
-	.ware-1 .info .price-tag .unit {
-		font-size: 8px;
-		color: #cbcbcb;
-	}
+			.ware-1 .info .price-tag .unit {
+				font-size: 8px;
+				color: #cbcbcb;
+			}
 
-	.ware-1 .info .origin-price {
-		margin-top: 5px;
-		width: 100%;
-		height: 10px;
-		font-size: 10px;
-		color: #d3d3d3;
-	}
+			.ware-1 .info .origin-price {
+				margin-top: 5px;
+				width: 100%;
+				height: 10px;
+				font-size: 10px;
+				color: #d3d3d3;
+			}
 
-	.ware .control {
-		position: absolute;
-		width: 110px;
-		height: 23px;
-		right: 8px;
-	}
+			.ware .control {
+				position: absolute;
+				width: 110px;
+				height: 23px;
+				right: 8px;
+			}
 
-	.ware-1 .control {
-		top: 90px;
-	}
+			.ware-1 .control {
+				top: 90px;
+			}
 
-	.ware .control .panel {
+			.ware .control .panel {
+				display: none;
+				height: 23px;
+			}
+
+			.ware .control .minus {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 23px;
+				height: 23px;
+			}
+
+			.ware .control .count {
+				position: relative;
+				top: 0;
+				margin-left: 31px;
+				margin-right: 31px;
+				width: auto;
+				height: 23px;
+				text-align: center;
+				line-height: 23px;
+				color: #444;
+				font-size: 12px;
+				background-image: url(../image/count.png);
+				background-repeat: no-repeat;
+				background-size: 48px 23px;
+			}
+
+			.ware .control .add {
+				position: absolute;
+				top: 0;
+				right: 0;
+				width: 23px;
+				height: 23px;
+			}
+
+			.push-status {
+				width: 100%;
+				height: 40px;
+				font-size: 16px;
+				color: #888;
+				line-height: 40px;
+				text-align: center;
+				background-color: #fff;
+			}
+
+			.active {
+				opacity: 0.7;
+			}
+
+			.default,
+			.speak {
+				position: absolute;
+				right: 10px;
+				bottom: 2px;
+				height: 16px;
+				font-size: 13px;
+				border: 1px solid black;
+				border-radius: 2px;
+				padding: 5px;
+				-moz-box-shadow: 1px 1px 1px #999 inset;
+				-webkit-box-shadow: 1px 1px 1px #999 inset;
+				box-shadow: 1px 1px 1px #999 inset;
+
+			}
+
+			.speak span {
+				height: 16px;
+				line-height: 16px;
+				padding: 2px 6px 2px 6px;
+			}
+
+			.default span {
+				color: black;
+				height: 16px;
+				line-height: 16px;
+			}
+
+
+			.no {
+				position: absolute;
+				right: 76px;
+				bottom: 2px;
+				height: 16px;
+				font-size: 13px;
+				border: 1px solid black;
+				border-radius: 2px;
+				padding: 5px;
+				-moz-box-shadow: 1px 1px 1px #999 inset;
+				-webkit-box-shadow: 1px 1px 1px #999 inset;
+				box-shadow: 1px 1px 1px #999 inset;
+
+			}
+
+			.no span {
+				height: 16px;
+				line-height: 20px;
+				padding: 0px 6px 0px 6px;
+
+			}
+
+			.shoppingrenzheng {
+				position: absolute;
+				right: 138px;
+				bottom: 2px;
+				height: 20px;
+				font-size: 11px;
+				border: 1px solid black;
+				border-radius: 2px;
+				padding: 3px;
+				-moz-box-shadow: 1px 1px 1px #999 inset;
+				-webkit-box-shadow: 1px 1px 1px #999 inset;
+				box-shadow: 1px 1px 1px #999 inset;
+
+			}
+
+			.shoppingrenzheng span {
+				height: 20px;
+				line-height: 20px;
+
+			}
+
+			.lookgengduo {
+				position: absolute;
+				right: 68px;
+				bottom: 2px;
+				height: 20px;
+				font-size: 11px;
+				border: 1px solid black;
+				border-radius: 2px;
+				padding: 3px;
+				-moz-box-shadow: 1px 1px 1px #999 inset;
+				-webkit-box-shadow: 1px 1px 1px #999 inset;
+				box-shadow: 1px 1px 1px #999 inset;
+
+			}
+
+			.lookgengduo span {
+				height: 20px;
+				line-height: 20px;
+
+			}
+
+			.ok {
+				position: absolute;
+				right: 8px;
+				bottom: 2px;
+				height: 21px;
+				font-size: 11px;
+				border-radius: 2px;
+				padding: 3px;
+				padding-left: 6px;
+				padding-right: 6px;
+				background-color: #01C5C0;
+
+			}
+
+			.ok span {
+				height: 21px;
+				line-height: 21px;
+				color: white;
+				font-weight: bold;
+
+			}
+
+			header {
+				width: 100%;
+				height: 40px;
+				background: white;
+				border-bottom: 0.3px solid #F1F1F1;
+				box-shadow:0px 6px 6px -6px black;
+			}
+
+			header .back {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 40px;
+				height: 40px;
+				z-index: 2;
+			}
+
+			header .back img {
+				margin-top: 5px;
+				margin-left: 4px;
+				width: 28px;
+				height: 30px;
+			}
+
+			header a {
+				display: block;
+				text-align: center;
+				line-height: 40px;
+				font-size: 16px;
+				font-weight: bold;
+
+			}
+
+			.nav {
+				margin-top: 3px;
+				border-bottom: 1px solid #ddd;
+
+			}
+
+			.nav p {
+				display: inline-block;
+				width: 22%;
+				padding: 5px 0;
+				/*padding-left: 2px;*/
+				margin-left: 5px;
+				text-align: center;
+				font-size: 13px;
+			}
+
+			.nav .active {
+				font-weight: bold;
+				border-bottom: 1px solid #46D8AB;
+				color: #46D8AB;
+			}
+
+
+			.noshopping {
+				z-index: 9999;
+				text-align: center;
+				/*position: fixed;*/
+				/*top: 36%;
+				left: 36%;*/
+				color: #ddd;
+			}
+
+			.noshoppingshow {
+				display: '';
+			}
+
+			/*.noshoppinghidden{
 		display: none;
-		height: 23px;
-	}
+		}*/
+		</style>
+	</head>
 
-	.ware .control .minus {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 23px;
-		height: 23px;
-	}
-
-	.ware .control .count {
-		position: relative;
-		top: 0;
-		margin-left: 31px;
-		margin-right: 31px;
-		width: auto;
-		height: 23px;
-		text-align: center;
-		line-height: 23px;
-		color: #444;
-		font-size: 12px;
-		background-image: url(../image/count.png);
-		background-repeat: no-repeat;
-		background-size: 48px 23px;
-	}
-
-	.ware .control .add {
-		position: absolute;
-		top: 0;
-		right: 0;
-		width: 23px;
-		height: 23px;
-	}
-
-	.push-status {
-		width: 100%;
-		height: 40px;
-		font-size: 16px;
-		color: #888;
-		line-height: 40px;
-		text-align: center;
-		background-color: #fff;
-	}
-
-	.active {
-		opacity: 0.7;
-	}
-	.default,.speak{
-		position: absolute;
-		right: 10px;
-		bottom: 2px;
-		height: 16px;
-		font-size: 13px;
-		border: 1px solid black;
-		border-radius: 2px;
-		padding: 5px;
-		-moz-box-shadow:1px 1px 1px #999 inset;              
-		-webkit-box-shadow:1px 1px 1px #999 inset;           
-		box-shadow:1px 1px 1px #999 inset; 
-
-	}
-	.speak input{
-		height: 16px;
-		line-height: 16px;
-		padding: 2px 6px 2px 6px;
-	}
+	<body>
 
 
-	.no{
-		position: absolute;
-		right: 76px;
-		bottom: 2px;
-		height: 16px;
-		font-size: 13px;
-		border: 1px solid black;
-		border-radius: 2px;
-		padding: 5px;
-		-moz-box-shadow:1px 1px 1px #999 inset;              
-		-webkit-box-shadow:1px 1px 1px #999 inset;           
-		box-shadow:1px 1px 1px #999 inset; 
+		<header>
+			<div class="back" tapmode onclick="back()">
+				<img src="../image/back.png">
+			</div>
+			<a>我的订单</a>
+		</header>
+		<div class="nav">
+			<p class="active nav0" i="0">待付款</p>
+			<p class="nav1" i="1">待收货</p>
+			<p class="nav2" i="2">已签收</p>
+			<p i="all">全部商品</p>
+		</div>
 
-	}
-	.no input{
-		height: 16px;
-		line-height: 20px;
+		<div id="list">
 
-	}
-	.shoppingrenzheng{
-		position: absolute;
-		right: 125px;
-		bottom: 2px;
-		height: 20px;
-		font-size: 11px;
-		border: 1px solid black;
-		border-radius: 2px;
-		padding: 3px;
-		-moz-box-shadow:1px 1px 1px #999 inset;              
-		-webkit-box-shadow:1px 1px 1px #999 inset;           
-		box-shadow:1px 1px 1px #999 inset; 
+		</div>
+		<div class="noshopping">
+			<p>-木有啦-</p>
+		</div>
 
-	}
-	.shoppingrenzheng input{
-		height: 20px;
-		line-height: 20px;
-
-	}
-	.lookgengduo{
-		position: absolute;
-		right: 62px;
-		bottom: 2px;
-		height: 20px;
-		font-size: 11px;
-		border: 1px solid black;
-		border-radius: 2px;
-		padding: 3px;
-		-moz-box-shadow:1px 1px 1px #999 inset;              
-		-webkit-box-shadow:1px 1px 1px #999 inset;           
-		box-shadow:1px 1px 1px #999 inset; 
-
-	}
-	.lookgengduo input{
-		height: 20px;
-		line-height: 20px;
-
-	}
-	.ok{
-		position: absolute;
-		right: 1px;
-		bottom: 2px;
-		height: 20px;
-		font-size: 11px;
-		border-radius: 2px;
-		padding: 3px;
-		background-color:#01C5C0;
-
-	}
-	.ok input{
-		height: 20px;
-		line-height: 16px;
-		color: white;
-
-	}
-</style>
-</head>
-
-<body>
-	<section id="list">
-     <!--    <div class="ware ware-0">
-            <div class="content">
-                <img class="thumbnail" src="../image/default_rect.png">
-                <div class="info">
-                    <span class="price">RMB14.9</span>
-                    <span class="unit">/4盒</span>
-                    <span class="origin-price">&nbsp;超市:<del>19.9元</del></span>
-                </div>
-                <div class="control">
-                    <div class="panel">
-                        <img class="minus" src="../image/minus.png">
-                        <div class="count">0</div>
-                    </div>
-                    <img class="add" src="../image/add.png">
-                </div>
-            </div>
-        </div>
-        <div class="ware ware-1" >
-            <div class="content" >
-                <img class="thumbnail" src="../image/default_square.png">
-                <div class="info" tapmode onclick="openWareWin()">
-                    <div class="name">牛奶巧克力</div>
-                    <div class="description">下雨天更配哦</div>
-                    <div class="price-tag">
-                        <span class="price">￥28.9</span>
-                        <span class="unit">/1盒</span>
-                    </div>
-                    <div class="origin-price">超市:
-                        <del>59.9元</del>
-                    </div>
-                </div>
-                <div class="control">
-                    <div class="panel">
-                        <img class="minus" src="../image/minus.png">
-                        <div class="count">0</div>
-                    </div>
-                    <img class="add" src="../image/add.png ">
-                </div>
-            </div>
-        </div> -->
-    </section>
-    <div class="push-status" id="pushStatus">我是有底线滴</div>
-</body>
-<script type="text/template" id="template">
-	{{~it:value:index}}
+	</body>
+	<script type="text/template" id="template">
+		{{~it:value:index}}
 	<div class="ware ware-1" id="ware_{{=value.id}}">
 		<div class="content" >
-			<img onload="LoadImage(this,'{{=value.id}}')" data-url="{{=value.url}}" data-wareTypeId="{{=value.wareTypeId}}"  class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
+			<img src="{{=value.url}}" data-wareTypeId="{{=value.wareTypeId}}"  class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
 			<div class="info" tapmode onclick="openWareWin('{{=value.wareid}}','{{=value.wareTypeId}}')">
 				<div class="name">{{=value.warename}}</div>
 				<div class="description">{{=value.description}}</div>
 				<div class="price-tag">
 					<span class="price">￥{{=value.price}}</span>
-
 				</div>
 				{{? value.dindantypeid=='5c2a3991af3114d73d9ddfc2'}}
 				<div class="no" tapmode onclick="no('{{=value.id}}')">
-					<input type="button" value="取消">
+					<span>取消</span>
 				</div>
 				<div class="default" tapmode onclick="pay('{{=value.id}}','{{=value.wareid}}','{{=value.price}}')">
-					<input type="button" value="去支付">
+					<span>去支付</span>
 				</div>
 				{{?? value.dindantypeid=='5c2a39a2af3114d73d9ddfc3'}}
 				<div class="shoppingrenzheng" tapmode onclick="shoppingrenzheng('{{=value.id}}')">
-					<input type="button" value="购买信息">
+					<span>订单详情</span>
 				</div>
 				<div class="lookgengduo" tapmode onclick="look('{{=value.id}}')">
-					<input type="button" value="订单跟踪">
+					<span>查看物流</span>
 				</div>
 				<div class="ok" tapmode onclick="qianshou('{{=value.id}}')">
-					<input type="button" value="确认收货">
+					<span>已签收</span>
 				</div>
 				{{?? value.dindantypeid=='5c2a39add37a824c5ac6cc64'}}
 				<div class="speak" tapmode onclick="speak('{{=value.wareid}}','{{=value.id}}','{{=value.speaktype}}')">
-					<input type="button" value="评价">
+					<span>评价</span>
 				</div>
 				{{?}}
 			</div>
@@ -341,349 +412,245 @@
 	{{~}}
 
 </script>
-<script type="text/javascript" src="../script/api.js"></script>
-<script type="text/javascript" src="../script/SHA1.js"></script>
-<script type="text/javascript" src="../script/doT.min.js"></script>
-<script type="text/javascript">
-	apiready = function() {
-		init();
-		getAddressList();
-		initRefresh();
-		initEventListenter();
+
+
+	<script type="text/javascript">
+		var loading;
+		var activity;
+		var dindantypeList;
+		var userInfo;
+		var skip = 0;
+		var LIMIT = 6;
+		var wareindex2 = 0;
+		var wareindex = 0;
+		$(".nav .active").removeClass("active");
 		
-
-	};
-	var activity;
-	var dindantypeList;
-	var userInfo;
-	var skip=0;
-	var LIMIT=5;
-	function init(){
-		userInfo=$api.getStorage('userInfo');
-		dindantypeList=$api.getStorage('dindantypeList');
-	}
-	function openWareWin(_wareId,_wareTypeId){
-
-		api.openWin({
-			name: 'ware',
-			url: './ware.html',
-			pageParam: {
-				wareId: _wareId,
-				wareTypeId:_wareTypeId
-			},
-			animation: {
-				type: "fade"
-			}
-		});
-
-	}
-	function look(_id){
-		event.stopPropagation();
-		api.openWin({
-			name: 'lookxiangqing.html',
-			url: './lookxiangqing.html',
-			pageParam: {
-				lookid:_id
-			},
-			animation: {
-				type: "fade"
-			}
-		});
-	}
-	function shoppingrenzheng(_id){
-		event.stopPropagation();
-		api.openWin({
-			name: 'shoppingrenzheng.html',
-			url: './shoppingrenzheng.html',
-			pageParam: {
-				shopping:_id
-			},
-			animation: {
-				type: "fade"
-			}
-		});
+		apiready = function(){
+			$('.nav'+api.pageParam.nav).addClass("active");
+		    setNavMenuIndex();
+		getAddressList(api.pageParam.nav);
+		}
+		    
 		
+		$(window).scroll(function() {
+			if (getScrollHeight() == getWindowHeight() + getDocumentTop()) {
+				getAddressList(wareindex, true);
+				// toast({
+				// 	message: "数据加载中",
+				// 	time: 3000
+				// })
+			}
+		});
 
-	}
-	function qianshou(_id){
-		event.stopPropagation();
-		var dialogBox = api.require('dialogBox');
-		dialogBox.alert({
-			texts: {
-				title: '收货地址',
+		function back(){
+			api.sendEvent({
+			    name: 'resmy',
+			});
+			api.closeWin();
+		}
+
+		function setNavMenuIndex() {
+			// alert($('.nav'+getQueryString(0)))
+				
+		
+			
+			$(".nav p").click(function() {
+				var i = $(this).attr("i");
+				// if (i == wareindex) {
+				// 	return;
+				// }
+				$(".nav .active").removeClass("active");
+				$(this).addClass("active");
+				
+				wareindex = i;
+				getAddressList(wareindex, false);
+			})
+
+		}
+
+		function openWareWin(_wareId, _wareTypeId) {
+			window.location.href = "./ware_frame.html?" + window.btoa(encodeURI('wareId=' + _wareId));
+
+		}
+
+		function look(_id) {
+			event.stopPropagation();
+			window.location.href = "./lookxiangqing_frame.html?" + window.btoa(encodeURI('shooping=' + _id));
+		}
+
+		function shoppingrenzheng(_id) {
+			event.stopPropagation();
+			window.location.href = "./shoppingrenzheng_frame.html?" + window.btoa(encodeURI('shooping=' + _id));
+
+		}
+
+		function qianshou(_id) {
+			event.stopPropagation();
+			$(document).dialog({
+				type: 'confirm',
+				style: 'ios',
+				titleText: '签收',
 				content: '您真的已签收了快递了么ლ(′◉❥◉｀ლ)',
-				leftBtnTitle: '取消',
-				rightBtnTitle: '确认'
-			},
-			styles: {
-				bg: '#fff',
-				w: 300,
-				corner:2,
-				title: {
-					marginT: 18,
-					titleSize: 14,
-					titleColor: '#000'
+				buttons: [{
+						name: '没有',
+						callback: function() {
+							
+						}
+					},
+					{
+						name: '已签收',
+						callback: function() {
+							updateqianshou(_id);
+						}
+					},
+					
+					
+				]
+			});
+			
+
+		}
+		// 已签收
+		function updateqianshou(_id){
+			
+			postajax(url+'updateqianshou',{'id':_id},function(e){
+				if(e.code==200){
+					getAddressList(1);
+					$('#ware_'+_id).remove();
+				}
+			})
+		}
+		function no(_data) {
+			event.stopPropagation();
+			var params = {
+				id: _data,
+			}
+			postajax(url + 'deldindan', params, function(ret) {
+				if (ret.code == 200) {
+					$("#ware_" + _data).css('display', 'none');
+
+				}
+			})
+			return;
+
+		}
+
+		function pay(id, wareid, price) {
+
+			event.stopPropagation();
+			window.location.href = "./pay_frame.html?" + window.btoa(encodeURI('wareid=' + id));
+
+		}
+
+		function speak(_wareid, _id, _speaktype) {
+			event.stopPropagation();
+			// alert(_speaktype)
+			if (_speaktype == 1) {
+				api.toast({
+					msg: '已评论',
+					duration: 2000,
+					location: 'bottom'
+				});
+				return;
+			}
+
+			api.openWin({
+				name: 'speak.html',
+				url: './speak.html',
+				pageParam: {
+					wareId: _wareid,
+					shoppingid: _id
+				}
+			});
+		}
+		// 获取列表页数据
+		function getAddressList(_index, _LoadMore) {
+			dialog('订单加载中');
+			dindanTypeList = [{
+					id: "5c2a3991af3114d73d9ddfc2",
+					name: "待收款"
 				},
-				content: {
-					color: '#000',
-					size: 14
+				{
+					id: "5c2a39a2af3114d73d9ddfc3",
+					name: "待收货"
 				},
-				right: {
-					marginB: 7,
-					marginL: 10,
-					w: 130,
-					h: 35,
-					corner: 8,
-					bg: '#000',
-					size: 12,
-					color: '#fff',
+				{
+					id: "5c2a39add37a824c5ac6cc64",
+					name: "已签收"
 				},
-				left: {
-					marginB: 7,
-					marginL: 20,
-					w: 130,
-					h: 35,
-					corner: 8,
-					bg: '#000',
-					size: 12,
-					color: '#fff',
-				},
+			]
+			if (_LoadMore) {
+				// mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
+			} else {
 
 			}
-		}, function(ret, err){
-			if( ret.eventType == 'right' ){
-				var now = Date.now();
-				var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-				var userInfo=$api.getStorage('userInfo');
-				api.ajax({
-					url: 'https://d.apicloud.com/mcm/api/shoppinginformation/'+_id,
-					method: 'put',
-					headers: {
-						"X-APICloud-AppId": "A6099267504667",
-						"X-APICloud-AppKey":   appKey,
-						"Authorization":userInfo.id
-					},
-					data: {
-						values: { 
-							dindantypeid:'5c2a39add37a824c5ac6cc64'
-						}
+			if (_LoadMore) {
+				skip += LIMIT;
+			} else {
+				skip = 0;
+			}
+			if (_index == 'all') {
+				var params = {
+					// dindantypeid:dindanTypeList[_index].id,
+					userid: userInfo.id,
+					skip: skip,
+					limit: LIMIT,
+				}
 
-					}
-				},function(ret, err){
-					if (ret) {
-						
-						getAddressList();
-					} 
-					dialogBox.close();
+			} else {
+				var params = {
+					dindantypeid: dindanTypeList[_index].id,
+					userid: userInfo.id,
+					skip: skip,
+					limit: LIMIT,
+				}
+			}
+
+			getajax(url + 'getdindan', params, function(ret) {
+				if (ret.code == '200') {
+					// console.log(ret.data[0]);
+					updateWareList(ret.data, _index);
+
+				}
+			})
+
+		}
+
+
+		function updateWareList(_data, _index) {
+
+			var tempFn = doT.template($('#template').text());
+			var resultText = tempFn(_data);
+			dl.close();
+			if (resultText == 0) {
+				// toast('没有资源啦', 'bottom', 2000);
+				api.toast({
+				    msg: '没有资源啦'
 				});
 
-			}else{
-				dialogBox.close();
 			}
-		});
-		
-
-
-	}
-	function no(_data){
-		event.stopPropagation();
-		var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
-      api.ajax({
-      	url: 'http://d.apicloud.com/mcm/api/shoppinginformation/'+_data,
-      	method: 'delete',
-      	headers: {
-      		"X-APICloud-AppId": "A6099267504667",
-      		"X-APICloud-AppKey":   appKey
-      	},
-
-      },function(ret, err){
-      	if (ret) {
-      		var ware=$api.byId('ware_'+_data);
-      		ware.style.display='none'
-      	} 
-      });
-
-  }
-  function pay(id,wareid,price){
-  	event.stopPropagation();
-  	ware={
-  		id:id,
-  		wareId:wareid,
-  		price:price
-  	}
-  	api.openWin({
-  		name: 'pay',
-  		url: './pay.html',
-  		pageParam: {
-  			ware:ware
-  		},
-  		animation: {
-  			type: "fade"
-  		}
-  	});
-
-  }
-  function speak(_wareid,_id,_speaktype){
-  	event.stopPropagation();
-  	// alert(_speaktype)
-  	if (_speaktype==1) {
-  		api.toast({
-  			msg: '已评论',
-  			duration: 2000,
-  			location: 'bottom'
-  		});
-  		return;
-  	}
-
-  	api.openWin({
-  		name: 'speak.html',
-  		url: './speak.html',
-  		pageParam: {
-  			wareId: _wareid,
-  			shoppingid:_id
-  		}
-  	});
-  }
-// 获取列表页数据
-function getAddressList(_LoadMore){
-	activity = api.require('UILoading');
-	activity.keyFrame({
-		rect: {
-			w: 80,
-			h: 100
-		},
-		styles: {
-			bg: 'rgba(0,0,0,0.5)',
-			corner: 5,
-			interval: 50,
-			frame: {
-				w: 80,
-				h: 80
+			if (_index == wareindex2) {
+				$('#list').append(resultText);
+			} else {
+				$('#list').html(resultText);
 			}
+
+			$("#loading").addClass("hidden");
+			wareindex2 = _index;
+
+
+
 		}
-	});
-	var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
-      if (_LoadMore) {
-      	skip+=LIMIT;
-      }else{
-      	skip=0;
-      }
-      var params={
-      	fields:{},
-      	fields: {},
-      	where: {
-      		dindantypeid: dindantypeList[api.pageParam.dindantypeIndex].id,
-      		userid:userInfo.userId
-      	},
-      	skip:skip,
-      	limit:LIMIT,
-      	order:"createdAt DESC"
-      }
-      params=$api.jsonToStr(params);
-      api.ajax({
-      	url: 'http://d.apicloud.com/mcm/api/shoppinginformation?filter='+params,
-      	method: 'get',
-      	headers: {
-      		"X-APICloud-AppId": "A6099267504667",
-      		"X-APICloud-AppKey":   appKey
-      	},
 
-      },function(ret, err){
-      	if (ret) {
-         // 模板渲染
-         api.refreshHeaderLoadDone()
-         updateWareList(ret,_LoadMore);
-         // alert($api.jsonToStr(ret))
-     } else {
-     	api.toast({
-     		msg: err.msg,
-     		duration: 2000,
-     		location: 'bottom'
-     	});
-     }
- });
-  }
-  function updateWareList(_data,_LoadMore){
-  	
-  	var list=$api.byId('list');
-  	var tempFn=doT.template($api.byId('template').innerHTML);
-  	var resultText=tempFn(_data)
-  	if (_LoadMore) {
-  		$api.append(list, resultText);
-  	}else{
-  		$api.html(list, resultText);
-  	}
-    // 优化
-    api.parseTapmode();
-    if (_LoadMore) {
-    	if (_data.length<LIMIT) {
-    		var pushStatus=$api.byId('pushStatus');
-    		pushStatus.innerHTML="我是有底线滴"
-    	}
-    }
-    activity.closeKeyFrame()
-}
+		// 列表页图片缓存
 
-// 列表页图片缓存
 
-function LoadImage(_this,_id){
-	var dataUrl=$api.attr(_this, 'data-url');
-	var dataWareTypeId=$api.attr(_this, 'data-wareTypeId');
-	// if (dataWareTypeId=='5c6e5cc2d772329a6f2562dd') {
-	// 	var thumbnail=$api.byId('thumbnail_'+_id);
-	// 	thumbnail.style.width=50+'px';
-	// 	thumbnail.style.height=40+'px';
-	// 	thumbnail.style.marginTop=5+'px';
+		// 监听 
+		function jiazai() {
 
-	// }
+			getAddressList(true);
 
-	if (dataUrl) {
-		api.imageCache({
-			url: dataUrl
-		}, function(ret, err){
-			if( ret ){
-				_this.src=ret.url;
-				$api.attr(_this, 'data-url', '');
-			}else{
-             // alert( JSON.stringify( err ) );
-         }
-     });
-	}
-
-}
-// 监听 
-function initEventListenter(){
-	api.addEventListener({
-		name:'scrolltobottom',
-		extra:{
-			threshold:100
 		}
-	}, function(ret, err){        
-		getAddressList(true);
-	});
-	api.addEventListener({
-		name: 'updatedindantype'
-	}, function(ret, err){
-		getAddressList();
-	});
-}
-// 下拉刷新
-function initRefresh(){
-	api.setCustomRefreshHeaderInfo({
-		bgColor: '#C0C0C0',
-		isScale: true
-	}, function() {
-		getAddressList();
-		
-	});
-
-}
-
-
-</script>
+	</script>
 
 </html>

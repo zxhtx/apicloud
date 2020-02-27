@@ -6,10 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
     <title>个人中心</title>
-    <link rel="stylesheet" type="text/css" href="../css/my_frame.css">
+   
     <script src="../script/commonjs.js"></script>
-    <script src="../script/footcom.js">
-    </script>
+  <link rel="stylesheet" type="text/css" href="../css/my_frame.css">
     <script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
     <style>
    
@@ -150,7 +149,17 @@ function daifukuan(){
   if (!userInfo) {
    openlogin();
 }else{
-    window.location.href="./dindan_frame.html?"+window.btoa(encodeURI('nav=0'));
+    // window.location.href="./dindan_frame.html?"+window.btoa(encodeURI('nav=0'));
+    api.openWin({
+        name: 'dindan',
+        url: './dindan.html',
+        pageParam: {
+            nav:0
+        },
+           animation:{
+            type:'fade'
+           }
+    });
 }
 
 }
@@ -170,7 +179,17 @@ function daishouhuo(){
   if (!userInfo) {
     openlogin();
 }else{
-   window.location.href="./dindan_frame.html?"+window.btoa(encodeURI('nav=1'));;
+   // window.location.href="./dindan_frame.html?"+window.btoa(encodeURI('nav=1'));;
+   api.openWin({
+       name: 'dindan',
+       url: './dindan.html',
+       pageParam: {
+           nav:1
+       },
+           animation:{
+            type:'fade'
+           }
+   });
 }
 
 } 
@@ -204,7 +223,17 @@ function qianshou(){
       if (!userInfo) {
          openlogin();
     }else{
-       window.location.href="./dindan_frame.html?"+window.btoa(encodeURI('nav=2'));;
+       // window.location.href="./dindan_frame.html?"+window.btoa(encodeURI('nav=2'));;
+       api.openWin({
+           name: 'dindan',
+           url: './dindan.html',
+           pageParam: {
+               nav:2
+           },
+           animation:{
+            type:'fade'
+           }
+       });
     }
     
 }
@@ -213,7 +242,17 @@ function meaddress(){
   if (!userInfo) {
     openlogin();
 }else{
-  window.location.href="./address_frame.html";
+  // window.location.href="./address_frame.html";
+api.openWin({
+    name: 'address',
+    url: './address_frame.html',
+    pageParam: {
+        name: 'test'
+    },
+    animation:{
+      type:'fade'
+    }
+});
 }
 
 }
@@ -257,6 +296,7 @@ function login(){
 
 // 在个人中心中显示用户名
 function getUsername(){
+  var userInfo=$api.getStorage('userInfo');
      dialog('努力加载中');
    if (!userInfo) {
      dl.close();

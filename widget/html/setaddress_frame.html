@@ -2,29 +2,33 @@
 <html>
 
 <head>
+      <link rel="shortcut icon" href="../image/chao.ico" />
     <meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>添加收货地址Frame</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" href="../css/address.css" />
+    <script src="../script/commonjs.js"></script>
     <style>
     html,
-    body {
-        height: 100%;
-    }
-    
-    body {
+    body,html{
+        /*height: 100%;*/
+        padding: 0px;
+        margin:0px;
         background-color: #eee;
     }
+
     
 
     
     section {
         height: auto;
         width: 100%;
+        margin-top: 6px;
     }
     
     section .option {
+
         position: relative;
         display: -webkit-box;
         display: -webkit-flex;
@@ -35,7 +39,7 @@
         box-sizing: border-box;
         width: 100%;
         height: 60px;
-        padding-left: 16px;
+        padding-left: 9px;
         padding-right: 16px;
         margin-bottom: 1px;
         background-color: #fff;
@@ -44,6 +48,7 @@
     section .option .name {
         width: auto;
         line-height: 60px;
+        font-size: 15px;
     }
     
     section .option .input {
@@ -53,6 +58,7 @@
         height: 60px;
         box-sizing: border-box;
         padding-top: 22px;
+        padding-left:6px;
     }
     
     section .option .input input {
@@ -63,6 +69,7 @@
         vertical-align: top;
         border: none;
         outline: none;
+        
     }
     
     section .option .select {
@@ -116,13 +123,16 @@
     footer {
         margin-top: 16px;
         width: 100%;
-        height: 50px;
+        /*height: 50px;*/
+        height: auto;
     }
     
     footer .btn {
-        margin-left: 100px;
-        margin-right: 100px;
+        margin-left: 32px;
+        margin-right: 32px;
         height: 44px;
+        min-width:auto;
+        margin-top: 52px;
         background-color: black;
         border-radius: 22px;
         text-align: center;
@@ -134,109 +144,173 @@
     .highlight {
         opacity: 0.7;
     }
+    header {
+       
+        position: relative;
+        width: 100%;
+        height: 40px;
+        background-color: white;
+        box-shadow:0px 6px 6px -6px black;
+        
+    }
+    
+    header .back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 26px;
+      height: 30px;
+     margin-left: 5px;
+     margin-top: 4px;
+      background: url(../image/back.png);
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat;
+  }
+
+  header a {
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+header .right {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    line-height: 57px;
+    color: black;
+    font-size: 15px;
+    text-align: center;
+}
+
 </style>
 </head>
 
 <body>
-
-    <section>
-        <div class="option">
-            <div class="name">收货人：</div>
-            <div class="input">
-                <input id="consignee" type="text" placeholder="点击输入收货人姓名">
-            </div>
+ 
+<header id="header">
+    <div class="back" tapmode onclick="back()"></div>
+    <a>收货地址</a>
+    <div id="right" class="right" tapmode onclick="fnDelete()">删除</div>
+</header>
+<section>
+    <div class="option">
+        <div class="name">收货人：</div>
+        <div class="input">
+            <input id="consignee" type="text" placeholder="点击输入收货人姓名">
         </div>
-        <div class="option">
-            <div class="name">手机号码：</div>
-            <div class="input">
-                <input id="mobile" type="text" placeholder="点击输入收货人手机号码">
-            </div>
+    </div>
+    <div class="option">
+        <div class="name">手机号码：</div>
+        <div class="input">
+            <input id="mobile" type="text" placeholder="点击输入收货人手机号码">
         </div>
-        <div class="option" tapmode onclick="fnOpenSetAddressDetailWin();">
-            <div class="name">所在区域:</div>
-            <div id="focus" class="select">点击选择具体的小区或写字楼</div>
-            <div class="arrow-right-highlight"></div>
+    </div>
+   <div class="iphone">
+    <div class="browser">
+           <!--选择地区-->
+           <section class="express-area">
+               <a id="expressArea" href="javascript:void(0)">
+                   <dl>
+                       <dt>选择地区：</dt>
+                       <dd id="focus">省 > 市 > 区/县</dd>
+                   </dl>
+               </a>
+           </section>
+           <!--选择地区弹层-->
+           <section id="areaLayer" class="express-area-box">
+               <header>
+                   <h3>选择地区</h3>
+                   <a id="backUp" class="backUp" href="javascript:void(0)" title="返回"></a>
+                   <a id="closeArea" class="close" href="javascript:void(0)" title="关闭"></a>
+               </header>
+               <article id="areaBox">
+                   <ul id="areaList" class="area-list"></ul>
+               </article>
+           </section>
+           <!--遮罩层-->
+           <div id="areaMask" class="mask"></div>
+           <script src="../script/jquery.area.js"></script>
+       </div>
+   </div>
+    <div class="option">
+        <div class="name">详细地址</div>
+        <div class="input">
+            <input id="house" type="text" placeholder="(街道 小区 乡镇 村)">
         </div>
-        <div class="option">
-            <div class="name">具体位置:</div>
-            <div class="input">
-                <input id="house" type="text" placeholder="(例 街道 小区 乡镇 村)">
-            </div>
+    </div>
+    <div class="option">
+        <div class="name">地址类型：</div>
+        <div id="type" class="multi-select">
+            <div class="item selected" tapmode onclick="fnSelectAddressType(0)">公司</div>
+            <div class="item" tapmode onclick="fnSelectAddressType(1)">住宅</div>
+            <div class="item" tapmode onclick="fnSelectAddressType(2)">学校</div>
+            <div class="item" tapmode onclick="fnSelectAddressType(3)">其它</div>
         </div>
-        <div class="option">
-            <div class="name">地址类型：</div>
-            <div id="type" class="multi-select">
-                <div class="item selected" tapmode onclick="fnSelectAddressType(0)">公司</div>
-                <div class="item" tapmode onclick="fnSelectAddressType(1)">住宅</div>
-                <div class="item" tapmode onclick="fnSelectAddressType(2)">学校</div>
-                <div class="item" tapmode onclick="fnSelectAddressType(3)">其它</div>
-            </div>
-        </div>
-    </section>
-    <footer>
-        <div class="btn" tapmode onclick="fnSave();">保存</div>
-    </footer>
+    </div>
+</section>
+<footer>
+    <div class="btn" tapmode onclick="fnSave();">保存</div>
+</footer>
 </body>
-<script type="text/javascript" src="../script/api.js"></script>
-<script type="text/javascript" src="../script/SHA1.js"></script>
-
 <script type="text/javascript">
-    var flowerid;
-    var activity;
-    apiready = function() {
-     activity = api.require('UILoading');
-     init();
- };
 
- var addressInfo = {
-    type: 0
-};
-var consignee, mobile, area, focus, house;
+    var addressid;
+    var addressInfo = {
+        type: 0,
+        // default:0,
 
-function init() {
-    consignee = $api.byId('consignee');
-    mobile = $api.byId('mobile');
-    focus = $api.byId('focus');
-    house = $api.byId('house');
-
-    if (api.pageParam.id) {
+    };
+    var consignee, mobile, focus, house;
+    apiready = function(){
+           init();
+    }
+      function back(){
+        api.closeWin();
+      }  
+ 
+    function init() {
+  // window.location.href="./setaddress_frame.html?"+window.btoa(encodeURI('address='+data[ware].address+'&default='+data[ware].default+'&house='+data[ware].house+'&id='+data[ware].id+'&mobile='+data[ware].mobile+'&name='+data[ware].name+'&type='+data[ware].type+'&userId'+data[ware].userId)); 
+      addressid=api.pageParam.id;
+      if (api.pageParam.id) {
+        addressInfo.default=api.pageParam.default,
+        $('#right').css('display','block');
         addressInfo.type = api.pageParam.type;
         fnSelectAddressType(addressInfo.type);
-        consignee.value = api.pageParam.name;
-        mobile.value = api.pageParam.mobile;
-        focus.innerHTML = api.pageParam.address;
-        house.value = api.pageParam.house;
+        $('#consignee').val(api.pageParam.name)
+        // console.log(getQueryString(0))
+        $('#mobile').val(api.pageParam.mobile)
+        $("#focus").html(api.pageParam.address)
+        $("#house").val(api.pageParam.house)
+
     }
 }
 
 
 
-function fnOpenSetAddressDetailWin() {
-    api.openWin({
-        name: 'setaddressdetail',
-        url: './setaddressdetail.html',
-        pageParam: {
-            name: 'test'
-        }
-    });
-}
 
 // 被setaddressdetail_frame中调用
-function setAddressDetail(address_,addresstwo_) {
-    var focus = $api.byId('focus');
-    var address=address_+addresstwo_;
-    $api.html(focus, address);
-}
+
 
 function fnSelectAddressType(index_) {
-    var type = $api.byId('type');
-    var typeItems = $api.domAll(type, '.item');
+    // var type = $api.byId('type');
+    // var typeItems = $api.domAll(type, '.item');
+    var typeItems=$('#type>.item');
     addressInfo.type = index_;
     for (var i = 0; i < typeItems.length; i++) {
         if (i == index_) {
-            $api.addCls(typeItems[i], 'selected');
+            $(typeItems[i]).addClass('selected');
         } else {
-            $api.removeCls(typeItems[i], 'selected');
+            $(typeItems[i]).removeClass('selected');
         }
     }
 }
@@ -245,81 +319,83 @@ function fnSelectAddressType(index_) {
 
 
 function fnSave() {
-  activity.flower({
-    center: {
-        x: api.winWidth/2,
-        y: api.winHeight/2
-    },
-    mask:'rgba(20,0,0,0.5)',
-    size: 30,
-    // fixed: true,
+   
+  var notice = $(document).dialog({
+    type : 'notice',
+    infoIcon: '../image/icon/loading.gif',
+     infoText: '保存中'
+     });
+    addressInfo.name = $("#consignee").val();
+    addressInfo.mobile = $("#mobile").val();
+    addressInfo.address =$("#focus").html();
+    addressInfo.house = $("#house").val();
+    addressInfo.userId = userInfo.id;
+    
+    // 修改条件
+    addressInfo.addressid=addressid;
 
-}, function(ret) {
-  flowerid=ret.id;
-});
-  var userInfo = $api.getStorage('userInfo');
-  addressInfo.name = consignee.value;
-  addressInfo.mobile = mobile.value;
-  addressInfo.address = focus.innerHTML;
-  addressInfo.house = house.value;
-  addressInfo.userId = userInfo.userId;
-   addressInfo.default='0';
 
-  var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-      
+    if (addressid) {
+        postajax(url+'putaddress',addressInfo,function(ret){
+            if (ret.code==200) {
+                api.sendEvent({
+                    name: 'resaddress',
+                });
+                  notice.update({
+                    infoIcon: '../image/icon/success.png',
+                    infoText: '修改成功',
+                    autoClose: 1500
+                });
+                  setTimeout(function(){
+                      api.closeWin();
+                  },1500)
+             
+          }
+      });
 
-      if (api.pageParam.id) {
-        api.ajax({
-            url: 'https://d.apicloud.com/mcm/api/address/' + api.pageParam.id,
-            method: 'put',
-            headers: {
-                "X-APICloud-AppId": "A6099267504667",
-                "X-APICloud-AppKey":   appKey,
-                "Authorization": userInfo.id
-            },
-            data: {
-                values: addressInfo
-            },
-            timeout: 30
-        }, function(ret, err) {
-            if (ret) {
-             activity.closeFlower({
-                id:flowerid 
-            });
-             api.sendEvent({
-                name: 'updateAddress'
-            });
-             api.closeWin();
-         } else {
-            alert(JSON.stringify(err));
-        }
-    });
     } else {
-        api.ajax({
-            url: 'https://d.apicloud.com/mcm/api/address',
-            method: 'post',
-            headers: {
-               "X-APICloud-AppId": "A6099267504667",
-               "X-APICloud-AppKey":   appKey,
-               "Authorization": userInfo.id
-           },
-           data: {
-            values: addressInfo
-        },
-        timeout: 30
-    }, function(ret, err) {
-        if (ret) {
-            api.sendEvent({
-                name: 'updateAddress'
-            });
-            api.closeWin();
-        } else {
-            alert(JSON.stringify(err));
-        }
-    });
+        postajax(url+'addoneaddress',addressInfo,function(ret){
+            if (ret.code==200) {
+                 api.sendEvent({
+                    name: 'resaddress',
+                });
+             notice.update({
+                    infoIcon: '../image/icon/success.png',
+                    infoText: '地址添加成功',
+                    autoClose: 1500
+                });
+                  setTimeout(function(){
+                    api.closeWin();
+                  },1500)
+          }
+      })
+
     }
+}
+
+
+function fnDelete(){
+    $("#loading").addClass("show").removeClass("hidden");
+    var param={
+        addressid:addressid,
+    }
+    postajax(url+'deloneaddress',param,function(ret){
+        if (ret.code==200) {
+            $("#loading").addClass("hidden").removeClass("show");
+            // window.location.href="./address_frame.html";
+             api.sendEvent({
+                    name: 'resaddress',
+                });
+             api.toast({
+                 msg: '成功删除该地址'
+             });
+              setTimeout(function(){
+                    api.closeWin();
+                  },1000)
+        }
+    })
+
+    
 }
 </script>
 
