@@ -126,6 +126,22 @@
                             bounces: false
                         });
                        
+                    }else if(page=='ware'){
+                         api.sendEvent({
+                            name: 'resmy',
+                        });
+                        api.closeWin();
+                        api.openWin({
+                            name: 'ware',
+                            url: './ware.html',
+                            pageParam: {
+                                wareId:api.pageParam.wareId 
+                            },
+                            animation:{
+                                type:'fade'
+                            },
+                            bounces: false
+                        });
                     }
                 }else{
                     // toast(e.message);

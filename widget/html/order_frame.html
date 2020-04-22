@@ -2,15 +2,18 @@
 <html>
 
 <head>
+      <link rel="shortcut icon" href="../image/chao.ico" />
     <meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>下单Frame</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css" />
-    <!-- <link rel="stylesheet" type="text/css" href="../script/mui/css/mui.min.css" /> -->
+    <script src="../script/commonjs.js"></script>
+
     <style>
     html,
     body {
+        padding:0;
+        margin:0;
         height: 100%;
         background-color: #f0f0f0;
     }
@@ -23,6 +26,7 @@
         margin-bottom: 8px;
         padding: 8px 16px;
         background-color: #fff;
+        margin-top: 6px;
     }
     
     .address .icon {
@@ -31,7 +35,7 @@
         left: 16px;
         width: 19px;
         height: 24px;
-        background-image: url(../image/icon_address.png);
+        background-image: url(../image/dizhi.png);
         background-repeat: no-repeat;
         background-size: auto 20px;
         background-position: center center;
@@ -270,107 +274,23 @@
         color: black;
     }
     
-    .pay {
-        position: relative;
-        width: 100%;
-        height: auto;
-    }
-    
-    .pay .title {
-        position: relative;
-        box-sizing: border-box;
-        padding-left: 40px;
-        width: 100%;
-        height: 44px;
-        line-height: 44px;
-        font-size: 16px;
-        text-align: left;
-        color: black;
-        background-color: #fff;
-        background-image: url(../image/order_pay.png);
-        background-repeat: no-repeat;
-        background-size: auto 16px;
-        background-position: 12px center;
-    }
-    
-    .pay .row {
-        position: relative;
-        box-sizing: border-box;
-        width: 100%;
-        height: 50px;
-        margin-bottom: 1px;
-        padding-left: 96px;
-        text-align: left;
-        font-size: 16px;
-        color: black;
-        line-height: 50px;
-        background-color: #fff;
-        background-repeat: no-repeat;
-        background-size: auto 36px;
-        background-position: 12px center;
-    }
-    
-    .pay .row-balance-pay {
-        background-image: url(../image/icon_balance_pay.png);
-    }
-    
-    .pay .row-wxpay {
-        background-image: url(../image/icon_wxpay.png);
-    }
-    
-    .pay .row-alipay {
-        background-image: url(../image/icon_alipay.png);
-    }
-    
-    .pay .row-disable {
-        opacity: 0.5;
-    }
-    
-    .pay .row .text {
-        display: inline-block;
-        width: auto;
-        height: 50px;
-    }
-    
-    .pay .row .text-recommend {
-        box-sizing: border-box;
-        padding-right: 28px;
-        display: inline-block;
-        width: auto;
-        height: 50px;
-        background-image: url(../image/recommend.png);
-        background-repeat: no-repeat;
-        background-size: 20px 20px;
-        background-position: right center;
-        border-radius: 10px;
-    }
-    
-    .pay .row .select {
-        position: absolute;
-        top: 0;
-        right: 16px;
-        width: 50px;
-        height: 50px;
-        background-repeat: no-repeat;
-        background-position: right center;
-        background-size: auto 20px;
-        background-image: url(../image/order_off.png);
-    }
-    
-    .pay .row .selected {
-        background-image: url(../image/order_on.png);
-    }
+  
+  
     
     .highlight {
         opacity: 0.7;
     }
     .info .description {
         /*margin-bottom: 3px;*/
-        overflow: hidden;
+        display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
         width: 100%;
-        height: 16px;
+        /*height: 16px;*/
         font-size: 13px;
         color: #9d9d9d;
+        margin-top: 10px;
     }
     #footer{
       display: -webkit-box;
@@ -402,414 +322,360 @@
 }
 
 #footer .buy {
-    width: 47px;
-    height: 47px;
+    width: 66px;
+    height: 100%;
+    margin-right: 12px;
+    
+}
+#footer .buy .buybtn{
+    margin-top: 6px;
+    width: 100%;
+    height: 39px;
+    background: #FE2640;
+    border-radius: 25px;
+    text-align: center;
+    color: #FFFFFF;
+    line-height: 39px;
 }
 
-#footer .buy .buy-button {
-    width: 47px;
-    height: 47px;
+#colorandsize{
+    font-size: 12px;
+    /*margin-left: 2px;*/
+    color: #888;
+    /*margin-top: 0px;*/
+    /*border:1px solid red;*/
+    width: 100px;
+    display: inline-block;
+    height: 18px;
+}
+header{
+    width: 100%;
+    height: 40px;
+    background: white;
+    margin: 0px;
+    position: relative;
+}
+header .back {
     position: absolute;
-    right: 0;
-    margin-right: 18px;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    z-index: 2;
+}
+
+header .back img {
+    margin-top: 5px;
+    margin-left: 4px;
+    width: 28px;
+    height: 30px;
+}
+header a {
+ display: block;
+ text-align: center;
+ line-height: 40px;
+ font-size: 16px;
+ font-weight: bold;
+
+}
+#wareprice{
+    /*border: 1px solid red;*/
+    height: 18px;
+    font-size: 13px;
+    width:50px;
+    /*border:1px solid red;*/
+    display:inline-block;
 }
 </style>
 </head>
 
 <body>
-    <section class="address" id="address">
-        <div class="icon">
+    <header>
+     <div class="back" tapmode onclick="javascript:history.back(-1);">
+        <img src="../image/back.png">
+    </div>
+    <a>购买进行中</a>
+
+</header>
+
+<section class="address"  id="address">
+    <div class="icon">
+    </div>
+    <div class="info">
+        <div class="top">
+            <div class="consignee" id="shouhuoren">收货人：...</div>
+            <div class="mobile" id="mobile">...</div>
+        </div>
+        <div class="bottom">
+            <div class="type" id="type">【...】</div>
+            <div class="text" id="text">...</div>
+        </div>
+    </div>
+</section>
+<section class="order">
+    <div class="title">订单信息</div>
+    <div class="icon-panel">
+        <div class="icon" id="icon">
+            <img src="../image/order_ware.gif" id="image" alt="">
         </div>
         <div class="info">
-            <div class="top">
-                <div class="consignee" id="shouhuoren">收货人：...</div>
-                <div class="mobile" id="mobile">...</div>
-            </div>
-            <div class="bottom">
-                <div class="type" id="type">【...】</div>
-                <div class="text" id="text">...</div>
-            </div>
+            <!-- <div class="top" id="warename"></div> -->
+            <div class="description" id="description"></div>
+            <div class="bottom" id="wareprice"></div>
+            <div class="bottom" id="colorandsize">.../...</div>
+
         </div>
-    </section>
-    <section class="order">
-        <div class="title">订单信息</div>
-        <div class="icon-panel">
-            <div class="icon" id="icon">
-                <img src="../image/order_ware.gif" id="image" alt="">
-            </div>
-            <div class="info">
-                <div class="top" id="warename">佳沛绿奇异果</div>
-                <div class="description" id="description"></div>
-                <div class="bottom" id="wareprice">￥19.9</div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="text">商品金额:</div>
-            <div class="value value-2" id="price1">+&nbsp;￥19.9</div>
-        </div>
-        <div class="row">
-            <div class="text">运费：</div>
-            <div class="value value-2">&nbsp;运费平台付</div>
-        </div>
-        <div class="row">
-            <div class="text">VIP优惠：</div>
-            <div class="value value-2" id="viptext">-&nbsp;￥0.0</div>
-        </div>
-        <div class="row">
-            <div class="text">返现金(商品中扣除):</div>
-            <div class="value value-2" id="fanqian">&nbsp;￥0.0</div>
-        </div>
-        <div class="row-1">
-            <div class="value value-2">实付款：&nbsp;<span class="color" id="price2">￥24.9</span></div>
-        </div>
-    </section>
-    <footer id="footer">
-        <div class="panel" id="price3">总金额:￥24.9</div>
-        <div class="buy">
-            <img class="buy-button" src="../image/confirm.png" tapmode onclick="yesadd()">
-        </div>
-    </footer>
-</body>
-<script type="text/javascript" src="../script/api.js"></script>
-<script type="text/javascript" src="../script/SHA1.js"></script>
-<!-- <script type="text/javascript" src="../script/mui/js/mui.min.js"></script> -->
+    </div>
+    <div class="row">
+        <div class="text">商品金额:</div>
+        <div class="value value-2" id="price1">+&nbsp;</div>
+    </div>
+    <div class="row">
+        <div class="text">运费：</div>
+        <div class="value value-2">&nbsp;运费平台付</div>
+    </div>
+    <div class="row">
+        <div class="text">VIP优惠：</div>
+        <div class="value value-2" id="viptext">-&nbsp;￥0.0</div>
+    </div>
+    <div class="row">
+        <div class="text">返现金(商品中扣除):</div>
+        <div class="value value-2" id="fanqian">&nbsp;￥0.0</div>
+    </div>
+    <div class="row-1">
+        <div class="value value-2">实付款：&nbsp;<span class="color" id="price2"></span></div>
+    </div>
+</section>
+<footer id="footer">
+    <div class="panel" id="price3">总金额:</div>
+    <div class="buy" onclick="yesadd()">
+        <div class="buybtn">购买</div>
+    </div>
+</footer>
 <script type="text/javascript">
     var price3;
     var dizhinull;
-    var activity;
-    var flowerid1;
-    var flowerid2;
-    var flowerid3;
-    var flowerid4;
-    var activity;
-    apiready = function() {
-        activity = api.require('UILoading');
-        getware();
-        getaddress();
-        var jiage;
-
-
-
-    };
+    var loading;
+    var jiage;
+    var myDate = new Date();
+    var Y=myDate.getFullYear();
+    var M=myDate.getMonth()+1;
+    var D=myDate.getDate();  
+    var h=myDate.getHours();    
+    var m=myDate.getMinutes();
+    var s=myDate.getSeconds(); 
     var addInfo = {
         dindantypeid:'5c2a3991af3114d73d9ddfc2',
+        addtime:Y+'-'+M+'-'+D+' '+h+':'+m+':'+s,
     };
     var types = ['公司', '住宅', '学校', '其它'];
-    function getware(){
-
-        activity.flower({
-            center: {
-                x: api.winWidth/2,
-                y: api.winHeight/2
-            },
-            mask:'rgba(20,0,0,0.5)',
-            size: 30,
-    // fixed: true,
-
-}, function(ret) {
-  flowerid1=ret.id;
-});
-        var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
-      var params={
-        fields:{},
-        fields: {},
-        where: {
-            id:api.pageParam.wareId
-        },
-        skip:0
+    apiready = function(){
+        getware();
     }
-    params=$api.jsonToStr(params);
-    api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/ware?filter='+params,
-        method: 'get',
-        headers: {
-            "X-APICloud-AppId": "A6099267504667",
-            "X-APICloud-AppKey":   appKey
-        },
         
-    },function(ret, err){
-        if (ret) {
-          activity.closeFlower({
-            id:flowerid1 
-        });
-            // 赋值
-            jiage=ret[0].price;
-            updateWare(ret);
-            addInfo.size=api.pageParam.size;
-            addInfo.color=api.pageParam.color;
-            addInfo.wareid=ret[0].id;
-            addInfo.description=ret[0].description;
-            addInfo.warename=ret[0].name;
-            addInfo.url=ret[0].thumbnail;
-            addInfo.shangjia=ret[0].shangjia;
-            addInfo.wareTypeId=ret[0].wareTypeId;
-            
-        } else {
-           api.toast({
-               msg: err.msg,
-               duration: 2000,
-               location: 'bottom'
-           });
-       }
-   });
-
-}
-function updateWare(_data){
-    var warename=$api.byId('warename');
-    var wareprice=$api.byId('wareprice');
-    var price1=$api.byId('price1');
     
-    var image=$api.byId('image');    
-    var description=$api.byId('description');
-    warename.innerHTML=_data[0].name;
-    description.innerHTML=_data[0].description;
-    wareprice.innerHTML='￥'+_data[0].price;
-    price1.innerHTML='￥'+_data[0].price;
+
+    
+    function getware(){
+        dialog('订单加载中');
+        $('#colorandsize').html(api.pageParam.size+'/'+ api.pageParam.color)
+        // alert(api.pageParam.size)
+        var params={
+            fields:{},
+            fields: {},
+            where: {
+                id:api.pageParam.wareId
+            },
+            skip:0
+        }
+        apigetajax('http://d.apicloud.com/mcm/api/ware',params,function(ret){
+            if (ret){
+                jiage=ret[0].price;
+                updateWare(ret);
+                addInfo.size=api.pageParam.size;
+                addInfo.color=api.pageParam.color;
+                addInfo.wareid=ret[0].id;
+                addInfo.description=ret[0].description;
+                addInfo.warename=ret[0].name;
+                addInfo.url=ret[0].thumbnail;
+                addInfo.shangjia=ret[0].shangjia;
+                addInfo.wareTypeId=ret[0].wareTypeId;
+            }
+        });
+
+    }
+    function updateWare(_data){
+        var warename=$('#warename');
+        var wareprice=$('#wareprice');
+        var price1=$('#price1');
+        var image=$('#image');    
+        var description=$('#description');
+        warename.html(_data[0].name);
+        description.html(_data[0].description);
+        wareprice.html('￥'+_data[0].price);
+        price1.html('￥'+_data[0].price);
     // price2.innerHTML='￥'+_data[0].price;
-    image.src=_data[0].thumbnail;
+    image.attr('src',_data[0].thumbnail);
+    console.log(_data[0].thumbnail);
     vip(_data[0].price);
+   
     
 }
 function vip(dataprice){
 
- activity.flower({
-    center: {
-        x: api.winWidth/2,
-        y: api.winHeight/2
-    },
-    mask:'rgba(20,0,0,0.5)',
-    size: 30,
-    // fixed: true,
-
-}, function(ret) {
-  flowerid3=ret.id;
-});
-
-
- var usernameinfo=$api.getStorage('userInfo');
- var price2=$api.byId('price2');
- price3=$api.byId('price3');
- var now = Date.now();
- var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
- var params={
-    fields: {},
-    where:{
-        id:usernameinfo.userId
-    },
-    skip: 0,
-}
-params=$api.jsonToStr(params);
-api.ajax({
-    url: 'http://d.apicloud.com/mcm/api/user?filter='+params,
-    method: 'get',
-    headers: {
-        "X-APICloud-AppId": "A6099267504667",
-        "X-APICloud-AppKey":   appKey
-    },
-
-},function(ret, err){
-    if (ret) {
-        activity.closeFlower({
-            id:flowerid3 
-        });
-        var viptext=$api.byId('viptext');
-        var fanqian=$api.byId('fanqian');
-        var vipprice=dataprice * 0.95;
-        var ceilprice =Math.round(vipprice);
-         addInfo.username=ret[0].username;
-            // 存储用户名
-            // alert($api.jsonToStr(ret))
-            if (jiage>29) {
+  var usernameinfo=$api.getStorage('userInfo');;
+  var price2=$('#price2');
+  price3=$('#price3');
+  var viptext=$('#viptext');
+  var fanqian=$('#fanqian');
+  var vipprice=dataprice * 0.95;
+  var ceilprice =Math.round(vipprice);
+    // console.log(ret);
+    addInfo.username=usernameinfo.username;
+    addInfo.userid=usernameinfo.id;
+    // return;
+    if (jiage>29) {
 
 
-                if (ret[0].vip==1) {
+        if (usernameinfo.vip==1) {
+            viptext.html('9.5折'+'(-'+(dataprice-ceilprice)+'元)');
+            var fan=Math.round(ceilprice*0.03);
+            price2.html('￥'+(ceilprice-fan));
+            price3.html('总金额：'+(ceilprice-fan));
+            fanqian.html(fan);
+            addInfo.price=ceilprice-fan;
+        } else{
+          viptext.html('分享应用获取vip打9.5折');
+          var fan=Math.round(dataprice*0.03);
+          price2.html('￥'+(dataprice-fan));
+          price3.html('总金额：'+(dataprice-fan));
+          fanqian.html(fan);
+          addInfo.price=dataprice-fan;
+      }
 
-                   viptext.innerHTML='9.5折'+'(-'+(dataprice-ceilprice)+'元)';
-                   var fan=Math.round(ceilprice*0.03);
-                   price2.innerHTML='￥'+(ceilprice-fan);
-                   price3.innerHTML='总金额：'+(ceilprice-fan);
-                   fanqian.innerHTML=fan;
-                   addInfo.price=ceilprice-fan;
-               } else{
-                  viptext.innerHTML='分享应用获取vip打9.5折'
-                  var fan=Math.round(dataprice*0.03);
-                  price2.innerHTML='￥'+(dataprice-fan);
-                  price3.innerHTML='总金额：'+(dataprice-fan);
-                  fanqian.innerHTML=fan;
-                  addInfo.price=dataprice-fan;
-              }
+  }else{
+      viptext.html('商品价格大于30元即可打折');
+      var fan=Math.round(dataprice*0.03);
+      price2.html('￥'+(dataprice-fan));
+      price3.html('总金额：'+(dataprice-fan));
+      fanqian.html(fan);
+      addInfo.price=dataprice-fan;
 
-          }else{
-              viptext.innerHTML='商品价格大于30元即可打折'
-              var fan=Math.round(dataprice*0.03);
-              price2.innerHTML='￥'+(dataprice-fan);
-              price3.innerHTML='总金额：'+(dataprice-fan);
-              fanqian.innerHTML=fan;
-              addInfo.price=dataprice-fan;
+  }
+  // loading=$('#loading');
+  // loading.addClass("hidden").removeClass("show");
+  getaddress();
 
-          }
-      } else {
-        api.toast({
-            msg: err.msg,
-            duration: 2000,
-            location: 'bottom'
-        });
-    }
-});
+
 
 
 }
 function getaddress(){
-
-
-   activity.flower({
-    center: {
-        x: api.winWidth/2,
-        y: api.winHeight/2
-    },
-    mask:'rgba(20,0,0,0.5)',
-    size: 30,
-    // fixed: true,
-
-}, function(ret) {
-  flowerid2=ret.id;
-});
-
-   var userInfo=$api.getStorage('userInfo');
-   var user=$api.getStorage('user');
-   var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-      var params={
-       fields: {},
-       where: {
-        default:1,
-        userId:userInfo.userId
-    },
-    skip: 0
-}
-params = $api.jsonToStr(params);
-api.ajax({
-    url: 'http://d.apicloud.com/mcm/api/address?filter='+params,
-    method: 'get',
-    headers: {
-       "X-APICloud-AppId": "A6099267504667",
-       "X-APICloud-AppKey":   appKey
-   }
-},function(ret, err){
-    if (ret) {
-      activity.closeFlower({
-        id:flowerid2 
-    });
-      dizhinull=ret[0];
-      if(ret[0]==null){
-        api.toast({
-            msg: '请完善收货地址',
-            duration: 2000,
-            location: 'bottom'
-        });
-
-        return;
-
-    }
-    updateaddress(ret);
-    addInfo.addressid=ret[0].id;
-    addInfo.address=ret[0].address;
-    addInfo.shoppingname=ret[0].name;
-    addInfo.userid=ret[0].userId;
-    addInfo.house=ret[0].house;
-    addInfo.addresstype=ret[0].type;
-    addInfo.mobile=ret[0].mobile; 
-
-} 
-}); 
-}
-function updateaddress(_data){
-
-    var data=$api.jsonToStr(_data);
     
-    var shouhuoren=$api.byId('shouhuoren');
-    var mobile=$api.byId('mobile');
-    var type=$api.byId('type');
-    var text=$api.byId('text');
-        // alert($api.jsonToStr(_data))
-        shouhuoren.innerHTML='收货人:'+_data[0].name;
-        mobile.innerHTML=_data[0].mobile;
-        type.innerHTML='['+ types[_data[0].type] +']'
-        text.innerHTML=_data[0].address+'/'+_data[0].house
+    var userInfo=$api.getStorage('userInfo');
+    var params={
+     default:1,
+     userId:userInfo.id,
+ }
+ getajax(url+'getdefaultaddress',params,function(ret){  
+    dl.close();
+     if (ret.code==200) {
+        // console.log(ret.data);
+        dizhinull=ret.data[0];
+           var data=ret.data[0];
+        addInfo.addressid=data.id;
+        addInfo.address=data.address;
+        addInfo.shoppingname=data.name;
+        addInfo.house=data.house;
+        addInfo.addresstype=data.type;
+        addInfo.mobile=data.mobile; 
 
+        updateaddress(data);
 
-
-    }
-
-
-    function yesadd(){ 
-        var loader=false;
-
-        activity.flower({
-            center: {
-                x: api.winWidth/2,
-                y: api.winHeight/2
-            },
-            mask:'rgba(20,0,0,0.5)',
-            size: 30,
-        }, function(ret) {
-            flowerid4=ret.id;
-        });
-        if(dizhinull==null){
-            api.toast({
-                msg: '请完善收货地址',
-                duration: 2000,
-                location: 'bottom'
-            });
-            activity.closeFlower({
-                id:flowerid4
-            });
-            return;
+        
+        }else if (ret.data[0]==null){
+            toast('请完善收货地址','center',2000)
+              
+              return;
 
         }
-        var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-      var userInfo=$api.getStorage('userInfo');
-      api.ajax({
-        url: 'https://d.apicloud.com/mcm/api/shoppinginformation',
-        method: 'post',
-        headers: {
-           "X-APICloud-AppId": "A6099267504667",
-           "X-APICloud-AppKey":   appKey,
-           "Authorization": userInfo.id
-       },
-       data: {
-        values: addInfo
+       
+
+    
+
+})
+
+}
+
+
+function updateaddress(_data){
+     
+    mobile=_data[0];
+    var shouhuoren=$('#shouhuoren');
+    var mobile=$('#mobile');
+    var type=$('#type');
+    var text=$('#text');
+    shouhuoren.html('收货人:'+_data.name);
+    mobile.html(_data.mobile);
+    type.html('['+ types[_data.type] +']');
+    text.html(_data.address +'/'+_data.house);
+   
+}
+
+
+function yesadd(){ 
+    if(dizhinull==null){
+      // toast('请完善收货地址','center',2000)
+      api.toast({
+          msg: '请完善收货地址'
+      });
+     return;
+
+ }
+  var notice = $(document).dialog({
+            type : 'notice',
+            infoIcon: '../image/icon/loading.gif',
+            infoText: '正在生成订单...'
+        });
+
+ postajax(url+'addshopping',addInfo,function(ret){
+    if (ret.code==200) {
+          notice.update({
+                infoIcon: '../image/icon/success.png',
+                infoText: '下单成功！！',
+                autoClose: 1500
+            });
+          setTimeout(function(){
+              // body...
+              api.closeWin({
+                  name: 'order'
+              });
+          },1000)
+         
+          // setTimeout(function(){
+            // window.location.href="./dindan_frame.html?"+window.btoa(encodeURI('nav=0'));
+             
+            api.openWin({
+                name: 'dindan',
+                url: './dindan.html',
+                pageParam: {
+                    nav:0
+                },
+                animation:{
+                    type:'fade'
+                }
+            });
+          
+          // },2000);
     }
-}, function(ret, err) {
-    if (ret) {
-      activity.closeFlower({
-        id:flowerid4
-    });
 
-      api.openWin({
-         name: 'dindan.html',
-         url: './dindan.html',
-         pageParam: {
-             name: 'test'
-         },
-         animation: {
-             type: "fade"
-         }
-     });
-            // mui.toast('正在生成订单');
-               // setTimeout(function(){
-                api.closeWin();
-               // },1000)
+});
 
-
-           } 
-       });
-  }
+}
 </script>
+</body>
+
+
+
 
 </html>

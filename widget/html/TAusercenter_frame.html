@@ -78,7 +78,7 @@
 			var authoritytext;
 			var off_on = false;
 			var skip = 0;
-			var limit = 12;
+			var limit = 16;
 			var uid;
 			apiready = function(){
 				uid =api.pageParam.uid;
@@ -227,7 +227,17 @@
 			});
 
 			function openDressing(id) {
-				window.location.href = './Dressingdetails_frame.html?' + window.btoa(encodeURI('articleid=' + id));
+				 api.openWin({
+           name: 'Dressingdetails',
+           url: './Dressingdetails.html',
+           pageParam: {
+               articleid:id
+           },
+           animation:{
+            type:"fade"
+           }
+       });
+				
 			}
 
 			function dinyue() {

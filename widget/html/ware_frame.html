@@ -62,45 +62,56 @@
  }
 
  .info-name {
-  box-sizing: border-box;
+  /*box-sizing: border-box;*/
   margin-top: 10px;
   width: 100%;
-  height: 88px;
+  /*min-height:50px;*/
+  /*max-height: 90px;*/
   /*padding-top: 2px;*/
   /*padding-left: 8px;*/
   border-bottom: 1px solid #ddd;
-  position: relative;
+  /*position: relative;*/
 }
 
-.info-name .name {
+/*.info-name .name {
   width: 80%;
   height: 20px;
   line-height: 20px;
   color: #444;
   font-size: 18px;
   padding-left: 8px;
-}
+}*/
 
 .info-name .description {
-  margin-top: 5px;
+  margin-top: 3px;
+  margin-bottom: 3px;
   width: 80%;
   height: 20px;
   line-height: 20px;
+
   color: #888;
   font-size: 14px;
   margin-bottom: 10px;
   padding-left: 10px;
+  display: inline-block;
+  /*vertical-align: middle;*/
 }
 
 .price {
-  box-sizing: border-box;
-  width: 50px;
-  height: 41px;
-  padding-top: 8px;
-  padding-right: 8px;
-  position: absolute;
+  /*box-sizing: border-box;*/
+  width: 38px;
+  height: 22px;
+  /*border:1px solid red;*/
+  padding-left: 3px;
+  margin-bottom: 12px;
+  /*vertical-align: center;*/
+  /*padding-top: 8px;*/
+  display: inline-block;
+  font-size: 15px;
+  /*padding-right: 8px;*/
+/*  position: absolute;
   right: 8px;
-  bottom: 8px;
+  bottom: 8px;*/
 }
 
 
@@ -348,7 +359,7 @@ footer{
              <div class="swiper-pagination"></div>
         </div>
           <div class="info-name">
-            <div id="wareName" class="name">{{=value.name}}</div>
+            
             <div id="description" class="description">{{=value.description}}</div>
             <div id="price" class="price">￥{{=value.price}}</div>
           </div>
@@ -440,20 +451,21 @@ footer{
             // 更新商品详情展示
             shoppingid = ret[0].id;
             var picture = [];
-            picture.push(
-              ret[0].wareInfo.picture0,
-              ret[0].wareInfo.picture1,
-              ret[0].wareInfo.picture2,
-              ret[0].wareInfo.picture3,
-              ret[0].wareInfo.picture4
-
-            );
-            for (var i = 0; i < picture.length; i++) {
-              if (picture[i] == null) {
-                picture.splice(i, 1)
-              }
-
+            // alert(ret[0].wareInfo.picture0)
+            for (var i =0; i<5; i++) {
+             if (ret[0].wareInfo['picture'+i]){
+              picture.push(
+                  ret[0].wareInfo['picture'+i]
+                );
+             }
             }
+         
+            // for (var i = 0; i < picture.length; i++) {
+            //   if (picture[i] == null) {
+            //     picture.splice(i, 1)
+            //   }
+
+            // }
 
             ret[0].wareInfo = picture;
 
@@ -569,22 +581,50 @@ footer{
 
           if (!datacolor) {
 
-            toast('请选择颜色', 'center', 2000);
+            // toast('请选择颜色', 'center', 2000);
+           api.toast({
+               msg: '请选择颜色'
+           });
             return;
           } else if (!datasize) {
-            toast('请选择尺码', 'center', 2000);
+            // toast('请选择尺码', 'center', 2000);
+            api.toast({
+                msg: '请选择尺码'
+            });
 
             return;
           }
-          var userInfo = JSON.parse(localStorage.getItem('userInfo'));
-          if (userInfo == undefined && userInfo == null) {
-            window.location.href = './login_frame.html?' + window.btoa(encodeURI('wareId=' + shoppingid));
+          var userInfo = $api.getStorage('userInfo');
+          if (!userInfo) {
+            // window.location.href = './login_frame.html?' + window.btoa(encodeURI('wareId=' + shoppingid));
+            api.openWin({
+                name: 'login',
+                url: './login.html',
+                pageParam: {
+                    page:'ware',
+                    wareId:shoppingid 
+                },
+                animation:{
+                  type:'fade'
+                }
+            });
             return;
           }
-          var canshu = window.btoa(encodeURI("wareId=" + shoppingid + "&size=" + datasize + "&color=" + datacolor));
-          var url = './order_frame.html?' + canshu;
-
-          window.location.href = url;
+          // var canshu = window.btoa(encodeURI("wareId=" + shoppingid + "&size=" + datasize + "&color=" + datacolor));
+          // var url = './order_frame.html?' + canshu;
+           api.openWin({
+                name: 'order',
+                url: './order.html',
+                pageParam: {
+                    wareId:shoppingid,
+                    size:datasize,
+                    color:datacolor
+                },
+                animation:{
+                  type:'fade'
+                }
+            }); 
+         
         })
       }
 

@@ -246,6 +246,7 @@ a {
 }
 
 .myheadimg {
+	/*background:url(../image/empty_page_nothing.png),*/
 	background-size: cover;
 	background-position: center center;
 	width: 39px;

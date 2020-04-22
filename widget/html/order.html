@@ -8,140 +8,27 @@
     <title>下单</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
     <style>
-    html,
-    body {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-flex-flow: column;
-        flex-flow: column;
-        height: 100%;
-    }
-    
-    header {
-        position: relative;
-        width: 100%;
-        height: 40px;
-        background-color: white
-    }
-    
-    header .back {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 40px;
-        height: 40px;
-        z-index: 2;
-    }
-    
-    header .back img {
-        margin-top: 16px;
-        margin-left: 12px;
-        width: 11px;
-        height: 18px;
-    }
-    
-    header .title {
-        position: relative;
-        width: 100%;
-        height: 40px;
-        text-align: center;
-        color: #000;
-        font-size: 18px;
-        line-height: 40px;
-    }
-    
-    section {
-        -webkit-box-flex: 1;
-        -webkit-flex: 1;
-        flex: 1;
-    }
-    
-    footer {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-orient: horizontal;
-        -webkit-flex-flow: row;
-        flex-flow: row;
-        width: 100%;
-        height: 50px;
-        background-color: #fff;
-        /*border-top: 1px solid #d1d1d1;*/
-        position: relative;
-    }
-    
-    footer .panel {
-        -webkit-box-flex: 1;
-        -webkit-flex: 1;
-        flex: 1;
-        height: 50px;
-        box-sizing: border-box;
-        padding-left: 16px;
-        line-height: 50px;
-        color: #000;
-        font-size: 18px;
-        text-align: left;
-    }
-    
-    footer .buy {
-        width: 47px;
-        height: 47px;
-    }
-    
-    footer .buy .buy-button {
-        width: 47px;
-        height: 47px;
-        position: absolute;
-        right: 0;
-        margin-right: 18px;
-    }
-    
-    .highlight {
-        opacity: 0.7;
-    }
+   
 </style>
 </head>
 
 <body>
-    <header id="header">
-        <div class="back" tapmode onclick="api.closeWin()">
-            <img src="../image/back.png">
-        </div>
-        <div class="title">
-            确认订单
-        </div>
-    </header>
-    <section></section>
-    <!--<footer id="footer">
-        <div class="panel" id="price">总金额:￥24.9</div>
-        <div class="buy">
-            <img class="buy-button" src="../image/confirm.png" tapmode onclick="yesadd()">
-        </div>
-    </footer>-->
+   
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
-<script type="text/javascript" src="../script/SHA1.js"></script>
+
 <script type="text/javascript">
 
     apiready = function() {
-        var jiage;
-
-
-
-        var header=$api.byId('header');
-
-        // 获取header和nav的高
-        headerH=$api.offset(header).h
+      
         api.openFrame({
             name: 'order_frame',
             url: './order_frame.html',
             rect: {
                 x: 0,
-                y: headerH,
+                y: 0,
                 w: 'auto',
-                h: api.winHeight-headerH
+                h: 'auto'
             },
             pageParam: {
                 wareId:api.pageParam.wareId, 
@@ -151,10 +38,10 @@
             animation: {
                 type: "fade"
             },
-            bounces: true
+            bounces:false 
         });
-//      getuser();
-        //      getprice();
+
+
 
     };
    

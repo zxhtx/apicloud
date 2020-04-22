@@ -749,7 +749,10 @@
 					if(off_on){
 						off_on=false;
 						getWareList(wareindex,true);
-						toast("商品加载中",'bottom',1000);
+						// toast("商品加载中",'bottom',1000);
+            api.toast({
+                msg: '商品加载中'
+            });
 					}
 		            
 		         

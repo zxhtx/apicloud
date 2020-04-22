@@ -20,6 +20,7 @@
         <div id="userAccount" class="title" tapmode onclick="login()">点击登录</div>
         <!-- <img id="userAvatar" src="../image/empty_page_nothing.png"  class="personal_logo"> -->
         <div class="personal_logo" tapmode onclick="setAvatar()" ></div>
+        <div class="mycenter" tapmode onclick="gocenter()">我的动态</div>
         <div class="userlist">
             <div class="lists" onclick="opendinyue()">
                 <div class="dinyuecount" >0</div>
@@ -116,7 +117,7 @@
         
 
     getUsername();
-    getcdslist();
+    // getcdslist();
     shoppingcount();
     function setuser(){
      var userInfo=$api.getStorage('userInfo');
@@ -137,6 +138,31 @@
     });
 }
 
+function gocenter(){
+ var userInfo=$api.getStorage('userInfo');
+  if (!userInfo){
+    api.openWin({
+        name: 'login',
+        url: './login.html',
+        pageParam: {
+            page:'my_frame'
+        },
+        animation:{
+          type:'fade'
+        }
+    });
+  }
+  api.openWin({
+      name: 'TAusercenter',
+      url: './TAusercenter.html',
+      pageParam: {
+          uid: userInfo.id
+      },
+      animation:{
+        type:'fade'
+      }
+  });
+}
 function setAvatar(){
     // var userInfo=JSON.parse(localStorage.getItem('userInfo'));
     var userInfo=$api.getStorage('userInfo');
@@ -158,7 +184,8 @@ function daifukuan(){
         },
            animation:{
             type:'fade'
-           }
+           },
+           
     });
 }
 
@@ -280,19 +307,7 @@ function login(){
 
 
 //上拉加载
-         window.addEventListener("scroll", function (){
-              //当时滚动条离底部0px时开始加载下一页的内容
-              if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
-                    if(off_on){
-                        off_on=false;
-                        getcdslist(true);
-                        $('.cdslist').append('<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; ">')
-                    }
-                    
-                 
-              }
-          });
-
+      
 
 // 在个人中心中显示用户名
 function getUsername(){
@@ -411,50 +426,6 @@ function updatevip(){
 
 }
 
-function getcdslist(_LoadMore){
-    if (!userInfo) {
-        return;
-    }
-    if(_LoadMore){
-        skip+=limit;
-    }else{
-        skip=0; 
-    }
-    postajax(url+'getusercdslist',{"limit":limit,"skip":skip,"uid":userInfo.id},function(e){
-        // console.log(e)
-        // return;
-         if(e.code=='200'){
-             update(e.data,_LoadMore);
-         }else{
-             $('.xz').remove();
-             $('.cdslist').append('<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px; ">-暂无动态-</p>');
-         }
-    })
-}
-
-
-function update(ret,_LoadMore){
-    var param = {
-      list:ret,
-      imgurl:imgurl,
-    };
-      var tempFn = doT.template($('#template').text());
-      // 使用模板函数生成HTML文本
-      var resultHTML = tempFn(param);
-     
-      
-        if(_LoadMore){
-              $(".cdslist").append(resultHTML);
-        }else{
-              $(".cdslist").html(resultHTML);
-        }
-        off_on=true;
-        $(".cdsimg").lazyload({
-          threshold : 200,
-          // effect: "fadeIn",
-        });
-        $('.xz').remove();
-}
 
 function openDressing(id){
          window.location.href='./Dressingdetails_frame.html?'+window.btoa(encodeURI('articleid='+id));
