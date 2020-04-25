@@ -235,8 +235,8 @@
         </script>
     <script id="template4" type="text/template">
       {{~it:value:index}}
-        <div class="wareitem" onclick="openware('{{=value.id}}')">
-         <div class="wareimg wareimgs" data-original="{{=value.thumbnail}}"></div>
+        <div class="wareitem" onclick="openware('{{=value.bid}}')">
+         <div class="wareimg wareimgs" data-original="{{=value.image}}"></div>
          <div class="wareinfo">
            <div class="waretext">{{=value.description}}</div>
            <div class="wareprice">￥{{=value.price}}</div>
@@ -722,20 +722,14 @@ function lianjie(id,imglists,warelists){
 
       function ajaxwarelist(_id) {
 
+       
         var params = {
-
-          where: {
-            id: {
-              inq: warearray[0]
-            }
-          },
-          skip: 0,
-          limit: warearray[0].length,
-          order: "createdAt DESC"
+             bid:warearray[0].toString()
+      
         }
-        apigetajax('https://d.apicloud.com/mcm/api/ware', params, function(ret) {
+        getajax(url+'Dressingware', params, function(ret) {
           if (ret) {
-            dotwarelist(ret,_id);
+            dotwarelist(ret.data,_id);
             warearray=[];
             
           }

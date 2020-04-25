@@ -375,8 +375,8 @@
 		</script>
 		<script id="template4" type="text/template">
 			{{~it:value:index}}
-				<div class="wareitem" onclick="openware('{{=value.id}}')">
-				 <div class="wareimg wareimgs" data-original="{{=value.thumbnail}}"></div>
+				<div class="wareitem" onclick="openware('{{=value.bid}}')">
+				 <div class="wareimg wareimgs" data-original="{{=value.image}}"></div>
 				 <div class="wareinfo">
 					 <div class="waretext">{{=value.description}}</div>
 					 <div class="wareprice">￥{{=value.price}}</div>
@@ -959,22 +959,14 @@
 					// $('#Dressinglist').append('<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; border-bottom:1px solid #FF4466; ">');
 					  toshare();
 					var params = {
-					    fields: {},
-					    where: {
-					        id: {
-					            inq: wareid[src]
-					        }
-					    },
-					    skip: 0,
-					    limit: wareid.length,
-					    order:"createdAt DESC"
+						bid: wareid[src].toString()
 
 					}
-					apigetajax('https://d.apicloud.com/mcm/api/ware',params,function(ret){
-					    if (ret) {
-					       updateWareList(ret);
-						 // $('.xz').remove();
-					    }
+					getajax(url + 'Dressingware', params, function(ret) {
+						if (ret) {
+							updateWareList(ret.data);
+							// $('.xz').remove();
+						}
 					})
 					
 					
@@ -1209,28 +1201,15 @@
 
 			function ajaxwarelist(warearray) {
 
-				// var params = {
-
-				// 	where: {
-				// 		id: {
-				// 			inq: warearray[0]
-				// 		}
-				// 	},
-				// 	skip: 0,
-				// 	limit: warearray[0].length,
-				// 	order: "createdAt DESC"
-				// }
+				
 				var params = {
-					inq:JSON.stringify(warearray[0]),
-					skip: 0,
-					limit: warearray[0].length,
-					
+					bid:warearray[0].toString(),
+
 				}
-				getajax(url+'Dressingware', params, function(ret) {
+				getajax(url + 'Dressingware', params, function(ret) {
 					if (ret) {
-						dotwarelist(ret);
-						
-						// console.log(ret);
+						dotwarelist(ret.data);
+
 					}
 				})
 			}
@@ -1273,7 +1252,7 @@
 			     var resultText='';
 			     for (var i =0; i <_data.length; i++) {
 			
-			      resultText+="<div class='item'  data-ware="+_data[i].id+"  style='background:white'><img class='lazytwo'  data-original="+_data[i].thumbnail+" ><span class='description'>"+_data[i].description+"</span><span class='price'>￥"+_data[i].price+"</span></div>";
+			      resultText+="<div class='item'  data-ware="+_data[i].bid+"  style='background:white'><img class='lazytwo'  data-original="+_data[i].image+" ><span class='description'>"+_data[i].description+"</span><span class='price'>￥"+_data[i].price+"</span></div>";
 			
 			
 			    }
