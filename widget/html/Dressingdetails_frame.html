@@ -1230,7 +1230,16 @@
 			}
 
 			function openware(wareid) {
-				window.location.href = "./ware_frame.html?" + window.btoa(encodeURI("wareId=" + wareid));
+				  api.openWin({
+			           name: 'ware',
+			           url: './ware.html',
+			           pageParam: {
+			               wareId:wareid
+			        },
+			        animation:{
+			        	type:'fade'
+			        }
+   			   });
 			}
 
 			function share() {
@@ -1268,10 +1277,8 @@
 				});
 			   $('.item').on('click',function(e){
 			    var wareid=$(this).attr('data-ware');
-			    var url='./ware_frame.html?'+window.btoa(encodeURI('wareId='+wareid));
-			    window.location.href=url;
-			
-			
+			  	
+				openware(wareid)
 			  })
 			
 			

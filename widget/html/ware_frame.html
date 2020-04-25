@@ -546,7 +546,17 @@ footer{
       function listware() {
         $(".listwareid").on('click', function() {
           var wareid = $(this).attr('data-wareid')
-          window.location.href = "./ware_frame.html?" + window.btoa(encodeURI('wareId=' + wareid));;
+            api.closeWin();
+           api.openWin({
+                 name: 'ware',
+                 url: './ware.html',
+                 pageParam: {
+                     wareId:wareid
+              },
+              animation:{
+                type:'fade'
+              },
+           });
         })
 
       }

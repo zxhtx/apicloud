@@ -227,16 +227,19 @@
 			});
 
 			function openDressing(id) {
+				api.closeWin({
+				    name: 'Dressingdetails'
+				});
 				 api.openWin({
-           name: 'Dressingdetails',
-           url: './Dressingdetails.html',
-           pageParam: {
-               articleid:id
-           },
-           animation:{
-            type:"fade"
-           }
-       });
+		           name: 'Dressingdetails',
+		           url: './Dressingdetails.html',
+		           pageParam: {
+		               articleid:id
+		           },
+		           animation:{
+		            type:"fade"
+		           }
+		       });
 				
 			}
 
