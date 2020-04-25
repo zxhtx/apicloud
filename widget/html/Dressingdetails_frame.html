@@ -11,6 +11,7 @@
 		</title>
 		<script src="../script/commonjs.js">
 		</script>
+		<link rel="stylesheet" type="text/css" href="../css/liketx/style.css"/>
 		<link href="https://cdn.bootcss.com/Swiper/4.5.0/css/swiper.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="../css/Dressingdetails_frame.css">
 		<script src="https://cdn.bootcss.com/Swiper/4.5.0/js/swiper.min.js"></script>
@@ -95,6 +96,24 @@
 	</head>
 
 	<body>
+
+		<button class="like-button" onclick="likeright()">
+		  <div class="like-wrapper">
+		    <div class="ripple"></div>
+		    <svg class="heart" width="24" height="24" viewBox="0 0 24 24">
+		      <path class="heartcolor" d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"></path>
+		    </svg>
+		    <div class="particles" style="--total-particles: 6">
+		      <div class="particle" style="--i: 1; --color: #7642F0"></div>
+		      <div class="particle" style="--i: 2; --color: #AFD27F"></div>
+		      <div class="particle" style="--i: 3; --color: #DE8F4F"></div>
+		      <div class="particle" style="--i: 4; --color: #D0516B"></div>
+		      <div class="particle" style="--i: 5; --color: #5686F2"></div>
+		      <div class="particle" style="--i: 6; --color: #D53EF3"></div>
+		    </div>
+		  </div>
+		</button>
+
 		<div class="am-share">
 		  <h3 class="am-share-title">链接直达</h3>
 		 <ul class="am-share-sns" >
@@ -383,6 +402,10 @@
 			var sqtime = 0;
 			var liketime = 0;
 			var musicname;
+
+			var liker_userid;
+			var art_id;
+			var uid;
 			apiready = function(){
 			    getchaodashe();
 			getcomment();
@@ -404,6 +427,57 @@
 				$('#Dressinglist').height($(window).height()/1.6+'px');
 				// $('.am-share').height($(window).height())
 			})
+
+
+			function likeright(){
+				if (!userInfo) {
+					window.location.href = "./login_frame.html";
+					return;
+				}
+				if (liketime == 0) {
+					liketime = 1;
+					setTimeout(function() {
+						liketime = 0;
+					}, 3000)
+				} else {
+					toast('不能连续点赞哟', 'bottom');
+					return;
+				}
+				var img='like'+art_id;
+				var imgid=$('#like'+art_id);
+				if(liker_userid){
+					// 取消点赞
+					addlike(0, art_id,img, uid);
+					$('.heart>path').removeClass('redlike');
+					$('.like-button').removeClass('heartbs');
+					$('.particle').removeClass('particledh');
+					$('.heart>path').addClass('nolike');
+					liker_userid=0;
+					imgid.fadeOut();
+					imgid.fadeIn();
+					setTimeout(function() {
+						imgid.attr('src', '../image/likeb_white.png');
+						imgid.attr('data-like_userid', '0');
+					}, 300);
+				}else{
+					// 点亮红心
+					addlike(1, art_id,img, uid);
+					$('.heart>path').removeClass('nolike');
+					$('.heart>path').addClass('redlike');
+					$('.like-button').addClass('heartbs');
+					$('.particle').addClass('particledh');
+					liker_userid=1;
+					imgid.fadeOut();
+					imgid.fadeIn();
+					setTimeout(function() {
+						imgid.attr('src', '../image/likea_red.png');
+						imgid.attr('data-like_userid', '1');
+					}, 300);
+				}
+				// alert(liker_userid)
+				
+			}
+
 			 $(window).scroll(function(event){
 			
 				if($(window).scrollTop()>$('#list').height()-$(window).height()){
@@ -514,8 +588,12 @@
 
 				postajax(url + 'getdetails', params, function(ret) {
 					if (ret.code == '200') {
-						// alert(JSON.stringify(ret))
-						// console.log(ret.data[0].warelist);
+						
+						liker_userid=ret.data[0].like_userid;
+						art_id=ret.data[0].id;
+						uid=ret.data[0].userid;
+						islike(liker_userid);
+
 						var ware = ret.data[0].warelist;
 						wareid = ware;
 						fnwarelists = $.extend(true, {}, ware);
@@ -710,6 +788,7 @@
 					}, 300);
 					addlike(1, articleid, _this.id, touid);
 					// console.log(_this.id)
+
 				} else {
 					$(_this).fadeOut();
 					$(_this).fadeIn();
@@ -831,6 +910,11 @@
 							var likecount = ++likecount;
 							$('#likecount_' + articleid).attr('data-likecount', likecount);
 							$('#likecount_' + articleid).html(likecount + '个赞');
+								$('.heart>path').removeClass('nolike');
+							$('.heart>path').addClass('redlike');
+							$('.like-button').addClass('heartbs');
+							$('.particle').addClass('particledh');
+							liker_userid=1;
 						}
 					});
 				} else {
@@ -850,6 +934,11 @@
 							var likecount = --likecount;
 							$('#likecount_' + articleid).attr('data-likecount', likecount);
 							$('#likecount_' + articleid).html(likecount + '个赞');
+							$('.heart>path').removeClass('redlike');
+							$('.like-button').removeClass('heartbs');
+							$('.particle').removeClass('particledh');
+							$('.heart>path').addClass('nolike');
+							liker_userid=0;
 						}
 					});
 				}
@@ -1220,6 +1309,17 @@
 			
 			  
 			}
+
+				function islike(islike){
+				if(islike){
+					$('.heart>path').addClass('redlike');
+					$('.like-button').addClass('heartbs');
+					$('.particle').addClass('particledh');
+				}
+			}
+			let b = document.querySelector('button');
+			setTimeout(()=>b.focus(), 100);
+			setTimeout(()=>b.blur(), 1000);
 		</script>
 	</body>
 </html>

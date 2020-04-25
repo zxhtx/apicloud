@@ -33,6 +33,9 @@
                 Chaodashe
 
             </a>
+            <a class="headbgcolor" onclick="gobcolor()">
+                <img src="../image/icon/colorpan.png">
+           </a>
             <a class="headphoto" onclick="headphoto()">
                 <img src="../image/Cphoto.png">
             </a>
@@ -774,6 +777,20 @@ function lianjie(id,imglists,warelists){
        });
     }
     
+    function gobcolor(){
+    // location.href="./bgcolor_frame.html";
+    
+    api.openWin({
+        name: 'bgcolor',
+        url: './bgcolor.html',
+        pageParam: {
+            name: 'test'
+        },
+        animation:{
+              type:'fade'
+          }
+    });
+  }
     
 </script>
 </body>
