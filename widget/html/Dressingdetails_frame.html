@@ -488,7 +488,7 @@
 					})
 					$('.keybox').fadeIn();
 					// console.log(1);
-				}else{
+				}else if ($(window).scrollTop()+388<$('#list').height()-$(window).height()){
 					$('.keybox').fadeOut()
 				}
 				// console.log($(window).scrollTop())

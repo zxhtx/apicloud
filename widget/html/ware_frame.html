@@ -346,71 +346,67 @@ footer{
       <div id="cart"><a class="addCart" href="javascript:;">加入收藏</a></div>
       <div id="buy"><a class="pay" href="javascript:;">立即下单</a></div>
     </footer>
-    <script type="text/x-dot-template" id="template">
-      {{~it.list:value:index}}
-           <div class="swiper-container">
-               <div class="swiper-wrapper" style="height:100%">
-            {{for(var i=0; i< value.wareInfo.length;i++) { }}
-              
-                 <div class="swiper-slide"  style=" width:100%;height:auto;background-image: url({{=value.wareInfo[i]}});" ></div>
-     
-            {{  }  }}
-          </div>
-             <div class="swiper-pagination"></div>
-        </div>
-          <div class="info-name">
-            
-            <div id="description" class="description">{{=value.description}}</div>
-            <div id="price" class="price">￥{{=value.price}}</div>
-          </div>
-          <div class="quan">
-            <span class="onespan">返现(单单返)</span><span class="twospan">全站每单都会获得商品相应的优惠</span><br/>
-            <span class="onespan">VIP优惠</span><span class="twospan">VIP用户全站购物均9.5折</span>
+   <script id="template" type="text/x-dot-template">
+        <div class="swiper-container">
+                       <div class="swiper-wrapper" style="height:100%">
+                    {{for(var i=0; i<it.list.wareimglist.length;i++) { }}
+                      
+                         <div class="swiper-slide"  style=" width:100%;height:auto;background-image: url({{=it.list.wareimglist[i]}});" ></div>
+             
+                    {{  }  }}
+                  </div>
+                     <div class="swiper-pagination"></div>
+                </div>
+           <div class="info-name">
+                      <div id="description" class="description">{{=it.list.description}}</div>
+                      <div id="price" class="price">￥{{=it.list.price}}</div>
+                    </div>
+                    <div class="quan">
+                      <span class="onespan">返现(单单返)</span><span class="twospan">全站每单都会获得商品相应的优惠</span><br/>
+                      <span class="onespan">VIP优惠</span><span class="twospan">VIP用户全站购物均9.5折</span>
+          
+                    </div>
+                    <div class="baolist" >
+                     <span>全场包邮</span>
+                     <span>7天退换</span>
+                     <span>24小时发货</span>
+          
+                   </div>
+                   <div class="sizeandcolor">
+                    <div class="info-color">
+                      <div class="name">颜色</div>
+                      {{ for(var i=0; i< it.list.color.length;i++) { }}
+                      <span data-color="{{=it.list.color[i]}}" class="yanse">{{=it.list.color[i]}}</span>
+                      {{ } }}
+                    </div>
+          
+          
+          
+                    <input id="copyInput" value="https://chaodashe.com/html/ware_frame.html?{{!sharetle()}}" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
+                    <div class="info-discount">
+                      <div class="name">尺码</div>
+                      {{for(var i=0; i< it.list.size.length ;i++) { }}
+                      <span data-value="{{=it.list.size[i]}}" class="cima">{{=it.list.size[i]}}</span>
+                      {{ } }}
+                    </div>
+                  </div>
+                  <div id="" style="width: {{=it.frameWidth}}px; margin-top: 28px; ">
+                    {{for(var i=0; i< it.alllist.length;i++) { }}
+                    <div   data-wareid="{{=it.alllist[i].bid}}" class="listwareid" style="width: {{=it.frameWidth/4}}px; margin-left:{{=(it.frameWidth/4)/4}}px ;  display: inline-block;">
+                      <img  class="lazy"  data-original="{{=it.alllist[i].image}}" style="width:100% ; border-radius:6px ;  " />
+                      <span id="sixtext" style="font-size: 10px; ">{{=it.alllist[i].description}}</span>
+                    </div>
+                    {{  }  }}
+          
+                  </div>
+                  <div class="imglist">
+                    {{for(var i= it.list.wareimglist.length-1; i>=0 ;i--) { }}
+                    <img style="width:{{=it.frameWidth}}px ;" class="lazy"   data-original="{{=it.list.wareimglist[i]}}" alt="" />
+                    {{  }  }}
+                  </div>
 
-          </div>
-          <div class="baolist" >
-           <span>全场包邮</span>
-           <span>7天退换</span>
-           <span>24小时发货</span>
-
-         </div>
-         <div class="sizeandcolor">
-          <div class="info-color">
-            <div class="name">颜色</div>
-            {{ for(var i=0; i< value.color.length;i++) { }}
-            <span data-color="{{=value.color[i]}}" class="yanse">{{=value.color[i]}}</span>
-            {{ } }}
-          </div>
-
-
-
-          <input id="copyInput" value="http://www.chaodashe.com/html/ware_frame.html?{{!sharetle()}}" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
-          <div class="info-discount">
-            <div class="name">尺码</div>
-            {{for(var i=0; i<value.size.length ;i++) { }}
-            <span data-value="{{=value.size[i]}}" class="cima">{{=value.size[i]}}</span>
-            {{ } }}
-          </div>
-        </div>
-        <div id="" style="width: {{=it.frameWidth}}px; margin-top: 28px; ">
-          {{for(var i=0; i<it.alllist.length;i++) { }}
-          <div   data-wareid="{{=it.alllist[i].id}}" class="listwareid" style="width: {{=it.frameWidth/4}}px; margin-left:{{=(it.frameWidth/4)/4}}px ;  display: inline-block;">
-            <img  class="lazy"  data-original="{{=it.alllist[i].thumbnail}}" style="width:100% ; border-radius:6px ;  " />
-            <span id="sixtext" style="font-size: 10px; ">{{=it.alllist[i].description}}</span>
-          </div>
-          {{  }  }}
-
-        </div>
-        <div class="imglist">
-          {{for(var i= value.wareInfo.length-1; i>=0 ;i--) { }}
-          <img style="width:{{=it.frameWidth}}px ;" class="lazy"   data-original="{{=value.wareInfo[i]}}" alt="" />
-          {{  }  }}
-        </div>
-
-
-        {{~}}
-
-      </script>
+    
+        </script>
     <script type="text/javascript">
       var size;
       var color;
@@ -440,37 +436,18 @@ footer{
       function getWareInfo(_wareId) {
 
         var params = {
-          id: _wareId,
-          skip: 0,
-          limit: 1,
-          include: 'wareInfoPointer'
+          bid: _wareId,
         }
 
         getajax(url+'oneware', params, function(ret) {
           if (ret) {
             // 更新商品详情展示
-            shoppingid = ret[0].id;
-            var picture = [];
-            // alert(ret[0].wareInfo.picture0)
-            for (var i =0; i<5; i++) {
-             if (ret[0].wareInfo['picture'+i]){
-              picture.push(
-                  ret[0].wareInfo['picture'+i]
-                );
-             }
-            }
-         
-            // for (var i = 0; i < picture.length; i++) {
-            //   if (picture[i] == null) {
-            //     picture.splice(i, 1)
-            //   }
-
-            // }
-
-            ret[0].wareInfo = picture;
+            shoppingid = ret.data.bid;
+            
 
 
-            getallware(ret);
+            getallware(ret.data);
+
 
           }
 
@@ -487,7 +464,7 @@ footer{
 
         }
         getajax(url+'sjware', params, function(ret) {
-          fnUpdateWareInfo(ret1, ret);
+          fnUpdateWareInfo(ret1, ret.data);
         });
       }
       // 更新商品详情展示

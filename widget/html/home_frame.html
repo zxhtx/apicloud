@@ -696,8 +696,8 @@
 
           <script id="template" type="text/template">
           	{{~it:value:index}}
-          		<div class="wareitem" onclick="openware('{{=value.id}}')">
-          		 <div class="wareimg wareimgs" data-original="{{=value.thumbnail}}"></div>
+          		<div class="wareitem" onclick="openware('{{=value.bid}}')">
+          		 <div class="wareimg wareimgs" data-original="{{=value.image}}"></div>
           		 <div class="wareinfo">
           			 <div class="waretext">{{=value.description}}</div>
           			 <div class="wareprice">￥{{=value.price}}</div>
@@ -812,28 +812,29 @@
              skip=0;
 			dialog('商品加载中');
             }
-            var params={
-               wareTypeId:wareTypeList[_index].id,
+           var params={
+             waretypeid:wareTypeList[_index].id,
              skip:skip,
              limit:LIMIT,
            };
            getajax(url+'allware',params,function(ret){
+              var data=ret.data;
              var ret1=[
-             ret[3],
-             ret[6],
-             ret[2]
+             ret.data[3],
+             ret.data[6],
+             ret.data[2]
              ]
-			 var ret2=[
-			ret[20],	 
-			 ret[18],
-			 ret[12],
-			 ret[9],
-			 ret[8],
-			 ret[6],
-			 ]
-             updateWareList(ret,_index);
+       var ret2=[
+       ret.data[16],   
+       ret.data[18],
+       ret.data[12],
+       ret.data[9],
+       ret.data[8],
+       ret.data[6],
+       ]
+             updateWareList(data,_index);
              updateWareList1(ret1);
-			 updateWareList2(ret2);
+       updateWareList2(ret2);
            });
 
          }
@@ -846,7 +847,7 @@
            var resultText='';
            for (var i =0; i <_data.length; i++) {
 
-            resultText+="<div class='item'  data-ware="+_data[i].id+"  style='background:white'><img   data-original="+_data[i].thumbnail+" ><span class='description'>"+_data[i].description+"</span><span class='price'>￥"+_data[i].price+"</span></div>";
+            resultText+="<div class='item'  data-ware="+_data[i].bid+"  style='background:white'><img   data-original="+_data[i].image+" ><span class='description'>"+_data[i].description+"</span><span class='price'>￥"+_data[i].price+"</span></div>";
 
 
           }
@@ -900,7 +901,7 @@
       function updateWareList1(_data){
         var text='';
         for (var i =0; i<_data.length; i++) {
-          text+="<div class='snapup hightitem section02 open-win' data-ware="+_data[i].id+"  ><img  data-original="+_data[i].thumbnail+" class='fl infologo'><div class='shelf2 fl'><div class='shelfcell'><div class='title'>"+_data[i].description+"<span>￥"+_data[i].price+"</span></div><span class='subtitel'>周计火爆商品</span></div></div><img src='../image/arrow.png' class='arrow fr'></div>";
+          text+="<div class='snapup hightitem section02 open-win' data-ware="+_data[i].bid+"  ><img  data-original="+_data[i].image+" class='fl infologo'><div class='shelf2 fl'><div class='shelfcell'><div class='title'>"+_data[i].description+"<span>￥"+_data[i].price+"</span></div><span class='subtitel'>周计火爆商品</span></div></div><img src='../image/arrow.png' class='arrow fr'></div>";
         }
     // console.log(text);
     $('#list1').html(text);
