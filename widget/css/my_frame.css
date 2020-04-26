@@ -359,6 +359,7 @@
 	border-radius: 50%;
 	background-color:#F74C31;
 	color: #fff;
+    line-height: 16px;
 	display: none;
 }
 .dshcount{
@@ -370,6 +371,7 @@
 	height: 16px;
 	font-size:11px;
 	border-radius: 50%;
+    line-height: 16px;
 	background-color:#F74C31;
 	color: #fff;
 }

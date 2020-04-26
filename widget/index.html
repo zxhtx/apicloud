@@ -257,6 +257,14 @@
       };
 
       function fnNVTabBar_open() {
+        var userInfo=$api.getStorage('userInfo');
+        if(userInfo){
+          bColor=userInfo.Dressingbgcolor;
+          // alert(2);
+        }else{
+          // alert(1)
+          bColor='#fff';
+        }
         var NVTabBar = api.require('NVTabBar');
         NVTabBar.open({
           styles: {
@@ -267,10 +275,12 @@
               color: '#E2E2E2'
             },
             badge: {
-              bgColor: '#f00',
-              numColor: '#000',
-              size: 6.0,
-              centerY: 2
+         bgColor:bColor, //（可选项）字符串类型；徽章背景色，支持rgb、rgba、#；默认：#ff0
+       numColor: '#fff',//（可选项）字符串类型；徽章数字字体颜色，支持rgb、rgba、#；默认：#fff
+       size: 6.0,       //（可选项）数字类型；徽章半径大小；默认值：6.0
+       fontSize:10,      // (可选项) 数字类型;设置徽章字体大小;默认值: 10 ;注意:仅支持iOS。
+       centerX: 6.0,    //（可选项）数字类型；徽章中心点坐标（相对于所属item的背景面板坐标系）；默认值：icon图标的右上角
+       centerY: 6.0     //（可选项）数字类型；徽章中心点坐标（相对于所属item的背景面板坐标系）；默认值：icon图标的右上角
             }
           },
           items: [
@@ -371,10 +381,11 @@
 
        }
        var NVTabBar = api.require('NVTabBar');
-NVTabBar.setBadge({
-    index: 2,
-    badge: '21'
-});
+      NVTabBar.setBadge({
+          index: 2,
+          badge: '1'
+
+      });
      });
       }
       function openDressing(){
