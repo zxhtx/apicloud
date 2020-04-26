@@ -49,19 +49,21 @@
 	 var skip=0;
 	 var limit=8;
 	 apiready = function(){
-	     even();
-	 }
-	     
-	 $(function(){
-	 	
-		 resetlists();
+	   
+	      resetlists();
 		 u_allNoreadcount();
+		   even();
 		$('.chat').addClass('now').siblings().removeClass('now');
 		$('.likecount').css('background-color',userInfo.Dressingbgcolor);	
 		$('.dinyuecount').css('background-color',userInfo.Dressingbgcolor);	
 		$('.commentcount').css('background-color',userInfo.Dressingbgcolor);	
 		
-	})
+	 }
+	     
+	 // $(function(){
+	 	
+		
+	// })
 	var userInfo=$api.getStorage('userInfo'); 
 	var fromid=userInfo.id;
 
@@ -166,7 +168,9 @@
 		 var userInfo=JSON.parse(localStorage.getItem('userInfo'));
 		 postajax(url+'u_allNoreadcount',{'uid':userInfo.id},function(e){
 			 if(e.code=200){
+			 	alert('1'+e.data.subscribecount)
 				 if(e.data.subscribecount){
+				 	alert('2'+e.data.subscribecount)
 					 $('.dinyuecount').html(e.data.subscribecount);
 				 }else{
 					 $('.dinyuecount').html('').css('display','none');
