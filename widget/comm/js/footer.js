@@ -102,9 +102,6 @@ $(function() {
 				
 				$('.navnoreadcount').text(e);
 				$('.navnoreadcount').css('display','block');
-				if($.cookie('ts')!=e){
-					$("#ts").get(0).play();
-				}
 				$.cookie("ts",e);
 				  
 			}else{

@@ -99,7 +99,12 @@
 
 <script type="text/javascript">
       $(function(){
-                $('.my').addClass('now').siblings().removeClass('now');
+            $('.my').addClass('now').siblings().removeClass('now');
+          var userInfo=$api.getStorage('userInfo');
+        if(userInfo){
+          $('.dfkcount').css('background-color',userInfo.Dressingbgcolor);  
+          $('.dshcount').css('background-color',userInfo.Dressingbgcolor);  
+        }
 
             })
     var myDate = new Date();
@@ -112,6 +117,7 @@
     var limit=9;
     var off_on=false;
     apiready = function(){
+
             event();
     }
         
@@ -199,6 +205,14 @@ api.addEventListener({
     if (ret) {
        location.reload()
     } 
+});
+
+api.addEventListener({
+    name: 'warecount'
+}, function(ret, err) {
+    if (ret) {
+        shoppingcount();
+    }
 });
 }
 function daishouhuo(){

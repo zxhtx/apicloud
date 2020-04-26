@@ -58,12 +58,11 @@
 				width: 100%;
 				height: 15px;
 				color: #555555;
-				/*margin-top: 14px;*/
 				font-size: 15px;
 			}
 
 			.ware-1 .info .description {
-				margin-top: 10px;
+				margin-top: 12px;
 				width: 100%;
 				height: 15px;
 				font-size: 13px;
@@ -81,7 +80,8 @@
 
 			.ware-1 .info .price-tag .price {
 				color: black;
-				font-size: 16px;
+				font-size: 15px;
+				width: 88px;
 			}
 
 			.ware-1 .info .price-tag .unit {
@@ -345,6 +345,23 @@
 			.noshoppingshow {
 				display: '';
 			}
+			.sizecolor{
+				color:#9d9d9d;
+				font-size: 12px;
+				display: inline-block;
+			}
+			.thtext{
+				display: inline-block;
+				font-size: 12px;
+				background-color:#FFF2EC;
+				color:#FF5406;
+				border-radius: 3px;
+				padding: 2px;
+				margin-left: 8px;
+			}
+			.xaingq{
+				margin-top: 6px;
+			}
 
 			/*.noshoppinghidden{
 		display: none;
@@ -382,8 +399,11 @@
 		<div class="content" >
 			<img src="{{=value.url}}" data-wareTypeId="{{=value.wareTypeId}}"  class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
 			<div class="info" tapmode onclick="openWareWin('{{=value.wareid}}','{{=value.wareTypeId}}')">
-				<div class="name">{{=value.warename}}</div>
 				<div class="description">{{=value.description}}</div>
+				<div class="xaingq">
+					<div class="sizecolor">{{=value.size}}/{{=value.color}}</div>
+					<div class="thtext">七天无理由退换</div>
+				</div>
 				<div class="price-tag">
 					<span class="price">￥{{=value.price}}</span>
 				</div>
@@ -531,7 +551,10 @@
 			postajax(url + 'deldindan', params, function(ret) {
 				if (ret.code == 200) {
 					$("#ware_" + _data).css('display', 'none');
-
+					api.sendEvent({
+					    name: 'warecount',
+					    extra: {}
+					});
 				}
 			})
 			return;
