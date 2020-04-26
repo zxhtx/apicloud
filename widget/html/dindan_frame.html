@@ -492,8 +492,18 @@
 		}
 
 		function openWareWin(_wareId, _wareTypeId) {
-			window.location.href = "./ware_frame.html?" + window.btoa(encodeURI('wareId=' + _wareId));
+			// window.location.href = "./ware_frame.html?" + window.btoa(encodeURI('wareId=' + _wareId));
+			  api.openWin({
+		           name: 'ware'+_wareId,
+		           url: './ware.html',
+		           pageParam: {
+		               wareId: _wareId
+		           },
+		             animation: {
+		                type: "fade"
+		            }
 
+		       });
 		}
 
 		function look(_id) {
