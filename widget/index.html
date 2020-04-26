@@ -72,6 +72,7 @@
   var clipBoard;
   var dialogBox ;
   var status = false;
+  var NVTabBar;
 
   apiready = function() {
 
@@ -270,11 +271,11 @@
           // alert(1)
           bColor='#F74C31';
         }
-        var NVTabBar = api.require('NVTabBar');
+         NVTabBar = api.require('NVTabBar');
         NVTabBar.open({
           styles: {
             bg: '#fff',
-            h: 54,
+            h: 50,
             dividingLine: {
               width: 1,
               color: '#E2E2E2'
@@ -282,8 +283,8 @@
             badge: {
             bgColor:bColor, //（可选项）字符串类型；徽章背景色，支持rgb、rgba、#；默认：#ff0
             numColor: '#fff',//（可选项）字符串类型；徽章数字字体颜色，支持rgb、rgba、#；默认：#fff
-            size: 7.0,       //（可选项）数字类型；徽章半径大小；默认值：6.0
-            fontSize:10,      // (可选项) 数字类型;设置徽章字体大小;默认值: 10 ;注意:仅支持iOS。
+            size: -1,       //（可选项）数字类型；徽章半径大小；默认值：6.0
+            fontSize:12,      // (可选项) 数字类型;设置徽章字体大小;默认值: 10 ;注意:仅支持iOS。
             // centerX: 6.0,    //（可选项）数字类型；徽章中心点坐标（相对于所属item的背景面板坐标系）；默认值：icon图标的右上角
           // centerY: 6.0     //（可选项）数字类型；徽章中心点坐标（相对于所属item的背景面板坐标系）；默认值：icon图标的右上角
             }
@@ -305,7 +306,7 @@
               size: 12.0,
               normal: '#696969',
               selected: '#000',
-              marginB: 6.0,
+              marginB: 3.0,
             }
           },
           {
@@ -324,7 +325,7 @@
               size: 12.0,
               normal: '#696969',
               selected: '#000',
-              marginB: 6.0,
+              marginB: 3.0,
             }
           },
             {
@@ -343,7 +344,7 @@
               size: 12.0,
               normal: '#696969',
               selected: '#000',
-              marginB: 6.0,
+              marginB: 3.0,
             }
           },
           {
@@ -362,7 +363,7 @@
               size: 12.0,
               normal: '#696969',
               selected: '#eb4f38',
-              marginB: 6.0
+              marginB: 3.0
             }
           },{
             w: api.winWidth / 5.0,
@@ -380,7 +381,7 @@
               size: 12.0,
               normal: '#696969',
               selected: '#eb4f38',
-              marginB: 6.0
+              marginB: 3.0
             }
           }],
           selectedIndex: 0
@@ -597,20 +598,20 @@
         
         setTimeout(function(){
           getNoreadcount();
-        },600)
+        },1000)
         // alert(1)
         
       return;
       case 'text':
       setTimeout(function(){
         getNoreadcount();
-      },600)
+      },1000)
       return;
       
       case 'img':
       setTimeout(function(){
         getNoreadcount();
-      },600)
+      },1000)
       return;
       
       
@@ -624,7 +625,7 @@
         
         // $('.navnoreadcount').text(e);
         // $('.navnoreadcount').css('display','block');
-          var NVTabBar = api.require('NVTabBar');
+           NVTabBar = api.require('NVTabBar');
             NVTabBar.setBadge({
                 index: 2,
                 badge: e
@@ -634,7 +635,7 @@
           
       }else{
         $api.setStorage('navnoreadcount',e);
-          var NVTabBar = api.require('NVTabBar');
+           NVTabBar = api.require('NVTabBar');
             NVTabBar.setBadge({
                 index: 2,
                 badge: e
@@ -645,6 +646,18 @@
       }
       
     })
+    api.addEventListener({
+        name: 'resallNoreadcount'
+    }, function(ret, err) {
+        if (ret) {
+           NVTabBar = api.require('NVTabBar');
+            NVTabBar.setBadge({
+                index: 2,
+                badge: ret.value.allcount
+
+            });
+        }
+    });
   }
  }
   

@@ -7,8 +7,7 @@
 		<title>消息列表</title>
 		<meta name="referrer" content="no-referrer" />
 		<script src="../script/commonjs.js"></script>
-		<script src="../script/footcom.js">
-		</script>
+	
 		<link rel="stylesheet" type="text/css" href="../css/chat_lists.css">
 	</head>
 <body>
@@ -18,17 +17,17 @@
 <div class="tongxin">
 	<div class="dinyue txlist" onclick="opensubscribelist()">
 		<div class="dinyueimg"></div>
-		<div class="dinyuecount">···</div>
+		<div class="dinyuecount"></div>
 		<div class="text">新增订阅</div>
 	</div>
 	<div class="like txlist" onclick="openlikeandsqlist()">
 		<div class="likeimg"></div>
-		<div class="likecount">···</div>
+		<div class="likecount"></div>
 		<div class="text">赞和书签</div>
 	</div>
 	<div class="comment txlist" onclick="opencommandreplylist()">
 		<div class="commentimg"></div>
-		<div class="commentcount">···</div>
+		<div class="commentcount"></div>
 		<div class="text">评论和回复</div>
 	</div>
 </div>
@@ -45,19 +44,19 @@
 
  </div>
 
- <?php
-   require("../comm/html/footer.html");
- ?>
-
  <script type="text/javascript">
 	 var off_on=false;
 	 var skip=0;
 	 var limit=8;
+	 apiready = function(){
+	     even();
+	 }
+	     
 	 $(function(){
+	 	
 		 resetlists();
 		 u_allNoreadcount();
 		$('.chat').addClass('now').siblings().removeClass('now');
-		
 		$('.likecount').css('background-color',userInfo.Dressingbgcolor);	
 		$('.dinyuecount').css('background-color',userInfo.Dressingbgcolor);	
 		$('.commentcount').css('background-color',userInfo.Dressingbgcolor);	
@@ -78,7 +77,7 @@
 			 setTimeout(function(){
 			 	 // $('.lists').html('');
 			 	resetlists();
-			 },800)
+			 },1000)
 
 			return;
 			case 'img':
@@ -86,7 +85,7 @@
 			   setTimeout(function(){
 			   	 // $('.lists').html('');
 			 	resetlists();
-			 },800)
+			 },1000)
 			return;
  		}
  	}
@@ -199,8 +198,53 @@
 		window.location.href="./commentandreplylist.html?"+window.btoa(encodeURI("uid="+fromid));
 	}
     function redi(toid){
-    	window.location.href="./chat.html?"+window.btoa(encodeURI("fromid="+fromid+"&toid="+toid));
+    	// alert(toid)
+    	api.openWin({
+    	    name: 'chat',
+    	    url: './chat.html',
+    	    pageParam: {
+    	        fromid:fromid,
+    	        toid:toid
+    	    },
+    	    animation:{
+    	    	type:'fade'
+    	    }
+
+    	});
+    	// window.location.href="./chat.html?"+window.btoa(encodeURI("fromid="+fromid+"&toid="+toid));
     }
+    function even(){
+    	api.addEventListener({
+    	    name: 'reschatlist'
+    	}, function(ret, err) {
+    	    if (ret) {
+    	    resetlists();
+    		getNoreadcount();
+    	
+    		
+    	    }
+    	});
+    }
+
+     function getNoreadcount(){
+    // 底部导航栏
+    postajax(url+'chat_allNoreadcount',{'fromid':fromid},function(e){
+    	// alert(e)
+      if(e>0){
+        
+      	api.sendEvent({
+    		    name: 'resallNoreadcount',
+    		    extra: {
+    		        allcount: e, 
+    		        valueName2: 'value2'
+    		    }
+    		});
+        
+      }
+      
+    })
+  }
+ 
  </script>
 </body>
 </html>

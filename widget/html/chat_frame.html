@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html >
+
+	<head>
+		<meta charset="UTF-8" />
+		 <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>聊天界面</title>
+		<script src="../script/commonjs.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/chat.css" />
+		<meta name="referrer" content="no-referrer" />
+		<script src="../script/flexible.js"></script>
+		
+		
+	</head>
+
+	<body>
+		<header class="header">
+			<a class="back"  onclick="rechat_lists()"></a>
+			<div class="userinfo">
+			<span class="tit">...</span>
+			<span class="line"></span>
+			</div>
+			<div class="right" onclick="getallrecore()">所有记录</div>
+		</header>
+		<div class="chatbox">
+		<div class="message">
+
+			<!-- <div class="send">
+				<div class="time">05/22 06:30</div>
+				<div class="msg">
+					<img src="images/touxiang.png" alt="" />
+					<p><i class="msg_input"></i>你好在不在呀，妹子！</p>
+				</div>
+			</div>
+			<div class="show">
+				<div class="time">05/22 06:30</div>
+				<div class="msg">
+					<img src="images/touxiangm.png" alt="" />
+					<p><i clas="msg_input"></i>你好你好你好</p>
+				</div>
+			</div> -->
+		</div>
+		</div>
+		<div class="footer">
+			<div contenteditable="true" class="text" id="text"></div>
+			<img src="../image/Cphoto.png" class="imgup" alt="" />
+			<input type="file" name="pic" id="file" accept="image/jpeg,image/png,image/jpg,image/gif" style="display: none;">
+			<!-- <img src="images/xiaolian.png"  id="emojibtn" alt="" /> -->
+			<p class="sendbtn">发送</p>
+		</div>
+	<script type="text/javascript">
+		  var fromid;
+			var toid;
+			var from_head='';
+			var to_head='';
+			var online=0;
+			var is_contact=0;
+		apiready=function(){
+			fromid=api.pageParam.fromid;
+			toid=api.pageParam.toid;
+			woorket();
+
+		}
+			
+		function woorket(){
+			dl=$(document).dialog({
+				    type : 'notice',
+				    infoIcon: '../image/icon/loading.gif',
+				    infoText: '正在与好友连线中'
+				});
+			var ws=new WebSocket("ws://socket.chaodashe.com:8282");
+			ws.onmessage=function(e) {
+				console.log(e);
+			var message=eval("("+e.data+")");
+				switch(message.type){
+
+					case 'init':
+						var bild='{"type":"bind","fromid":"'+fromid+'"}';
+						ws.send(bild);
+						record_load();
+						// get_touserinfo(fromid,toid);
+						// 判断对方是否在线
+						var online='{"type":"online","toid":"'+toid+'","fromid":"'+fromid+'"}';
+						ws.send(online);
+						changeNoread();
+					return;
+
+					case 'text':
+						// alert(message.time);
+						if (toid==message.fromid) {
+							$('.message').append('<div class="send"><div class="msg"><div class="head_img" style="background-image:url('+to_head+')"></div><p><i class="msg_input"></i>'+message.data+'</p><span class="time">'+timestampFormat(message.time)+'</span></div></div>');
+							  for_bottom();
+						}
+
+						 if (message.isread){
+					   		$('.line').css('background-color','green');
+					   		online=1;
+					   }else{
+					   		online=0
+					   		$(".line").css("background-color","gray");
+					   }
+					   	changeNoread();
+				
+					return;
+					case 'img':
+					
+						$('.message').append('<div class="send"><div class="msg"><div class="head_img" style="background-image:url('+to_head+')"></div><p><i class="msg_input"></i><img onload="loadImage()" max-width="188em" max-height="188em" src="'+imgurl+message.img+'"/></p><span class="time">'+timestampFormat(message.time)+'</span></div></div>');
+							// for_bottom();
+
+							 changeNoread();
+					 return
+					case 'save':
+					// 数据持久化
+					   save_message(message);
+					   if (message.isread){
+					   		online=1;
+					   		$('.line').css('background-color','green');
+					   }else{
+					   		online=0;
+					   		$(".line").css("background-color","gray");
+					   }
+					  return;
+					case 'online':
+					 if (message.status==1){
+					 	online=1;
+					 	$('.line').css('background-color','green');
+					 	
+					 }else{
+					 	online=0;
+					 	$(".line").css("background-color","gray");
+					 }
+					 return;
+				
+				}
+
+
+			}
+
+			$('.sendbtn').click(function(event){
+			$('.text').focus();
+				var text=$('.text').text();
+				text = text.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, ' ');
+				// 内容中有html标签全部剔除(除br外);
+				text=text.replace(/<\/?((?!br).)*?\/?>/g, ""); 
+				if (text.length==0){
+					toast('请填写内容','center',2000)
+					$('.text').val('');
+					return;
+				}
+				var message='{"data":"'+text+'","type":"say","fromid":"'+fromid+'","toid":"'+toid+'"}';
+				$('.message').append('<div class="show"><div class="msg"><div class="head_img" style="background-image:url('+from_head+')" ></div><p><i clas="msg_input"></i>'+text+'</p><span class="time">'+timestampFormat(new Date())+'</span></div></div>');
+				ws.send(message);
+				$('.text').text('');
+				for_bottom();
+				$('.sendbtn').css('color','gray');
+			});
+
+			
+		}	
+			
+
+			// 保存聊天记录
+			function save_message(message){
+				message.is_contact=is_contact;
+				// console.log(message);
+				postajax(url+'chat_saverecord',message,function(e){
+					if(e.code==200){
+						// toast('请填写内容','center',2000)
+						is_contact=1
+					}
+				})
+
+			}
+
+
+			function record_load(){
+				
+				postajax(url+'chat_getrecord',{"fromid":fromid,"toid":toid},function(e){
+					// 没有聊天记录时返回对象
+					// alert($api.jsonToStr( e))
+					if(!Array.isArray(e)){
+						
+						from_head=imgurl+e.from_head;
+						to_head=imgurl+e.to_head;
+						$('.tit').html(e.to_name);
+						dl.close();
+						return;
+					}
+
+					// 有聊天记录时返回数组
+					is_contact=1;
+					from_head=imgurl+e[0].from_head;
+					to_head=imgurl+e[0].to_head;
+					$('.tit').html(e[0].to_name);
+				  $.each(e,function(index,e){
+					if (fromid==e.fromid){
+						if (e.type==2) {
+							$('.message').append('<div class="show"><div class="msg"><div class="head_img" style="background-image:url('+from_head+')" ></div><p><i clas="msg_input"></i><img onload="loadImage()" max-width="188em" max-height="188em" src="'+imgurl+e.content+'"/></p><span class="time">'+timestampFormat(e.time)+'</span></div></div>');
+						}else{
+							$('.message').append('<div class="show"><div class="msg"><div class="head_img" style="background-image:url('+imgurl+e.from_head+')" ></div><p><i clas="msg_input"></i>'+e.content+'</p><span class="time">'+timestampFormat(e.time)+'</span></div></div>');
+						}
+					}else{
+						if (e.type==2){
+							$('.message').append('<div class="send" ><div class="msg"><div class="head_img" style="background-image:url('+to_head+')"></div><p><i class="msg_input"></i><img onload="loadImage()" max-width="188em" max-height="188em" src="'+imgurl+e.content+'"/></p><span class="time">'+timestampFormat(e.time)+'</span></div></div>');
+						}else{
+							$('.message').append('<div class="send"><div class="msg"><div class="head_img" style="background-image:url('+imgurl+e.to_head+')"></div><p><i class="msg_input"></i>'+e.content+'</p><span class="time">'+timestampFormat(e.time)+'</span></div></div>');
+						}
+
+					}
+					})
+					dl.close();
+				 for_bottom();
+				 
+				})
+			}
+			function changeNoread(){
+				postajax(url+'chat_changeNoread',{'fromid':fromid,'toid':toid},function(e){
+					// alert('触发')
+					setTimeout(function(){
+						api.sendEvent({
+					    name: 'reschatlist',
+					});
+					},600)
+					
+				})
+			}
+
+			$('.imgup').click(function(){
+				$('#file').click();
+			});
+
+			$("#file").change(function(){
+				toast('图片发送较慢请稍等...','center',2000)
+				var formdata=new FormData();
+				formdata.append('fromid',fromid);
+				formdata.append('toid',toid);
+				formdata.append('online',online);
+				formdata.append('file',$('#file')[0].files[0])
+				$.ajax({
+					url:url+'chat_upimg',
+					type:'post',
+					cache:false,
+					data:formdata,
+					dataType:'json',
+					processData:false,
+					contentType:false,
+					success:function(data,status,xhr){
+						if (data.status=='200'){
+							$('.message').append('<div class="show"><div class="msg"><div class="head_img" style="background-image:url('+from_head+')" ></div><p><i clas="msg_input"></i><img max-width="188em" max-height="188em" src="'+imgurl+data.img+'"/></p><span class="time">'+timestampFormat(data.time)+'</span></div></div>');
+							  var message='{"data":"'+data.img+'","fromid":"'+fromid+'","toid":"'+toid+'","type":"say_img"}';
+							  ws.send(message);
+						}else{
+							toast(data.message,'center',2000)
+						}
+						setTimeout(function(){
+							 for_bottom();
+						},1500)
+					}
+				});
+			});
+			
+
+		 function for_bottom(){
+		var message_height = ($('.message').height())*18;
+		$('.message,.chatbox').animate({scrollTop:message_height},1000);
+	}
+	function loadImage(){
+		for_bottom();
+		
+	}
+	$(".text").click(function(){
+		for_bottom();
+	$('.text').on("keyup paste",function(){
+    if($('.text').text().length>=1){
+        $('.sendbtn').css({'color':'#fff','background':'black'});
+    }else{
+        $('.sendbtn').css({'color':'#fff','background':'#606060'});
+    }
+  })	
+	})
+	
+	function getallrecore(){
+		window.location.href="./allrecord.html?"+window.btoa(encodeURI("fromid="+fromid+"&toid="+toid));
+	}
+	function rechat_lists(){
+		window.location.href="./chat_lists.php?"+window.btoa(encodeURI("fromid=" + fromid));
+	}
+	
+	pushHistory();
+	window.addEventListener("popstate", function(e) {
+	    window.location.href="./chat_lists.php?"+window.btoa(encodeURI("fromid=" + fromid));
+	}, false);
+	function pushHistory() {
+	var state = {
+	title: "title",
+	url: "#"
+	};
+	window.history.pushState(state, "title", "");
+	}
+	</script>
+	</body>
+
+</html>
