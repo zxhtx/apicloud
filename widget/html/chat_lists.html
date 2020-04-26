@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<meta charset="UTF-8" />
+		 <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>消息列表</title>
+		<meta name="referrer" content="no-referrer" />
+		<script src="../script/commonjs.js"></script>
+		<script src="../script/footcom.js">
+		</script>
+		<link rel="stylesheet" type="text/css" href="../css/chat_lists.css">
+	</head>
+<body>
+	<header>
+		<div>消息列表</div>
+	</header>
+<div class="tongxin">
+	<div class="dinyue txlist" onclick="opensubscribelist()">
+		<div class="dinyueimg"></div>
+		<div class="dinyuecount">···</div>
+		<div class="text">新增订阅</div>
+	</div>
+	<div class="like txlist" onclick="openlikeandsqlist()">
+		<div class="likeimg"></div>
+		<div class="likecount">···</div>
+		<div class="text">赞和书签</div>
+	</div>
+	<div class="comment txlist" onclick="opencommandreplylist()">
+		<div class="commentimg"></div>
+		<div class="commentcount">···</div>
+		<div class="text">评论和回复</div>
+	</div>
+</div>
+<div class="height10"></div>
+ <div class="lists">
+	<!-- <div class="list">
+		<div class="head_img" style="background-image: url('images/touxiang.png');"></div>
+		<p class="noreadcount">5</p>
+		<p class="name">风来了</p>
+		<p class="text">风来了风来了风来了风来了风来了风来了风来了风来了风来了风来了风来了风来了</p>
+		<p class="time">2019/10/10 10:1:2</p>
+
+	</div> -->
+
+ </div>
+
+ <?php
+   require("../comm/html/footer.html");
+ ?>
+
+ <script type="text/javascript">
+	 var off_on=false;
+	 var skip=0;
+	 var limit=8;
+	 $(function(){
+		 resetlists();
+		 u_allNoreadcount();
+		$('.chat').addClass('now').siblings().removeClass('now');
+		
+		$('.likecount').css('background-color',userInfo.Dressingbgcolor);	
+		$('.dinyuecount').css('background-color',userInfo.Dressingbgcolor);	
+		$('.commentcount').css('background-color',userInfo.Dressingbgcolor);	
+		
+	})
+	var userInfo=$api.getStorage('userInfo'); 
+	var fromid=userInfo.id;
+
+ 	var ws=new WebSocket("ws://socket.chaodashe.com:8282");
+ 	ws.onmessage=function(e){
+ 		var message=eval("("+e.data+")");
+ 		switch(message.type){
+ 			case 'init':
+			  var bild='{"type":"bind","fromid":"'+fromid+'"}';
+			  ws.send(bild);
+			return;
+			case 'text':
+			 setTimeout(function(){
+			 	 // $('.lists').html('');
+			 	resetlists();
+			 },800)
+
+			return;
+			case 'img':
+
+			   setTimeout(function(){
+			   	 // $('.lists').html('');
+			 	resetlists();
+			 },800)
+			return;
+ 		}
+ 	}
+
+
+
+
+ 	
+
+		//上拉加载
+				 window.addEventListener("scroll", function (){
+				      //当时滚动条离底部0px时开始加载下一页的内容
+				      if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+							if(off_on){
+								off_on=false;
+								resetlists(true);
+								$('.lists').append('<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; ">')
+							}
+
+
+				      }
+				  });
+
+
+
+
+
+ 	function resetlists(_loadMore){
+		if(_loadMore){
+			skip+=limit;
+		}else{
+			skip=0;
+			// dialog('正在查找聊天好友');
+		}
+
+ 		postajax(url+'chat_getlists',{'fromid':fromid,'skip':skip,'limit':limit},function(e){
+ 			if(e.code==200){
+				var reshtml='';
+				$.each(e.data,function(index,data){
+					
+					if (data.noreadcount==0){
+						if(data.last_record.type==1){
+							reshtml+='<div onclick=redi("'+data.toid+'") class="list"><div class="head_img" style="background-image: url('+imgurl+data.head_img+');"></div><p class="name">'+data.username+'</p><p class="text">'+data.last_record.content+'</p><p class="time">'+timestampFormat(data.last_record.time)+'</p></div>'
+						}else{
+							reshtml+='<div onclick=redi("'+data.toid+'") class="list"><div class="head_img" style="background-image: url('+imgurl+data.head_img+');"></div><p class="name">'+data.username+'</p><p class="text">[新图片]</p><p class="time">'+timestampFormat(data.last_record.time)+'</p></div>'
+						}
+
+					}else{
+						if(data.last_record.type==1){
+							reshtml+='<div onclick=redi("'+data.toid+'") class="list"><div class="head_img" style="background-image: url('+imgurl+data.head_img+');"></div><p class="noreadcount">'+data.noreadcount+'</p><p class="name">'+data.username+'</p><p class="text">'+data.last_record.content+'</p><p class="time">'+timestampFormat(data.last_record.time)+'</p></div>'
+						}else{
+							reshtml+='<div onclick=redi("'+data.toid+'") class="list"><div class="head_img" style="background-image: url('+imgurl+data.head_img+');"></div><p class="noreadcount">'+data.noreadcount+'</p><p class="name">'+data.username+'</p><p class="text">[新图片]</p><p class="time">'+timestampFormat(data.last_record.time)+'</p></div>'
+						}
+
+					}
+
+			
+				})
+				if(_loadMore){
+					$('.lists').append(reshtml);
+				}else{
+					$('.lists').html(reshtml);
+				}
+				$('.noreadcount').css('background-color',userInfo.Dressingbgcolor);	
+				off_on=true;
+				// dl.close();
+				$('.xz').remove();
+			}else{
+				// dl.close();
+				$('.xz').remove();
+				$('body').append('<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-暂无聊天好友-</p>');
+			}
+			
+ 		})
+ 	}
+
+	function u_allNoreadcount(){
+		 var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+		 postajax(url+'u_allNoreadcount',{'uid':userInfo.id},function(e){
+			 if(e.code=200){
+				 if(e.data.subscribecount){
+					 $('.dinyuecount').html(e.data.subscribecount);
+				 }else{
+					 $('.dinyuecount').html('').css('display','none');
+				 }
+				 if(e.data.likeandsqcount){
+						 $('.likecount').html(e.data.likeandsqcount);
+				 }else{
+					  $('.likecount').html('').css('display','none');
+				 }
+
+				 if(e.data.reandcomcount){
+					  $('.commentcount').html(e.data.reandcomcount);
+				 }else{
+					   $('.commentcount').html('').css('display','none');
+				 }
+
+
+			 }
+		 })
+	}
+
+	function opensubscribelist(){
+		window.location.href="./subscribelist.html?"+window.btoa(encodeURI("uid="+fromid));
+	}
+	function openlikeandsqlist(){
+		window.location.href="./likeandsqlist.html?"+window.btoa(encodeURI("uid="+fromid));
+	}
+	function opencommandreplylist(){
+		window.location.href="./commentandreplylist.html?"+window.btoa(encodeURI("uid="+fromid));
+	}
+    function redi(toid){
+    	window.location.href="./chat.html?"+window.btoa(encodeURI("fromid="+fromid+"&toid="+toid));
+    }
+ </script>
+</body>
+</html>

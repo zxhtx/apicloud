@@ -7,6 +7,10 @@
   <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
   <title>Hello APP</title>
   <link rel="stylesheet" type="text/css" href="./css/api.css" />
+  <script type="text/javascript" src="./script/api.js"></script>
+  <!-- <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script> -->
+  <script type="text/javascript" src="./script/zepto/jquery.min.js"></script>
+  <script type="text/javascript" src="./script/ajax.js"></script>
   <style type="text/css">
   html,
   body {
@@ -61,8 +65,8 @@
     </div>
   </header> -->
 </body>
-<script type="text/javascript" src="./script/api.js"></script>
-<script type="text/javascript" src="./script/SHA1.js"></script>
+
+<!-- <script type="text/javascript" src="./script/SHA1.js"></script> -->
 <script type="text/javascript">
   var headerH;
   var clipBoard;
@@ -73,6 +77,7 @@
 
         // var header = $api.dom('header'); // 获取 header 标签元素
         // headerH=$api.offset(header).h;
+        workman();
         fnNVTabBar_open();
         kouling();
         fnInitListener();
@@ -263,7 +268,7 @@
           // alert(2);
         }else{
           // alert(1)
-          bColor='#fff';
+          bColor='#F74C31';
         }
         var NVTabBar = api.require('NVTabBar');
         NVTabBar.open({
@@ -275,17 +280,17 @@
               color: '#E2E2E2'
             },
             badge: {
-         bgColor:bColor, //（可选项）字符串类型；徽章背景色，支持rgb、rgba、#；默认：#ff0
-       numColor: '#fff',//（可选项）字符串类型；徽章数字字体颜色，支持rgb、rgba、#；默认：#fff
-       size: 6.0,       //（可选项）数字类型；徽章半径大小；默认值：6.0
-       fontSize:10,      // (可选项) 数字类型;设置徽章字体大小;默认值: 10 ;注意:仅支持iOS。
-       centerX: 6.0,    //（可选项）数字类型；徽章中心点坐标（相对于所属item的背景面板坐标系）；默认值：icon图标的右上角
-       centerY: 6.0     //（可选项）数字类型；徽章中心点坐标（相对于所属item的背景面板坐标系）；默认值：icon图标的右上角
+            bgColor:bColor, //（可选项）字符串类型；徽章背景色，支持rgb、rgba、#；默认：#ff0
+            numColor: '#fff',//（可选项）字符串类型；徽章数字字体颜色，支持rgb、rgba、#；默认：#fff
+            size: 7.0,       //（可选项）数字类型；徽章半径大小；默认值：6.0
+            fontSize:10,      // (可选项) 数字类型;设置徽章字体大小;默认值: 10 ;注意:仅支持iOS。
+            // centerX: 6.0,    //（可选项）数字类型；徽章中心点坐标（相对于所属item的背景面板坐标系）；默认值：icon图标的右上角
+          // centerY: 6.0     //（可选项）数字类型；徽章中心点坐标（相对于所属item的背景面板坐标系）；默认值：icon图标的右上角
             }
           },
           items: [
           {
-            w: api.winWidth / 4.0,
+            w: api.winWidth / 5.0,
             iconRect: {
               w: 25.0,
               h: 25.0,
@@ -304,7 +309,7 @@
             }
           },
           {
-            w: api.winWidth / 4.0,
+            w: api.winWidth / 5.0,
             iconRect: {
               w: 25.0,
               h: 25.0,
@@ -322,8 +327,27 @@
               marginB: 6.0,
             }
           },
+            {
+            w: api.winWidth / 5.0,
+            iconRect: {
+              w: 25.0,
+              h: 25.0,
+            },
+            icon: {
+              normal: 'widget://image/footer/home.png',
+              highlight: 'widget://image/footer/home_act.png',
+              selected: 'widget://image/footer/home_act.png'
+            },
+            title: {
+              text: '消息',
+              size: 12.0,
+              normal: '#696969',
+              selected: '#000',
+              marginB: 6.0,
+            }
+          },
           {
-            w: api.winWidth / 4.0,
+            w: api.winWidth / 5.0,
             iconRect: {
               w: 25.0,
               h: 25.0,
@@ -341,7 +365,7 @@
               marginB: 6.0
             }
           },{
-            w: api.winWidth / 4.0,
+            w: api.winWidth / 5.0,
             iconRect: {
               w: 25.0,
               h: 25.0,
@@ -370,22 +394,21 @@
              openDressing();
             }
             if (ret.eventType == "click" && ret.index == 2) {
-             opensaybug();
+             openchatlist();
            }
            if (ret.eventType == "click" && ret.index == 3) {
-            openmy();
+            opensaybug();
           }
           if (ret.eventType == "click" && ret.index == 1) {
             openmain();
          }
 
-       }
-      //  var NVTabBar = api.require('NVTabBar');
-      // NVTabBar.setBadge({
-      //     index: 2,
-      //     badge: '1'
+          if (ret.eventType == "click" && ret.index == 4) {
+            openmy();
+          }
 
-      // });
+       }
+     
      });
       }
       function openDressing(){
@@ -406,6 +429,7 @@
         });
         hiddensaybug();
         hiddenhome();
+       hiddenchatlist();
         hiddenmy();
       }
       function openmain(){
@@ -432,6 +456,7 @@
         hiddensaybug();
         hiddenmy();
         hiddenDressing();
+        hiddenchatlist();
       }
       function opensaybug(){
        api.openFrame({
@@ -457,7 +482,33 @@
        hiddenhome();
        hiddenmy();
        hiddenDressing();
+       hiddenchatlist();
 
+     }
+     function openchatlist(){
+      api.openFrame({
+        name: 'chat_list',
+        url: './html/chat_lists.html',
+        rect: {
+          x: 0,
+          y: 0,
+          w: api.winWidth,
+          h: api.winHeight-54
+        },
+        bounces: false,
+        pageParam: {
+          name: 'test'
+        },
+        animation:{
+          type:'fade'
+        }
+
+      });
+       
+       hiddenhome();
+       hiddensaybug();
+       hiddenDressing();
+       hiddenmy();
      }
      function openmy(){
        api.openFrame({
@@ -482,6 +533,7 @@
        hiddenhome();
        hiddensaybug();
        hiddenDressing();
+       hiddenchatlist();
 
 
      }
@@ -518,7 +570,83 @@
 
   }
 
- 
+  function hiddenchatlist(){
+     api.setFrameAttr({
+      name: 'chat_list',
+      hidden: true
+    });
+  }
+
+ function workman(){
+
+  var fromid='';
+  var userInfo=$api.getStorage('userInfo');
+  if(!userInfo){return;}else{fromid=userInfo.id};
+  var ws=new WebSocket("ws://socket.chaodashe.com:8282");
+
+  ws.onmessage=function(e){
+   
+    var message=eval("("+e.data+")");
+    switch(message.type){
+      case 'init':
+      // alert(1);
+      // alert($.cookie("ts"))
+      
+        var bild='{"type":"bind","fromid":"'+fromid+'"}';
+        ws.send(bild);
+        
+        setTimeout(function(){
+          getNoreadcount();
+        },600)
+        // alert(1)
+        
+      return;
+      case 'text':
+      setTimeout(function(){
+        getNoreadcount();
+      },600)
+      return;
+      
+      case 'img':
+      setTimeout(function(){
+        getNoreadcount();
+      },600)
+      return;
+      
+      
+    }
+  }
+  
+  function getNoreadcount(){
+    
+    postajax(url+'chat_allNoreadcount',{'fromid':fromid},function(e){
+      if(e>0){
+        
+        // $('.navnoreadcount').text(e);
+        // $('.navnoreadcount').css('display','block');
+          var NVTabBar = api.require('NVTabBar');
+            NVTabBar.setBadge({
+                index: 2,
+                badge: e
+
+            });
+        $api.setStorage('navnoreadcount',e);
+          
+      }else{
+        $api.setStorage('navnoreadcount',e);
+          var NVTabBar = api.require('NVTabBar');
+            NVTabBar.setBadge({
+                index: 2,
+                badge: e
+
+            });
+        // $('.navnoreadcount').text(e);
+        // $('.navnoreadcount').css('display','none');
+      }
+      
+    })
+  }
+ }
   
 </script>
 

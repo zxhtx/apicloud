@@ -83,7 +83,7 @@ header{
 	line-height:18px;
 	text-align: center;
 	border-radius: 50%;
-	background-color: #F74C31;
+	/* background-color: #F74C31; */
 	color: #fff;
 }
 .tongxin .comment .commentimg{
@@ -141,7 +141,6 @@ header{
 	font-size: 13px;
 	/*font-weight: bold;*/
 	color: white;
-	background-color: #F74C31;
 	display: inline-block;
 	width: 18px;
 	height: 18px;
@@ -158,7 +157,7 @@ margin-left: 6px;
 }
 .list .text{
 position: absolute;
-top: 26px;
+top: 36px;
 display: block;
 margin-left: 70px;
 height: 20px;
@@ -170,7 +169,7 @@ color: gray;
 
 .list .time{
 	position: absolute;
-	top: 45px;
+	top: 52px;
 	right: 10px;
 	color:gray;
 	display: inline-block;

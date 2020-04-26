@@ -4,14 +4,14 @@
  
  var imgurl='http://img.chaodashe.com/';
   // var headimgurl='http://www.666.com/chaoxiapi/';
-  var now = Date.now();
-  var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-  var header={
-   "X-APICloud-AppId": "A6099267504667",
-   "X-APICloud-AppKey":   appKey
- }
+ //  var now = Date.now();
+ //  var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
+ //  var header={
+ //   "X-APICloud-AppId": "A6099267504667",
+ //   "X-APICloud-AppKey":   appKey
+ // }
  // if ($api.getStorage('userInfo')) {
-   var userInfo=$api.getStorage('userInfo');
+   var userInfo=$api.getStorage('userInfo')?$api.getStorage('userInfo'):0;
  // }
 
  
