@@ -227,11 +227,8 @@
 			});
 
 			function openDressing(id) {
-				api.closeWin({
-				    name: 'Dressingdetails'
-				});
 				 api.openWin({
-		           name: 'Dressingdetails',
+		           name: 'Dressingdetails'+uid,
 		           url: './Dressingdetails.html',
 		           pageParam: {
 		               articleid:id
