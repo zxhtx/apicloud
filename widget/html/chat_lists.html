@@ -173,21 +173,22 @@
 		 var userInfo=$api.getStorage('userInfo');
 		 postajax(url+'u_allNoreadcount',{'uid':userInfo.id},function(e){
 			 if(e.code=200){
+			 	// alert($api.jsonToStr(e))
 			 	// alert('1'+e.data.subscribecount)
 				 if(e.data.subscribecount){
 				 	// alert('2'+e.data.subscribecount)
-					 $('.dinyuecount').html(e.data.subscribecount);
+					 $('.dinyuecount').html(e.data.subscribecount).css('display','none');
 				 }else{
 					 $('.dinyuecount').html('').css('display','none');
 				 }
 				 if(e.data.likeandsqcount){
-						 $('.likecount').html(e.data.likeandsqcount);
+						 $('.likecount').html(e.data.likeandsqcount).css('display','none');
 				 }else{
 					  $('.likecount').html('').css('display','none');
 				 }
 
 				 if(e.data.reandcomcount){
-					  $('.commentcount').html(e.data.reandcomcount);
+					  $('.commentcount').html(e.data.reandcomcount).css('display','block');
 				 }else{
 					   $('.commentcount').html('').css('display','none');
 				 }
@@ -255,12 +256,9 @@
     	}, function(ret, err) {
     	    if (ret) {
     	    resetlists();
+
     		api.sendEvent({
     		    name: 'resallNoreadcount',
-    		    extra: {
-    		        valueName1: 'value1', 
-    		        valueName2: 'value2'
-    		    }
     		});
     	
     		
@@ -270,7 +268,7 @@
     	api.addEventListener({
  		    name: 'restopdiv'
  		}, function(ret, err) {
- 		
+ 			  // alert(1)
  		     u_allNoreadcount();
  		    
  		});
