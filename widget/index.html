@@ -78,6 +78,7 @@
 
         // var header = $api.dom('header'); // 获取 header 标签元素
         // headerH=$api.offset(header).h;
+        even();
         workman();
         fnNVTabBar_open();
         kouling();
@@ -603,6 +604,7 @@
         
       return;
       case 'text':
+      // alert('text')
       setTimeout(function(){
         getNoreadcount();
       },1000)
@@ -613,53 +615,53 @@
         getNoreadcount();
       },1000)
       return;
+
+      case 'cds_say':
+       // alert(1)
+      setTimeout(function(){
+        getNoreadcount();
+      },1000)
+      return;
       
       
     }
   }
   
-  function getNoreadcount(){
+ 
+ }
+
+ function even(){
     
-    postajax(url+'chat_allNoreadcount',{'fromid':fromid},function(e){
-      if(e>0){
-        
-        // $('.navnoreadcount').text(e);
-        // $('.navnoreadcount').css('display','block');
-           NVTabBar = api.require('NVTabBar');
-            NVTabBar.setBadge({
-                index: 2,
-                badge: e
-
-            });
-        $api.setStorage('navnoreadcount',e);
-          
-      }else{
-        $api.setStorage('navnoreadcount',e);
-           NVTabBar = api.require('NVTabBar');
-            NVTabBar.setBadge({
-                index: 2,
-                badge: e
-
-            });
-        // $('.navnoreadcount').text(e);
-        // $('.navnoreadcount').css('display','none');
-      }
-      
-    })
     api.addEventListener({
         name: 'resallNoreadcount'
     }, function(ret, err) {
-        if (ret) {
-           NVTabBar = api.require('NVTabBar');
+        getNoreadcount();
+    });
+  }
+    function getNoreadcount(){
+    // 底部导航栏
+    postajax(url+'chat_allNoreadcount',{'fromid':userInfo.id},function(e){
+      // alert(e)
+        if (e!=0) {
+           // NVTabBar = api.require('NVTabBar');
             NVTabBar.setBadge({
                 index: 2,
-                badge: ret.value.allcount
+                badge: e
+
+            });
+        }else{
+            NVTabBar.setBadge({
+                index: 2,
+                // badge: ret.value.allcount
 
             });
         }
-    });
+       
+        
+      
+    })
   }
- }
+ 
   
 </script>
 

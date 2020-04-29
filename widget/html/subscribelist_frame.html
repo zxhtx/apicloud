@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<meta charset="UTF-8" />
+		 <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>消息列表</title>
+		<meta name="referrer" content="no-referrer" />
+		<script src="../script/commonjs.js"></script>
+	
+		<link rel="stylesheet" type="text/css" href="../css/subscribelist.css">
+	</head>
+<body>
+	<header>
+		<div class="back" tapmode onclick="rechat_lists()"></div>
+		<span class="title">新增订阅</span>
+	</header>
+	<div class="nodata"></div>
+ <div class="lists">
+	<!-- <div class="list">
+		<div class="head_img" style="background-image: url('images/touxiang.png');"></div>
+		<p class="noreadcount">5</p>
+		<p class="name">风来了</p>
+		<p class="text">风来了风来了风来了风来了风来了风来了风来了风来了风来了风来了风来了风来了</p>
+		<p class="time">2019/10/10 10:1:2</p>
+
+	</div> -->
+	
+ </div>
+
+
+ <script type="text/javascript">
+ 	var userInfo=$api.getStorage('userInfo');
+	var uid=userInfo.id;
+	var off_on=false;
+	var skip=0;
+	var limit=18;
+
+
+ 	// 初始化
+ 	$(function(){
+
+ 		resetlists();
+		changesubscribenoread();
+		
+ 	})
+ 		
+
+ //上拉加载
+		 window.addEventListener("scroll", function (){
+		      //当时滚动条离底部0px时开始加载下一页的内容
+		      if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+					if(off_on){
+						off_on=false;
+						resetlists(true);
+						$('.lists').append('<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; ">')
+					}
+		            
+		         
+		      }
+		  });
+
+
+
+ 	function resetlists(index){
+		if(index){
+			skip+=limit
+		}else{
+			skip=0;
+			dialog('正在加载新增订阅');
+		}
+		 
+ 		postajax(url+'subscribelist',{'uid':uid,'skip':skip,'limit':limit},function(e){
+			if(e.code==200){
+				var reshtml='';
+				$.each(e.data,function(index,data){ 				
+					reshtml+='<div  class="list"><div class="head_img" style="background-image: url('+imgurl+data.headimg+');"></div><p class="name">'+data.name+'<span>&nbsp;开始订阅您啦</span></p><p class="text"></p><p class="time">'+timestampFormat(data.time)+'</p><p class="lookusercenter" onclick="TAuser('+data.uid+')">看TA主页</p></div>'
+					
+				})
+				if(index){
+					$('.lists').append(reshtml);
+				}else{
+					$('.lists').html(reshtml);
+				}
+				
+				off_on=true;
+				$('.xz').remove();
+			}else{
+				$('.xz').remove();
+				$('body').append('<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-暂无数据-</p>');
+			}
+ 			
+ 			dl.close();	
+ 		})
+ 	}
+	// 进入该页面时修改显示已读
+	function changesubscribenoread(){
+		postajax(url+'changesubscribenoread',{"uid":uid},function(e){
+			setTimeout(function(){
+						api.sendEvent({
+					    name: 'restopdiv',
+					});
+						 api.sendEvent({
+                              name: 'resallNoreadcount',
+                           
+                          }); 
+					},800)
+		})
+	}
+	
+	function rechat_lists(){
+		window.location.href="./chat_lists.php?"+window.btoa(encodeURI("fromid=" + uid));
+	}
+	
+	pushHistory();
+	window.addEventListener("popstate", function(e) {
+	    window.location.href="./chat_lists.php?"+window.btoa(encodeURI("fromid=" + uid));
+	}, false);
+	function pushHistory() {
+	var state = {
+	title: "title",
+	url: "#"
+	};
+	window.history.pushState(state, "title", "");
+	}
+  function TAuser(uid){
+  	window.location.href='./TAusercenter.html?'+window.btoa(encodeURI('uid='+uid));
+  }
+ </script>
+</body>
+</html>

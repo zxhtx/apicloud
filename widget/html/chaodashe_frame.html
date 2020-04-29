@@ -653,10 +653,34 @@ function dinyue(articleuserid){
                  toast('服务器在开小差','bottom',800)
             }else{
                 $(".dinyue_"+articleuserid).fadeOut();
+
+                worketman(userInfo.id,articleuserid)
             }
         });
    
 }
+  function worketman(fromid, toid) {
+        var ws = new WebSocket("ws://socket.chaodashe.com:8282");
+
+        ws.onmessage = function(e) {
+
+          var message = eval("(" + e.data + ")");
+          switch (message.type) {
+            case 'init':
+              var bild = '{"type":"bind","fromid":"' + fromid + '"}';
+              ws.send(bild);
+              setTimeout(function(){
+                var message='{"type":"cds","toid":"' + toid + '"}';
+                ws.send(message);
+              },888)
+            
+              return;
+
+          }
+
+        }
+        
+      }
 function opendetails(_id){
     // window.location.href='./Dressingdetails_frame.html?'+window.btoa(encodeURI('articleid='+_id));
      api.openWin({

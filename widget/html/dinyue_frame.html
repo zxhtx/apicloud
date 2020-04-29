@@ -1,0 +1,325 @@
+<!DOCTYPE doctype html>
+<html>
+	<head>
+		<link rel="shortcut icon" href="../image/chao.ico" />
+		<meta charset="utf-8">
+		<meta content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" name="viewport" />
+		<meta content="telephone=no,email=no,date=no,address=no" name="format-detection">
+		<title>
+			我的订阅
+		</title>
+		<script src="../script/commonjs.js">
+		</script>
+		<script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+
+		<style type="text/css">
+			@font-face {
+				font-family: chaodashefont;
+				src: url('../css/Dobkin Script.ttf');
+			}
+
+			html,
+			body {
+				/*height: 100%;*/
+				background-color: white;
+				padding: 0;
+				margin: 0;
+			}
+
+			a {
+				text-decoration: none;
+				color: #fff;
+				-webkit-tap-highlight-color: rgba(255, 0, 0, 0);
+			}
+
+			header {
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				width: 100%;
+				height: 40px;
+				background-color: white;
+				z-index: 999;
+				box-shadow: 0px 6px 6px -6px black;
+			}
+
+
+			header h1 {
+				width: 100%;
+				height: 40px;
+				text-align: center;
+				color: #000;
+				font-size: 18px;
+				line-height: 40px;
+				margin: 0px;
+			}
+
+			header .back {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 32px;
+				height: 28px;
+				margin-left: 5px;
+				margin-top: 6px;
+				/*border: 1px solid red;*/
+				background: url(../image/back.png);
+				background-position:center;
+				background-size:cover;
+				background-repeat: no-repeat;
+			}
+
+			.ulist {
+				width: 100%;
+				height: 50px;
+				position: relative;
+				margin-top: 45px;
+			
+				border-bottom: 1px solid #ddd;
+			}
+
+			.headimg {
+				width: 43px;
+				height: 43px;
+				margin-left: 5px;
+				margin-top: 5px;
+				border-radius: 25px;
+				background-size: cover;
+				background-position: center center;
+				display: inline-block;
+			}
+
+			.more {
+				display: inline-block;
+				position: absolute;
+				right: 0px;
+				width: 32px;
+				height: 66px;
+				line-height: 50px;
+				color: #2591E0;
+				text-align: center;
+			}
+
+			.list {
+				
+			}
+
+			.cdsimg {
+				width: 100%;
+				height: 266px;
+				margin-top: 3px;
+				background-size: cover;
+				background-position: center center;
+
+			}
+
+			.usermore {
+				width: 100%;
+				height: 88px;
+				position: relative;
+			}
+
+			.cheadimg {
+				width: 43px;
+				height: 43px;
+				margin-left: 6px;
+				margin-top: 9px;
+				border-radius: 25px;
+				background-size: cover;
+				background-position: center center;
+				display: inline-block;
+				margin-bottom: 10px;
+			}
+
+			.text {
+				position: absolute;
+				top: 12px;
+				margin-left: 59px;
+				display: inline-block;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 2;
+
+			}
+
+			.likeandsq {
+				color: #9B9B9B;
+				font-size: 14px;
+				margin-top: -3px;
+				margin-left: 58px;
+			}
+
+			.chaodashe {
+				box-shadow: 0px 6px 6px -6px black;
+			}
+		</style>
+		</meta>
+		</meta>
+	</head>
+	<body>
+
+		<header id="header">
+			<div class="back" tapmode onclick="goback()"></div>
+			<h1>我的订阅</h1>
+		</header>
+		<!-- 订阅人 -->
+		<section class="ulist" id="ulist">
+
+
+		</section>
+		<!-- 订阅人动态 -->
+		<section class="list" id="list">
+		<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">--木有动态了--</p>
+		</section>
+		<section class="empty" id="empty">
+		</section>
+		<script id="template" type="text/template">
+			{{~it.list:value:index}}
+
+                <div class='chaodashe'>
+                    <div class="cdsimg" style=background-image:url('{{=it.imgurl}}{{=value.imglist}}'); onclick="openDressing({{=value.cid}})"></div>
+                    <div class='usermore'>
+                        <div class='cheadimg' style=background-image:url('{{=it.imgurl}}{{=value.headimg}}');  onclick="TAuser({{=value.uid}})"></div>
+                        <div class='text'>{{=value.text}}</div>
+                        <div class="likeandsq">{{=value.like}}&nbsp次点赞&nbsp&nbsp·&nbsp&nbsp{{=value.shuqian}}&nbsp次被存入书签</div>
+                    </div>
+                </div>
+              
+            {{~}}
+        </script>
+		<script id="utemplate" type="text/template">
+			{{~it.list:value:index}}
+                
+                <div  style=background-image:url('{{=it.imgurl}}{{=value.headimg}}'); onclick="TAuser({{=value.id}})" class='headimg'></div>
+                 <div class="more">···</div>
+            {{~}}
+        </script>
+		<script type="text/javascript">
+			var warelist;
+			var music;
+			var skip=0;
+			var limit=20;
+			var off_on=false;
+			var userInfo=$api.getStorage('userInfo');
+			getchaodashe();
+
+			window.addEventListener("scroll", function (){
+			     //当时滚动条离底部0px时开始加载下一页的内容
+			     if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+								if(off_on){
+									off_on=false;
+									getchaodashe(true);
+									$('#list').append('<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; ">')
+									
+								}
+			           
+			        
+			     }
+			 });
+
+			function getchaodashe(_loadMore) {
+				if(_loadMore){
+					skip+=limit;
+				}else{
+					skip=0;
+					dialog('订阅加载中');
+				}
+				// var articleid=getQueryString(0);
+				
+				var params = {
+					id: userInfo.id,
+					skip: skip,
+					limit: limit,
+				}
+
+
+				postajax(url + 'getdinyue', params, function(ret) {
+					if (ret.code == '200') {
+
+						// return;
+						updatechaodashe(ret.data.cdata);
+						updateuser(ret.data.udata);
+					}else if(ret.code=='201'){
+						updatechaodashe(ret.data.cdata);
+					}else{
+						$('.xz').remove();
+					}
+				})
+
+			}
+
+			function updatechaodashe(data_) {
+				// 编译模板函数
+				var param = {
+					list: data_,
+					imgurl: imgurl,
+				};
+				var tempFn = doT.template($('#template').text());
+				// 使用模板函数生成HTML文本
+				var resultHTML = tempFn(param);
+				$("#list").prepend(resultHTML);
+
+
+				$("img.lazy").lazyload({
+					effect: "fadeIn",
+					threshold: 88,
+				});
+				off_on=true;
+				$('.xz').remove();
+
+			}
+
+			function updateuser(data_) {
+				// 编译模板函数
+				var param = {
+					list: data_,
+					imgurl: imgurl,
+				};
+				var tempFn = doT.template($('#utemplate').text());
+				// 使用模板函数生成HTML文本
+				var resultHTML = tempFn(param);
+				console.log(resultHTML)
+				$("#ulist").html(resultHTML);
+
+
+				dl.close();
+				$("img.lazy").lazyload({
+					effect: "fadeIn",
+					threshold: 88,
+				});
+
+
+			}
+
+			function TAuser(uid) {
+				window.location.href = './TAusercenter.html?' + window.btoa(encodeURI('uid=' + uid));
+			}
+			
+			function goback() {
+				window.location.href = "./my_frame.php"
+			}
+			
+			pushHistory();
+			window.addEventListener("popstate", function(e) {
+				window.location.href = "./my_frame.php"
+			}, false);
+			
+			function pushHistory() {
+				var state = {
+					title: "title",
+					url: "#"
+				};
+				window.history.pushState(state, "title", "#");
+			}
+			function TAuser(uid){
+				window.location.href='./TAusercenter.html?'+window.btoa(encodeURI('uid='+uid));
+			}
+			function openDressing(id){
+					 window.location.href='./Dressingdetails_frame.html?'+window.btoa(encodeURI('articleid='+id));
+				}
+		</script>
+	</body>
+</html>

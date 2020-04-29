@@ -915,6 +915,7 @@
 							$('.like-button').addClass('heartbs');
 							$('.particle').addClass('particledh');
 							liker_userid=1;
+							worketman(fromuid,touid);
 						}
 					});
 				} else {
@@ -1088,6 +1089,7 @@
 					}, function(e) {
 						if (e.code == '200') {
 							getcomment();
+							worketman(fromuid,touid2);
 						}
 
 					})
@@ -1106,6 +1108,7 @@
 					}, function(e) {
 						if (e.code == '200') {
 							getcomment();
+							worketman(fromuid,touid2);
 						}
 					})
 				}
@@ -1303,9 +1306,32 @@
 					$('.particle').addClass('particledh');
 				}
 			}
-			let b = document.querySelector('button');
-			setTimeout(()=>b.focus(), 100);
-			setTimeout(()=>b.blur(), 1000);
+
+		function worketman(fromid, toid) {
+				var ws = new WebSocket("ws://socket.chaodashe.com:8282");
+
+				ws.onmessage = function(e) {
+
+					var message = eval("(" + e.data + ")");
+					switch (message.type) {
+						case 'init':
+							var bild = '{"type":"bind","fromid":"' + fromid + '"}';
+							ws.send(bild);
+							setTimeout(function(){
+								var message='{"type":"cds","toid":"' + toid + '"}';
+								ws.send(message);
+							},888)
+						
+							return;
+
+					}
+
+				}
+				
+			}
+			// let b = document.querySelector('button');
+			// setTimeout(()=>b.focus(), 100);
+			// setTimeout(()=>b.blur(), 1000);
 		</script>
 	</body>
 </html>

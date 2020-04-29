@@ -49,7 +49,7 @@
 	 var skip=0;
 	 var limit=8;
 	 apiready = function(){
-	   
+	   		even();
 	      resetlists();
 		 u_allNoreadcount();
 		   even();
@@ -89,6 +89,11 @@
 			 	resetlists();
 			 },1000)
 			return;
+			 case 'cds_say':
+		      setTimeout(function(){
+		        u_allNoreadcount();
+		      },1000)
+		      return;
  		}
  	}
 
@@ -165,12 +170,12 @@
  	}
 
 	function u_allNoreadcount(){
-		 var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+		 var userInfo=$api.getStorage('userInfo');
 		 postajax(url+'u_allNoreadcount',{'uid':userInfo.id},function(e){
 			 if(e.code=200){
-			 	alert('1'+e.data.subscribecount)
+			 	// alert('1'+e.data.subscribecount)
 				 if(e.data.subscribecount){
-				 	alert('2'+e.data.subscribecount)
+				 	// alert('2'+e.data.subscribecount)
 					 $('.dinyuecount').html(e.data.subscribecount);
 				 }else{
 					 $('.dinyuecount').html('').css('display','none');
@@ -193,13 +198,40 @@
 	}
 
 	function opensubscribelist(){
-		window.location.href="./subscribelist.html?"+window.btoa(encodeURI("uid="+fromid));
+		api.openWin({
+		    name: 'subscribelist',
+		    url: './subscribelist.html',
+		    pageParam: {
+		        name: 'test'
+		    },
+		    animation:{
+		    	type:'fade'
+		    }
+		});
 	}
 	function openlikeandsqlist(){
-		window.location.href="./likeandsqlist.html?"+window.btoa(encodeURI("uid="+fromid));
+		api.openWin({
+		    name: 'likeandsqlist',
+		    url: './likeandsqlist.html',
+		    pageParam: {
+		        name: 'test'
+		    },
+		    animation:{
+		    	type:'fade'
+		    }
+		});
 	}
 	function opencommandreplylist(){
-		window.location.href="./commentandreplylist.html?"+window.btoa(encodeURI("uid="+fromid));
+		api.openWin({
+		    name: 'commentandreplylist',
+		    url: './commentandreplylist.html',
+		    pageParam: {
+		        name: 'test'
+		    },
+		    animation:{
+		    	type:'fade'
+		    }
+		});
 	}
     function redi(toid){
     	// alert(toid)
@@ -223,32 +255,29 @@
     	}, function(ret, err) {
     	    if (ret) {
     	    resetlists();
-    		getNoreadcount();
+    		api.sendEvent({
+    		    name: 'resallNoreadcount',
+    		    extra: {
+    		        valueName1: 'value1', 
+    		        valueName2: 'value2'
+    		    }
+    		});
     	
     		
     	    }
     	});
+
+    	api.addEventListener({
+ 		    name: 'restopdiv'
+ 		}, function(ret, err) {
+ 		
+ 		     u_allNoreadcount();
+ 		    
+ 		});
     }
 
-     function getNoreadcount(){
-    // 底部导航栏
-    postajax(url+'chat_allNoreadcount',{'fromid':fromid},function(e){
-    	// alert(e)
-      if(e>0){
-        
-      	api.sendEvent({
-    		    name: 'resallNoreadcount',
-    		    extra: {
-    		        allcount: e, 
-    		        valueName2: 'value2'
-    		    }
-    		});
-        
-      }
-      
-    })
-  }
- 
+  
+
  </script>
 </body>
 </html>
