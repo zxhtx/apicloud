@@ -351,7 +351,7 @@ footer{
                        <div class="swiper-wrapper" style="height:100%">
                     {{for(var i=0; i<it.list.wareimglist.length;i++) { }}
                       
-                         <div class="swiper-slide"  style=" width:100%;height:auto;background-image: url({{=it.list.wareimglist[i]}});" ></div>
+                         <div class="swiper-slide" onclick="openwareimg({{=i}})"  style=" width:100%;height:auto;background-image: url({{=it.list.wareimglist[i]}});" ></div>
              
                     {{  }  }}
                   </div>
@@ -414,9 +414,13 @@ footer{
       var datacolor
       var shoppingid;
       var loading;
+      var openwareimglist;
       apiready = function(){
            dialog('商品加载中')
           getWareInfo(api.pageParam.wareId);
+          setTimeout(function(){
+            openp();
+          },1800)
       }
           
 
@@ -444,8 +448,7 @@ footer{
             // 更新商品详情展示
             shoppingid = ret.data.bid;
             
-
-
+            openwareimglist=ret.data.wareimglist;
             getallware(ret.data);
 
 
@@ -522,7 +525,20 @@ footer{
 
 
       }
-
+      function openp(){
+        var UIPhotoViewer = api.require('UIPhotoViewer');
+          UIPhotoViewer.open({
+              images:openwareimglist,
+              placeholderImg: 'widget://image/loading.png',
+              bgColor: '#000'
+          }, function(ret, err) {
+              if (ret) {
+                  alert(JSON.stringify(ret));
+              } else {
+                  alert(JSON.stringify(err));
+              }
+          });
+      }
       function size() {
         $(".cima").on('click', function(e) {
           datasize = $(this).attr('data-value');
@@ -667,6 +683,9 @@ footer{
 
         toast('成功复制链接', 'center', 2000);
 
+      }
+      function openwareimg(index){
+        alert(index)
       }
     </script>
   </body>
