@@ -15,11 +15,11 @@
 <body>
   
 </body>
-
+<script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
-
+  isback=0;
   apiready = function() {
-   
+        fnInitListener();
          api.openFrame({
           name: 'ware_frame',
           url: './ware_frame.html',
@@ -40,6 +40,31 @@
          
        };
        
+       function fnInitListener() {
+        // var flag = false;
+        api.addEventListener({
+          name: 'keyback'
+        }, function(ret, err) {
+            if (isback==0){
+               api.closeWin();
+            }else{
+               api.sendEvent({
+                   name: 'photoviewhide',
+               });
+
+            }
+        });
+
+        api.addEventListener({
+            name: 'backindex'
+        }, function(ret, err) {
+           // alert($api.jsonToStr(ret))
+            if (ret) {
+              isback=ret.value.isback;
+
+            } 
+        });
+      };
 
   </script>
 

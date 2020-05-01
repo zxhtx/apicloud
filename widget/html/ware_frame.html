@@ -351,7 +351,7 @@ footer{
                        <div class="swiper-wrapper" style="height:100%">
                     {{for(var i=0; i<it.list.wareimglist.length;i++) { }}
                       
-                         <div class="swiper-slide" onclick="openwareimg({{=i}})"  style=" width:100%;height:auto;background-image: url({{=it.list.wareimglist[i]}});" ></div>
+                         <div class="swiper-slide" onclick="openp({{=i}})"  style=" width:100%;height:auto;background-image: url({{=it.list.wareimglist[i]}});" ></div>
              
                     {{  }  }}
                   </div>
@@ -415,12 +415,18 @@ footer{
       var shoppingid;
       var loading;
       var openwareimglist;
+      // 判断图片查看器
+      var isopen=0;
+      // 监听返回键(手势滑动),关闭本window还是隐藏图片查看器
+      // var isback=0;
+       var UIPhotoViewer =null;
       apiready = function(){
+    
+        UIPhotoViewer = api.require('UIPhotoViewer');
            dialog('商品加载中')
           getWareInfo(api.pageParam.wareId);
-          setTimeout(function(){
-            openp();
-          },1800)
+          event();
+         
       }
           
 
@@ -525,20 +531,7 @@ footer{
 
 
       }
-      function openp(){
-        var UIPhotoViewer = api.require('UIPhotoViewer');
-          UIPhotoViewer.open({
-              images:openwareimglist,
-              placeholderImg: 'widget://image/loading.png',
-              bgColor: '#000'
-          }, function(ret, err) {
-              if (ret) {
-                  alert(JSON.stringify(ret));
-              } else {
-                  alert(JSON.stringify(err));
-              }
-          });
-      }
+    
       function size() {
         $(".cima").on('click', function(e) {
           datasize = $(this).attr('data-value');
@@ -684,8 +677,62 @@ footer{
         toast('成功复制链接', 'center', 2000);
 
       }
-      function openwareimg(index){
-        alert(index)
+        function openp(inde){
+        setTimeout(function(){
+           api.toast({
+            msg: '单击图片关闭查看器'
+        });
+        },666)
+       
+         if (isopen==0) {
+             isback=1;          
+           UIPhotoViewer.open({
+              images:openwareimglist,
+              placeholderImg: 'widget://image/loading.png',
+              bgColor: '#000',
+              activeIndex:inde,
+          }, function(ret, err) {   
+             if(ret.eventType == 'click'){
+                UIPhotoViewer.hide();      
+                isopen=1;
+                isback=0;
+          
+               
+              }
+          });
+         }else{
+
+           isback=1;
+          UIPhotoViewer.show();
+           UIPhotoViewer.setIndex({
+              index: inde
+            }); 
+                // alert(1111)
+            
+         }
+       sendevent(isback);
+      }
+      
+      function event(){
+        api.addEventListener({
+            name: 'photoviewhide'
+        }, function(ret, err) {
+            if (ret) {
+                 UIPhotoViewer.hide(); 
+                 isback=0;
+                 isopen=1;
+                 sendevent(isback);
+            } 
+        });
+      }
+
+      function sendevent(ret){
+        api.sendEvent({
+            name: 'backindex',
+            extra: {
+                isback: ret, 
+            }
+        });
       }
     </script>
   </body>
