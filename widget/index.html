@@ -424,9 +424,7 @@
             h: api.winHeight-54
           },
           bounces: false,
-          animation:{
-            type:'fade'
-          }
+          
 
         });
         hiddensaybug();
@@ -448,9 +446,7 @@
             name: 'test'
           },
           bounces: false,
-          animation:{
-            type:'fade'
-          }
+         
 
         });
         // var NVTabBar = api.require('NVTabBar');
@@ -474,9 +470,7 @@
         pageParam: {
           name: 'test'
         },
-        animation:{
-          type:'fade'
-        }
+        
 
       });
        // var NVTabBar = api.require('NVTabBar');
@@ -488,6 +482,19 @@
 
      }
      function openchatlist(){
+      var userInfo=$api.getStorage('userInfo');
+      if (!userInfo) {
+        api.openWin({
+            name: 'login',
+            url: './html/login.html',
+            pageParam: {
+                // page: 0,
+                // TAusercenteruid:0,
+                // wareId:0
+            }
+        });
+        return;
+      }
       api.openFrame({
         name: 'chat_list',
         url: './html/chat_lists.html',
@@ -501,9 +508,7 @@
         pageParam: {
           name: 'test'
         },
-        animation:{
-          type:'fade'
-        }
+       
 
       });
        
@@ -526,9 +531,7 @@
         pageParam: {
           name: 'test'
         },
-        animation:{
-          type:'fade'
-        }
+       
 
       });
        
@@ -637,6 +640,14 @@
     }, function(ret, err) {
         getNoreadcount();
     });
+
+    api.addEventListener({
+        name: 'closeallframe'
+    }, function(ret, err) {
+        if (ret) {
+          closeframe();
+        }
+    });
   }
     function getNoreadcount(){
     // 底部导航栏
@@ -661,6 +672,27 @@
       
     })
   }
+
+
+  function closeframe(){
+            api.closeFrame({
+                name: 'chaodashe_frame'
+            });
+             api.closeFrame({
+                name: 'home_frame'
+            });
+              api.closeFrame({
+                name: 'saybug_frame'
+            });
+               api.closeFrame({
+                name: 'chat_list'
+            });
+               NVTabBar.setBadge({
+                index: 2,
+                // badge: ret.value.allcount
+
+            });
+        }
  
   
 </script>

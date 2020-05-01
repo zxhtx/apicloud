@@ -83,7 +83,10 @@
                     // localStorage.setItem('userInfo',JSON.stringify(e.data));
                     // window.location.href="./my_frame.php";
                     $api.setStorage('userInfo', e.data);
-                    alert($api.jsonToStr($api.getStorage('userInfo')))
+                       api.sendEvent({
+                            name: 'closeallframe',
+                           
+                        });
                    var page=api.pageParam.page;
                     if (page=='my_frame'){
                         api.sendEvent({
@@ -142,6 +145,11 @@
                             },
                             bounces: false
                         });
+                    }else{
+                         api.sendEvent({
+                            name: 'resmy',
+                        });
+                        api.closeWin();
                     }
                 }else{
                     // toast(e.message);

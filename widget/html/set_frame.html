@@ -433,6 +433,10 @@
                         name: '确定',
                         callback: function() {
                         // clearStorage
+                        api.sendEvent({
+                            name: 'closeallframe',
+                           
+                        });
                         $api.clearStorage('userInfo');
                             // $api.setStorage('userInfo', '');
                             // window.location.href="./my_frame.php";
@@ -445,6 +449,7 @@
             });
             
         }
+        
     </script>
 
 </html>

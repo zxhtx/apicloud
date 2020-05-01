@@ -397,9 +397,7 @@ function fnUpdateWareListByShoppingCart(data_,_LoadMore) {
            pageParam: {
                articleid:e.target.dataset.articleid
            },
-           animation:{
-            type:"fade"
-           }
+          
        });
        },
    //      doubleTap:function(e){
@@ -458,9 +456,7 @@ var userInfo=$api.getStorage('userInfo');
           pageParam: {
               page: 'chaodashe_frame'
           },
-          animation:{
-              type:'fade'
-          }
+         
       });
          return;
     }
@@ -505,9 +501,7 @@ function beshuqian(articleid,_this,touid){
           pageParam: {
               page: 'chaodashe_frame'
           },
-          animation:{
-              type:'fade'
-          }
+         
       });
          return;
     }
@@ -637,9 +631,7 @@ function dinyue(articleuserid){
           pageParam: {
               page: 'chaodashe_frame'
           },
-          animation:{
-              type:'fade'
-          }
+          
       });
          return;
     }
@@ -689,9 +681,7 @@ function opendetails(_id){
            pageParam: {
                articleid:_id
            },
-           animation:{
-            type:"fade"
-           }
+         
        });
 }
 
@@ -716,7 +706,7 @@ function TAuser(uid){
       pageParam: {
           uid:uid
       },
-      animation:{type:'fade'}
+      
   });
 }
 function lianjie(id,imglists,warelists){
@@ -791,9 +781,7 @@ function lianjie(id,imglists,warelists){
            url: './ware.html',
            pageParam: {
                wareId:wareid
-           }, animation:{
-                type:'fade'
-              }
+           },
        });
     }
     
@@ -806,10 +794,8 @@ function lianjie(id,imglists,warelists){
         pageParam: {
             name: 'test'
         },
-        animation:{
-              type:'fade'
-          }
-    });
+       
+           });
   }
     
 </script>
