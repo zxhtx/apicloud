@@ -73,13 +73,17 @@
   var dialogBox ;
   var status = false;
   var NVTabBar;
-
+  var userInfo;
   apiready = function() {
 
         // var header = $api.dom('header'); // 获取 header 标签元素
         // headerH=$api.offset(header).h;
+        userInfo=$api.getStorage('userInfo');
         even();
-        workman();
+        if (userInfo) {
+          workman();
+        }
+        
         fnNVTabBar_open();
         kouling();
         fnInitListener();
@@ -204,9 +208,7 @@
                 pageParam: {
                   wareId:wvalue,
                 },
-                animation:{
-                  type:'fade'
-                }
+               
               });
             }else if(wintype=='Dressingdetails'){
 
@@ -217,9 +219,7 @@
                 pageParam: {
                   articleid:wvalue,
                 },
-                animation:{
-                  type:'fade'
-                }
+             
               });
             
 
@@ -690,8 +690,8 @@
                NVTabBar.setBadge({
                 index: 2,
                 // badge: ret.value.allcount
-
             });
+               workman();
         }
  
   
