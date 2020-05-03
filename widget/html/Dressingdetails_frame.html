@@ -200,12 +200,8 @@
 						<div class="musicname" onclick="openmusic()">{{#musicname}}</div>
 						{{ } }}
 						<div></div>
-						<div class="shuxiepng"></div>
-                        <span class="user" style="margin-left:2px;">{{=value.uname}}</span>
-                        <p class="text arttext" style="word-break: break-all;word-wrap: break-word;">{{#chaodashetext}}</p>
-						{{ if(value.text.length>88){ }}
-						<span class="showbtn" style="margin:6px; display: inline-block; color: #0062CC;" data-showall=0 onclick="showalltext()">显示更多</span>
-						{{ } }}
+						 <div class="user" style="margin-left:2px;"><div class="shuxiepng"></div>{{=value.uname}}：{{=value.text}}</div>
+						 <div></div>
 						<div class="likesmall"></div>
                          <div class="likecount" id="likecount_{{=value.id}}" data-likecount="{{=value.like}}">{{=value.like}}个赞</div>
 						 <div></div>
@@ -273,12 +269,8 @@
 						{{ } }}
 						<div></div>
 						
-						<div class="shuxiepng"></div>
-                        <span class="user" style="margin-left:2px;">{{=value.uname}}</span>
-                        <p class="text arttext" style="word-break: break-all;word-wrap: break-word;">{{#chaodashetext}}</p>
-						{{ if(value.text.length>88){ }}
-						<span class="showbtn" style="margin:6px; display: inline-block; color: #0062CC;" data-showall=0 onclick="showalltext()">显示更多...</span>
-						{{ } }}
+						 <div class="user" style="margin-left:2px;"><div class="shuxiepng"></div>{{=value.uname}}：{{=value.text}}</div>
+						<div></div>
 						<div class="likesmall"></div>
                          <div class="likecount" id="likecount_{{=value.id}}" data-likecount="{{=value.like}}">{{=value.like}}个赞</div>
 						<div></div>

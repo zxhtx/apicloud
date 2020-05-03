@@ -66,90 +66,11 @@
          
         <section class="empty" id="empty">
         </section>
-        <script id="template" type="text/template">
+       <script id="template" type="text/template">
             {{~it.list:value:index}}
           <div class="box" >
       <input id="copyInput" value="https://chaodashe.com" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
-                {{if(value.showimgtype=='0'){ }}
-
-                 <div class="Dressing"  >
-          {{if(value.uauthority==1){ }}
-          <div class="icon iconauthority">
-                     <div class='headimg lazy ' onclick="TAuser({{=value.userid}})" data-original="{{=it.imgurl}}{{=value.userheadimg}}" ></div>
-          </div>
-          {{ }else{ }}
-          <div class="icon iconnoauthority">
-           <div class='headimg lazy' onclick="TAuser({{=value.userid}})" data-original="{{=it.imgurl}}{{=value.userheadimg}}" ></div>
-          </div>
-          {{ } }}
-                    {{if(value.uauthority=='1'){ }}
-                    <div class="uname">
-                     <span class="unametext">{{=value.uname}}</span>
-                    </div>
-                    <div class="authority" onclick="authority()">
-                        <img src="../image/authority.png">
-                    </div>
-                  
-                    {{ }else{ }}
-                    <div class="uname">
-                     <span class="unametext">{{=value.uname}}</span>
-                    </div>
-                    {{ } }}
-
-                    {{if(value.Subscribeman=='0' && value.userid!=it.myuserid){ }}
-                    <div class="dinyue dinyue_{{=value.userid}}">
-                           <span onclick="dinyue({{=value.userid}})">·订阅 </span>
-                    </div>
-                    {{ } }}
-                 </div>
-        
-                <div class="swiper-container" >
-                     <div class="swiper-wrapper"   >
-                     {{for(var i=0; i< value.imglist.length;i++) { }}
-                          <div class="swiper-slide"  style="background-image: url({{=it.imgurl}}{{=value.imglist[i]}});" data-original="{{=it.imgurl}}{{=value.imglist[i]}}" data-articleid="{{=value.id}}" data-like_userid="{{=value.like_userid}}" data-userid="{{=value.userid}}" data-likeid="like{{=value.id}}">
-                           
-                          </div>
-                          
-                        
-                    {{  }  }}
-                 </div>
-                    <div class="swiper-pagination"></div>
-                </div>
-                <div class="footbox">
-          <div class="warelists warelists_{{=value.id}}"></div>
-                    <div class="duogongneng" >
-                        {{if(value.like_userid==0)}}
-                         <img onclick="belike({{=value.id}},this,{{=value.userid}})" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likeb.png">
-                        {{ else{ }}
-                         <img onclick="belike({{=value.id}},this,{{=value.userid}})" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likea.png">
-                        {{ } }}
-                        <img class="Cspeak" onclick="opendetails({{=value.id}})" src="../image/Cspeak.png">
-            {{if(value.type=='0'){ }}
-            <img src="../image/lianjie.png" class="lianjie  lianjie_{{=value.id}}"   onclick=lianjie({{=value.id}},"{{=value.imglist}}",{{=value.warelist}}) alt="">
-            {{ } }}
-                        {{if(value.shuqian_userid==0){ }}
-                        <img onclick="beshuqian({{=value.id}},this,{{=value.userid}})" id="shuqian{{=value.id}}" data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" src="../image/shuqianb.png">
-                        {{ }else{ }}
-                        <img onclick="beshuqian({{=value.id}},this,{{=value.userid}})" id="shuqian{{=value.id}}"  data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" src="../image/shuqiana.png">
-                        {{ } }}
-                    </div>
-                     {{ if(value.type=='0'){ }}
-                    <span class="chaodashetype" style="margin-left:6px;">动态类型:穿搭</span>
-                    {{ }else{ }}
-
-                    <span class="chaodashetype" style="margin-left:6px;">动态类型:潮图</span>
-                    {{ } }}
-                    <div class="textanduser">
-            <div class="shuxiepng"></div>
-                        <span class="user" style="margin-left:2px;">{{=value.uname}}</span>
-                        <span class="text" style="word-break: break-all;word-wrap: break-word;">{{=value.text}}</span>
-                    </div>
-          <div class="likesmall"></div>
-                    <span class="likecount" id="likecount_{{=value.id}}" data-likecount="{{=value.like}}">{{=value.like}}个赞</span>
-          
-          
-                </div>
-                {{ }else{ }}
+               
                     <div  style="position: relative">
                        
                         <div class="Dressing" >
@@ -184,31 +105,32 @@
                             </div>
                         {{ } }}
                         </div>
-            
-                         <div class="swiper-container " style="height: auto;" >
-                       <div class="swiper-wrapper" style="height: auto;" >
-                <div class="imglistone lazy"  style=" width:100%;height: 20rem;" data-original="{{=it.imgurl}}{{=value.imglist[0]}}"  data-like_userid="{{=value.like_userid}}"  data-articleid="{{=value.id}}" data-likeid="like{{=value.id}}"  >
-                       
+            <div class="fmdiv">
+                <div class="imglistone lazy"  style=" width:100%;height: 20rem;" data-original="{{=it.imgurl}}{{=value.fm}}"  data-like_userid="{{=value.like_userid}}"  data-articleid="{{=value.id}}" onclick="openDressing('{{=value.id}}')" data-likeid="like{{=value.id}}"  >
+                 {{if(value.showimgtype==1){ }}
                         <img class="minimg" src="../image/longimg.png" alt="">
-                    </div>
-                </div>
-                     </div>
+                {{ }else{ }}
+               <img class="minimg" src="../image/lunbo_white.png" alt="">
+                {{ } }}
+              </div>
+            </div>
+              
                   <div class="footbox">
             <div class="warelists warelists_{{=value.id}}"></div>
                     <div class="duogongneng" >
                         {{if(value.like_userid==0)}}
-                         <img onclick="belike({{=value.id}},this,{{=value.userid}})" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likeb.png">
+                         <img onclick="belike('{{=value.id}}',this,'{{=value.userid}}')" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likeb.png">
                         {{ else{ }}
-                         <img onclick="belike({{=value.id}},this,{{=value.userid}})" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likea.png">
+                         <img onclick="belike('{{=value.id}}',this,'{{=value.userid}}')" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likea.png">
                         {{ } }}
                         <img class="Cspeak" onclick="opendetails({{=value.id}})" src="../image/Cspeak.png">
             {{if(value.type=='0'){ }}
             <img src="../image/lianjie.png" class="lianjie lianjie_{{=value.id}}" onclick=lianjie({{=value.id}},"{{=value.imglist}}",{{=value.warelist}}) alt="">
             {{ } }}
                         {{if(value.shuqian_userid==0){ }}
-                        <img onclick="beshuqian({{=value.id}},this,{{=value.userid}})" id="shuqian{{=value.id}}" data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" src="../image/shuqianb.png">
+                        <img onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')" id="shuqian{{=value.id}}" data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" src="../image/shuqianb.png">
                         {{ }else{ }}
-                        <img onclick="beshuqian({{=value.id}},this,{{=value.userid}})" id="shuqian{{=value.id}}"  data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" src="../image/shuqiana.png">
+                        <img onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')" id="shuqian{{=value.id}}"  data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" src="../image/shuqiana.png">
                         {{ } }}
                     </div>
                      {{ if(value.type=='0'){ }}
@@ -218,9 +140,9 @@
                     <span class="chaodashetype" style="margin-left:6px;">动态类型:潮图</span>
                     {{ } }}
                     <div class="textanduser">
-            <div class="shuxiepng"></div>
-                        <span class="user" style="margin-left:2px;">{{=value.uname}}</span>
-                        <span class="text" style="word-break: break-all;word-wrap: break-word;">{{=value.text}}</span>
+            <!-- <div class="shuxiepng"></div> -->
+                        <div class="user" style="margin-left:2px;"><div class="shuxiepng"></div>{{=value.uname}}：{{=value.text}}</div>
+                        <!-- <div class="text" style="word-break: break-all;word-wrap: break-word;">{{=value.text}}</div> -->
                     </div>
           <div class="likesmall"></div>
                      <span class="likecount" id="likecount_{{=value.id}}" data-likecount="{{=value.like}}">{{=value.like}}个赞</span>
@@ -228,7 +150,6 @@
           
                 </div>
 
-                {{ } }}
             
         </div>
         {{~}}
@@ -356,96 +277,23 @@ function fnUpdateWareListByShoppingCart(data_,_LoadMore) {
      effect: 'fadeIn',
   });
   
-  // $('.swiper-container').click(function(){
-  //    clicki++;
-  //          setTimeout(function () {
-  //              clicki = 0;
-  //          }, 500);
-  //          if (clicki > 1) {
-  //              // if (!userInfo){
-  //              //    window.location.href="./login_frame.html";
-  //              //    return;
-  //              //   }
-  //        alert('双击')
-  //              clicki = 0;
-  //          }
-  // })
-  
-     var swiper = new Swiper('.swiper-container', {
-     slidesPerView:1.2,
-    spaceBetween : 6,
-    centeredSlides:true,
-     pagination: {
-         el: '.swiper-pagination',
-     dynamicBullets: true,
-       },
-    // speed:666,
-    // autoHeight:true,
+ 
     
-     loop:true,//循环 最后面一个往后面滑动会滑到第一个
-       // loadOnTransitionStart:true,
-     // loadPrevNext: true,
-    
-       on:{
-       click: function(e){
-       // alert('你碰了Swiper');
-       // console.log();
-        // window.location.href='./Dressingdetails_frame.html?'+window.btoa(encodeURI('articleid='+e.target.dataset.articleid));
-        api.openWin({
-           name: 'Dressingdetails',
-           url: './Dressingdetails.html',
-           pageParam: {
-               articleid:e.target.dataset.articleid
-           },
-          
-       });
-       },
-   //      doubleTap:function(e){
-   //          if (!userInfo){
-   //             window.location.href="./login_frame.html";
-   //             return;
-   //          }
-      // if (liketime == 0) {
-      //  liketime = 1;
-      //  setTimeout(function() {
-      //    liketime = 0;
-      //  }, 3000)
-      // } else {
-      //  toast('不能连续点赞哟', 'bottom');
-      //  return;
-      // }
-      
-   //           var likeid=e.target.dataset.likeid;
-      //  var touid=e.target.dataset.userid;
-   //          if ($('#'+likeid).attr('data-like_userid')=='0'){
-   //             $('#'+likeid).fadeOut();
-   //              $('#'+likeid).fadeIn();
-   //              setTimeout(function(){
-   //               $('#'+likeid).attr('src','../image/likea.png');
-   //               $('#'+likeid).attr('data-like_userid','1');
-   //              },300);
-   //               addlike(1,e.target.dataset.articleid,likeid);
-
-   //          }else{
-   //               $('#'+likeid).fadeOut();
-   //              $('#'+likeid).fadeIn();
-   //                setTimeout(function(){
-   //                  $('#'+likeid).attr('src','../image/likeb.png');
-   //                  $('#'+likeid).attr('data-like_userid','0');
-   //                },300);
-             
-   //            addlike(0,e.target.dataset.articleid,likeid);
-   //          }
-         
-   //      },
-        
-       },
-    
-    });
      dl.close();
 }
 // 点赞
 
+function openDressing(id){
+    api.openWin({
+           name: 'Dressingdetails',
+           url: './Dressingdetails.html',
+           pageParam: {
+               articleid:id
+           },
+          
+       });
+       
+}
 function belike(articleid,_this,touid){
     // 判断这条动态是否被点赞
 var userInfo=$api.getStorage('userInfo');
