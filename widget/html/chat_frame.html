@@ -284,7 +284,10 @@
 		window.location.href="./allrecord.html?"+window.btoa(encodeURI("fromid="+fromid+"&toid="+toid));
 	}
 	function rechat_lists(){
-		window.location.href="./chat_lists.php?"+window.btoa(encodeURI("fromid=" + fromid));
+		api.sendEvent({
+		    name: 'reschatlist',
+		});
+		api.closeWin();
 	}
 	
 	pushHistory();

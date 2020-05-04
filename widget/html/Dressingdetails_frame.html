@@ -169,7 +169,7 @@
                     <img class="share" onclick="share()" src="../image/share_white.png">
                      <img class="home" src="../image/home.png" tap onclick="gohome()">
                  </div>
-                <div class="swiper-container" style="height:auto">
+                <div class="swiper-container bgcolor" style="height:auto">
                      <div class="swiper-wrapper"  style="height:auto" >
                      {{for(var i=0; i< value.imglist.length;i++) { }}
                           <div class="swiper-slide"  style=" width:100%;height: 20rem;background-image: url({{=it.imgurl}}{{=value.imglist[i]}});"   data-articleid="{{=value.id}}" data-like_userid="{{=value.like_userid}}"  data-likeid="like{{=value.id}}" data-userid="{{=value.userid}}" onclick="Dressingimg('{{=value.imglist[i]}}')" data-Dressingimg="{{=value.imglist[i]}}"  >
@@ -242,9 +242,9 @@
                          <img class="home" src="../image/home.png" tap onclick="gohome()">
                         </div>
                         {{for(var i=0;i<value.imglist.length;i++){ }}
-						<div class="dongtaiimglist">
+						<div class="dongtaiimglist bgcolor">
                         
-						<img style="width:100%;" style="" data-original="{{=it.imgurl}}{{=value.imglist[i]}}" class="lazy" onclick="Dressingimg('{{=value.imglist[i]}}')" >
+						<img style="width:100%;" src="../image/tm.png" style="" data-original="{{=it.imgurl}}{{=value.imglist[i]}}" class="lazy" onclick="Dressingimg('{{=value.imglist[i]}}')" >
                         </div>
 						{{ } }}
 						<div class="warelists">
@@ -642,7 +642,9 @@
 					$(".buytoast").fadeOut();
 				}, 6000);
 
-				dl.close();
+			
+				$(".bgcolor").css("cssText", "background-color:" + data_[0].Dressingbgcolor + " !important;");
+					dl.close();
 				$("img.lazy").lazyload({
 					effect: "fadeIn",
 					threshold: 88,

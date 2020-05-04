@@ -15,7 +15,7 @@
 <!-- <script type="text/javascript" src="../script/api.js"></script> -->
 <script type="text/javascript">
     apiready = function() {
-
+        even();
        // var header=$api.byId('header');
        
         // 获取header和nav的高
@@ -37,7 +37,17 @@
             bounces: false
         });
     };
+   function even(){
+     api.addEventListener({
+          name: 'keyback'
+        }, function(ret, err) {
+           api.sendEvent({
+             name: 'reschatlist',
+        
+        });
+        });
    
+   }
 </script>
 
 </html>
