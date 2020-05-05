@@ -17,8 +17,8 @@
  	<content src="index.html" />
 
  	<access origin="*" />
- 	<!-- <preference name="customRefreshHeader" value="UIPullRefreshFlash"/> -->
-	<preference name="customRefreshHeader" value="UIPullRefreshMotive"/>
+ 	<preference name="customRefreshHeader" value="UIPullRefreshFlash"/>
+	
 	<preference name="checkSslTrusted" value="false" />
 
 	<preference name="appCertificateVerify" value="false" />
