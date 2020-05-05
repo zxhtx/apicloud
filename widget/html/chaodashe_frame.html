@@ -176,12 +176,43 @@
       var sqtime = 0;
       var liketime = 0;
       var clicki= 0;
-             $(function(){
-                $('.chaodashe').addClass('now').siblings().removeClass('now');
+      apiready = function(){
+           $('.chaodashe').addClass('now').siblings().removeClass('now');
         getchaodashe();
-            })
-            
-
+        reshtml();
+      }
+          
+             
+      function reshtml(){
+          // var UIListGroup = api.require('UIPullRefreshMotive');
+          api.setCustomRefreshHeaderInfo({
+            bgColor: '#eee',
+            images: [
+                'widget://image/refresh/dropdown0.png',
+                'widget://image/refresh/dropdown1.png',
+                'widget://image/refresh/dropdown2.png',
+                'widget://image/refresh/dropdown3.png',
+                'widget://image/refresh/dropdown4.png',
+                'widget://image/refresh/dropdown5.png',
+                'widget://image/refresh/dropdown6.png'
+            ],
+            tips: {
+                pull: '下拉刷新',
+                threshold: '松开立即刷新',
+                load: '正在刷新'
+            },
+            animationRate:0.2
+        }, function() {
+            //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+            //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
+            alert('开始加载刷新数据，摇一摇停止加载状态');
+            api.addEventListener({
+                name: 'shake'
+            }, function(ret, err) {
+                api.refreshHeaderLoadDone()
+            });
+        });
+      }
           
  //上拉加载
      window.addEventListener("scroll", function (){

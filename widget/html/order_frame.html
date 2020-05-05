@@ -530,7 +530,7 @@ header a {
     price2.html(_data.price);
     price3.html(_data.price)
     addInfo.price=_data.price;
-     var usernameinfo=JSON.parse(localStorage.getItem('userInfo'));
+     var usernameinfo=$api.getStorage('userInfo');
     addInfo.username=usernameinfo.username;
     addInfo.userid=usernameinfo.id;
      getaddress();
@@ -579,14 +579,14 @@ function vip(dataprice){
   }
   // loading=$('#loading');
   // loading.addClass("hidden").removeClass("show");
-  getaddress();
+  // getaddress();
 
 
 
 
 }
 function getaddress(){
-    
+       // alert(1)
     var userInfo=$api.getStorage('userInfo');
     var params={
      default:1,
@@ -594,6 +594,7 @@ function getaddress(){
  }
  getajax(url+'getdefaultaddress',params,function(ret){  
     dl.close();
+
      if (ret.code==200) {
         // console.log(ret.data);
         dizhinull=ret.data[0];
