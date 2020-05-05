@@ -10,7 +10,7 @@
     <script src="../script/commonjs.js"></script>
 
     <style>
-    html,
+html,
     body {
         padding:0;
         margin:0;
@@ -282,15 +282,11 @@
     }
     .info .description {
         /*margin-bottom: 3px;*/
-        display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+        overflow: hidden;
         width: 100%;
-        /*height: 16px;*/
+        height: 16px;
         font-size: 13px;
         color: #9d9d9d;
-        margin-top: 10px;
     }
     #footer{
       display: -webkit-box;
@@ -340,13 +336,8 @@
 
 #colorandsize{
     font-size: 12px;
-    /*margin-left: 2px;*/
+    margin-left: 8px;
     color: #888;
-    /*margin-top: 0px;*/
-    /*border:1px solid red;*/
-    width: 100px;
-    display: inline-block;
-    height: 18px;
 }
 header{
     width: 100%;
@@ -378,13 +369,29 @@ header a {
  font-weight: bold;
 
 }
-#wareprice{
-    /*border: 1px solid red;*/
-    height: 18px;
-    font-size: 13px;
-    width:50px;
-    /*border:1px solid red;*/
-    display:inline-block;
+.tuihuan{
+    display: inline-block;
+    font-size: 12px;
+    background-color:#FFF2EC;
+    color:#FF5406;
+    border-radius: 3px;
+    padding: 2px;
+    /* margin-left: 8px; */
+    text-align: center;
+    width: 89px;
+    margin-top: 6px;
+}
+.fahuotime{
+    display: inline-block;
+    font-size: 12px;
+    background-color:#FFF2EC;
+    color:#FF5406;
+    border-radius: 3px;
+    padding: 2px;
+    /* margin-left: 8px; */
+    text-align: center;
+    width: 78px;
+    margin-top: 6px;
 }
 </style>
 </head>
@@ -421,9 +428,15 @@ header a {
         <div class="info">
             <!-- <div class="top" id="warename"></div> -->
             <div class="description" id="description"></div>
-            <div class="bottom" id="wareprice"></div>
-            <div class="bottom" id="colorandsize">.../...</div>
-
+            <span class="" id="wareprice" style=""></span>
+            <span class="" id="colorandsize">.../...</span>
+            <div id="">
+                
+            </div>
+            <div class="tuihuan">
+                七天无理由退换
+            </div>
+            <div class="fahuotime">24小时内发货</div>
         </div>
     </div>
     <div class="row">
@@ -480,45 +493,47 @@ header a {
         dialog('订单加载中');
         $('#colorandsize').html(api.pageParam.size+'/'+ api.pageParam.color)
         // alert(api.pageParam.size)
-        var params={
-            fields:{},
-            fields: {},
-            where: {
-                id:api.pageParam.wareId
-            },
-            skip:0
+       var params={
+             bid:api.pageParam.wareId
         }
-        apigetajax('http://d.apicloud.com/mcm/api/ware',params,function(ret){
+        getajax(url+'payware',params,function(ret){
             if (ret){
-                jiage=ret[0].price;
-                updateWare(ret);
+                // alert($api.jsonToStr(ret.data))
+                var data=ret.data;
+                jiage=data.price;
+                updateWare(data);
                 addInfo.size=api.pageParam.size;
                 addInfo.color=api.pageParam.color;
-                addInfo.wareid=ret[0].id;
-                addInfo.description=ret[0].description;
-                addInfo.warename=ret[0].name;
-                addInfo.url=ret[0].thumbnail;
-                addInfo.shangjia=ret[0].shangjia;
-                addInfo.wareTypeId=ret[0].wareTypeId;
+                addInfo.wareid=data.bid;
+                addInfo.description=data.description;
+                addInfo.url=data.image;
+                addInfo.shangjia=data.shangjia;
+                addInfo.wareTypeId=data.waretypeid;
             }
         });
 
     }
-    function updateWare(_data){
+     function updateWare(_data){
         var warename=$('#warename');
         var wareprice=$('#wareprice');
         var price1=$('#price1');
         var image=$('#image');    
         var description=$('#description');
-        warename.html(_data[0].name);
-        description.html(_data[0].description);
-        wareprice.html('￥'+_data[0].price);
-        price1.html('￥'+_data[0].price);
+        warename.html(_data.name);
+        description.html(_data.description);
+        wareprice.html('￥'+_data.price);
+        price1.html('￥'+_data.price);
     // price2.innerHTML='￥'+_data[0].price;
-    image.attr('src',_data[0].thumbnail);
-    console.log(_data[0].thumbnail);
-    vip(_data[0].price);
-   
+    image.attr('src',_data.image);
+    var price2=$('#price2');
+    var price3 =$('#price3');
+    price2.html(_data.price);
+    price3.html(_data.price)
+    addInfo.price=_data.price;
+     var usernameinfo=JSON.parse(localStorage.getItem('userInfo'));
+    addInfo.username=usernameinfo.username;
+    addInfo.userid=usernameinfo.id;
+     getaddress();
     
 }
 function vip(dataprice){
