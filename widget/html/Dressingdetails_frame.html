@@ -161,9 +161,9 @@
 					</div>
 					
                      {{if(value.like_userid==0)}}
-                         <img onclick="belike({{=value.id}},this,{{=value.userid}})" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likeb_white.png">
+                         <img onclick="belike('{{=value.id}}',this,'{{=value.userid}}')" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likeb_white.png">
                         {{ else{ }}
-                         <img onclick="belike({{=value.id}},this,{{=value.userid}})" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likea_red.png">
+                         <img onclick="belike('{{=value.id}}',this,'{{=value.userid}}')" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likea_red.png">
                         {{ } }}
 
                     <img class="share" onclick="share()" src="../image/share_white.png">
@@ -233,9 +233,9 @@
                        </div>
                        
                          {{if(value.like_userid==0)}}
-                             <img onclick="belike({{=value.id}},this,{{=value.userid}})" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likeb_white.png">
+                             <img onclick="belike('{{=value.id}}',this,'{{=value.userid}}')" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likeb_white.png">
                             {{ else{ }}
-                             <img onclick="belike({{=value.id}},this,{{=value.userid}})" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likea_red.png">
+                             <img onclick="belike('{{=value.id}}',this,'{{=value.userid}}')" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likea_red.png">
                             {{ } }}
 
                             <img class="share"  onclick="share()"  src="../image/share_white.png">
@@ -545,7 +545,7 @@
 			});
 			// 缩短音乐名
 			function submusicname(_musicname) {
-				musicname = _musicname.substring(6, 16) + '...';
+				musicname = _musicname.substring(5, 16) + '...';
 			}
 
 			function getchaodashe() {
@@ -1270,6 +1270,7 @@
 					effect: "fadeIn",
 					threshold: 88,
 				});
+				$('.keybox').fadeOut()
 			   $('.item').on('click',function(e){
 			    var wareid=$(this).attr('data-ware');
 			  	

@@ -77,11 +77,11 @@
               
                         {{if(value.uauthority==1){ }}
                         <div class="icon iconauthority">
-                         <div class='headimg lazy ' onclick="TAuser({{=value.userid}})" data-original="{{=it.imgurl}}{{=value.userheadimg}}" ></div>
+                         <div class='headimg lazy ' onclick="TAuser('{{=value.userid}}')" data-original="{{=it.imgurl}}{{=value.userheadimg}}" ></div>
                         </div>
                         {{ }else{ }}
                         <div class="icon iconnoauthority">
-                         <div class='headimg lazy' onclick="TAuser({{=value.userid}})" data-original="{{=it.imgurl}}{{=value.userheadimg}}" ></div>
+                         <div class='headimg lazy' onclick="TAuser('{{=value.userid}}')" data-original="{{=it.imgurl}}{{=value.userheadimg}}" ></div>
                         </div>
                         {{ } }}
             
@@ -123,9 +123,9 @@
                         {{ else{ }}
                          <img onclick="belike('{{=value.id}}',this,'{{=value.userid}}')" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likea.png">
                         {{ } }}
-                        <img class="Cspeak" onclick="opendetails({{=value.id}})" src="../image/Cspeak.png">
+                        <img class="Cspeak" onclick="opendetails('{{=value.id}}')" src="../image/Cspeak.png">
             {{if(value.type=='0'){ }}
-            <img src="../image/lianjie.png" class="lianjie lianjie_{{=value.id}}" onclick=lianjie({{=value.id}},"{{=value.imglist}}",{{=value.warelist}}) alt="">
+            <img src="../image/lianjie.png" class="lianjie lianjie_{{=value.id}}" onclick=lianjie('{{=value.id}}','{{=value.imglist}}',{{=value.warelist}}) alt="">
             {{ } }}
                         {{if(value.shuqian_userid==0){ }}
                         <img onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')" id="shuqian{{=value.id}}" data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" src="../image/shuqianb.png">
@@ -566,6 +566,7 @@ function lianjie(id,imglists,warelists){
 }
 
     function fnwarelist(imglist,warelists,_id) {
+ 
         for (var i = 0; i < imglist.length; i++) {
           var imgsrc = imglist[i].split('/')[1].split('.')[0];
           var src = imgsrc.replace(/\-|\@|\=|\+|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\?|\{|\}|\:|\;|\'|\"|\/|\<|\>|\[|\]/g, '');
