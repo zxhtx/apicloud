@@ -1,367 +1,342 @@
-<!doctype html>
+<!DOCTYPE doctype html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>首页Frame</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css" />
-    <style type="text/css">
-    
-    section {
-        position: relative;
-        width: 100%;
-        height: auto;
-        box-sizing: border-box;
-        padding: 0 8px;
-    }
-
-    .content {
-        width: 100%;
-        height: 100%;
-    }
+    <head>
+        <link rel="shortcut icon" href="../image/chao.ico" />
+        <meta charset="utf-8">
+        <meta content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" name="viewport" />
+        <meta content="telephone=no,email=no,date=no,address=no" name="format-detection">
+        <title>
+            我的粉丝
+        </title>
+        <script src="../script/commonjs.js">
+        </script>
+        <script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
 
 
+        <style type="text/css">
+            @font-face {
+                font-family: chaodashefont;
+                src: url('../css/Dobkin Script.ttf');
+            }
 
-    .ware-1 {
-        position: relative;
-        width: 100%;
-        height: 88px;
-        box-sizing: border-box;
-        padding-top: 15px;
-        /*border: 1px solid red;*/
-        padding-bottom: 15px;
-        border-bottom: 1px solid #d1d1d1;
-    }
+            html,
+            body {
+                height: 100%;
+                background-color: white;
+                padding: 0;
+                margin: 0;
+            }
 
-    .ware-1 .thumbnail {
-        position: absolute;
-        top: 6px;
-        left: 0px;
-        height: 66px;
-        width: 66px;
-        border-radius: 50px;
-    }
+            a {
+                text-decoration: none;
+                color: #fff;
+                -webkit-tap-highlight-color: rgba(255, 0, 0, 0);
+            }
 
-    .ware-1 .info {
-        width: 100%;
-        height: 88px;
-        box-sizing: border-box;
-        padding-left: 88px;
-        padding-right: 28px;
-    }
-
-    .ware-1 .info .name {
-        width: 100%;
-        height: 10px;
-        color: #555555;
-        line-height: 10px;
-        margin-top: 6px;
-        /*margin-top: 14px;*/
-        font-size: 13px;
-    }
-
-    .ware-1 .info .description {
-        margin-top: 16px;
-        width: 100%;
-        height: 36px;
-        overflow: hidden;
-        font-size: 13px;
-        color: #9d9d9d;
-    }
+            header {
+                position: fixed;
+                top: 0px;
+                left: 0px;
+                width: 100%;
+                height: 40px;
+                background-color: white;
+                z-index: 999;
+                box-shadow: 0px 6px 6px -6px black;
+            }
 
 
+            header h1 {
+                width: 100%;
+                height: 40px;
+                text-align: center;
+                color: #000;
+                font-size: 18px;
+                line-height: 40px;
+                margin: 0px;
+            }
 
+            header .back {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 32px;
+                height: 28px;
+                /*border: 1px solid red;*/
+                background: url(../image/back.png);
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                margin-top: 6px;
+                margin-left: 4px;
+            }
 
+            .list {
+                margin-top: 52px;
+            }
 
-    .push-status {
-        width: 100%;
-        height: 40px;
-        font-size: 16px;
-        color: #888;
-        line-height: 40px;
-        text-align: center;
-        background-color: #fff;
-    }
+            .fensi {
+                position: relative;
+                /*border: 1px solid red;*/
+                margin-top: 10px;
+                min-width: 52px;
+                border-bottom: 1px solid black;
+            }
 
-    .active {
-        opacity: 0.7;
-    }
-    .dingyue{
-        margin-top: 20px;
-        width: 58px;
-        height: 25px;
-        border-radius: 8px;
-        background: black;
-        position: absolute;
-        right: 0px;
-        top: 15px;
-    }
-    .dingyue .text{
-     font-size: 13px;
-     line-height: 25px;
-     text-align: center;
-     color: white;
+            .fensiimg {
+                width: 47px;
+                height: 47px;
+                margin: 6px;
+                border-radius: 25px;
+                background-size: cover;
+                background-position: center center;
+                display: inline-block;
+            }
 
- }
-</style>
-</head>
+            .uname {
+                position: absolute;
+                left: 62px;
+                top: 9px;
+                display: inline-block;
+                vertical-align: middle;
+            }
 
-<body>
-    <section id="list">
-     <!--    <div class="ware ware-0">
-            <div class="content">
-                <img class="thumbnail" src="../image/default_rect.png">
-                <div class="info">
-                    <span class="price">RMB14.9</span>
-                    <span class="unit">/4盒</span>
-                    <span class="origin-price">&nbsp;超市:<del>19.9元</del></span>
-                </div>
-                <div class="control">
-                    <div class="panel">
-                        <img class="minus" src="../image/minus.png">
-                        <div class="count">0</div>
+            .dinyue {
+                position: absolute;
+                right: 18px;
+                top: 12px;
+                font-weight: bold;
+            }
+
+            .text {
+                position: absolute;
+                top: 12px;
+                margin-left: 59px;
+                display: inline-block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+
+            }
+
+            .autograph {
+                position: absolute;
+                left: 63px;
+                top: 35px;
+                font-size: 13px;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                overflow: hidden;
+            }
+
+            .authority {
+                display: inline-block;
+                vertical-align: top;
+                margin-left: 3px;
+                width: 16px;
+                height: 16px;
+                background-image: url('../image/authority.png');
+                background-size: cover;
+                background-position: center;
+            }
+
+            #loading {
+                z-index: 9999;
+            }
+
+            .hidden {
+                display: none;
+            }
+        </style>
+        </meta>
+        </meta>
+    </head>
+    <body>
+
+        <header id="header">
+            <div class="back" tapmode onclick="goback()"></div>
+            <h1>我的粉丝</h1>
+        </header>
+
+        <!-- 订阅人动态 -->
+        <section class="list" id="list">
+
+        </section>
+        <section class="empty" id="empty">
+        </section>
+        <script id="template" type="text/template">
+            {{~it.list:value:index}}
+
+                <div class='fensi'>
+                    <div class="fensiimg" onclick="TAuser('{{=value.id}}')" style=background-image:url('{{=it.imgurl}}{{=value.headimg}}');></div>
+                    <div class="uname">{{=value.name}}
+                    {{if(value.authority){ }}
+                    <div class="authority"></div>
+                    {{ } }}
                     </div>
-                    <img class="add" src="../image/add.png">
+                    
+                    {{if(value.autograph!=null && value.autograph!='null' ){ }}
+                    <div class="autograph">{{=value.autograph}}</div>
+                    {{ }else{ }}
+                    <div class="autograph">...</div>
+                    {{ } }}
+                    {{if(value.mutual){ }}
+                        <div class="dinyue dinyue_{{=value.id}}" onclick="dinyue({{=value.id}})" data-is_dy={{=value.mutual}}>相互订阅</div>
+                    {{ }else{ }}
+                        <div class="dinyue dinyue_{{=value.id}}" onclick="dinyue({{=value.id}})" data-is_dy={{=value.mutual}}>订阅</div>
+                    {{ } }}
                 </div>
-            </div>
-        </div>
-        <div class="ware ware-1" >
-            <div class="content" >
-                <img class="thumbnail" src="../image/default_square.png">
-                <div class="info" tapmode onclick="openWareWin()">
-                    <div class="name">牛奶巧克力</div>
-                    <div class="description">下雨天更配哦</div>
-                    <div class="price-tag">
-                        <span class="price">￥28.9</span>
-                        <span class="unit">/1盒</span>
-                    </div>
-                    <div class="origin-price">超市:
-                        <del>59.9元</del>
-                    </div>
-                </div>
-                <div class="control">
-                    <div class="panel">
-                        <img class="minus" src="../image/minus.png">
-                        <div class="count">0</div>
-                    </div>
-                    <img class="add" src="../image/add.png ">
-                </div>
-            </div>
-        </div> -->
-    </section>
-    <div class="push-status" id="pushStatus">上拉显示更多</div>
-</body>
-<script type="text/template" id="template">
-    {{~it:value:index}}
-    <div class="ware ware-1" >
-        <div class="content" tapmode onclick="openchaoshi('{{=value.id}}','{{=value.focus.id}}')" >
-           {{? value.focus==null || value.focus.avatar==null}}
-           <img  class="thumbnail" src="../image/default_square.png">
-           {{?? value.focus.avatar.url}}
-           <img onload="LoadImage(this,'{{=value.id}}')" data-url="{{=value.focus.avatar.url}}"  data-wareTypeId="{{=value.wareTypeId}}" class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
-           {{?}}
-           <div class="info" >
-            <div class="name">账号:{{=value.focus.username}}</div>
-            <div class="description">潮视用户名:{{=value.focus.chaoshiuser}}</div>
-
-        </div>
+              
+            {{~}}
+        </script>
+        <script type="text/javascript">
+            var warelist;
+            var music;
+            var off_on = false;
+            var skip = 0;
+            var limit = 12;
+            apiready = function(){
+                getchaodashe();
+            reshtml();   
+            }
+                
+         
+            window.addEventListener("scroll", function() {
+                //当时滚动条离底部0px时开始加载下一页的内容
+                if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+                    if (off_on) {
+                        off_on = false;
+                        getchaodashe(true);
+                        $('#list').append(
+                            '<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>')
+                    }
 
 
-    </div>
-</div>
-{{~}}
-</script>
-<script type="text/javascript" src="../script/api.js"></script>
-<script type="text/javascript" src="../script/SHA1.js"></script>
-<script type="text/javascript" src="../script/doT.min.js"></script>
-<script type="text/javascript">
-   var now;
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey;
-      apiready = function() {
-          now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now;
-      init();
-      getWareList();
-      initRefresh();
-      initEventListenter();
+                }
+            });
+
+             function reshtml(){
+               
+                api.setCustomRefreshHeaderInfo({
+                    bgColor: '#fff',
+                    images: [
+                         'widget://image/icon/chaodashe.png',
+                       
+                    ],
+                    tips: {
+                        pull: '下拉刷新',
+                        threshold: '松开立即刷新',
+                        load: '正在刷新'
+                    },
+                    animationRate:0.2
+                }, function() {
+                    //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+                    //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
+                   
+                   getchaodashe();
+                });
+              }
+
+            function getchaodashe(_loadMore) {
+                if (_loadMore) {
+                    skip += limit;
+                } else {
+                    skip = 0;
+                    dialog('粉丝加载中');
+                }
+                // var articleid=getQueryString(0);
+
+                var params = {
+                    id: userInfo.id,
+                    skip: skip,
+                    limit: limit,
+                }
 
 
-
-  };
-  var activity ;
-  var wareTypeList;
-  var skip=0;
-  var LIMIT=9;
-  function init(){
-   wareTypeList=$api.getStorage('WareTypeList');
-
-}
-function quxiaodingyue(id){
- event.stopPropagation();
- api.ajax({
-    url: 'https://d.apicloud.com/mcm/api/guanzhu/' + id,
-    method: 'delete',
-    headers: {
-      "X-APICloud-AppId": "A6099267504667",
-      "X-APICloud-AppKey":   appKey,
-  }
-}, function(ret, err) {
-    if (ret) {
-        api.toast({
-            msg: '成功取消订阅',
-            duration: 2000,
-            location: 'bottom'
-        });
-        getWareList();
-
-    }
-});
-
-}
-
-function openchaoshi(Id,guanzhuid){
+                postajax(url + 'getfensi', params, function(ret) {
+                    if (ret.code == '200') {
 
 
-    api.openFrame({
-        name: 'caoshi_frame',
-        url: './caoshi_frame.html',
-        pageParam: {
-            gz:'gz',
-            bewatchedid:guanzhuid
-        },
-        animation: {
-            type: "fade"
-        }
-    });
+                        updateuser(ret.data);
+                    } else {
+                        $('.list').append(
+                            '<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-暂无动态-</p>'
+                        );
+                        $('.xz').remove();
+                    }
+                })
 
-}
-// 获取列表页数据
-function getWareList(_LoadMore){
-  var userInfo=$api.getStorage('userInfo');
-  activity = api.require('UILoading');
-  activity.keyFrame({
-    rect: {
-        w: 80,
-        h: 100
-    },
-    styles: {
-        bg: 'rgba(0,0,0,0.5)',
-        corner: 5,
-        interval: 50,
-        frame: {
-            w: 80,
-            h: 80
-        }
-    }
-});
+            }
 
+            function updateuser(data_) {
+                // 编译模板函数
+                var param = {
+                    list: data_,
+                    imgurl: imgurl,
+                };
+                var tempFn = doT.template($('#template').text());
+                // 使用模板函数生成HTML文本
+                var resultHTML = tempFn(param);
+                console.log(resultHTML)
+                $("#list").append(resultHTML);
 
-  if (_LoadMore) {
-    skip+=LIMIT;
-}else{
+                dl.close();
+                $("img.lazy").lazyload({
+                    effect: "fadeIn",
+                    threshold: 88,
+                });
+                off_on = true;
+                $('.xz').remove();
+            }
 
-    skip=0;
-}
-var params={
-    fields:{},
-    fields: {},
-    where: {
-        bewatched:userInfo.userId
-    },
-    skip:skip,
-    limit:LIMIT,
-    order:"createdAt DESC",
-    include: ['focusPointer']
-}
-params=$api.jsonToStr(params);
-api.ajax({
-    url: 'http://d.apicloud.com/mcm/api/guanzhu?filter='+params,
-    method: 'get',
-    headers: {
-        "X-APICloud-AppId": "A6099267504667",
-        "X-APICloud-AppKey":   appKey
-    },
-
-},function(ret, err){
-    if (ret) {
-          // 隐藏下拉刷新
-          // api.refreshHeaderLoadDone();
-         // 模板渲染
-         api.refreshHeaderLoadDone()
-         updateWareList(ret,_LoadMore);
-
-     } else {
-       api.toast({
-           msg: err.msg,
-           duration: 2000,
-           location: 'bottom'
-       });
-   }
-});
-}
-function updateWareList(_data,_LoadMore){
-    var list=$api.byId('list');
-    var tempFn=doT.template($api.byId('template').innerHTML);
-    var resultText=tempFn(_data)
-    if (_LoadMore) {
-        $api.append(list, resultText);
-    }else{
-        $api.html(list, resultText);
-    }
-    // 优化
-    api.parseTapmode();
-    if (_LoadMore) {
-        if (_data.length<LIMIT) {
-            var pushStatus=$api.byId('pushStatus');
-            pushStatus.innerHTML="我是有底线滴"
-        }
-    }
-    activity.closeKeyFrame();
-
-}
-
-// 列表页图片缓存
-
-function LoadImage(_this,_id){
-    var dataUrl=$api.attr(_this, 'data-url');
-    var dataWareTypeId=$api.attr(_this, 'data-wareTypeId');
-
-    if (dataUrl) {
-        _this.src=dataUrl;
+            function dinyue(uid) {
+                var dy = $('.dinyue_' + uid).attr('data-is_dy');
+                if (dy == '1') {
+                    var type = '0';
+                } else {
+                    var type = '1';
+                }
+                var params = {
+                    Subscribeman: userInfo.id,
+                    beSubscribeman: uid,
+                    type: type
+                }
+                postajax(url + 'dinyue', params, function(ret) {
+                    if (ret.code == '400') {
+                        toast('服务器在开小差', 'bottom', 800)
+                    } else {
+                        if (type == '1') {
+                            $('.dinyue_' + uid).html('相互订阅');
+                            $('.dinyue_' + uid).attr('data-is_dy', '1');
+                        } else {
+                            $('.dinyue_' + uid).html('订阅');
+                            $('.dinyue_' + uid).attr('data-is_dy', '0');
+                        }
 
 
-    }
+                    }
+                });
 
+            }
 
-}
-// 监听 
-function initEventListenter(){
-    api.addEventListener({
-        name:'scrolltobottom',
-        extra:{
-            threshold:100
-        }
-    }, function(ret, err){        
-     getWareList(true);
- });
-}
-// 下拉刷新
-function initRefresh(){
-    api.setCustomRefreshHeaderInfo({
-        bgColor: '#C0C0C0',
-        isScale: true
-    }, function() {
-        getWareList();
+           function TAuser(uid){
         
-    });
+              api.openWin({
+                  name: 'TAusercenter',
+                  url: './TAusercenter.html',
+                  pageParam: {
+                      uid:uid
+                  },
+                  
+              });
+            }
+            function goback() {
+                api.closeWin();
+            }
 
-}
-
-
-</script>
-
+          
+        </script>
+    </body>
 </html>

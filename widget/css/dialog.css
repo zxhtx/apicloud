@@ -365,10 +365,10 @@
   background-color: transparent;
 }
 .dialog-toast .dialog-content {
-  width: 148px;
-  height: 148px;
+  width: 128px;
+  height: 128px;
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0);
   display: table;
 }
 .dialog-toast .dialog-content-bd {
@@ -387,15 +387,15 @@
   padding: 0;
 }
 .dialog-toast .info-icon {
-  width: 56px;
-  max-width: 56px;
+  width: 118px;
+  max-width: 118px;
 }
 .dialog-toast .info-text {
   display: block;
   width: 90%;
   margin: 12px auto 0;
-  font-size: 16px;
-  color: #fff;
+  font-size: 12px;
+  color: #000;
 }
 
 .dialog-toast.dialog-open .dialog-content,

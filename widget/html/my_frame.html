@@ -119,12 +119,36 @@
     apiready = function(){
 
             event();
+             getUsername();
+            // getcdslist();
+            shoppingcount();
+            reshtml();
     }
-        
+    
+      function reshtml(){
+         
+                api.setCustomRefreshHeaderInfo({
+                    bgColor: '#fff',
+                    images: [
+                         'widget://image/icon/chaodashe.png',
+                       
+                    ],
+                    tips: {
+                        pull: '下拉刷新',
+                        threshold: '松开立即刷新',
+                        load: '正在刷新'
+                    },
+                    animationRate:0.2
+                }, function() {
+                    //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+                    //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
+                   
+                  getUsername();
+                  shoppingcount();
+                });
+          }    
 
-    getUsername();
-    // getcdslist();
-    shoppingcount();
+   
     function setuser(){
      var userInfo=$api.getStorage('userInfo');
       if (!userInfo) {
@@ -329,6 +353,7 @@ var params={
 }
 postajax(url+'getuser',params,function(ret){
     dl.close();
+    api.refreshHeaderLoadDone()
     if (ret.code==200) {
         
         var data=ret.data;
@@ -351,20 +376,7 @@ postajax(url+'getuser',params,function(ret){
      }else{
       userRegion.html(data.name);
   }
-  var now=Y+"-"+M+"-"+D;
-  var vipday=datedifference(data.viptime,now)
-  vipday=99-vipday;
-  if (data.vip==1) {
-    $(".sharespan").html('vip'+'还有'+ vipday +'天过期');
-
-  }else{
-        vip.html('');
-  }
-if (data.viptime!=0) {
- date(data.viptime);
-}
-
-
+  
 }
 })
 
@@ -669,14 +681,24 @@ function downApp(){
   location.href='http://www.zxh.yueaa.com'
 }
 function opendinyue(){
-  var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+  var userInfo=$api.getStorage('userInfo');
     if (!userInfo){
-        window.location.href="./login_frame.html";
+       openlogin();
     }else{
         if (parseInt($('.dinyuecount').text())<1) {
-            toast('您还没有订阅任何账户','center',1000);
+            // toast('您还没有订阅任何账户','center',1000);
+            api.toast({
+                msg: '您还没有订阅任何账户'
+            });
         }else{
-         window.location.href="./dinyue_frame.html";
+         // window.location.href="./dinyue_frame.html";
+         api.openWin({
+             name: 'dinyue',
+             url: './dinyue.html',
+             pageParam: {
+                 name: 'test'
+             }
+         });
         }
     }
    
@@ -688,9 +710,19 @@ var userInfo=$api.getStorage('userInfo');
         openlogin();
     }else{
         if (parseInt($('.fensicount').text())<1) {
-            toast('您还没有粉丝','center',1000);
+            // toast('','center',1000);
+            api.toast({
+                msg: '您还没有粉丝'
+            });
         }else{
-           window.location.href="./fensi_frame.html";
+           // window.location.href="./fensi_frame.html";
+            api.openWin({
+             name: 'fensi',
+             url: './fensi.html',
+             pageParam: {
+                 name: 'test'
+             }
+         });
         }
          
     }

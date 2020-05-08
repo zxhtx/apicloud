@@ -707,11 +707,7 @@
           	{{~}}
           </script>
           <script type="text/javascript">
-            $(function(){
-                $('.shangc').addClass('now').siblings().removeClass('now');
-
-            })
-          var wareindex=2;
+               var wareindex=2;
           var wareindex2=2;
           var mescroll;
           var flowerid ;
@@ -719,13 +715,19 @@
           var wareTypeList;
           var skip=0;
           var LIMIT=22;
-            var scrollTop 
-    
+            var scrollTop; 
           var wareTypeList;
-		  var off_on=false;
+          var off_on=false;
+           
+          apiready = function(){
+              reshtml();
+               getWareList(wareindex);
+              nav();
+          }
+              
+       
         
-          getWareList(wareindex);
-          nav();
+         
           // initEventListenter();
           //监听top回到顶部
           window.addEventListener("scroll", function (){
@@ -758,6 +760,28 @@
 		         
 		      }
 		  });
+
+     function reshtml(){
+       
+        api.setCustomRefreshHeaderInfo({
+            bgColor: '#fff',
+            images: [
+                 'widget://image/icon/chaodashe.png',
+               
+            ],
+            tips: {
+                pull: '下拉刷新',
+                threshold: '松开立即刷新',
+                load: '正在刷新'
+            },
+            animationRate:0.2
+        }, function() {
+            //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+            //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
+           
+            getWareList(wareindex,false);
+        });
+      }
 		
           function nav(){
             $(".nav p").click(function(){
@@ -907,6 +931,7 @@
 
     
     dl.close();
+    api.refreshHeaderLoadDone()
     $("img").lazyload({
       threshold : 200
     });

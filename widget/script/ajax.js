@@ -119,8 +119,8 @@ function dialog(text){
   var doc=window;
    dl=$(doc).dialog({
         type : 'toast',
-        infoIcon: '../image/icon/loading.gif',
-        infoText: text,
+        infoIcon: '../image/icon/275.png',
+        // infoText: text,
 
     });
 

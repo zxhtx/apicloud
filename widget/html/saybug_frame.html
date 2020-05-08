@@ -182,8 +182,9 @@
 			var skip=0;
 			var limit=18;
 			var off_on=false;
-			$(function() {
-				getsaybug();
+			apiready = function(){
+			    getsaybug();
+			    reshtml();
 				$('.saybug').addClass('now').siblings().removeClass('now');
 				$('.text').on("keyup paste", function() {
 					// console.log($('.text').val().length)
@@ -193,8 +194,32 @@
 						$('.btn').css('background', '#CBE4F3');
 					}
 				})
-			})
+			}
+			    
+				
 			
+				function reshtml(){
+       
+			        api.setCustomRefreshHeaderInfo({
+			            bgColor: '#fff',
+			            images: [
+			                 'widget://image/icon/chaodashe.png',
+			               
+			            ],
+			            tips: {
+			                pull: '下拉刷新',
+			                threshold: '松开立即刷新',
+			                load: '正在刷新'
+			            },
+			            animationRate:0.2
+			        }, function() {
+			            //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+			            //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
+			           
+			         getsaybug();
+			        });
+			      }
+
 			//上拉加载
 					 window.addEventListener("scroll", function (){
 					      //当时滚动条离底部0px时开始加载下一页的内容
@@ -251,6 +276,7 @@
 						var resultHTML = tempFn(param);
 						$('.commentBox').append(resultHTML);
 						dl.close();
+						api.refreshHeaderLoadDone()
 						off_on=true;
 					}
 					function TAuser(uid){

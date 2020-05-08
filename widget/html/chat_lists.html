@@ -52,7 +52,8 @@
 	   		even();
 	      resetlists();
 		 u_allNoreadcount();
-		   even();
+		   
+		   reshtml();
 		$('.chat').addClass('now').siblings().removeClass('now');
 		$('.likecount').css('background-color',userInfo.Dressingbgcolor);	
 		$('.dinyuecount').css('background-color',userInfo.Dressingbgcolor);	
@@ -60,10 +61,29 @@
 		
 	 }
 	     
-	 // $(function(){
-	 	
-		
-	// })
+	function reshtml(){
+       
+        api.setCustomRefreshHeaderInfo({
+            bgColor: '#fff',
+            images: [
+                 'widget://image/icon/chaodashe.png',
+               
+            ],
+            tips: {
+                pull: '下拉刷新',
+                threshold: '松开立即刷新',
+                load: '正在刷新'
+            },
+            animationRate:0.2
+        }, function() {
+            //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+            //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
+           
+           resetlists();
+           u_allNoreadcount();
+        });
+      }
+
 	var userInfo=$api.getStorage('userInfo'); 
 	var fromid=userInfo.id;
 
@@ -165,8 +185,9 @@
 				$('.xz').remove();
 				$('body').append('<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-暂无聊天好友-</p>');
 			}
-			
+			api.refreshHeaderLoadDone()
  		})
+ 		
  	}
 
 	function u_allNoreadcount(){
@@ -247,7 +268,7 @@
     	}, function(ret, err) {
     	    if (ret) {
     	    resetlists();
-    	    $('.xz').remove();
+    	    $('.nodata').remove();
     		api.sendEvent({
     		    name: 'resallNoreadcount',
     		});

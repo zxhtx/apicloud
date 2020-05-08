@@ -180,9 +180,9 @@
 			{{~it.list:value:index}}
 
                 <div class='chaodashe'>
-                    <div class="cdsimg" style=background-image:url('{{=it.imgurl}}{{=value.imglist}}'); onclick="openDressing({{=value.cid}})"></div>
+                    <div class="cdsimg" style=background-image:url('{{=it.imgurl}}{{=value.imglist}}'); onclick="openDressing('{{=value.cid}}')"></div>
                     <div class='usermore'>
-                        <div class='cheadimg' style=background-image:url('{{=it.imgurl}}{{=value.headimg}}');  onclick="TAuser({{=value.uid}})"></div>
+                        <div class='cheadimg' style=background-image:url('{{=it.imgurl}}{{=value.headimg}}');  onclick="TAuser('{{=value.uid}}')"></div>
                         <div class='text'>{{=value.text}}</div>
                         <div class="likeandsq">{{=value.like}}&nbsp次点赞&nbsp&nbsp·&nbsp&nbsp{{=value.shuqian}}&nbsp次被存入书签</div>
                     </div>
@@ -193,8 +193,8 @@
 		<script id="utemplate" type="text/template">
 			{{~it.list:value:index}}
                 
-                <div  style=background-image:url('{{=it.imgurl}}{{=value.headimg}}'); onclick="TAuser({{=value.id}})" class='headimg'></div>
-                 <div class="more">···</div>
+                <div  style=background-image:url('{{=it.imgurl}}{{=value.headimg}}'); onclick="TAuser('{{=value.id}}')" class='headimg'></div>
+                 <div class="more" onclick="dinyuelist()">···</div>
             {{~}}
         </script>
 		<script type="text/javascript">
@@ -203,9 +203,13 @@
 			var skip=0;
 			var limit=20;
 			var off_on=false;
-			var userInfo=$api.getStorage('userInfo');
+			apiready = function(){
+			 var userInfo=$api.getStorage('userInfo');
 			getchaodashe();
-
+			reshtml();
+			}
+			    
+		
 			window.addEventListener("scroll", function (){
 			     //当时滚动条离底部0px时开始加载下一页的内容
 			     if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
@@ -219,6 +223,28 @@
 			        
 			     }
 			 });
+
+			  function reshtml(){
+		       
+		        api.setCustomRefreshHeaderInfo({
+		            bgColor: '#fff',
+		            images: [
+		                 'widget://image/icon/chaodashe.png',
+		               
+		            ],
+		            tips: {
+		                pull: '下拉刷新',
+		                threshold: '松开立即刷新',
+		                load: '正在刷新'
+		            },
+		            animationRate:0.2
+		        }, function() {
+		            //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+		            //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
+		           
+		           getchaodashe();
+		        });
+		      }
 
 			function getchaodashe(_loadMore) {
 				if(_loadMore){
@@ -294,32 +320,46 @@
 
 			}
 
-			function TAuser(uid) {
-				window.location.href = './TAusercenter.html?' + window.btoa(encodeURI('uid=' + uid));
+		 function dinyuelist(){
+		 	api.openWin({
+		 	    name: 'dinyuelist',
+		 	    url: './dinyuelist.html',
+		 	    pageParam: {
+		 	        name: 'test'
+		 	    }
+		 	});
+		 
+		 }
+
+ 		function TAuser(uid){
+		
+			  api.openWin({
+			      name: 'TAusercenter',
+			      url: './TAusercenter.html',
+			      pageParam: {
+			          uid:uid
+			      },
+			      
+			  });
 			}
 			
 			function goback() {
-				window.location.href = "./my_frame.php"
+				api.closeWin();
 			}
 			
-			pushHistory();
-			window.addEventListener("popstate", function(e) {
-				window.location.href = "./my_frame.php"
-			}, false);
+		
 			
-			function pushHistory() {
-				var state = {
-					title: "title",
-					url: "#"
-				};
-				window.history.pushState(state, "title", "#");
-			}
-			function TAuser(uid){
-				window.location.href='./TAusercenter.html?'+window.btoa(encodeURI('uid='+uid));
-			}
 			function openDressing(id){
-					 window.location.href='./Dressingdetails_frame.html?'+window.btoa(encodeURI('articleid='+id));
-				}
+			    api.openWin({
+			           name: 'Dressingdetails',
+			           url: './Dressingdetails.html',
+			           pageParam: {
+			               articleid:id
+			           },
+			          
+			       });
+			       
+			}
 		</script>
 	</body>
 </html>

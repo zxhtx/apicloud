@@ -188,12 +188,7 @@
         api.setCustomRefreshHeaderInfo({
             bgColor: '#fff',
             images: [
-                 'widget://image/icon/chaodashe1.png',
-                 'widget://image/icon/chaodashe1.png',
-                 'widget://image/icon/chaodashe1.png',
-                 'widget://image/icon/chaodashe1.png',
-                 'widget://image/icon/chaodashe1.png',
-                  'widget://image/icon/chaodashe1.png',
+                 'widget://image/icon/chaodashe.png',
                
             ],
             tips: {
@@ -205,12 +200,8 @@
         }, function() {
             //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
             //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
-            alert('开始加载刷新数据，摇一摇停止加载状态');
-            api.addEventListener({
-                name: 'shake'
-            }, function(ret, err) {
-                api.refreshHeaderLoadDone()
-            });
+           
+           getchaodashe();
         });
       }
           
@@ -303,7 +294,8 @@ function fnUpdateWareListByShoppingCart(data_,_LoadMore) {
   }else{
        off_on=true;
   }
-  api.refreshHeaderLoadDone();
+   api.refreshHeaderLoadDone()
+
   $('.xz').remove();
   $(".lazy").lazyload({
      effect: 'fadeIn',
