@@ -109,7 +109,12 @@
 					setTimeout(function(){
 						api.sendEvent({
 					    name: 'restopdiv',
+					    extra: {
+						        page: 'commentandreplylist', 
+						    }
 						});
+
+						
                          
                          api.sendEvent({
                               name: 'resallNoreadcount',

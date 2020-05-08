@@ -269,6 +269,7 @@
     	    if (ret) {
     	    resetlists();
     	    $('.nodata').remove();
+    	    // alert(1)
     		api.sendEvent({
     		    name: 'resallNoreadcount',
     		});
@@ -280,8 +281,18 @@
     	api.addEventListener({
  		    name: 'restopdiv'
  		}, function(ret, err) {
- 			  // alert(1)
- 		     u_allNoreadcount();
+ 			if (ret.value.page=='commentandreplylist') {
+ 				// alert('评论')
+ 				 $('.commentcount').html('').css('display','none');
+ 			}else if(ret.value.page=='likeandshuqianlist'){
+ 				// alert('喜欢')
+ 				$('.likecount').html('').css('display','none');
+ 			}else{
+ 				// subscribelist
+ 				// alert('订阅')
+ 				 $('.dinyuecount').html('').css('display','none');
+
+ 			}
  		    
  		});
     }
