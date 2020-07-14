@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <link rel="shortcut icon" href="../image/chao.ico" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>退换须知</title>
+    <script src="../script/commonjs.js"></script>
+    <style type="text/css">
+        html,body{
+            padding: 5px;
+        }
+    header{
+        width: 100%;
+        height: 40px;
+        background: white;
+    	box-shadow:0px 6px 6px -6px black;
+    	position: fixed;
+    	top: 0px;
+    	left:0px;
+    	z-index: 999;
+    }
+    header .back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 40px;
+        height: 40px;
+        z-index: 2;
+    }
+    
+    header .back img {
+        margin-top: 5px;
+        margin-left: 4px;
+        width: 28px;
+        height: 30px;
+    }
+    header a{
+        display: block;
+        text-align: center;
+        line-height: 40px;
+        font-size: 16px;
+        font-weight: bold;
+    
+    }
+	.connent{
+		margin-top: 50px;
+	}
+	.head{
+		color: #000000;
+		font-weight: bold;
+	}
+	.body{
+		color:darkgray;
+        font-size:13px ;
+	}
+    </style>
+</head>
+
+<body>
+   <header>
+       <div class="back" tapmode onclick="back()">
+           <img src="../image/back.png">
+       </div>
+       <a>商品退换/平台模式须知</a>
+   </header>
+   <div class="connent">
+	   <p class="head">1、打击刷单/好评返现</p>
+	   <p class="body">本站为了打造绿色健康的平台，采用了平台对买家的模式，所有服饰都是通过和源头厂家、电子商务、个人创业者、微商合作采购，<b>这样的模式下有效的遏制了好评返现、刷单等严重损害买家利益的恶劣行为，并且限制买家购买的商品收货(从点击收货按钮那天起开始计算)5天后才能评价，以此来保证宝贝评论的公正、有效。 注意:如买家发现有商品疑似出现水军刷好评请联系平台管理员下架此商品并终止与服装商合作</b></p>
+	   <p class="head">2、退换运费</p>
+	   <p class="body">在平台对买家模式下商品退换功能跟传统的买家对卖家的模式下截然不同，传统的退换是直接与卖家进行，而本站则不然本站退换由平台进行，<b>因为本站的模式所有运费都得买家自行掏腰包，为了让利最大化给买家所以平台将支付运费，而退换的运费则由平台与买家共同支付一半。</b></p>
+	   <p class="head">3、7天无理由须知</p>
+	   <p class="body"><b>1.购买商品时请注意本商品是否支持"7天退货"以及"7天换货"字样(如果商品质量有问题(破损、开缝)不管此商品是否有"7天换货"以及"7天退货"字样都可以退换并不用支付运费)。</b></p>
+	   <p class="head">4、返利给买家(重磅)</p>
+	   <p class="body">因为本站采取了和服装商合作的模式，<b>好评返现、刷单得到有效的遏制，但是这种模式使得用户退换得自己承担一半的运费，所以本站推出了积分兑、单单减以及重磅返利活动买5返1活动(5+活动)来弥补买家</b>(在本站购物5次将获得一张购物券)，在本站购物5次没有时间限制(十年内购物5次也会得到购物券)，购物券的时间也没有限制(十年内不使用购物券也不会清零)，当然我们永远不希望您用到商品退换服务，没关系不用退换服务我们这个活动所有用户都有资格参加。</p>
+	   <p class="head">5、买5返1活动(5+活动)计算方式</p>
+	   <p class="body">第一次购物消费30元</p>
+	   <p class="body">第二次购物消费50元</p>
+	   <p class="body">第三次购物消费60元</p>
+	   <p class="body">第四次购物消费76元</p>
+	   <p class="body">第五次购物消费82元</p>
+	   <p class="head">得到的购物券:</p>
+	   <p class="body">(30+50+60+76+82)÷6=49.66...元=50元 得到的购物券金额为小数那么就以四舍五入的方式来得到最后金额、购物券可以直接购买50元及50元以下的商品不需要另外支付 <b>注意:当您用50元的购物券购买了40元的商品后，此购物券会直接被系统收回并不会找零10元的购物券，所以买家尽量使用购物券购买接近50元的商品或者直接购买价格为50元的商品</b></p>
+	  <p class="head"><b>有好的想法以及好建议我们欢迎您到说一说专刊留言</b></p>
+   </div>
+</body>
+<script type="text/javascript">
+    function  back() {
+        api.closeWin();
+    }
+</script>
+
+</html>

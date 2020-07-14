@@ -26,18 +26,18 @@
 			.ware-1 {
 				position: relative;
 				width: 100%;
-				height: 105px;
-				box-sizing: border-box;
+				height: 118px;
+				/* box-sizing: border-box; */
 				padding-top: 8px;
 				/*border: 1px solid red;*/
 				padding-bottom: 8px;
 				border-bottom: 0.5px solid #ddd;
-				
+
 			}
 
 			.ware-1 .thumbnail {
 				position: absolute;
-				top: 20px;
+				top: 22px;
 				left: 6px;
 				height: 58px;
 				width: 58px;
@@ -46,7 +46,7 @@
 
 			.ware-1 .info {
 				width: 100%;
-				height: 114px;
+				height: 80px;
 				margin-top: 8px;
 				box-sizing: border-box;
 				padding-left: 66px;
@@ -54,15 +54,10 @@
 
 			}
 
-			.ware-1 .info .name {
-				width: 100%;
-				height: 15px;
-				color: #555555;
-				font-size: 15px;
-			}
+
 
 			.ware-1 .info .description {
-				margin-top: 12px;
+
 				width: 100%;
 				height: 15px;
 				font-size: 13px;
@@ -161,9 +156,9 @@
 
 			.default,
 			.speak {
-				position: absolute;
+				/* position: absolute;
 				right: 10px;
-				bottom: 2px;
+				bottom: 2px; */
 				height: 16px;
 				font-size: 13px;
 				border: 1px solid black;
@@ -189,31 +184,33 @@
 
 
 			.no {
-				position: absolute;
+				/* position: absolute;
 				right: 76px;
-				bottom: 2px;
+				bottom: 2px; */
 				height: 16px;
 				font-size: 13px;
-				border: 1px solid black;
+				/* border: 1px solid black; */
 				border-radius: 2px;
 				padding: 5px;
-				-moz-box-shadow: 1px 1px 1px #999 inset;
-				-webkit-box-shadow: 1px 1px 1px #999 inset;
-				box-shadow: 1px 1px 1px #999 inset;
+				/* -moz-box-shadow: 1px 1px 1px #999 inset; */
+				/* -webkit-box-shadow: 1px 1px 1px #999 inset; */
+				/* box-shadow: 1px 1px 1px #999 inset; */
+				background: #ef3333;
+				color: #fff;
 
 			}
 
 			.no span {
 				height: 16px;
-				line-height: 20px;
-				padding: 0px 6px 0px 6px;
+				line-height: 16px;
+				padding: 0px 3px 0px 3px;
 
 			}
 
 			.shoppingrenzheng {
-				position: absolute;
+				/* 	position: absolute;
 				right: 138px;
-				bottom: 2px;
+				bottom: 2px; */
 				height: 20px;
 				font-size: 11px;
 				border: 1px solid black;
@@ -232,9 +229,9 @@
 			}
 
 			.lookgengduo {
-				position: absolute;
+				/* position: absolute;
 				right: 68px;
-				bottom: 2px;
+				bottom: 2px; */
 				height: 20px;
 				font-size: 11px;
 				border: 1px solid black;
@@ -253,9 +250,9 @@
 			}
 
 			.ok {
-				position: absolute;
+				/* position: absolute;
 				right: 8px;
-				bottom: 2px;
+				bottom: 2px; */
 				height: 21px;
 				font-size: 11px;
 				border-radius: 2px;
@@ -279,7 +276,7 @@
 				height: 40px;
 				background: white;
 				border-bottom: 0.3px solid #F1F1F1;
-				box-shadow:0px 6px 6px -6px black;
+				box-shadow: 0px 6px 6px -6px black;
 			}
 
 			header .back {
@@ -308,28 +305,37 @@
 			}
 
 			.nav {
-				margin-top: 12px;
-				height: 28px;
-				/*margin-bottom: 12px;*/
-				/*border-bottom: 1px solid #ddd;*/
+				border-bottom: 1px solid #ddd;
+				width: 100%;
+				overflow-x: scroll;
+				white-space: nowrap;
+				height: 43px;
+				line-height: 43px;
 
+			}
+
+			.nav::-webkit-scrollbar {
+				display: none
 			}
 
 			.nav p {
 				display: inline-block;
-				width: 22%;
-				padding: 5px 0;
+				width: calc(100%/6);
+				/*padding: 5px 0;*/
 				/*padding-left: 2px;*/
-				margin-left: 5px;
+				/* margin-left: 5px; */
 				text-align: center;
 				font-size: 14px;
+				height: 36px;
 			}
 
 			.nav .active {
 				font-weight: bold;
+				font-size: 15px;
 				border-bottom: 1px solid #46D8AB;
 				color: #46D8AB;
-				
+				height: 36px;
+
 			}
 
 
@@ -345,27 +351,75 @@
 			.noshoppingshow {
 				display: '';
 			}
-			.sizecolor{
-				color:#9d9d9d;
+
+			.sizecolor {
+				color: #9d9d9d;
 				font-size: 12px;
 				display: inline-block;
 			}
-			.thtext{
+
+			.thtext {
 				display: inline-block;
 				font-size: 12px;
-				background-color:#FFF2EC;
-				color:#FF5406;
+				background-color: #FFF2EC;
+				color: #FF5406;
 				border-radius: 3px;
 				padding: 2px;
 				margin-left: 8px;
 			}
-			.xaingq{
+
+			.xaingq {
 				margin-top: 6px;
+			}
+
+			.bottomlist {
+				width: 98%;
+				margin: 0 auto;
+				height: 30px;
+				display: flex;
+				justify-content: flex-end;
+			}
+
+			.bottomlist>div {
+				margin-right: 10px;
+			}
+
+			.ddtitle {
+				position: absolute;
+				top: 2px;
+				left: 6px;
+				font-size: 12px;
+				color: #fff;
+
+				padding-right: 6px;
+				border-radius: 0px 6px 6px 0px;
 			}
 
 			/*.noshoppinghidden{
 		display: none;
 		}*/
+			.yiquxiao {
+				color: #fff;
+				height: 16px;
+				border-radius: 2px;
+				padding: 5px;
+			}
+
+			.yiquxiao span {
+				height: 16px;
+				line-height: 16px;
+				text-align: center;
+				font-size: 13px;
+			}
+
+			.red {
+				background-color: ;
+				color: #ef3333;
+			}
+
+			.green {
+				color: #01C5C0;
+			}
 		</style>
 	</head>
 
@@ -373,7 +427,7 @@
 
 
 		<header>
-			<div class="back" tapmode onclick="back()">
+			<div class="back" tapmode onclick="javascript:history.back(-1);">
 				<img src="../image/back.png">
 			</div>
 			<a>我的订单</a>
@@ -383,6 +437,9 @@
 			<p class="nav1" i="1">待收货</p>
 			<p class="nav2" i="2">已签收</p>
 			<p i="all">全部商品</p>
+			<p class="nav3" i="3">换货</p>
+			<p class="nav4" i="4">退货</p>
+
 		</div>
 
 		<div id="list">
@@ -398,25 +455,40 @@
 	<div class="ware ware-1" id="ware_{{=value.id}}">
 		<div class="content" >
 			<img src="{{=value.url}}" data-wareTypeId="{{=value.wareTypeId}}"  class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
-			<div class="info" tapmode onclick="openWareWin('{{=value.wareid}}','{{=value.wareTypeId}}')">
+			<div class="info" tapmode onclick="shoppingrenzheng('{{=value.id}}')">
 				<div class="description">{{=value.description}}</div>
 				<div class="xaingq">
 					<div class="sizecolor">{{=value.size}}/{{=value.color}}</div>
-					<div class="thtext">七天无理由退换</div>
+					{{if(value.sevenT){}}
+						<div class="thtext">七天退货</div>
+					{{ } }}
+					{{if(value.sevenH){}}
+						<div class="thtext">七天换货</div>
+					{{ } }}
 				</div>
 				<div class="price-tag">
-					<span class="price">￥{{=value.price}}</span>
+					<div class="price">￥{{=value.newprice}}</div>
 				</div>
-				{{? value.dindantypeid=='5c2a3991af3114d73d9ddfc2'}}
-				<div class="no" tapmode onclick="no('{{=value.id}}')">
+				</div>
+				<div class="bottomlist">
+				{{? value.dindantypeid=='5c2a3991af3114d73d9ddfc2' && value.is_tf!=0}}
+				<div class="no" tapmode onclick="no('{{=value.id}}','{{=value.dindantypeid}}')">
 					<span>取消</span>
 				</div>
 				<div class="default" tapmode onclick="pay('{{=value.id}}','{{=value.wareid}}','{{=value.price}}')">
 					<span>去支付</span>
 				</div>
 				{{?? value.dindantypeid=='5c2a39a2af3114d73d9ddfc3'}}
-				<div class="shoppingrenzheng" tapmode onclick="shoppingrenzheng('{{=value.id}}')">
-					<span>订单详情</span>
+					{{if(value.gouwuquan>0){ }}
+						<div class="ddtitle green">购物券</div>
+					{{ } }}
+				{{if(value.addtime>value.newtime-5*60*60 && value.gouwuquan){ }}
+				<div class="no" tapmode onclick="no('{{=value.id}}','{{=value.dindantypeid}}')">
+					<span>5小时内可取消</span>
+				</div>
+				{{ } }}
+				<div class="shoppingrenzheng" tapmode onclick="tuihuan('{{=value.id}}')">
+					<span>售后/退换</span>
 				</div>
 				<div class="lookgengduo" tapmode onclick="look('{{=value.id}}')">
 					<span>查看物流</span>
@@ -425,11 +497,40 @@
 					<span>已签收</span>
 				</div>
 				{{?? value.dindantypeid=='5c2a39add37a824c5ac6cc64'}}
-				<div class="speak" tapmode onclick="speak('{{=value.wareid}}','{{=value.id}}','{{=value.speaktype}}')">
+				<div class="ddtitle green" >交易完成</div>
+				<div class="no" tapmode onclick="no('{{=value.id}}','{{=value.dindantypeid}}')">
+					<span>删除订单</span>
+				</div>
+				{{if(value.evaluateid){ }}
+					{{if(value.replyevaluateid==null){}}
+						<div class="speak" tapmode onclick="speak('{{=value.wareid}}','{{=value.id}}','{{=value.evaluateid}}')">
+							<span>继续追评</span>
+						</div>
+					 {{ } }}
+				{{ }else{ }}
+				<div class="speak" tapmode onclick="speak('{{=value.wareid}}','{{=value.id}}')">
 					<span>评价</span>
 				</div>
+				
+				{{ } }}
+				{{?? value.dindantypeid=='5c2a39add37a824c5ac6cc67'}}
+				<div class="no" tapmode onclick="no('{{=value.id}}','{{=value.dindantypeid}}')">
+					<span>删除订单</span>
+				</div>
+				<div class="ddtitle red" >交易取消</div>
+				{{?? value.dindantypeid=='5c2a39add37a824c5ac6cc65'}}
+					<div class="ddtitle green" >换货中</div>
+					<div class="lookgengduo" tapmode onclick="look('{{=value.id}}')">
+						<span>查看物流</span>
+					</div>
+					<div class="ok" tapmode onclick="qianshou('{{=value.id}}')">
+						<span>已签收</span>
+					</div>
+				{{?? value.dindantypeid=='5c2a39add37a824c5ac6cc66'}}
+					<div class="ddtitle red" >退货退款</div>
 				{{?}}
 			</div>
+			
 		</div>
 	</div>
 	{{~}}
@@ -438,53 +539,66 @@
 
 
 	<script type="text/javascript">
-		var loading;
+		  var loading;
 		var activity;
 		var dindantypeList;
 		var userInfo;
 		var skip = 0;
-		var LIMIT = 6;
+		var LIMIT = 20;
+		var off_on = false;
 		var wareindex2 = 0;
-		var wareindex = 0;
-		$(".nav .active").removeClass("active");
-		
+		var wareindex;
 		apiready = function(){
-			$('.nav'+api.pageParam.nav).addClass("active");
-		    setNavMenuIndex();
+		
+		 wareindex = api.pageParam.nav;
+		
+
+		$(".nav .active").removeClass("active");
+		$('.nav' + api.pageParam.nav).addClass("active");
+		setNavMenuIndex();
 		getAddressList(api.pageParam.nav);
 		}
 		    
 		
-		$(window).scroll(function() {
-			if (getScrollHeight() == getWindowHeight() + getDocumentTop()) {
-				getAddressList(wareindex, true);
-				// toast({
-				// 	message: "数据加载中",
-				// 	time: 3000
-				// })
+		// $(window).scroll(function() {
+		// 	if (getScrollHeight() == getWindowHeight() + getDocumentTop()) {
+		// 		getAddressList(wareindex, true);
+		// 		// toast({
+		// 		// 	message: "数据加载中",
+		// 		// 	time: 3000
+		// 		// })
+		// 	}
+		// });
+		window.addEventListener("scroll", function() {
+			//当时滚动条离底部0px时开始加载下一页的内容
+
+			if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+				if (off_on) {
+					off_on = false;
+					getAddressList(wareindex, true);
+					// toast("动态加载中...",'bottom',1000);
+					// $('.list').append('<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>')
+				}
+
+
 			}
 		});
 
-		function back(){
-			api.sendEvent({
-			    name: 'resmy',
-			});
-			api.closeWin();
-		}
-
 		function setNavMenuIndex() {
 			// alert($('.nav'+getQueryString(0)))
-				
-		
-			
+
+
+
 			$(".nav p").click(function() {
+
 				var i = $(this).attr("i");
-				// if (i == wareindex) {
-				// 	return;
-				// }
+				if (i == wareindex) {
+					// console.log(1);
+					return;
+				}
 				$(".nav .active").removeClass("active");
 				$(this).addClass("active");
-				
+
 				wareindex = i;
 				getAddressList(wareindex, false);
 			})
@@ -492,16 +606,8 @@
 		}
 
 		function openWareWin(_wareId, _wareTypeId) {
-			// window.location.href = "./ware_frame.html?" + window.btoa(encodeURI('wareId=' + _wareId));
-			  api.openWin({
-		           name: 'ware'+_wareId,
-		           url: './ware.html',
-		           pageParam: {
-		               wareId: _wareId
-		           },
-		             
+			window.location.href = "./ware_frame.html?" + window.btoa(encodeURI('wareId=' + _wareId));
 
-		       });
 		}
 
 		function look(_id) {
@@ -514,18 +620,23 @@
 			window.location.href = "./shoppingrenzheng_frame.html?" + window.btoa(encodeURI('shooping=' + _id));
 
 		}
+		
+		function tuihuan(_id){
+			event.stopPropagation();
+			window.location.href = "./tuihuan_frame.html?" + window.btoa(encodeURI('shooping=' + _id));
+		}
 
 		function qianshou(_id) {
 			event.stopPropagation();
 			$(document).dialog({
 				type: 'confirm',
 				style: 'ios',
-				titleText: '签收',
-				content: '您真的已签收了快递了么ლ(′◉❥◉｀ლ)',
+				titleText: '订单签收',
+				content: '请您确认是否已签收此订单的快递?',
 				buttons: [{
 						name: '没有',
 						callback: function() {
-							
+
 						}
 					},
 					{
@@ -534,38 +645,82 @@
 							updateqianshou(_id);
 						}
 					},
-					
-					
+
+
 				]
 			});
-			
+
 
 		}
 		// 已签收
-		function updateqianshou(_id){
-			
-			postajax(url+'updateqianshou',{'id':_id},function(e){
-				if(e.code==200){
+		function updateqianshou(_id) {
+
+			postajax(url + 'updateqianshou', {
+				'id': _id,
+				'userid': userInfo.id
+			}, function(e) {
+				if (e.code == 200) {
 					getAddressList(1);
-					$('#ware_'+_id).remove();
+					$('#ware_' + _id).remove();
 				}
 			})
 		}
-		function no(_data) {
+
+		function no(_data, dindantypeid) {
+
 			event.stopPropagation();
-			var params = {
-				id: _data,
-			}
-			postajax(url + 'deldindan', params, function(ret) {
-				if (ret.code == 200) {
-					$("#ware_" + _data).css('display', 'none');
-					api.sendEvent({
-					    name: 'warecount',
-					    extra: {}
-					});
+			if (dindantypeid == '5c2a39add37a824c5ac6cc64' || dindantypeid == '5c2a39add37a824c5ac6cc67') {
+				$(document).dialog({
+					type: 'confirm',
+					style: 'ios',
+					titleText: '删除订单',
+					content: '订单删除后无法恢复，删除已签收的订单将失去生成购物券的机会',
+					buttons: [{
+							name: '取消',
+							callback: function() {
+
+							}
+						},
+						{
+							name: '确认',
+							callback: function() {
+								
+								var params = {
+									id: _data,
+									userid: userInfo.id
+								}
+								postajax(url + 'deldindan', params, function(ret) {
+									if (ret.code == 200) {
+										$("#ware_" + _data).css('display', 'none');
+									} else {
+										toast(ret.message, '', 800);
+									}
+								})
+								return;
+								
+							}
+						},
+
+
+					]
+				});
+			}else{
+				var params = {
+					id: _data,
+					userid: userInfo.id
 				}
-			})
-			return;
+				postajax(url + 'deldindan', params, function(ret) {
+					if (ret.code == 200) {
+						$("#ware_" + _data).css('display', 'none');
+					} else {
+						toast(ret.message, '', 800);
+					}
+				})
+				return;
+			
+			}
+
+			
 
 		}
 
@@ -576,33 +731,40 @@
 
 		}
 
-		function speak(_wareid, _id, _speaktype) {
+		function speak(_wareid, _id,_evaluateid) {
 			event.stopPropagation();
-			// alert(_speaktype)
-			if (_speaktype == 1) {
-				api.toast({
-					msg: '已评论',
-					duration: 2000,
-					location: 'bottom'
-				});
-				return;
-			}
-
-			api.openWin({
-				name: 'speak.html',
-				url: './speak.html',
-				pageParam: {
-					wareId: _wareid,
-					shoppingid: _id
-				}
+			var notice = $(document).dialog({
+				type: 'notice',
+				infoIcon: '../image/icon/loading.gif',
+				infoText: '正在检测'
 			});
+			
+			
+			getajax(url+'verifyspeak',{'userid':userInfo.id,'shoppingid':_id},function(ret){
+				if(ret.code=='200'){
+						notice.close();
+						if(_evaluateid){
+							location.href="./evaluate_frame.html?"+window.btoa(encodeURI('wareid=' +ret.data.wareid+'&id='+ret.data.id+'&evaluateid='+_evaluateid));
+						}else{
+							location.href="./evaluate_frame.html?"+window.btoa(encodeURI('wareid=' +ret.data.wareid+'&id='+ret.data.id));
+						}
+						
+				}else{
+					notice.close();
+					 $(document).dialog({
+					        titleText: '打击刷单，好评返现',
+					        content:  ret.message,
+					   });
+				}
+			})
+		
 		}
 		// 获取列表页数据
 		function getAddressList(_index, _LoadMore) {
 			dialog('订单加载中');
 			dindanTypeList = [{
 					id: "5c2a3991af3114d73d9ddfc2",
-					name: "待收款"
+					name: "待付款"
 				},
 				{
 					id: "5c2a39a2af3114d73d9ddfc3",
@@ -612,6 +774,18 @@
 					id: "5c2a39add37a824c5ac6cc64",
 					name: "已签收"
 				},
+				{
+					id: "5c2a39add37a824c5ac6cc65",
+					name: "换货"
+				},
+				{
+					id: "5c2a39add37a824c5ac6cc66",
+					name: "退货"
+				},
+				{
+					id: "5c2a39add37a824c5ac6cc67",
+					name: "已取消购买"
+				}
 			]
 			if (_LoadMore) {
 				// mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
@@ -658,16 +832,16 @@
 			dl.close();
 			if (resultText == 0) {
 				// toast('没有资源啦', 'bottom', 2000);
-				api.toast({
-				    msg: '没有资源啦'
-				});
 
+			} else {
+				off_on = true;
 			}
 			if (_index == wareindex2) {
 				$('#list').append(resultText);
 			} else {
 				$('#list').html(resultText);
 			}
+
 
 			$("#loading").addClass("hidden");
 			wareindex2 = _index;

@@ -16,6 +16,7 @@
 </head>
 
 <body>
+    <input id="copyInput" value="" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
     <div class="login open-win" win="person_info">
         <div id="userAccount" class="title" tapmode onclick="login()">点击登录</div>
         <!-- <img id="userAvatar" src="../image/empty_page_nothing.png"  class="personal_logo"> -->
@@ -64,14 +65,14 @@
            </div>
        </div>
        <div class="setlist">
-           <div class="downapp list">
+           <div class="downapp list" onclick="tuihuanxuzhi()">
             <div class="downappimg"></div>
-              <div class="text">APP下载</div> 
+              <div class="text">售后须知</div> 
                
             </div>
-           <div class="getVIP list"  onclick="share()">
+           <div class="getVIP list"   onclick="huodong()">
             <div class="getVIPimg"></div>
-            <div class="text">分享获取VIP</div>   
+            <div class="text">5+返利活动</div>   
             </div>
            <div class="kefu list">
             <div class="kefuimg"></div>
@@ -79,14 +80,32 @@
             </div>
        </div>
    </div>
-  <div class="cdslist">
-    
+ <div class="chaobei">
+  <div class="cbnamecount list">
+    <div class="cbcount">0</div>
+    <div class="cbname">潮贝</div>
   </div>
-      
+  <div class="copy list" onclick="sharemyurl()">
+    <div>复制链接</div>
+  </div>
+  <div class="history list" onclick="cbhistory()">
+    <div>使用记录</div>
+  </div>
+  <div class="cbgz list">
+    <div>潮贝须知</div>
+    <div class="gzimg"></div>
+  </div>
+  </div>
+     <div class="gwq" onclick="opengwq()">
+    <div class="gwqcount">0</div>
+    <div class="gwqtitle">购物券</div>
+  </div>   
 </body>
 
 <script id="template" type="text/template">
+    
     {{~it.list:value:index}}
+
         <div onclick="openDressing({{=value.id}})" class="cdsimg "  data-original="{{=it.imgurl}}{{=value.imglist}}">
             {{if(value.showimgtype=='1'){}}
              <img src="../image/longimg.png" alt="">
@@ -116,12 +135,14 @@
     var skip=0;
     var limit=9;
     var off_on=false;
+    var myurl;
     apiready = function(){
 
             event();
              getUsername();
             // getcdslist();
             shoppingcount();
+            gouwuquanlist();
             reshtml();
     }
     
@@ -191,6 +212,21 @@ function setAvatar(){
     // var userInfo=JSON.parse(localStorage.getItem('userInfo'));
     var userInfo=$api.getStorage('userInfo');
   window.open(imgurl+userInfo.headimg);
+}
+
+function gouwuquanlist(){
+  var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+  var params={
+     userid:userInfo.id
+  };
+  
+  getajax(url+'getgwqcount',params,function(e){
+
+    if(e.code==200){
+      $('.gwqcount').html(e.data)
+    }
+  })
+  
 }
 
 function daifukuan(){
@@ -349,21 +385,26 @@ var  userAvatar=$('#userAvatar');
 var vip=$('#vip');
 
 var params={
-    id:userInfo.id
+    id:userInfo.id,
 }
-postajax(url+'getuser',params,function(ret){
+getajax(url+'getuser',params,function(ret){
     dl.close();
     api.refreshHeaderLoadDone()
+   
     if (ret.code==200) {
         
         var data=ret.data;
         // console.log(data);
+      
         $('.dinyuecount').html(data.dycount);
         $('.fensicount').html(data.bdycount);
         $('.sqcount').html(data.sqcount);
+       
         // localStorage.setItem('userInfo',JSON.stringify( ret.data.user));
         $api.setStorage('userInfo', ret.data.user);
         var data=ret.data.user;
+          myurl=data.id;
+           $('.cbcount').html(data.cb);
         userAccount.html(data.username);
         if (data.headimg!=0) {
             // console.log(headimgurl)
@@ -755,6 +796,56 @@ function openlogin(){
     });
     return;
 }
+
+function tuihuanxuzhi(){
+  api.openWin({
+      name: 'tuihuanxuzhi',
+      url: './tuihuanxuzhi.html',
+      pageParam: {
+          name: 'test'
+      }
+  });
+}
+
+function huodong(){
+  api.openWin({
+      name: 'wujia',
+      url: './wujia.html',
+      pageParam: {
+          name: 'test'
+      }
+  });
+}
+
+function cbhistory(){
+  api.openWin({
+      name: 'cbhistory',
+      url: './cbhistory.html',
+      pageParam: {
+          name: 'test'
+      }
+  });
+
+}
+
+function opengwq(){
+  api.openWin({
+      name: 'gwq',
+      url: './gwq.html',
+      pageParam: {
+          name: 'test'
+      }
+  });
+}
+function sharemyurl() {
+        $('#copyInput').val('http://www.chaodashe.com?'+window.btoa(encodeURI('u='+myurl+'&t=share')));
+        var copyInput = document.getElementById('copyInput')
+        copyInput.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+
+        toast('成功复制链接', 'center', 2000);
+
+      }
 </script>
 
 </html>

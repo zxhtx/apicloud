@@ -1,0 +1,373 @@
+<!DOCTYPE doctype html>
+<html>
+	<head>
+		<link rel="shortcut icon" href="../image/chao.ico" />
+		<meta charset="utf-8">
+		<meta content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" name="viewport" />
+		<meta content="telephone=no,email=no,date=no,address=no" name="format-detection">
+		<title>
+			兑换购物券
+		</title>
+		<script src="../script/commonjs.js">
+		</script>
+		<script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+
+		<style type="text/css">
+			@font-face {
+				font-family: chaodashefont;
+				src: url('../css/Dobkin Script.ttf');
+			}
+
+			html,
+			body {
+				height: 100%;
+				background-color: white;
+				padding: 0;
+				margin: 0;
+			}
+
+			a {
+				text-decoration: none;
+				color: #fff;
+				-webkit-tap-highlight-color: rgba(255, 0, 0, 0);
+			}
+
+			header {
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				width: 100%;
+				height: 40px;
+				background-color: white;
+				z-index: 999;
+				box-shadow: 0px 6px 6px -6px black;
+			}
+
+
+			header h1 {
+				width: 100%;
+				height: 40px;
+				text-align: center;
+				color: #000;
+				font-size: 18px;
+				line-height: 40px;
+				margin: 0px;
+			}
+
+			header .back {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 32px;
+				height: 28px;
+				/*border: 1px solid red;*/
+				background: url(../image/back.png);
+				background-position: center;
+				background-size: cover;
+				background-repeat: no-repeat;
+				margin-top: 6px;
+				margin-left: 4px;
+			}
+			
+		
+
+			.list {
+				margin-top: 43px;
+			}
+			.item{
+				width: 96%;
+				margin: 0 auto;
+				height: 68px;
+				border-bottom: 0.8px solid darkgray;
+				border-radius: 6px;
+				margin-top: 3px;
+				position: relative;
+				
+			}
+			.price{
+				margin-left: 3px;
+				height: 50px;
+				width: 66px;
+				/* border: 1px solid red; */
+				line-height: 66px;
+				text-align: center;
+				font-weight: bold;
+				font-size: 18px;
+				display: inline-block;
+			}
+			
+			.time{
+				position: absolute;
+				right: 9px;
+				top: 29px;
+				display: inline-block;
+				vertical-align: middle;
+				font-size: 13px;
+				color: darkgray;
+			}
+			.wareimg{
+				margin: 6px;
+				margin-top: 6px;
+				width: 50px;
+				height: 50px;
+				background-position: center;
+				background-size: cover;
+				border-radius: 6px;
+				display: inline-block;
+				vertical-align: middle;
+			}
+			.waretext{
+				/* width: 50px; */
+				/* margin-left: 50px; */
+				width:63%;
+				font-size: 14px;
+				vertical-align: middle;
+				display: inline-block;
+				
+			}
+			.wareprice{
+				height: 68px;
+				width: 62px;
+				display: inline-block;
+				line-height: 68px;
+				vertical-align: top;
+				text-align: right;
+			}
+			.imgcolor{
+			    background-color: #ece7e7;
+			}
+			footer{
+				position: fixed;
+				bottom: 0px;
+				left: 0px;
+				width: 100%;
+				height: 50px;
+				/* background: red; */
+				z-index: 999;
+				border-top: 0.5px solid #9D9D9D;
+			}
+			footer .avgprice{
+				display: inline-block;
+				width:calc(100%/1.8);
+				height: 50px;
+				line-height: 50px;
+				margin: 0px;
+				padding-left: 9px;
+			}
+			footer .generate{
+				display: inline-block;
+				height: 50px;
+				width: calc(100%/2.5);
+				vertical-align: top;
+				line-height: 50px;
+				text-align: center;
+				color: #fff;
+				background-color: #000;
+				margin: 0px;
+				border-radius: 12px;
+				font-size: 16px;
+				font-weight: bold;
+			}
+		</style>
+		</meta>
+		</meta>
+	</head>
+	<body>
+
+		<header id="header">
+			<div class="back" onclick="goback()"></div>
+			<h1>生成购物券</h1>
+		</header>
+		<section class="list" id="list">
+
+		</section>
+		<section class="empty" id="empty">
+		</section>
+		<footer>
+			<div class="avgprice">计算得出：0.00</div>
+			<div class="generate" onclick="generate()">生成购物券</div>
+		</footer>
+		<script id="template" type="text/template">
+			{{~it:value:index}}
+			<div class="item" data-select='0' tapmode onclick="select(this,'{{=value.id}}',{{=value.newprice}})">
+				<div class="wareimg" style="background-image: url({{=value.url}});"></div>
+				<div class="waretext">{{=value.description}}</div>
+				<div class="wareprice">{{=value.newprice}}</div>
+			</div>
+				
+            {{~}}
+        </script>
+		<script type="text/javascript">
+			var warelist;
+			var music;
+			var off_on = false;
+			var skip = 0;
+			var limit = 20;
+			var warelist=[];
+			var pricelist=[];
+			var sumprice;
+			getchaodashe();
+			window.addEventListener("scroll", function() {
+				//当时滚动条离底部0px时开始加载下一页的内容
+				if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+					if (off_on) {
+						off_on = false;
+						getchaodashe(true);
+						$('#list').append(
+							'<div id="xuanzhun" class="xz" style="width: 30px;  height: 30px; margin:0 auto; margin-top:12px; "></div>')
+					}
+
+
+				}
+			});
+
+			function select(_this,id,newprice){
+			    // alert(api.pageParam.objname);
+			
+				// console.log(pricelist.length)
+			    var TN= $(_this).attr('data-select');
+			    if(TN==0) {
+			        $(_this).addClass('imgcolor');
+			         $(_this).attr('data-select','1');
+			        warelist.push(id);
+					pricelist.push(newprice);
+					// jisuan();
+					
+			    }else{
+			
+			        for (var i = 0; i<warelist.length; i++) {
+			            if(warelist[i]==id){
+			                warelist.splice(i,1)
+			            }
+			        }
+					for (var i = 0; i<pricelist.length; i++) {
+					    if(pricelist[i]==newprice){
+					        pricelist.splice(i,1)
+					    }
+					}
+				
+			        $(_this).removeClass('imgcolor');
+			         $(_this).attr('data-select','0');    
+					
+			    }
+				if(pricelist.length>5){
+					$(_this).removeClass('imgcolor');
+					 $(_this).attr('data-select','0');
+					   for (var i = 0; i<warelist.length; i++) {
+					       if(warelist[i]==id){
+					           warelist.splice(i,1)
+					       }
+					   }
+					   for (var i = 0; i<pricelist.length; i++) {
+					       if(pricelist[i]==newprice){
+					           pricelist.splice(i,1)
+					       }
+					   }
+					 toast('只能选择五件商品','',500);
+					 // console.log(pricelist.length)
+					 // console.log(pricelist)
+					 return;
+				}
+				
+			
+		
+					jisuan();
+					
+			}
+			
+			function jisuan(){
+				
+				
+				var avg=0;
+				for (var i = 0; i<pricelist.length; i++) {
+				   avg+=pricelist[i];
+				   	
+				}
+				$('.avgprice').html('计算得出：'+ Math.round(avg/6));
+				sumprice=Math.round(avg/6);
+			// console.log(pricelist)
+			}
+			function getchaodashe(_loadMore) {
+				if (_loadMore) {
+					skip += limit;
+				} else {
+					skip = 0;
+					dialog('粉丝加载中');
+				}
+				// var articleid=getQueryString(0);
+
+				var params = {
+					uid: userInfo.id,
+					skip: skip,
+					limit: limit,
+				}
+
+
+				getajax(url + 'getmyshopping', params, function(ret) {
+					if (ret.code == '200') {
+						updateuser(ret.data);
+					} else {
+						$('.list').append(
+							'<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;margin-top: 50px;">-'+ret.message+'-</p>'
+						);
+						$('.xz').remove();
+							dl.close();
+					}
+				})
+
+			}
+
+			function updateuser(data_) {
+				// 编译模板函数
+				
+				var tempFn = doT.template($('#template').text());
+				// 使用模板函数生成HTML文本
+				var resultHTML = tempFn(data_);
+				$("#list").append(resultHTML);
+
+				dl.close();
+				$("img.lazy").lazyload({
+					effect: "fadeIn",
+					threshold: 88,
+				});
+				off_on = true;
+				$('.xz').remove();
+			}
+
+		
+
+		
+			function generate(){
+				console.log(pricelist.length)
+				if(pricelist.length<5){
+					toast('需要选择五件商品','',800);
+					return;
+				}
+				
+				var params={
+					'userid':userInfo.id,
+					'shoppingidlist':warelist.join(','),
+					'sumprice':sumprice
+				}
+				
+				postajax(url+'generategwq',params,function(e){
+					if(e.code==200){
+						toast('成功！快去使用吧');
+						location.replace('./gwq_frame.html')
+					}
+				})
+			}
+			// function shoppingrenzheng(_id) {
+			// 	event.stopPropagation();
+			// 	window.location.href = "./shoppingrenzheng_frame.html?" + window.btoa(encodeURI('shooping=' + _id));
+			
+			// }
+
+			function goback(){
+				api.closeWin();
+			}
+			
+		</script>
+	</body>
+</html>

@@ -304,7 +304,7 @@
 	
 }
 .wareandcds .setlist .downapp .downappimg{
-	background-image: url(../image/downAPP.png);
+	background-image: url(../image/shouhou.png);
 	background-size: cover;
 	background-position: center center;
 	width: 32px;
@@ -315,7 +315,7 @@
 	
 }
 .wareandcds .setlist .getVIP .getVIPimg{
-	background-image: url(../image/shareVIP.png);
+	background-image: url(../image/huodong.png);
 	background-size: cover;
 	background-position: center center;
 	width: 32px;
@@ -374,4 +374,78 @@
     line-height: 16px;
 	background-color:#F74C31;
 	color: #fff;
+}
+.chaobei{
+    width: 96%;
+    
+    border-radius: 3px;
+    margin:0 auto;
+    margin-top: 18px;
+       height:50px ;
+        display: flex;
+        justify-content: flex-start;
+        align-content: space-between;
+        box-shadow: 0px 3px 6px black;
+}
+.chaobei .list{
+    width: calc(100%/3);
+    text-align: center;
+    height: 100%;
+    /* border: 1px solid red; */
+}
+.chaobei .cbnamecount .cbcount{
+    margin-top: 6px;
+}
+.chaobei .cbnamecount .cbname{
+    /* margin-top: 8px; */
+    font-size: 13px;
+}
+.chaobei .copy div{
+    line-height: 50px;
+    font-size: 13px;
+    border-right: 1px solid #d9d8d8;
+    border-left: 1px solid #d9d8d8;
+}
+.chaobei .history div{
+    line-height: 50px;
+    /* display: inline-block; */
+    font-size: 13px;
+    border-right: 1px solid #d9d8d8;
+}
+
+.chaobei .cbgz div{
+    line-height: 50px;
+    display: inline-block;
+    font-size: 13px;
+}
+.chaobei .cbgz .gzimg{
+    width: 16px;
+    height: 16px;
+    background-image: url(../image/yiwen.png);
+    background-size: cover;
+    background-position: center;
+    vertical-align: middle;
+}
+.gwq{
+      width:39%;
+      padding:10% 0 10% 0;
+    /* border: 1px solid red; */
+    margin-left:6px;
+    margin-top: 9px;
+    margin-bottom: 50px;
+    border-radius: 6px;
+    background: #11C1F3;
+    color: #fff;
+}
+.gwqcount{
+    width: 100%;
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+}
+.gwqtitle{
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
 }

@@ -444,6 +444,10 @@ header a {
         <div class="value value-2" id="price1">+&nbsp;</div>
     </div>
     <div class="row">
+        <div class="text">退换须知:</div>
+        <div class="value value-2" onclick="tuihuanxuzhi()" style="color:#000; font-weight: bold;">查看详情</div>
+    </div>
+    <div class="row">
         <div class="text">运费：</div>
         <div class="value value-2">&nbsp;运费平台付</div>
     </div>
@@ -685,6 +689,16 @@ function yesadd(){
 
 });
 
+}
+
+function tuihuanxuzhi(){
+    api.openWin({
+        name: 'tuihuanxuzhi',
+        url: './tuihuanxuzhi.html',
+        pageParam: {
+            name: 'test'
+        }
+    });
 }
 </script>
 </body>

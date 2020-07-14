@@ -14,41 +14,18 @@
    var userInfo=$api.getStorage('userInfo')?$api.getStorage('userInfo'):0;
  // }
 
+ if(userInfo){
+   token=$api.getStorage('token');
+   header={
+    // 'Content-Type': 'application/json;charset=utf8',
+      "Token":token,
+   }
+ }else{
+   header='';
+ }
  
- // apicloud数据库数据
-function apigetajax( url, data, callback) { //封装ajax的一些常用参数  //data数据可以为空
- $.ajax({
-  type: 'get',
-  url: url,
-  dataType: 'json',
-  data: {'filter':data},
-  headers:header,
-  error: function (data) {
-   callback(data);
- },
- success: function (data) {
-  callback(data);
-}
-});
-}
- // apicloud数据库数据
- function apipostajax(url, data, callback){
-  $.ajax({
-    type: 'post',
-    url: url,
-    dataType: 'json',
-    data: data,
-    headers:header,
-    success: function (data) {
-      callback(data);
-    },
-    error: function (data) {
-      callback(data);
-    },
-  });
-}
 // 我的数据库
-function getajax(url,data,callback,header){
+function getajax(url,data,callback){
 	
   $.ajax({
     type: 'get',
@@ -72,7 +49,7 @@ function postajax(url, data, callback){
     url: url,
     dataType: 'json',
     data: data,
-
+    headers:header,
     success: function (data) {
       callback(data);
     },

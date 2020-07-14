@@ -79,6 +79,7 @@
                     // localStorage.setItem('userInfo',JSON.stringify(e.data));
                     // window.location.href="./my_frame.php";
                     $api.setStorage('userInfo', e.data);
+                    $api.setStorage('token', e.token);
                        api.sendEvent({
                             name: 'closeallframe',
                            
