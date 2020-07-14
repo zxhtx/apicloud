@@ -6,7 +6,7 @@
 		<meta content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" name="viewport" />
 		<meta content="telephone=no,email=no,date=no,address=no" name="format-detection">
 		<title>
-			兑换购物券
+			潮贝使用记录
 		</title>
 		<script src="../script/commonjs.js">
 		</script>
@@ -69,61 +69,46 @@
 				margin-top: 6px;
 				margin-left: 4px;
 			}
-			
-			.generategwq{
-				position: absolute;
-				top: 0;
-				right:9px;
-				margin-top: 8px;
-				font-weight: bold;
-			}
 
 			.list {
-				margin-top: 8px;
+				margin-top: 43px;
 			}
 			.item{
 				width: 96%;
 				margin: 0 auto;
-				height: 66px;
+				height: 50px;
 				border-bottom: 0.8px solid darkgray;
 				border-radius: 6px;
 				margin-top: 3px;
 				position: relative;
 				
 			}
-			.price{
+			.cbcount{
 				margin-left: 3px;
 				height: 50px;
-				width: 66px;
+				width: 50px;
 				/* border: 1px solid red; */
-				line-height: 66px;
+				line-height: 50px;
 				text-align: center;
 				font-weight: bold;
-				font-size: 18px;
+				font-size: 16px;
 				display: inline-block;
 			}
-			
+			.text{
+				display: inline-block;
+				vertical-align: middle;
+				font-size: 14px;
+			}
 			.time{
 				position: absolute;
-				right: 9px;
-				top: 29px;
+				right: 5px;
+				top: 19px;
 				display: inline-block;
 				vertical-align: middle;
 				font-size: 13px;
 				color: darkgray;
 			}
-			.generateVoucher{
-				width: 96%;
-				margin: 0 auto;
-				height: 50px;
-				margin-top: 50px;
-				line-height: 50px;
-				text-align: center;
-				border-radius: 6px;
-				background: #9ae2f7;
-				color: #fff;
-				font-weight: bold;
-			}
+	
 		</style>
 		</meta>
 		</meta>
@@ -132,10 +117,8 @@
 
 		<header id="header">
 			<div class="back" tapmode onclick="goback()"></div>
-			<h1>购物券</h1>
-			<div class="generategwq" onclick="opengwqhistory()">历史记录</div>
+			<h1>历史记录</h1>
 		</header>
-		<div class="generateVoucher"  onclick="openmyshopping()">+生成购物券</div>
 		<section class="list" id="list">
 
 		</section>
@@ -144,11 +127,23 @@
 		<script id="template" type="text/template">
 			{{~it:value:index}}
 			<div class="item"  tapmode onclick="shoppingrenzheng('{{=value.shoppingid}}')">
-				<div class="price">
-					{{=value.price}}元
+				<div class="cbcount">
+				{{if(value.type==1){ }}
+				-{{=value.price}}
+				
+				{{ }else{}}
+				+{{=value.price}}
+				{{ } }}
+				</div>
+				<div class="text">
+					{{if(value.type==1){ }}
+					 购买商品使用了{{=value.price}}元的购物券	
+					{{ }else{}}
+					 取消购买商品退回{{=value.price}}元的购物券
+					{{ } }}
 				</div>
 				<div class="time">
-					有效期：终生
+					{{!timestampFormat('{{=value.time}}')}}
 				</div>
 			</div>
 				
@@ -193,12 +188,14 @@
 				}
 
 
-				getajax(url + 'getgwqlist', params, function(ret) {
+				postajax(url + 'gwqhistory', params, function(ret) {
 					if (ret.code == '200') {
+
+
 						updateuser(ret.data);
 					} else {
 						$('.list').append(
-							'<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-'+ret.message+'-</p>'
+							'<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-暂无历史记录-</p>'
 						);
 						$('.xz').remove();
 							dl.close();
@@ -227,33 +224,15 @@
 		
 
 		
-			function goback() {
+		
+			
+			function shoppingrenzheng(_id) {
+				event.stopPropagation();
+				window.location.href = "./shoppingrenzheng_frame.html?" + window.btoa(encodeURI('shooping=' + _id));
+			
+			}
+			function goback(){
 				api.closeWin();
-			}
-			
-			// function shoppingrenzheng(_id) {
-			// 	event.stopPropagation();
-			// 	window.location.href = "./shoppingrenzheng_frame.html?" + window.btoa(encodeURI('shooping=' + _id));
-			
-			// }
-			function openmyshopping(){
-				api.openWin({
-				    name: 'myshoppinglist',
-				    url: './myshoppinglist.html',
-				    pageParam: {
-				        name: 'test'
-				    }
-				});
-			}
-			
-			function opengwqhistory(){
-				api.openWin({
-				    name: 'gwqhistory',
-				    url: './gwqhistory.html',
-				    pageParam: {
-				        name: 'test'
-				    }
-				});
 			}
 		</script>
 	</body>
