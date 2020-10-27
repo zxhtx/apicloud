@@ -25,6 +25,48 @@
                
             </meta>
         </meta>
+        <style>
+         
+          .uploadcds{
+              margin-top: 45px; 
+              width: 100%;
+              height: 50px;
+              
+              display: flex;
+              justify-content: flex-start;
+            } 
+            .cdsimg{
+              width: 43px;
+              height: 43px;
+              background-position: center;
+              background-size: cover;
+              margin-top: 3px;
+              border-radius: 3px;
+              margin-left: 6px;
+        
+            }
+            .texts{
+              margin-left: 8px;
+              width: 80%;
+            
+            }  
+            .cdstext{
+              margin-top: 2px;
+              height: 25px;
+              width: 100%;
+              white-space:nowrap;
+              text-overflow:ellipsis;
+              overflow: hidden;
+              line-height: 25px;
+              font-size: 16px;
+              font-weight: bold;
+            }
+            .cdsjd{
+              font-size: 14px;
+            }
+            
+         
+        </style>
     </head>
     <body>
        
@@ -33,16 +75,27 @@
                 Chaodashe
 
             </a>
-            <a class="headbgcolor" onclick="gobcolor()">
+            <div class="headnav">
+            <a class="headbgcolor" tapmode onclick="gobcolor()">
                 <img src="../image/icon/colorpan.png">
            </a>
-            <a class="headphoto" onclick="headphoto()">
+            <a class="headphoto" tapmode onclick="headphoto()">
                 <img src="../image/Cphoto.png">
             </a>
-            <a class="headshare" onclick="share()">
-                <img src="../image/share.png">
-            </a>
+          <a class="headtitleimg" onclick="openTAuser()">
+           
+          
+         </a>
+       </div>
         </header>
+        <div class="uploadcds"> 
+          <div class="cdsimg"></div>
+          <div class="texts">
+              <div class="cdstext"></div>
+             <div class="cdsjd"></div>
+          </div>
+        
+        </div>
         <section class="list" id="list">
             <!--  <div id="ware_id" class="ware">
             <div class="content">
@@ -63,13 +116,13 @@
             </div>
         </div>         -->
         </section>
-         
+          <!-- <input id="copyInput" value="https://chaodashe.com" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly /> -->
         <section class="empty" id="empty">
         </section>
        <script id="template" type="text/template">
             {{~it.list:value:index}}
-          <div class="box" >
-      <input id="copyInput" value="https://chaodashe.com" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
+          <div class="box box_{{=value.id}}" >
+     
                
                     <div  style="position: relative">
                        
@@ -77,11 +130,11 @@
               
                         {{if(value.uauthority==1){ }}
                         <div class="icon iconauthority">
-                         <div class='headimg lazy ' onclick="TAuser('{{=value.userid}}')" data-original="{{=it.imgurl}}{{=value.userheadimg}}" ></div>
+                         <div class='headimg lazy ' tapmode onclick="TAuser('{{=value.userid}}')" data-original="{{=it.imgurl}}{{=value.userheadimg}}" ></div>
                         </div>
                         {{ }else{ }}
                         <div class="icon iconnoauthority">
-                         <div class='headimg lazy' onclick="TAuser('{{=value.userid}}')" data-original="{{=it.imgurl}}{{=value.userheadimg}}" ></div>
+                         <div class='headimg lazy' tapmode onclick="TAuser('{{=value.userid}}')" data-original="{{=it.imgurl}}{{=value.userheadimg}}" ></div>
                         </div>
                         {{ } }}
             
@@ -89,7 +142,7 @@
                         <div class="uname">
                          <span class="unametext">{{=value.uname}}</span>
                         </div>
-                        <div class="authority" onclick="authority()">
+                        <div class="authority" tapmode onclick="authority('{{=value.uauthoritytext}}')">
                             <img src="../image/authority.png">
                         </div>
                       
@@ -101,12 +154,12 @@
                         {{ } }}
                          {{if(value.Subscribeman=='0' && value.userid!=it.myuserid){ }}
                             <div class="dinyue dinyue_{{=value.userid}}">
-                                   <span onclick="dinyue({{=value.userid}})">·订阅</span>
+                                   <span tapmode onclick="dinyue('{{=value.userid}}')">·订阅</span>
                             </div>
                         {{ } }}
                         </div>
             <div class="fmdiv">
-                <div class="imglistone lazy"  style=" width:100%;height: 20rem;" data-original="{{=it.imgurl}}{{=value.fm}}"  data-like_userid="{{=value.like_userid}}"  data-articleid="{{=value.id}}" onclick="openDressing('{{=value.id}}')" data-likeid="like{{=value.id}}"  >
+                <div class="imglistone lazy"  style="background:{{=value.Dressingbgcolor}};background-image:url(../image/tm.png); width:100%;height: 20rem;" data-original="{{=it.imgurl}}{{=value.fm}}"  data-like_userid="{{=value.like_userid}}"  data-articleid="{{=value.id}}" tapmode onclick="openDressing('{{=value.id}}')" data-likeid="like{{=value.id}}"  >
                  {{if(value.showimgtype==1){ }}
                         <img class="minimg" src="../image/longimg.png" alt="">
                 {{ }else{ }}
@@ -119,18 +172,18 @@
             <div class="warelists warelists_{{=value.id}}"></div>
                     <div class="duogongneng" >
                         {{if(value.like_userid==0)}}
-                         <img onclick="belike('{{=value.id}}',this,'{{=value.userid}}')" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likeb.png">
+                         <img tapmode onclick="belike('{{=value.id}}',this,'{{=value.userid}}')" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likeb.png">
                         {{ else{ }}
-                         <img onclick="belike('{{=value.id}}',this,'{{=value.userid}}')" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likea.png">
+                         <img tapmode onclick="belike('{{=value.id}}',this,'{{=value.userid}}')" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likea.png">
                         {{ } }}
-                        <img class="Cspeak" onclick="opendetails('{{=value.id}}')" src="../image/Cspeak.png">
-            {{if(value.type=='0'){ }}
-            <img src="../image/lianjie.png" class="lianjie lianjie_{{=value.id}}" onclick=lianjie('{{=value.id}}','{{=value.imglist}}',{{=value.warelist}}) alt="">
+                        <img class="Cspeak" tapmode onclick="opendetails('{{=value.id}}')" src="../image/Cspeak.png">
+            {{if(value.warelist!=0){ }}
+            <img src="../image/lianjie.png" class="lianjie lianjie_{{=value.id}}" tapmode onclick=lianjie('{{=value.id}}','{{=value.imglist}}',{{=value.warelist}}) alt="">
             {{ } }}
                         {{if(value.shuqian_userid==0){ }}
-                        <img onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')" id="shuqian{{=value.id}}" data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" src="../image/shuqianb.png">
+                        <img tapmode onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')" id="shuqian{{=value.id}}" data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" src="../image/shuqianb.png">
                         {{ }else{ }}
-                        <img onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')" id="shuqian{{=value.id}}"  data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" src="../image/shuqiana.png">
+                        <img tapmode onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')" id="shuqian{{=value.id}}"  data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" src="../image/shuqiana.png">
                         {{ } }}
                     </div>
                      {{ if(value.type=='0'){ }}
@@ -149,14 +202,14 @@
 
           
                 </div>
-
+              </div>
             
         </div>
         {{~}}
         </script>
     <script id="template4" type="text/template">
       {{~it:value:index}}
-        <div class="wareitem" onclick="openware('{{=value.bid}}')">
+        <div class="wareitem" tapmode onclick="openware('{{=value.bid}}')">
          <div class="wareimg wareimgs" data-original="{{=value.image}}"></div>
          <div class="wareinfo">
            <div class="waretext">{{=value.description}}</div>
@@ -176,15 +229,74 @@
       var sqtime = 0;
       var liketime = 0;
       var clicki= 0;
+      var userInfo;
       apiready = function(){
-           $('.chaodashe').addClass('now').siblings().removeClass('now');
+        userInfo=$api.getStorage('userInfo');
+        $('.uploadcds').hide();
+        $('.chaodashe').addClass('now').siblings().removeClass('now');
         getchaodashe();
         reshtml();
+        even();
       }
-          
-             
+        
+      function even(){
+        api.addEventListener({
+            name: 'progress'
+        }, function(ret, err) {
+            if (ret) {
+                if(ret.value.v1==100){
+                  $('.cdsjd').html('发布成功');
+                  setTimeout(function(){
+                    $('.uploadcds').fadeOut(2000);
+                  },2000)
+                  setTimeout(function(){
+                    $('.list').css('margin-top','52px');
+                  },4000)
+                  api.sendEvent({
+                      name: 'reloaddynamic',
+                      extra: {
+                      }
+                  });
+                  api.sendEvent({
+                      name: 'addonclick',
+                     
+                  });
+                }else{
+                  $('.uploadcds').fadeIn(800);
+                    $('.list').css('margin-top','0px');
+                  $('.cdsimg').css('background-image','url('+ret.value.img+')');
+                  if (ret.value.text) {
+                    $('.cdstext').html(ret.value.text);
+                  }else{
+                     $('.cdstext').html('...');
+                  }
+                  
+                  $('.cdsjd').html('正在发布('+ret.value.v1+'%)');
+                }
+                
+            } 
+        });
+
+        api.addEventListener({
+            name: 'reschaodashe'
+        }, function(ret, err) {
+            if (ret) {
+              // alert(1);
+              // $('#list').html(1);
+             getchaodashe();
+            }
+        });
+
+        api.addEventListener({
+            name: 'delDressing'
+        }, function(ret, err) {
+            if (ret) {
+                $('.box_'+ret.value.value).remove();
+            } 
+        });
+      }     
       function reshtml(){
-       
+        api.refreshHeaderLoadDone() 
         api.setCustomRefreshHeaderInfo({
             bgColor: '#fff',
             images: [
@@ -200,7 +312,8 @@
         }, function() {
             //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
             //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
-           
+            dl.close();
+             // alert(1)
            getchaodashe();
         });
       }
@@ -208,9 +321,11 @@
  //上拉加载
      window.addEventListener("scroll", function (){
           //当时滚动条离底部0px时开始加载下一页的内容
+
           if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
           if(off_on){
             off_on=false;
+            
             getchaodashe(true);
             // toast("动态加载中...",'bottom',1000);
             $('.list').append('<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>')
@@ -219,13 +334,43 @@
              
           }
       });
-
+     function openTAuser(){
+    if(userInfo){
+      api.openWin({
+          name: 'TAusercenter',
+          url: './TAusercenter.html',
+          pageParam: {
+              uid: userInfo.id
+          }
+      });
+    }else{
+      api.openWin({
+          name: 'login',
+          url: './login.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+      return;
+    }
+  }
     function getchaodashe(_LoadMore) {
     // toast=$(document).dialog({
     //     type : 'toast',
     //     infoIcon: '../image/icon/load.gif',
     //     infoText: '动态加载中',
     // });
+    // alert(1);
+ 
+
+     userInfo=$api.getStorage('userInfo');
+   if(userInfo){ 
+    $('.headtitleimg').html('<img src='+imgurl+userInfo.headimg+'>')
+  
+  }else{
+    $('.headtitleimg').html('<font>C</font>')
+    
+  }
   if(_LoadMore){
     skip+=limit;
   }else{
@@ -251,8 +396,9 @@
     }
      }
 
-    
+
     postajax(url+'getchaodashe',params,function(ret){
+      
         if (ret.code=='200') {
       for(var i=0;i<ret.data.length;i++){
         ret.data[i].warelist=JSON.stringify(ret.data[i].warelist);
@@ -261,7 +407,7 @@
             fnUpdateWareListByShoppingCart(ret.data,_LoadMore);
       
         }else{
-      $('.list').append('<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-木有动态了-</p>');
+      $('.list').append('<p class="nodata" style=" text-align: center;color: #ddd;height: 50px;line-height: 50px;">-木有动态了-</p>');
       $('.xz').remove();
     }
     })
@@ -285,9 +431,11 @@ function fnUpdateWareListByShoppingCart(data_,_LoadMore) {
     // 使用模板函数生成HTML文本
     var resultHTML = tempFn(param);
   if(_LoadMore){
+
       $("#list").append(resultHTML);
   }else{
       $("#list").html(resultHTML);
+
   }
   if(data_.length<1){
     toast('没有动态了...','bottom',800);
@@ -298,12 +446,14 @@ function fnUpdateWareListByShoppingCart(data_,_LoadMore) {
 
   $('.xz').remove();
   $(".lazy").lazyload({
-     effect: 'fadeIn',
+     // effect: 'fadeIn',
   });
   
- 
+  // setTimeout(function(){
+    dl.close();
+  // },2000)
     
-     dl.close();
+ 
 }
 // 点赞
 
@@ -558,11 +708,27 @@ function opendetails(_id){
 }
 
 function headphoto(){
-   
-    toast('网页版暂不支持此功能','bottom',800);
+   var userInfo=$api.getStorage('userInfo');
+   if(!userInfo){
+     api.toast({
+         msg: '请登录后再操作'
+     });
+     return;
+   }
+   api.openWin({
+       name: 'dynamic',
+       url: './dynamic.html',
+       pageParam: {
+           name: 'test'
+       }
+       ,singleInstance:true,
+   });
 }
-function authority(){
-    toast('官方认证用户','center',800);
+function authority(val){
+    
+    api.toast({
+        msg: val
+    });
 }
 
 function loadImage(){
@@ -584,34 +750,17 @@ function TAuser(uid){
 function lianjie(id,imglists,warelists){
   $('.warelists_'+id).append('<div id="xuanzhun" class="xz1" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; border-bottom:1px solid #FF4466; ">')
   
-  var arrimg=imglists.split(',');
-  fnwarelist(arrimg,warelists,id);
+ var arrimg=imglists.split(',');
+  ajaxwarelist(warelists,id);
     
 }
 
-    function fnwarelist(imglist,warelists,_id) {
- 
-        for (var i = 0; i < imglist.length; i++) {
-          var imgsrc = imglist[i].split('/')[1].split('.')[0];
-          var src = imgsrc.replace(/\-|\@|\=|\+|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\?|\{|\}|\:|\;|\'|\"|\/|\<|\>|\[|\]/g, '');
-          if (warelists[src]) {
-            var warestr = warelists[src];
-            warearray.push(warestr);
-          }
-        }
-        
-        for (var i = 1; i < warearray.length; i++) {
-          warearray[0].push.apply(warearray[0], warearray[i]);
-        }
-
-        ajaxwarelist(_id);
-      }
-
-      function ajaxwarelist(_id) {
+    
+      function ajaxwarelist(warelists,_id) {
 
        
         var params = {
-             bid:warearray[0].toString()
+             bid:warelists
       
         }
         getajax(url+'Dressingware', params, function(ret) {
@@ -639,14 +788,14 @@ function lianjie(id,imglists,warelists){
         
       }
       
-    function share() {
-        var copyInput = document.getElementById('copyInput')
-        copyInput.select(); // 选择对象
-        document.execCommand("Copy"); // 执行浏览器复制命令
+    // function share() {
+    //     var copyInput = document.getElementById('copyInput')
+    //     copyInput.select(); // 选择对象
+    //     document.execCommand("Copy"); // 执行浏览器复制命令
 
-        toast('成功复制链接', 'center', 2000);
+    //     toast('成功复制链接', 'center', 2000);
 
-      }
+    //   }
     function openware(wareid){
        // window.location.href="./ware_frame.html?"+window.btoa(encodeURI("wareId="+wareid));
        api.openWin({
@@ -669,7 +818,7 @@ function lianjie(id,imglists,warelists){
         },
        
            });
-  }
+    }
     
 </script>
 </body>

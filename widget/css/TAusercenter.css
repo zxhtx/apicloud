@@ -55,20 +55,23 @@ body,html{
 }
 
 .userinfo .head .headimg{
-	width: 32%;
-	/* border: 1px solid red; */
-	background-color: #fff;
+	  width: 96px;
+    height: 96px;
+    background-color: #fff;
+    border-radius: 50%;
+	margin: 8px;
 }
 .userinfo .head .headimg .img{
 
-	background-position: center center;
+		background-position: center center;
 	background-size: cover;
 	width: 88px;
 	height: 88px;
 	border-radius: 50%;
 	margin: 0 auto;
 	margin-top: 22px;
-	border: 1px solid #ddd;
+	border: 2px solid #fff;
+	margin: 2px;
 }
 .userinfo .head .headinfo{
 	width: 68%;
@@ -155,7 +158,12 @@ body,html{
 	display: inline-block;
 	height: 18px;
 }
-.userinfo .textinfo .authority{
+.userinfo .textinfo .rzdiv {
+	display: inline-block;
+	/* display: flex; */
+	/* justify-content: flex-start; */
+}
+.userinfo .textinfo .rzdiv .authority{
 	background-image: url('../image/noauthority.png');
 	background-size: cover;
 	background-position: center center;
@@ -176,7 +184,12 @@ body,html{
 	font-size: 14px;
 }
 
-
+.userinfo .textinfo .rzdiv .authoritytext{
+	display: inline-block;
+	vertical-align: top;
+	font-size: 14px;
+	font-weight: bold;
+}
 
 .cdslist {
 	
@@ -218,4 +231,7 @@ body,html{
 	display: inline-block;
 	margin-right: 6px;
 	margin-bottom: 3px;
+}
+.iconauthority {
+    background-image: linear-gradient(to bottom left,#B50C82, #FDA641);
 }

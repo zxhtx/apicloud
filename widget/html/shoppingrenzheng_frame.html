@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-	<title>下单Frame</title>
-	<link rel="stylesheet" type="text/css" href="../css/api.css" />
-	<style>
-	html,
-	body {
+	<head>
+		<link rel="shortcut icon" href="../image/chao.ico" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>商品购买详情</title>
+		<script src="../script/commonjs.js"></script>
+		<style>
+			html,
+
+	body,body {
+		padding: 0px;
+		margin:0px;
 		height: 100%;
 		background-color: #fff;
 	}
@@ -152,7 +156,8 @@
 		padding: 8px 16px;
 		width: 100%;
 		height: 80px;
-		background-color: #f1f5f8;
+		background-color: white;
+		border: 0.3px solid  #F1F1F1;
 	}
 
 	.order .icon-panel .icon {
@@ -269,96 +274,6 @@
 		color: black;
 	}
 
-	.pay {
-		position: relative;
-		width: 100%;
-		height: auto;
-	}
-
-	.pay .title {
-		position: relative;
-		box-sizing: border-box;
-		padding-left: 40px;
-		width: 100%;
-		height: 44px;
-		line-height: 44px;
-		font-size: 16px;
-		text-align: left;
-		color: black;
-		background-color: #fff;
-		background-image: url(../image/order_pay.png);
-		background-repeat: no-repeat;
-		background-size: auto 16px;
-		background-position: 12px center;
-	}
-
-	.pay .row {
-		position: relative;
-		box-sizing: border-box;
-		width: 100%;
-		height: 50px;
-		margin-bottom: 1px;
-		padding-left: 96px;
-		text-align: left;
-		font-size: 16px;
-		color: black;
-		line-height: 50px;
-		background-color: #fff;
-		background-repeat: no-repeat;
-		background-size: auto 36px;
-		background-position: 12px center;
-	}
-
-	.pay .row-balance-pay {
-		background-image: url(../image/icon_balance_pay.png);
-	}
-
-	.pay .row-wxpay {
-		background-image: url(../image/icon_wxpay.png);
-	}
-
-	.pay .row-alipay {
-		background-image: url(../image/icon_alipay.png);
-	}
-
-	.pay .row-disable {
-		opacity: 0.5;
-	}
-
-	.pay .row .text {
-		display: inline-block;
-		width: auto;
-		height: 50px;
-	}
-
-	.pay .row .text-recommend {
-		box-sizing: border-box;
-		padding-right: 28px;
-		display: inline-block;
-		width: auto;
-		height: 50px;
-		background-image: url(../image/recommend.png);
-		background-repeat: no-repeat;
-		background-size: 20px 20px;
-		background-position: right center;
-		border-radius: 10px;
-	}
-
-	.pay .row .select {
-		position: absolute;
-		top: 0;
-		right: 16px;
-		width: 50px;
-		height: 50px;
-		background-repeat: no-repeat;
-		background-position: right center;
-		background-size: auto 20px;
-		background-image: url(../image/order_off.png);
-	}
-
-	.pay .row .selected {
-		background-image: url(../image/order_on.png);
-	}
 
 	.highlight {
 		opacity: 0.7;
@@ -378,148 +293,230 @@
 		text-align: center;
 
 	}
-</style>
-</head>
+	 #loading{
+    z-index: 9999;
+  }
+  .hidden{
+    display:none;
+  }
+  .show{
+    margin-top: 188px;
+    display:'';
 
-<body>
-	<section class="order">
-		<div class="title">订单信息</div>
-		<div class="icon-panel">
+  }
+  header{
+		width: 100%;
+		height: 40px;
+		background: white;
+		 border-bottom: 0.3px solid #F1F1F1;
+	}
+	header .back {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 40px;
+		height: 40px;
+		z-index: 2;
+	}
+	
+	header .back img {
+		margin-top: 5px;
+		margin-left: 4px;
+		width: 28px;
+		height: 30px;
+	}
+	header a{
+		display: block;
+		text-align: center;
+		line-height: 40px;
+		font-size: 16px;
+		font-weight: bold;
+
+	}
+	*{
+		font-weight: bold;
+	}
+	.zhangdan{
+		width: 100%;
+		height: 100px;
+	}
+	.dandanjian,.cb,.gouwuquan{
+		margin-left:66%;
+		font-size: 13px;
+		color: gray;
+		line-height: 33px;
+		
+	}
+	.liuyan{
+		width: 96%;
+		margin: 0 auto;
+		height: 88px;
+		color: gray;
+		/* border: 1px solid red; */
+	}
+</style>
+	</head>
+ <input id="copyInput" value="http://www.chaodashe.com" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;" />
+	<body>
+		<header>
+			<div class="back" tapmode onclick="api.closeWin();">
+				<img src="../image/back.png">
+			</div>
+			<a>订单详情</a>
+		</header>
+		<!-- 	<div class="wrapp" id="loading">
+    <div class="load-7">
+      <div class='k-square-holder2' >
+        <div class='k-square3 k-square3a'></div>
+        <div class='k-square3 k-square3b'></div>
+        <div class='k-square3 k-square3c'></div>
+        <div class='k-square3 k-square3d'></div>
+      </div>
+    </div>
+  </div> -->
+		<section class="address" id="address">
 			<div class="icon">
-				<img src="../image/order_ware.gif" id="image" alt="">
 			</div>
 			<div class="info">
-				<div class="top" id="warename">佳沛绿奇异果</div>
-				<div class="description" id="description"></div>
-				<div class="bottom" id="wareprice">￥19.9</div>
+				<div class="top">
+					<div class="consignee" id="shouhuoren">收货人：...</div>
+					<div class="mobile" id="mobile">...</div>
+				</div>
+				<div class="bottom">
+					<div class="type" id="type">【...】</div>
+					<div class="text" id="text">...</div>
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="text">商品金额：</div>
-			<div class="value value-2" id="price1">+&nbsp;￥19.9</div>
-		</div>
-		<div class="row">
-			<div class="text">运费：</div>
-			<div class="value value-2">&nbsp;运费平台付</div>
-		</div>
+		</section>
+		<section class="order">
+			<!-- <div class="title">订单信息</div> -->
+			<div class="icon-panel">
+				<div class="icon">
+					<img src="../image/order_ware.gif" id="image" alt="">
+				</div>
+				<div class="info">
+					<div class="description" id="description"></div>
+					<div class="bottom" id="wareprice">￥19.9</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="text">运费：</div>
+				<div class="value value-2">&nbsp;运费平台付</div>
+			</div>
+
+
+
+			<div class="row">
+				<div class="text">颜色：</div>
+				<div class="value value-2" id="color">-&nbsp;</div>
+			</div>
+
+			<div class="row">
+				<div class="text">尺码：</div>
+				<div class="value value-2" id="size">-&nbsp;</div>
+			</div>
+			<div class="row" onclick="copydindanhao()">
+				<div class="text">订单号：</div>
+				<div class="value value-2" id="dindanhao">-&nbsp;</div>
+			</div>
+			<div class="row ">
+				<div class="text">详细账单：</div>
+				<div class="value value-2" id="newprice">-&nbsp;</div>
+			</div>
+			<div class="zhangdan">
+
+				<div class="dandanjian">
+					<div class="name">单单减：<span></span></div>
+				</div>
+				<div class="cb">
+					<div class="name">潮贝：<span></span></div>
+				</div>
+				<div class="gouwuquan">
+					<div class="name">购物券金额：<span>未使用</span></div>
+				</div>
+
+			</div>
+
+		<div class="liuyan">我的留言:</div>
+		</section>
+
+	</body>
+
+	<script type="text/javascript">
+		var types = ['公司', '住宅', '学校', '其它'];
 		
-		<div class="row">
-			<div class="text">购买人：</div>
-			<div class="value value-2" id="username">-&nbsp;</div>
-		</div>
-
-		<div class="row">
-			<div class="text">颜色：</div>
-			<div class="value value-2" id="color">-&nbsp;</div>
-		</div>
-
-		<div class="row">
-			<div class="text">鞋码：</div>
-			<div class="value value-2" id="size">-&nbsp;</div>
-		</div>
-
-		<div class="row-1">
-			<div class="value value-2">实付款：&nbsp;<span class="color" id="price2">￥24.9</span></div>
-		</div>
-	</section>
-</body>
-<script type="text/javascript" src="../script/api.js"></script>
-<script type="text/javascript" src="../script/SHA1.js"></script>
-<script type="text/javascript">
-	apiready = function() {
-		getware();
-		initEventLisen();
+		apiready = function(){
+		    getware();
+		}
+    
 
 
-	};
-	var types = ['公司', '住宅', '学校', '其它'];	
-	var times = Date.parse(new Date());
+		var types = ['公司', '住宅', '学校', '其它'];
+		var times = Date.parse(new Date());
 
-	function getware(){
-		var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
-      var params={
-      	fields:{},
-      	fields: {},
-      	where: {
-      		id:api.pageParam.shoppingid
-      	},
-      	skip:0
-      }
-      params=$api.jsonToStr(params);
-      api.ajax({
-      	url: 'http://d.apicloud.com/mcm/api/shoppinginformation?filter='+params,
-      	method: 'get',
-      	headers: {
-      		"X-APICloud-AppId": "A6099267504667",
-      		"X-APICloud-AppKey":   appKey
-      	},
+		function getware() {
+			// alert(api.pageParam.shoppingid)
+			var params = {
+				id: api.pageParam.shoppingid,
+				uid:userInfo.id
 
-      },function(ret, err){
-      	if (ret) {
-            // 赋值
-            // alert($api.jsonToStr(ret))
-            // return
-            updateWare(ret);
-        } else {
-        	api.toast({
-        		msg: err.msg,
-        		duration: 2000,
-        		location: 'bottom'
-        	});
-        }
-    });
+			}
+			postajax(url + 'getoneshopping', params, function(ret) {
+				// alert($api.jsonToStr(ret))
+				if (ret.code == 200) {
+					updateWare(ret.data);
+					if(ret.data[0].liuyan){
+						$('.liuyan').html('我的留言：'+ret.data[0].liuyan)
+					}else{
+						$('.liuyan').empty();
+					}
+				}
+			})
 
-  }
-  function updateWare(_data){
 
-  	var warename=$api.byId('warename');
-  	var wareprice=$api.byId('wareprice');
-  	var price1=$api.byId('price1');
-  	var price2=$api.byId('price2');
-  	var image=$api.byId('image');    
-  	// var date=$api.byId('date');    
-  	var username=$api.byId('username');
-  	var description=$api.byId('description');
-  	var color=$api.byId('color');
-  	var size=$api.byId('size');
-  	color.innerHTML=_data[0].color;
-  	size.innerHTML=_data[0].size;
-  	description.innerHTML=_data[0].description;    
-  	warename.innerHTML=_data[0].warename;
-  	wareprice.innerHTML='￥'+_data[0].price;
-  	price1.innerHTML='￥'+_data[0].price;
-  	price2.innerHTML='￥'+_data[0].price;
-  	image.src=_data[0].url;
-  	// if (_data[0].duihuanma==null) {
-  	// 	date.innerHTML=times;
-  	// }else{
-  	// 		date.innerHTML=_data[0].duihuanma;
 
-  	// }
+		}
 
-  	username.innerHTML=_data[0].username;
-  }
+		function updateWare(_data) {
 
-  function initEventLisen(){
-  	api.addEventListener({
-  		name: 'jietu'
-  	}, function(ret, err){
-  		var screenClip = api.require('screenClip');
-  		screenClip.screenShot({album:true,imgPath:'fs://DCIM/du',imgName:times+'.png'},function(ret, err) {
-  			if (ret.status) {
-  				api.toast({
-  					msg: '截图成功',
-  					duration: 2000,
-  					location: 'bottom'
-  				});
-  			} 
-  		})
-
-  	});
-  }
-
-</script>
+			var warename = $('#warename');
+			var wareprice = $('#wareprice');
+			var newprice = $('#newprice')
+			var image = $('#image');
+			var date = $('#date');
+			var description = $('#description');
+			var color = $('#color');
+			var size = $('#size');
+			color.html(_data[0].color);
+			size.html(_data[0].size);
+			description.html(_data[0].description);
+			warename.html(_data[0].warename);
+			wareprice.html('￥' + _data[0].oldprice);
+			newprice.html('￥' + _data[0].newprice);
+			image.attr('src', imgurl+_data[0].url);
+			// 详细账单
+			$('.dandanjian>.name>span').html(_data[0].dandanjian);
+			$('.cb>.name>span').html(_data[0].cb);
+			$('.gouwuquan>.name>span').html(_data[0].gouwuquan+'元');
+			// 地址信息
+			$('#shouhuoren').html(_data[0].shoppingname);
+			$('#mobile').html(_data[0].mobile);
+			$('#type').html('【' + types[_data[0].addresstype] + '】')
+			$('#text').html(_data[0].address + '/' + _data[0].house);
+			$('#dindanhao').html(_data[0].dindanhao);
+			$('#copyInput').val(_data[0].dindanhao);
+			$("#loading").addClass('hidden');
+		}
+		function copydindanhao() {
+				var copyInput = document.getElementById('copyInput')
+				copyInput.select(); // 选择对象
+				document.execCommand("Copy"); // 执行浏览器复制命令
+				api.toast({
+				    msg: '已复制订单号'
+				});
+		
+			}
+	</script>
 
 </html>

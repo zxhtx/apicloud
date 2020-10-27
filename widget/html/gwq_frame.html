@@ -135,7 +135,7 @@
 			<h1>购物券</h1>
 			<div class="generategwq" onclick="opengwqhistory()">历史记录</div>
 		</header>
-		<div class="generateVoucher"  onclick="openmyshopping()">+生成购物券</div>
+		<div class="generateVoucher bgcolor"  onclick="openmyshopping()">+生成购物券</div>
 		<section class="list" id="list">
 
 		</section>
@@ -161,7 +161,22 @@
 			var skip = 0;
 			var limit = 20;
 
-			getchaodashe();
+			
+			apiready = function(){
+			    event();
+			    getchaodashe();
+			}
+
+			function event(){
+				api.addEventListener({
+				    name: 'reloadgwq'
+				}, function(ret, err) {
+				    if (ret) {
+				 		getchaodashe();
+				    }
+				});
+			}
+			    
 			window.addEventListener("scroll", function() {
 				//当时滚动条离底部0px时开始加载下一页的内容
 				if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
@@ -192,13 +207,13 @@
 					limit: limit,
 				}
 
-
+					$(".bgcolor").css("cssText", "background-color:" + userInfo.Dressingbgcolor + " !important;");
 				getajax(url + 'getgwqlist', params, function(ret) {
 					if (ret.code == '200') {
 						updateuser(ret.data);
 					} else {
 						$('.list').append(
-							'<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-'+ret.message+'-</p>'
+							'<p class="nodata" style=" text-align: center;color: #ddd;height: 50px;line-height: 50px;">-'+ret.message+'-</p>'
 						);
 						$('.xz').remove();
 							dl.close();

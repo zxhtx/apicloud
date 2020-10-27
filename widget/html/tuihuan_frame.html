@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+	  <link rel="shortcut icon" href="../image/chao.ico" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>title</title>
+	<!-- <script src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script> -->
+	<!-- <script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.11.1/jquery.min.js"></script> -->
+	<!-- <script type="text/javascript" src="http://39.108.10.146/js/SHA1.js"></script> -->
+	<script src="../script/commonjs.js"></script>
+	<style>
+		*{
+			margin: 0px;
+		}
+	header{
+	    width: 100%;
+	    height: 40px;
+	    background: white;
+		box-shadow:0px 6px 6px -6px black;
+		position: fixed;
+		top: 0px;
+		left:0px;
+		z-index: 999;
+	}
+	header .back {
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    width: 40px;
+	    height: 40px;
+	    z-index: 2;
+	}
+	
+	header .back img {
+	    margin-top: 5px;
+	    margin-left: 4px;
+	    width: 28px;
+	    height: 30px;
+	}
+	header a{
+	    display: block;
+	    text-align: center;
+	    line-height: 40px;
+	    font-size: 16px;
+	    font-weight: bold;
+	
+	}
+	.thtype{
+		margin-top: 50px;
+	}
+	.th{
+		text-align: center;
+		width: 96%;
+		border-radius: 3px;
+		border: 2px solid #b4b1b1;
+		
+		height: 50px;
+		line-height: 50px;
+		font-size: 16px;
+		font-weight: bold;
+		margin: 0 auto;
+		margin-top: 9px;
+	}
+	.text{
+		width: 96%;
+		height: 166px;
+		margin: 0 auto;
+		margin-top: 30px;
+		outline:none;
+		border: 1px solid #dbdbdb;
+		border-radius: 3px;
+	}
+	[contentEditable=true]:empty::before {
+	    content: "退换理由，可不填写！";
+	    color: gray;
+	}
+	.btn{
+		width: 98%;
+		height: 50px;
+		/* border: 1px solid red; */
+		text-align: center;
+		line-height: 50px;
+		margin: 0 auto;
+		font-size: 16px;
+		font-weight: bold;
+		color: #fff;
+		background: #b4b1b1;
+		margin-top: 100px;
+		border-radius: 3px;
+	}
+	.bgcolor{
+		background: #b4b1b1;
+		color: #fff;
+	}
+	.tranbgcolor{
+		background: '';
+		/* color: #000; */
+	}
+	.divupdateMask{
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		width: 100%;
+		height: 100%;
+		/* background: #000; */
+	}
+	.divupdate{
+		position: relative;
+		width: 88%;
+		height: 40%;
+		background: #fff;
+		margin: 0 auto;
+		margin-top:50%;
+		border: 2px solid  #b4b1b1;
+		border-radius: 5px;
+		background: #fbf9f9;
+	}
+	.updateback{
+		position: absolute;
+		right: 9px;
+		top: -2px;
+		font-size: 22px;
+		color: gray;
+		
+	}
+	#xuanzhun{
+		position: absolute;
+		left: 47%;
+		top: -39%;
+	}
+	.wareInfo{
+		position: absolute;
+		width: 100%;
+		height: 87%;
+		margin-top: 33px;
+		/* background: red; */
+	}
+	.info-color .yanse{
+	  padding: 5px 8px 5px 8px;
+	  margin:3px;
+	  font-size: 12px;
+	  color: white;
+	  background: #b4b1b1;
+	  border: 1px solid #ccc;
+	  border-radius: 6px;
+	  display: inline-block;
+	
+	}
+	.info-color .yanse.now{
+	  padding: 5px 8px 5px 8px;
+	  font-size: 12px;
+	  color: #999797;
+	  background: white;
+	  border: 1px solid #b4b1b1;
+	  font-weight: bold;
+	}
+	
+	.info-discount .cima{
+	  padding: 5px 8px 5px 8px;
+	  margin:3px;
+	  font-size: 12px;
+	  color: white;
+	  background: #b4b1b1;
+	  border: 1px solid #ccc;
+	  border-radius: 6px;
+	  display: inline-block;
+	}
+	.info-discount .cima.now{
+	 padding: 5px 8px 5px 8px;
+	 font-size: 12px;
+	 color: #999797;
+	 background: gray;
+	 background: white;
+	 border: 1px solid #b4b1b1;
+	
+	}
+	.btn2{
+		position: absolute;
+		    margin-top: 12%;
+		    margin-left: 26%;
+		width: 50%;
+		height: 40px;
+		text-align: center;
+		line-height: 40px;
+	   background:#b4b1b1;
+	   border-radius: 3px;
+		/* margin: 0 auto; */
+		color: #fff;
+	}
+	.hidden{
+		display: none;
+	}
+	.show{
+		display: black;
+	}
+	.red{
+		color: #f85959;
+		width: 100%;
+		text-align: center;
+		font-size: 12px;
+	}
+</style>
+</head>
+<body>
+	<header>
+	    <div class="back" tapmode onclick="api.closeWin();">
+	        <img src="../image/back.png">
+	    </div>
+	    <a>售后处理</a>
+	</header>
+	<div class="thtype">
+		<div class="t th" onclick="clickth(0,this)">退货/退款</div>
+		<p class="red">注意：申请成功后复制订单号联系官方客服退款以及商家收货地址</p>
+		<div class="h th" onclick="clickth(1,this)">换货</div>
+		<p class="red">注意：申请成功后复制订单号联系官方客服获取商家收货地址</p>
+	</div>
+	<div contenteditable="true"  class="text" ></div>
+	
+	<div class="btn" onclick="updatedata()">确认</div>
+	<div class="divupdateMask hidden">
+		<div class="divupdate">
+			<div class="updateback" onclick="updateback(0)">x</div>
+			<div id="xuanzhun" class="xz" style="width: 30px; height: 30px;border-bottom: 2px solid #b4b1b1; margin:0 auto; margin-top:50%; "></div>
+			<div class="wareInfo"></div>
+		</div>
+	</div>
+</body>
+<script id="template" type="text/x-dot-template">
+	<div class="info-color">
+	  <div class="name" style="display: inline-block;margin-left: 9px;font-weight: bold;">颜色：</div>
+	  {{ for(var i=0; i< it.color.length;i++) { }}
+	  <div data-color="{{=it.color[i]}}" class="yanse">{{=it.color[i]}}</div>
+	  {{ } }}
+	</div>
+						
+	<div class="info-discount">
+	  <div class="name" style="display: inline-block; margin-left: 9px;font-weight: bold;">尺码：</div>
+	  {{for(var i=0; i< it.size.length ;i++) { }}
+	  <div data-value="{{=it.size[i]}}" class="cima">{{=it.size[i]}}</div>
+	  {{ } }}
+	</div>
+	
+	<div  class="btn2" onclick="updateback(1)" >确认修改</div>
+</script>
+<script type="text/javascript">
+	var index;
+	var wareid;
+	var datasize;
+	var datasize;
+	var dindantypeidlist=[
+		{
+			id: "5c2a39add37a824c5ac6cc66",
+			name: "退货"
+		},
+		{
+			id: "5c2a39add37a824c5ac6cc65",
+			name: "换货"
+		},
+	]
+	apiready = function(){
+	    getshoppinginformation();
+
+	}
+	    
+	
+	function getshoppinginformation(){
+		var params={
+			id:api.pageParam.shoopingid,
+			uid:userInfo.id
+		}
+		dl=$(document).dialog({
+		    type : 'notice',
+		    infoIcon: '../image/icon/loading.gif',
+		    infoText: '正在加载...'
+		});
+		postajax(url+'getoneshopping',params,function(ret){
+			if (ret.code==200) {
+				wareid=ret.data[0].wareid;
+				if(ret.data[0].sevenT==0){
+					$('.t').removeAttr('onclick').html('此商品暂不支持退货').css('border','0px');
+				}
+				if(ret.data[0].sevenH==0){
+					$('.h').removeAttr('onclick').html('此商品暂不支持换货').css('border','0px');
+				}
+				dl.close();
+	
+			}
+		})
+	}
+
+	function clickth(_index,_this){
+		$(_this).addClass('bgcolor');
+		$(_this).siblings().addClass('tranbgcolor').removeClass('bgcolor');
+		index=_index;
+		
+		if(_index==1){
+			$('.divupdateMask').addClass('show').removeClass('hidden');
+			getwaredata();
+		}
+		
+	}
+	
+	function updateback(_index){
+		if(_index==0){
+			$('.divupdateMask').addClass('hidden').removeClass('show');
+			$('.th').removeClass('bgcolor');
+			index=null;
+			// console.log()
+		}else if(_index==1){
+			if(datasize && datacolor){
+				$('.divupdateMask').addClass('hidden').removeClass('show');
+				$('.h').html('换货(颜色：'+datacolor+' 尺寸：'+datasize+')');
+		}else{
+				toast('请点击您需要修改的尺寸和颜色')
+		}
+			
+		}
+		
+	}
+	
+	// 获取商品规格(颜色，尺寸)
+	function getwaredata(){
+		var params={
+			bid:wareid,
+		}
+		getajax(url+'oneware',params,function(ret){
+			if(ret.code==200){
+				// 把尺寸颜色更新到
+				var tempFn = doT.template($('#template').text());
+				var resultHTML = tempFn(ret.data);
+				$(".wareInfo").html(resultHTML);
+				$('.xz').remove();
+				size();
+				color();
+			}
+		})
+	}
+	
+	function size() {
+		$(".cima").on('click', function(e) {
+			datasize = $(this).attr('data-value');
+			$(this).addClass('now').siblings().removeClass('now');
+		})
+		$(".home").on("click", function() {
+			window.location.href = "./home_frame.php";
+		});
+	
+	
+	}
+	
+	function color() {
+		$(".yanse").on('click', function() {
+			datacolor = $(this).attr('data-color');
+			$(this).addClass('now').siblings().removeClass('now');
+		})
+	
+	}
+	
+	function updatedata(){
+		if(index==0){
+			var params={
+				shoppingid:api.pageParam.shoopingid,
+				uid:userInfo.id,
+				dindantypeid:dindantypeidlist[index].id,
+				thtext:$('.text').html(),
+			}
+		}else if(index==1){
+			var params={
+				shoppingid:api.pageParam.shoopingid,
+				uid:userInfo.id,
+				color:datacolor,
+				size:datasize,
+				dindantypeid:dindantypeidlist[index].id,
+				thtext:$('.text').html(),
+			}
+		}else{
+			toast('请选择售后类型');
+			return;
+		}
+		var notice = $(document).dialog({
+		  type : 'notice',
+		  infoIcon: '../image/icon/loading.gif',
+		  infoText: '正在申请售后'
+		   });
+		postajax(url+'shouhou',params,function(ret){
+			if(ret.code==200){
+				// console.log(ret);
+				
+				notice.update({
+				       infoIcon: '../image/icon/success.png',
+				       infoText: '申请成功,',
+				       autoClose: 2000
+				   });
+				   setTimeout(function(){
+					     location.replace('./dindan_frame.html?bmF2PTE=')
+				   },2000);
+			}else{
+				// toast(ret.message,'bottom',1500);
+				notice.update({
+				       infoIcon: '../image/icon/fail.png',
+				       infoText: ret.message,
+				       autoClose: 2000
+				   });
+			}
+		});
+	}
+  </script>
+  </html>

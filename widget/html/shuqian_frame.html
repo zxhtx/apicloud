@@ -1,0 +1,347 @@
+<!doctype html>
+<html>
+
+	<head>
+		<link rel="shortcut icon" href="../image/chao.ico" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<title>购物大厅</title>
+		<script src="../script/commonjs.js"></script>
+		<script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+		<script type="text/javascript" src=" ../script/pinterest_grid.js"></script>
+		<script type="text/javascript" src=" ../script/ajax.js"></script>
+
+
+		<style>
+			html,
+  body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin:0;
+    background-color:#fff;
+  }
+  a{
+    text-decoration: none;
+    color: #fff;
+    -webkit-tap-highlight-color:rgba(255,0,0,0);
+  }
+  * {
+    box-sizing: border-box;
+    font-family: Georgia;
+  }
+
+  /* swipe begin. */
+#list{
+    position: relative;
+    width:100%;
+    background: #fff;
+    margin-top: 47px;
+
+
+
+  }
+
+
+  .item {
+    position: absolute;
+    /*width: calc(100%/1);*/
+    margin-left: 3.5px;
+    /*margin: 0 auto;*/
+    border-radius: 22px 26px 0px 29px;
+    transition:all 0.3s ease-in-out;
+    box-shadow:0px 6px 6px -6px black;
+	
+
+
+  }
+  .item>img{
+    width: 100%;
+    display: block;
+    border-radius: 10px 10px 0px 24px;
+  }
+  .item .headimg{
+    width: 39px;
+    height: 39px;
+    border-radius: 25px;
+    background-size: cover;
+    background-position: center center; 
+    margin-left: 8px;
+    margin-top: 8px;
+    display: inline-block;
+    vertical-align: top;
+
+  }
+  .item .textbox{
+    height:50px;
+    width: 69%;
+    display: inline-block;
+  
+  }
+  .item .text{
+    padding-top: 12px;
+    margin-left: 6px;
+    font-size: 15px;
+    display: inline-block;
+         overflow:hidden;
+        text-overflow:ellipsis;
+        display:-webkit-box;
+        -webkit-box-orient:vertical;
+        -webkit-line-clamp:2; 
+    
+  }
+  
+     header {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 40px;
+        background-color: white;
+        z-index: 999;
+         box-shadow:0px 6px 6px -6px black;
+
+    }
+
+    
+    header h1 {
+        width: 100%;
+        height: 40px;
+        text-align: center;
+        color: #000;
+        font-size: 18px;
+        line-height: 40px;
+        margin: 0px;
+    }
+     header .back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 32px;
+      height: 28px;
+      /*border: 1px solid red;*/
+      background: url(../image/back.png);
+		background-position: center;
+		background-size: cover;
+      background-repeat: no-repeat;
+	  margin-left: 4px;
+	  margin-top: 6px;
+  }
+   .cover{ 
+      background-position: center;
+	  background-size: cover;
+	  height: 169px;
+	  border-radius: 10px 10px 0px 24px;
+	  background: #000000;
+      filter:alpha(opacity=20);  /*设置透明度为60%*/
+      opacity:0.2;  /*非IE浏览器下设置透明度为60%*/
+      /* display:none; */
+      z-Index:999;  
+  }
+  .cdsemptytoast{
+	  z-index: 1000;
+	  color: #fff;
+	  width: 100%;
+	line-height: 10;
+	  font-size: 16px;
+	  text-align: center;
+  }
+   
+ </style>
+	</head>
+
+	<body>
+
+
+		<header id="header">
+			<div class="back" tapmode onclick="goback()"></div>
+			<h1>我的书签</h1>
+		</header>
+
+		<div id="list">
+
+
+		</div>
+		<div class="toast" style="width: 100%;height: auto;">
+			
+		</div>
+
+		<script type="text/javascript">
+			var skip = 0;
+			var LIMIT = 8;
+			var scrollTop
+			var off_on=false;
+			apiready = function(){
+			    getWareList();
+				reshtml();
+
+			}
+			    
+			
+			window.addEventListener("scroll", function() {
+				//当时滚动条离底部0px时开始加载下一页的内容
+				if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+					if (off_on) {
+						off_on = false;
+						getWareList(true);
+						$('.toast').append('<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; ">')
+						
+						}
+			
+			
+				}
+			});
+			 function reshtml(){
+		       
+		        api.setCustomRefreshHeaderInfo({
+		            bgColor: '#fff',
+		            images: [
+		                 'widget://image/icon/chaodashe.png',
+		               
+		            ],
+		            tips: {
+		                pull: '下拉刷新',
+		                threshold: '松开立即刷新',
+		                load: '正在刷新'
+		            },
+		            animationRate:0.2
+		        }, function() {
+		            //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+		            //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
+		           
+		           getWareList();
+		        });
+		      }
+
+
+
+
+
+			function opensearch() {
+				api.openWin({
+					name: 'search',
+					url: './search.html',
+					pageParam: {
+						name: 'test'
+					},
+					animation: {
+						type: 'fade'
+					}
+				});
+			}
+
+
+
+			function getWareList(_LoadMore) {
+				
+				if (_LoadMore) {
+
+					skip += LIMIT;
+				} else {
+					dialog('书签加载中');
+					skip = 0;
+
+				}
+				var params = {
+					id: userInfo.id,
+					skip: skip,
+					limit: LIMIT,
+
+
+				};
+				postajax(url + 'getsq', params, function(ret) {
+					if(ret.code=='200'){
+						updateWareList(ret.data,_LoadMore);
+					}else{
+						$('.toast').append('<p class="nodata" style=" text-align: center;color: #ddd;height: 50px;line-height: 50px;">-木有动态了-</p>');
+						$('.xz').remove();
+
+					}
+					 api.refreshHeaderLoadDone();
+					
+				});
+
+			}
+
+
+
+
+			function updateWareList(_data,_LoadMore) {
+				initWaterFall();
+				var resultText = '';
+				for (var i = 0; i < _data.length; i++) {
+
+					if(_data[i].cdsistf==0){
+						resultText += "<div class='item '  data-articleid=" + _data[i].id +
+							"  style='background:white'><div class='cover' data-original=" + imgurl + _data[i].fm +"><div class='cdsemptytoast'>此动态已删除</div></div><div class='headimg' style='background-image:url(" + imgurl + _data[i].headimg +
+							")'></div> <div class='textbox'><span class='text'>" + _data[i].text + "</span></div></div>";
+						
+					}else{
+						resultText += "<div class='item'  data-articleid=" + _data[i].id +
+							"  style='background:white'><img src='../image/loading.png'  data-original=" + imgurl + _data[i].fm +
+							" ><div class='headimg' style='background-image:url(" + imgurl + _data[i].headimg +
+							")'></div> <div class='textbox'><span class='text'>" + _data[i].text + "</span></div></div>";
+						
+					}
+
+				}
+				if (resultText == 0) {
+					toast('没有资源啦', 'center', 2000);
+					return;
+				}
+				 if(_LoadMore){
+                    $("#list").append(resultText);
+                }else{
+                    $("#list").html(resultText);
+                }
+
+				dl.close();
+				$("img").lazyload({
+					threshold: 200
+				});
+				$('.item').on('click', function(e) {
+					var articleid = $(this).attr('data-articleid');
+				
+					api.openWin({
+			           name: 'Dressingdetails',
+			           url: './Dressingdetails.html',
+			           pageParam: {
+			               articleid:articleid
+			           },
+			          
+			       });
+
+				})
+
+
+			$('.xz').remove();
+			off_on=true;
+
+			}
+
+			function initWaterFall() {
+
+				$("#list").pinterest_grid({
+					no_columns: 2,
+					padding_x: 8,
+					padding_y: 8,
+					margin_bottom: 10,
+					single_column_breakpoint: 100
+				});
+
+
+			}
+
+
+			function goback() {
+			 api.closeWin();
+			}
+		</script>
+
+	</body>
+
+
+
+
+</html>

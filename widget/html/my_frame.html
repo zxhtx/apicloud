@@ -20,8 +20,11 @@
     <div class="login open-win" win="person_info">
         <div id="userAccount" class="title" tapmode onclick="login()">点击登录</div>
         <!-- <img id="userAvatar" src="../image/empty_page_nothing.png"  class="personal_logo"> -->
-        <div class="personal_logo" tapmode onclick="setAvatar()" ></div>
-        <div class="mycenter" tapmode onclick="gocenter()">我的动态</div>
+        <div class="personal_logo" tapmode onclick="" ></div>
+        <div class="yue bgcolor" tapmode onclick="openyue()">
+           <div class="money">0.00</div>
+          <div class="moneytext">余额</div>
+        </div>
         <div class="userlist">
             <div class="lists" onclick="opendinyue()">
                 <div class="dinyuecount" >0</div>
@@ -91,12 +94,12 @@
   <div class="history list" onclick="cbhistory()">
     <div>使用记录</div>
   </div>
-  <div class="cbgz list">
+  <div class="cbgz list" onclick="cbxuzhi()">
     <div>潮贝须知</div>
     <div class="gzimg"></div>
   </div>
   </div>
-     <div class="gwq" onclick="opengwq()">
+     <div class="gwq bgcolor" onclick="opengwq()">
     <div class="gwqcount">0</div>
     <div class="gwqtitle">购物券</div>
   </div>   
@@ -137,37 +140,53 @@
     var off_on=false;
     var myurl;
     apiready = function(){
-
+            reshtml();
             event();
              getUsername();
             // getcdslist();
             shoppingcount();
             gouwuquanlist();
-            reshtml();
+           
     }
-    
+      function openyue(){
+        var userInfo=$api.getStorage('userInfo');
+        if(!userInfo){
+          api.toast({
+              msg: '请登录后操作'
+          });
+          return;
+        }
+        api.openWin({
+            name: 'bnlancelist',
+            url: './balancelist.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+      }
       function reshtml(){
-         
-                api.setCustomRefreshHeaderInfo({
-                    bgColor: '#fff',
-                    images: [
-                         'widget://image/icon/chaodashe.png',
-                       
-                    ],
-                    tips: {
-                        pull: '下拉刷新',
-                        threshold: '松开立即刷新',
-                        load: '正在刷新'
-                    },
-                    animationRate:0.2
-                }, function() {
-                    //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
-                    //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
-                   
-                  getUsername();
-                  shoppingcount();
-                });
-          }    
+           api.setCustomRefreshHeaderInfo({
+            bgColor: '#fff',
+            images: [
+                 'widget://image/icon/chaodashe.png',
+               
+            ],
+            tips: {
+                pull: '下拉刷新',
+                threshold: '松开立即刷新',
+                load: '正在刷新'
+            },
+            animationRate:0.2
+        }, function() {
+            //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+            //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
+            dl.close();
+            getUsername();
+            shoppingcount();
+            gouwuquanlist();
+        });
+               
+    }    
 
    
     function setuser(){
@@ -187,41 +206,19 @@
     });
 }
 
-function gocenter(){
- var userInfo=$api.getStorage('userInfo');
-  if (!userInfo){
-    api.openWin({
-        name: 'login',
-        url: './login.html',
-        pageParam: {
-            page:'my_frame'
-        },
-       
-    });
-  }
-  api.openWin({
-      name: 'TAusercenter',
-      url: './TAusercenter.html',
-      pageParam: {
-          uid: userInfo.id
-      },
-    
-  });
-}
-function setAvatar(){
-    // var userInfo=JSON.parse(localStorage.getItem('userInfo'));
-    var userInfo=$api.getStorage('userInfo');
-  window.open(imgurl+userInfo.headimg);
-}
+
 
 function gouwuquanlist(){
-  var userInfo=JSON.parse(localStorage.getItem('userInfo'));
+  var userInfo=$api.getStorage('userInfo');
+  if (!userInfo) {
+      return;
+  }
   var params={
      userid:userInfo.id
   };
   
   getajax(url+'getgwqcount',params,function(e){
-
+    // alert($api.jsonToStr(e));
     if(e.code==200){
       $('.gwqcount').html(e.data)
     }
@@ -266,6 +263,13 @@ api.addEventListener({
         shoppingcount();
     }
 });
+api.addEventListener({
+    name: 'getbalance'
+}, function(ret, err) {
+    if (ret) {
+    getbalance();
+    }
+});
 }
 function daishouhuo(){
   var userInfo=$api.getStorage('userInfo');
@@ -295,7 +299,6 @@ function shoppingcount(){
     
     postajax(url+'shoppingcount',params,function(e){
         if(e.code=='200'){
-            console.log(e.data)
             if(e.data.dfk){
                 $('.dfkcount').html(e.data.dfk).css('display','block');
             }else{
@@ -392,7 +395,7 @@ getajax(url+'getuser',params,function(ret){
     api.refreshHeaderLoadDone()
    
     if (ret.code==200) {
-        
+        getbalance();
         var data=ret.data;
         // console.log(data);
       
@@ -404,6 +407,7 @@ getajax(url+'getuser',params,function(ret){
         $api.setStorage('userInfo', ret.data.user);
         var data=ret.data.user;
           myurl=data.id;
+              $(".bgcolor").css("cssText", "background-color:" + data.Dressingbgcolor + " !important;");
            $('.cbcount').html(data.cb);
         userAccount.html(data.username);
         if (data.headimg!=0) {
@@ -423,61 +427,6 @@ getajax(url+'getuser',params,function(ret){
 
 }   
 
-
- function datedifference(sDate1, sDate2) {    //sDate1和sDate2是2006-12-18格式  
-    var dateSpan,
-    tempDate,
-    iDays;
-    sDate1 = Date.parse(sDate1);
-    sDate2 = Date.parse(sDate2);
-    dateSpan = sDate2 - sDate1;
-    dateSpan = Math.abs(dateSpan);
-    iDays = Math.floor(dateSpan / (24 * 3600 * 1000));
-    return iDays
-};
-
-
-function date(_date){
-    var now=Y+"-"+M+"-"+D;
-    var day=datedifference(_date,now);
-    if (day>99){
-        updatevip();
-
-    }
-
-}
-function updatevip(){
-   // var usernameinfo=$api.getStorage('userInfo');
-   var userInfo=$api.getStorage('userInfo');
-   api.ajax({
-    url: 'http://d.apicloud.com/mcm/api/user/'+usernameinfo.userId,
-    method: 'put',
-    headers: {
-        "X-APICloud-AppId": "A6099267504667",
-        "X-APICloud-AppKey":   appKey,
-        "Authorization": usernameinfo.id
-    },
-    data: {
-        values:{
-            "vip":'',
-            "date":''
-        }
-    },
-
-},function(ret, err){
-    if (ret) {
-     var vip=$api.byId('vip');  
-     vip.innerHTML='普通用户';
- } else {
-    api.toast({
-        msg: err.msg,
-        duration: 2000,
-        location: 'bottom'
-    });
-}
-});
-
-}
 
 
 function openDressing(id){
@@ -565,37 +514,7 @@ function share(){
 
 
 }
-function sharevip(){
- var myDate = new Date();
- var Y=myDate.getFullYear();
- var M=myDate.getMonth()+1;
- var D=myDate.getDate();  
- var shijian=Y+'-'+M+'-'+D;
 
- userInfo=$api.getStorage('userInfo');
-
- api.ajax({
-    url: 'https://d.apicloud.com/mcm/api/user/'+userInfo.userId,
-    method: 'put',
-    headers: {
-        "X-APICloud-AppId": "A6099267504667",
-        "X-APICloud-AppKey":   appKey,
-    },
-    data: {
-        values: { 
-            vip:'1',
-            date:shijian
-        }
-
-
-    }
-},function(ret, err){
-    if (ret) {
-
-
-    }
-});
-}
 
 
 function kefu(){
@@ -775,9 +694,20 @@ function opensq(){
         window.location.href="./shuqian_frame.html";
     }else{
          if (parseInt($('.sqcount').text())<1) {
-            toast('您还没有添加动态到书签','center',1000);
+          
+            api.toast({
+                msg: '您还没有添加动态到书签'
+            });
         }else{
-            window.location.href="./shuqian_frame.html";
+            // window.location.href="./shuqian_frame.html";
+            api.openWin({
+                name: 'shuqian',
+                url: './shuqian.html',
+                pageParam: {
+                    name: 'test'
+                }
+            });
+
         }
         
     }
@@ -846,6 +776,22 @@ function sharemyurl() {
         toast('成功复制链接', 'center', 2000);
 
       }
+
+  function cbxuzhi(){
+    api.openWin({
+        name: 'chaobeixuzhi',
+        url: './chaobeixuzhi.html',
+        pageParam: {
+            name: 'test'
+        }
+    });
+  }
+
+  function getbalance(){
+
+  userInfo=$api.getStorage('userInfo');
+    $('.money').html(userInfo.balance);
+  }
 </script>
 
 </html>

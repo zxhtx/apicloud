@@ -23,7 +23,7 @@
 		</meta>
 		<style>
 			[contentEditable=true]:empty::before{
-			        content:'发布评论';
+			        content:'留下你精彩的评论吧';
 					color:gray;
 					
 			    }
@@ -64,9 +64,8 @@
 					.sharebg { background-color: rgba(0, 0, 0, 0.6); bottom: 0; height: 100%; left: 0; opacity: 0; position: fixed; right: 0; top: 0; width: 100%; z-index: 1100; display:none; }
 					.sharebg-active { opacity: 111; display:block; }
 					.am-share-sns::-webkit-scrollbar {display:none}
-					.myheadimg{
-						
-					}
+					.atbg{ background-color: rgba(0, 0, 0, 0.6); bottom: 0; height: 100%; left: 0; opacity: 0.7; position: fixed; right: 0; top: 0; width: 100%; z-index: 1100; }
+
 				
 		</style>
 		<script type="text/javascript">
@@ -116,7 +115,7 @@
 
 		<div class="am-share">
 		  <h3 class="am-share-title">链接直达</h3>
-		 <ul class="am-share-sns" >
+		 <ul class="am-share-sns">
 				<div id="Dressinglist">
 					
 				</div>
@@ -131,17 +130,31 @@
 		<div class="commentBox">
 
 		</div>
+		<div class="speakbtn" data-type="0" tapmode onclick="showorhiddenspeak(this)">
+			<div class="speakimg" ></div>
+		</div>
+
+		<div class="downpic" tapmode onclick="downpic(0)">
+			<div class="downimg" ></div>
+		</div>
 	
 		<div class="keybox">
 		   <div class="myheadimg" ></div>
-							  <div contenteditable="true" class="keyboard" id="text" onblur="jiaodian()" ></div>
+		   <div class="keyboardbox">
+			<div contenteditable="true" class="keyboard" id="text" onblur="jiaodian()" ></div>
+			</div>
+			<div class="at" onclick="openat()">@</div>
 		   <div class="keybtn"  onclick="sendbtn()">发布</div>
 		 </div>
-		
+		<div class="atlist">
+
+			<div class="loadingxz"></div>
+			<div class="atbox"></div>
+		</div>
 		<script id="template" type="text/template">
 			{{~it.list:value:index}}
           <div class="box" >
-               <input id="copyInput" value="https://chaodashe.com/html/Dressingdetails_frame.html?{{!sharetle()}}" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
+               <input id="copyInput" value="http://www.chaodashe.com/html/Dressingdetails_frame.html?{{!sharetle()}}" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
                 {{if(value.showimgtype=='0'){ }}
                  <div class="Dressing" style="position: fixed;">
                     {{if(value.type=='0'){ }}
@@ -149,11 +162,11 @@
                     {{ } }}
 					{{if(value.uauthority==1){ }}
 						<div class="icon iconauthority">
-							<div class="headimg" onclick="TAuser({{=value.userid}})" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
+							<div class="headimg" onclick="TAuser('{{=value.userid}}')" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
 						</div>
 					{{ }else{ }}
 						<div class="icon iconnoauthority">
-							<div class="headimg" onclick="TAuser({{=value.userid}})" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
+							<div class="headimg" onclick="TAuser('{{=value.userid}}')" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
 						</div>	
 					{{ } }}	
                     <div class="back">
@@ -168,8 +181,12 @@
 
                     <img class="share" onclick="share()" src="../image/share_white.png">
                      <img class="home" src="../image/home.png" tap onclick="gohome()">
+                     {{ if(value.userid == it.userid){ }}
+						 <img src="../image/del.png" class="delimg" onclick="delDressing('{{=value.id}}')" alt="">
+					 {{ } }}
                  </div>
                 <div class="swiper-container bgcolor" style="height:auto">
+                	<div class="bgmh"></div>
                      <div class="swiper-wrapper"  style="height:auto" >
                      {{for(var i=0; i< value.imglist.length;i++) { }}
                           <div class="swiper-slide"  style=" width:100%;height: 20rem;background-image: url({{=it.imgurl}}{{=value.imglist[i]}});"   data-articleid="{{=value.id}}" data-like_userid="{{=value.like_userid}}"  data-likeid="like{{=value.id}}" data-userid="{{=value.userid}}" onclick="Dressingimg('{{=value.imglist[i]}}')" data-Dressingimg="{{=value.imglist[i]}}"  >
@@ -188,9 +205,9 @@
                     <div class="duogongneng" >
                        
                         {{if(value.shuqian_userid==0){ }}
-                        <img onclick="beshuqian({{=value.id}},this,{{=value.userid}})" data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqianb.png">
+                        <img onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')" data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqianb.png">
                         {{ }else{ }}
-                        <img onclick="beshuqian({{=value.id}},this,{{=value.userid}})"  data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqiana.png">
+                        <img onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')"  data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqiana.png">
                         {{ } }}
                     </div>
 					
@@ -220,11 +237,11 @@
                         <!-- <img  src=""> -->
 						{{if(value.uauthority==1){ }}
 							<div class="icon iconauthority">
-								<div class="headimg" onclick="TAuser({{=value.userid}})" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
+								<div class="headimg" onclick="TAuser('{{=value.userid}}')" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
 							</div>
 						{{ }else{ }}
 							<div class="icon iconnoauthority">
-								<div class="headimg" onclick="TAuser({{=value.userid}})" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
+								<div class="headimg" onclick="TAuser('{{=value.userid}}')" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
 							</div>	
 						{{ } }}	
 						
@@ -240,6 +257,9 @@
 
                             <img class="share"  onclick="share()"  src="../image/share_white.png">
                          <img class="home" src="../image/home.png" tap onclick="gohome()">
+                         {{ if(value.userid == it.userid){ }}
+						 <img src="../image/del.png" class="delimg" onclick="delDressing('{{=value.id}}')" alt="">
+					 {{ } }}
                         </div>
                         {{for(var i=0;i<value.imglist.length;i++){ }}
 						<div class="dongtaiimglist bgcolor">
@@ -255,9 +275,9 @@
                             <div class="duogongneng" >
                        
                         {{if(value.shuqian_userid==0){ }}
-                        <img onclick="beshuqian({{=value.id}},this,{{=value.userid}})" data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqianb.png">
+                        <img onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')" data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqianb.png">
                         {{ }else{ }}
-                        <img onclick="beshuqian({{=value.id}},this,{{=value.userid}})"  data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqiana.png">
+                        <img onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')"  data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqiana.png">
                         {{ } }}
                     </div>
 					
@@ -276,15 +296,9 @@
 						<div></div>
 						 <div class="shuqiansmall"></div>
 						 <div class="sqcount" id="sqcount_{{=value.id}}" data-sqcount="{{=value.shuqian}}">{{=value.shuqian}}次收入书签</div>
-						 <!-- <div onclick="comment()" style="margin-left: 5px;font-weight: bold;">评论该动态</div> -->
+						
                     </div>
-                     <!-- <div class="keybox">
-                      <div class="myheadimg" style="background-image:url(../image/empty_page_nothing.png)"></div>
-                        <div contenteditable="true" class="keyboard" id="text"  onblur="jiaodian()" >
-							
-						</div>
-                       <div class="keybtn" onclick="sendbtn()">发布</div>
-                    </div> -->
+                   
 
 
 
@@ -303,11 +317,11 @@
 				<div class="li" >
 				{{if(value.userinfo.authority==1){ }}
 				 <div class="icon iconauthority">
-				  <div class="head_img " onclick="TAuser({{=value.userinfo.id}})" style="background-image:url({{=it.imgurl}}{{=value.userinfo.headimg}})"></div>
+				  <div class="head_img " onclick="TAuser('{{=value.userinfo.id}}')" style="background-image:url({{=it.imgurl}}{{=value.userinfo.headimg}})"></div>
 				 </div>
 				 {{ }else{ }}
 					<div class="icon iconnoauthority">
-					 <div class="head_img" onclick="TAuser({{=value.userinfo.id}})" style="background-image:url({{=it.imgurl}}{{=value.userinfo.headimg}})"></div>
+					 <div class="head_img" onclick="TAuser('{{=value.userinfo.id}}')" style="background-image:url({{=it.imgurl}}{{=value.userinfo.headimg}})"></div>
 					</div>
 				 {{ } }}
 				 <div class="content" onclick="reply('{{=value.userinfo.id}}','{{=value.userinfo.name}}','{{=value.superiorid}}')">
@@ -320,15 +334,15 @@
 						<div class="son"   onclick="reply('{{=value.sonmsg[i].frominfo.id}}','{{=value.sonmsg[i].frominfo.name}}','{{=value.sonmsg[i].msg.superiorid}}')">
 							{{ if(value.sonmsg[i].frominfo.authority==1){ }}
 							<div class="icon iconauthority">
-								<div class="son_head" onclick="TAuser({{=value.sonmsg[i].frominfo.id}})" style="background-image:url({{=it.imgurl}}{{=value.sonmsg[i].frominfo.headimg}})" ></div>
+								<div class="son_head" onclick="TAuser('{{=value.sonmsg[i].frominfo.id}}')" style="background-image:url({{=it.imgurl}}{{=value.sonmsg[i].frominfo.headimg}})" ></div>
 							</div>
 							{{ }else{ }}
 								<div class="icon iconnoauthority">
-									<div class="son_head" onclick="TAuser({{=value.sonmsg[i].frominfo.id}})" style="background-image:url({{=it.imgurl}}{{=value.sonmsg[i].frominfo.headimg}})" ></div>
+									<div class="son_head" onclick="TAuser('{{=value.sonmsg[i].frominfo.id}}')" style="background-image:url({{=it.imgurl}}{{=value.sonmsg[i].frominfo.headimg}})" ></div>
 								</div>
 							{{ } }}
 							<div class="comm">
-								<div class="sonname"><div class="fromname">{{=value.sonmsg[i].frominfo.name}}</div>&nbsp;{{if(value.sonmsg[i].toinfo){ }} 回复 &nbsp;<div class="toname" onclick="TAuser({{=value.sonmsg[i].toinfo.id}})"> {{=value.sonmsg[i].toinfo.name}}</div>{{ } }}</div>
+								<div class="sonname"><div class="fromname">{{=value.sonmsg[i].frominfo.name}}</div>&nbsp;{{if(value.sonmsg[i].toinfo){ }} 回复 &nbsp;<div class="toname" onclick="TAuser('{{=value.sonmsg[i].toinfo.id}}')"> {{=value.sonmsg[i].toinfo.name}}</div>{{ } }}</div>
 								<div class="text">{{=value.sonmsg[i].msg.msg}} <div class="time">{{!timestampFormat('{{=value.sonmsg[i].msg.time}}')}}</div></div>
 							</div>
 						</div>
@@ -337,7 +351,7 @@
 						{{ if(value.sonmsg.length>1){ }}
 						<div class="loading load_reply_{{=value.superiorid}}">
 							<img src="../image/icon/loading.gif" class="loadimghide loadimg_{{=value.superiorid}}" style="width: 18px;height: 18px;vertical-align: middle;" >
-							<span data-skip=2 data-limit=3 onclick="getload({{=value.superiorid}},{{=value.userinfo.id}},this)">加载更多</span>
+							<span data-skip=2 data-limit=3 onclick="getload('{{=value.superiorid}}','{{=value.userinfo.id}}',this)">加载更多</span>
 						</div>
 						{{ } }}
 					{{ } }}
@@ -349,12 +363,12 @@
 			<div class="son"   onclick="reply('{{=value.frominfo.id}}','{{=value.frominfo.name}}','{{=value.msg.superiorid}}')">
 			{{ if(value.frominfo.authority==1){ }}
 			  <div class="icon iconauthority">
-				<div class="son_head" onclick="TAuser({{=value.frominfo.id}})"  style="background-image:url({{=it.imgurl}}{{=value.frominfo.headimg}})" ></div>
+				<div class="son_head" onclick="TAuser('{{=value.frominfo.id}}')"  style="background-image:url({{=it.imgurl}}{{=value.frominfo.headimg}})" ></div>
 			  </div>
 			{{ }else{ }}
 				
 				<div class="icon iconnoauthority">
-					<div class="son_head" onclick="TAuser({{=value.frominfo.id}})"  style="background-image:url({{=it.imgurl}}{{=value.frominfo.headimg}})" ></div>
+					<div class="son_head" onclick="TAuser('{{=value.frominfo.id}}')"  style="background-image:url({{=it.imgurl}}{{=value.frominfo.headimg}})" ></div>
 				</div>
 			
 			{{ } }}
@@ -377,6 +391,20 @@
 				</div>
 			{{~}}
 		</script>
+		<script id="template5" type="text/template">
+
+			{{~it.list:value:index}}
+				<div class="atuser" onclick="clickat('{{=value.id}}','{{=value.name}}')">
+				 <div class="atuserhead" data-original="{{=it.imgurl}}{{=value.headimg}}"></div>
+				 <div class="atusername">
+					 <div class="atuname">{{=value.name}}</div>
+					 <div class="atusername">账号:{{=value.username}}</div>
+				 </div>
+				
+				</div>
+			{{~}}
+			
+		</script>
 		<script type="text/javascript">
 			// $(window).height()=0;
 			var wareid;
@@ -394,15 +422,100 @@
 			var sqtime = 0;
 			var liketime = 0;
 			var musicname;
-
+			var downpiclist;
 			var liker_userid;
 			var art_id;
 			var uid;
+			var piccount=1;
+			 var fs;
+			var atlimit = 18;
+			var atskip = 0;
+			var atsearchlimit = 18;
+			var atsearchskip = 0;
+			var atsearchval;
+			var isopenat = 0; 
+			 
+			// var picindex=0;
 			apiready = function(){
+				 fs = api.require('fs');
+				 isfocus();
 			    getchaodashe();
-			getcomment();
+				getcomment();
 			}
-			    
+			function isfocus(){
+				$('.keyboard').focus();
+				// 点击@按钮阻止失焦
+				$('.at,.atbg,.atbox').mousedown(function(e) {
+					console.log('鼠标点击')
+					if (e && e.preventDefault) {
+						e.preventDefault();
+						console.log('鼠标点击ie')
+						//IE阻止默认事件
+					} else {
+						window.event.returnValue = false;
+						console.log('鼠标点击webkit')
+					}
+					$('.keyboard').focus();
+					return false;
+
+				})
+				
+			}
+			function downpic(picindex){
+				// alert(1)
+				var imglist=downpiclist;
+			 	// var imglist=imglist.split(',');
+			 	// for(var i=0;i<imglist.length;i++){
+			
+			 	var pic =new Date().getTime();
+			 	// 下载到目录
+			 	api.download({
+				    url: imgurl+imglist[picindex],
+				    savePath:  'fs://CDSimage/CDS'+pic+'.jpg',
+				    report: false,
+				    cache: false,
+				    allowResume: false
+				}, function(ret, err) {
+					// alert($api.jsonToStr(ret))
+				    if (ret.state == 1) {
+				    	//从目录中转移到相册
+				       api.saveMediaToAlbum({
+							    path: 'fs://CDSimage/CDS'+pic+'.jpg',
+							    groupName:'CDS'
+							}, function(ret, err) {
+							    if (ret && ret.status) {
+							        // alert('保存成功'); 
+							         //删除目录中的图片 
+								  fs.remove({
+								    path: 'fs://CDSimage/CDS'+pic+'.jpg'
+								  }, function(ret, err) {
+										   
+								 });
+								 api.toast({
+							            msg: '第'+ piccount +'张下载完成'
+							        });
+							        if(piccount ==imglist.length){
+							        	api.toast({
+							        	    msg: '全部下载完成'
+							        	});
+							        	piccount=1;
+							        	return;
+							        }
+							      
+							        piccount+=1;
+							        downpic(picindex+=1);
+							    }
+							});
+				    } else {
+				    	api.toast({
+				    	    msg: '网络出错请联系客服'
+				    	});
+				    }
+				});
+				// alert(1+picindex)
+				// downpic(++picindex);
+	         
+	      }
 			function TAuser(uid){
 					api.openWin({
 			      name: 'TAusercenter',
@@ -432,7 +545,10 @@
 						liketime = 0;
 					}, 3000)
 				} else {
-					toast('不能连续点赞哟', 'bottom');
+					
+					api.toast({
+					    msg: '不能连续点赞哟'
+					});
 					return;
 				}
 				var img='like'+art_id;
@@ -469,23 +585,26 @@
 				// alert(liker_userid)
 				
 			}
-
-			 $(window).scroll(function(event){
-			
-				if($(window).scrollTop()>$('#list').height()-$(window).height()){
-					$('.myheadimg').css({
-						'background-image': 'url(' + imgurl + userInfo.headimg + ')',
-						'background-size': 'cover',
-                        'background-position': 'center center'
-					})
-					$('.keybox').fadeIn();
+				function showorhiddenspeak(_this){
+					var type=$(_this).attr('data-type');
+					if(type==0){
+							
+						 $('.keybox').fadeIn();
+						 $(_this).attr('data-type','1');
+					}else{
+						$('.keybox').fadeOut()
+						$(_this).attr('data-type','0');
+					}
+					
 					// console.log(1);
-				}else if ($(window).scrollTop()+388<$('#list').height()-$(window).height()){
-					$('.keybox').fadeOut()
+				
+					
 				}
-				// console.log($(window).scrollTop())
-				 // console.log($('#list').height()-$(window).height())
-			 });
+			
+					
+				
+			
+			 
 			function sharetle() {
 				return window.btoa(encodeURI("articleid=" + api.pageParam.articleid));
 
@@ -545,15 +664,15 @@
 			});
 			// 缩短音乐名
 			function submusicname(_musicname) {
-				musicname = _musicname.substring(5, 16) + '...';
+				musicname = _musicname.substring(0, 19) + '...';
 			}
 
 			function getchaodashe() {
 				dialog('动态加载中');
 
-				$("body").on('touchstart', function() {
-					$("#audio").get(0).play();
-				})
+				// $("body").on('touchstart', function() {
+				// 	$("#audio").get(0).play();
+				// })
 				var articleid = api.pageParam.articleid;
 			var userInfo=$api.getStorage('userInfo');
 				if (userInfo) {
@@ -580,7 +699,7 @@
 
 				postajax(url + 'getdetails', params, function(ret) {
 					if (ret.code == '200') {
-						
+						 downpiclist=ret.data[0].imglist;
 						liker_userid=ret.data[0].like_userid;
 						art_id=ret.data[0].id;
 						uid=ret.data[0].userid;
@@ -591,10 +710,8 @@
 						fnwarelists = $.extend(true, {}, ware);
 
 						if (ret.data[0].music) {
-							$('#audio').attr('src', imgurl + ret.data[0].music);
-							music = ret.data[0].music;
-							var fry_audio = $('#audio').get('0');
-							fry_audio.load();
+							
+							playAudio(imgurl+ret.data[0].music)
 						}
 						// console.log(warelist);
 
@@ -618,18 +735,50 @@
 
 
 
+					}else{
+						dl.close();
+						api.toast({
+						    msg: '此作品被删除'
+						});
+						setTimeout(function(){
+							api.closeWin();
+						},1000)
 					}
 				})
 
 			}
 
+
+			function playAudio(url) {
+				var netAudio = api.require('netAudio');
+                netAudio.play({
+                path: url
+                },function(ret, err){
+                    if(ret.complete)
+                       {
+                           playAudio(url);
+                      }
+                                            
+                });
+              }
 			function fnUpdateWareListByShoppingCart(data_) {
 				// 编译模板函数
-				var param = {
-					list: data_,
-					imgurl: imgurl,
-
-				};
+				var userInfo = $api.getStorage('userInfo');
+				
+				if(userInfo){
+					var param = {
+						list: data_,
+						imgurl: imgurl,
+						userid: userInfo.id
+					};
+				}else{
+					
+					var param = {
+						list: data_,
+						imgurl: imgurl,
+						
+					};
+				}
 
 				var tempFn = doT.template($('#template').text());
 				// 使用模板函数生成HTML文本
@@ -645,27 +794,23 @@
 			
 				$(".bgcolor").css("cssText", "background-color:" + data_[0].Dressingbgcolor + " !important;");
 					dl.close();
+					
 				$("img.lazy").lazyload({
 					effect: "fadeIn",
 					threshold: 88,
 				});
+				$('.bgmh').fadeOut(166).fadeIn(888).css('background-image','url('+imgurl+data_[0].imglist[0]+')');
 				// fnMinus();
 				// fnOpenWareWin();
 				key();
-				var userInfo = JSON.parse(localStorage.getItem('userInfo'));
+				var userInfo = $api.getStorage('userInfo');
 				if (userInfo) {
-
 					$('.myheadimg').css({
 						'background-image': 'url(' + imgurl + userInfo.headimg + ')'
 					})
-				} else {
-
-					$('.myheadimg').css({
-						'background-image': 'url(../image/empty_page_nothing.png)'
-					})
-				}
+				} 
 				var swiper = new Swiper('.swiper-container', {
-					slidesPerView: 1.2,
+					slidesPerView: 1.1,
 					spaceBetween: 6,
 					centeredSlides: true,
 					// speed:666,
@@ -689,7 +834,10 @@
 									liketime = 0;
 								}, 3000)
 							} else {
-								toast('不能连续点赞哟', 'bottom');
+								
+								api.toast({
+								    msg: '不能连续点赞哟'
+								});
 								return;
 							}
 							var likeid = e.target.dataset.likeid;
@@ -715,6 +863,14 @@
 							}
 
 
+						},
+						touchEnd: function() {
+							//太快会导致数据没刷新还是上一张图片的index
+							setTimeout(function() {
+								$('.bgmh').fadeOut(166).fadeIn(888).css('background-image','url('+imgurl+data_[0].imglist[swiper.realIndex]+')');
+								// console.log()
+							}, 100);
+							
 						},
 						// touchEnd: function(event){
 						//       //你的事件
@@ -748,6 +904,7 @@
 
 					}
 				});
+			
 			}
 
 			function subtext() {
@@ -768,7 +925,10 @@
 						liketime = 0;
 					}, 3000)
 				} else {
-					toast('不能连续点赞哟', 'bottom');
+				
+					api.toast({
+					    msg: '不能连续点赞哟'
+					});
 					return;
 				}
 
@@ -803,7 +963,10 @@
 						sqtime = 0;
 					}, 3000)
 				} else {
-					toast('不能连续操作哟', 'bottom');
+					
+					api.toast({
+					    msg: '不能连续操作哟'
+					});
 					return;
 				}
 				var shuqian_userid = $(_this).attr('data-shuqian_userid');
@@ -847,10 +1010,15 @@
 					postajax(url + 'addshuqian', params, function(ret) {
 						if (ret.code == '400') {
 
-							toast('服务器在开小差', 'bottom', 800);
+							
+							api.toast({
+							    msg: '服务器在开小差'
+							});
 						} else {
-
-							toast('已加入书签', 'bottom', 800);
+							api.toast({
+							    msg: '已加入书签'
+							});
+							
 							$('#' + sqid).attr('data-shuqian_userid', '1');
 
 							var sqcount = $('#sqcount_' + articleid).attr('data-sqcount');
@@ -868,10 +1036,15 @@
 					}
 					postajax(url + 'addshuqian', params, function(ret) {
 						if (ret.code == '400') {
-							toast('服务器在开小差', 'bottom', 800);
+							
+							api.toast({
+							    msg: '服务器在开小差'
+							});
 						} else {
-
-							toast('已移出书签', 'bottom', 800);
+							api.toast({
+							    msg: '已移出书签'
+							});
+						
 							$('#' + sqid).attr('data-shuqian_userid', '0');
 							var sqcount = $('#sqcount_' + articleid).attr('data-sqcount');
 							var sqcount = --sqcount;
@@ -896,8 +1069,9 @@
 					postajax(url + 'addlike', params, function(ret) {
 						if (ret.code == '400') {
 
-							toast('服务器在开小差', 'bottom', 800);
-
+							api.toast({
+							    msg: '服务器在开小差'
+							});
 						} else {
 							$('#' + likeid).attr('data-like_userid', '1');
 							var likecount = $('#likecount_' + articleid).attr('data-likecount');
@@ -921,8 +1095,10 @@
 					}
 					postajax(url + 'addlike', params, function(ret) {
 						if (ret.code == '400') {
-
-							toast('服务器在开小差', 'bottom', 800);
+							api.toast({
+							    msg: '服务器在开小差'
+							});
+							
 						} else {
 							$('#' + likeid).attr('data-like_userid', '0');
 							var likecount = $('#likecount_' + articleid).attr('data-likecount');
@@ -967,12 +1143,6 @@
 					
 						
 						// console.log(wareid[src])
-				} else {
-					toast('此图片没有穿搭链接', 'bottom', 1500);
-					// toast({
-					//   message:'此图片没有穿搭链接',
-					//   time:2000
-					// });
 				}
 
 			}
@@ -1001,13 +1171,13 @@
 					} else {
 						$('.xz').remove();
 						$('.commentBox').append(
-							'<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-暂无数据-</p>');
+							'<p class="nodata" style=" text-align: center;color: #ddd;height: 50px;line-height: 50px;">-暂无评论-</p>');
 					}
 
 				})
 			}
 
-			function fnupdate(ret, _loadMore) {
+			function fnupdate(ret, _loadMore)	{
 				var param = {
 					list: ret,
 					imgurl: imgurl,
@@ -1022,10 +1192,25 @@
 				}
 				// console.log(ret)
 				if (ret.length < 1) {
-					toast('没有资源了', 'bottom', 800);
+					
+					api.toast({
+					    msg: '没有资源了'
+					});
 				} else {
 					off_on = true;
 				}
+
+				$('.atnamecls').click(function() {
+					
+					api.openWin({
+					    name: 'TAusercenter',
+					    url: './TAusercenter.html',
+					    pageParam: {
+					        uid: $(this).data('atuid')
+					    }
+					});
+
+				})
 
 				$('.xz').remove();
 			}
@@ -1041,17 +1226,40 @@
 					}
 				})
 				$('.keyboard').on("keyup paste", function() {
-					if ($('.keyboard').text().length >= 1) {
-						$('.keybtn').css('color', 'black');
-					} else {
-						$('.keybtn').css('color', 'gray');
+					var startindex = $('.keyboard').text().indexOf('@:');
+
+					if ($('.keyboard').text().match(/@+:/g)) {
+						if ($('.keyboard').text().match(/@+:|@+：/g).length > 1) {
+							for (var i = 0; i < $('.keyboard').text().match(/@+:|@+：/g).length - 1; i++) {
+								$('.keyboard').html($('.keyboard').html().replace(/@:|@：/, ''))
+								// toast('输入框只允许')
+								startindex = $('.keyboard').text().indexOf('@:');
+
+							}
+
+						}
+
+
+						atsearchval = $('.keyboard').text().substring(startindex + 2);
+						jishisearch(atsearchval);
 					}
+					intissetval();
 				})
 
 			}
 
+			function intissetval() {
+				if ($('.keyboard').text().length >= 1) {
+					$('.keybtn').css('color', 'black');
+				} else {
+					$('.keybtn').css('color', 'gray');
+				}
+			}
 			function reply(id, name, superior, type) {
-				$('.keyboard').text('');
+				isfocus=1;
+				// $('.keyboard').text('');
+				$('.keybox').fadeIn();
+				$('.speakbtn').attr('data-type', '1');
 				touid2 = id;
 				superiorid = superior;
 				sonboxcls = 'sonbox_' + superior;
@@ -1061,11 +1269,21 @@
 			}
 
 			function sendbtn() {
+				var isat = 0;
 				if (!userInfo) {
 					window.location.href = './login_frame.html';
 					return;
 				}
-				var value = $('.keyboard').text();
+				var value = $('.keyboard').html();
+				var atspan = $('.keyboard span');
+				if (atspan.length > 0) {
+					isat = 1;
+				}
+
+				if (value.length == 0) {
+					toast('请输入内容');
+					return;
+				}
 				fromuid = userInfo.id;
 				if (superiorid == 0) {
 					$('.commentBox').prepend(
@@ -1079,18 +1297,22 @@
 						"fromuid": fromuid,
 						"touid": touid2,
 						"superiorid": 0,
-						"msg": value
+						"msg": value,
+						"isat": isat,
 					}, function(e) {
 						if (e.code == '200') {
 							getcomment();
 							worketman(fromuid,touid2);
+							atworketman(fromuid, e.data);
+						}else{
+							toast(e.message);
 						}
 
 					})
 				} else {
-					$('.' + sonboxcls).prepend('<div class="son"><div class="son_head" style="background-image:url(' + imgurl +
+					$('.' + sonboxcls).prepend('<div class="son"><div class="icon"><div class="son_head" style="background-image:url(' + imgurl +
 						userInfo.headimg +
-						')">></div><div class="comm"><div class="sonname"><div class="fromname">' + userInfo.name +
+						')"></div></div><div class="comm"><div class="sonname"><div class="fromname">' + userInfo.name +
 						'</div>&nbsp; 回复 &nbsp;<div class="toname">' + toname + '</div></div><div class="text">' + value +
 						'<div class="time">' + timestampFormat(new Date().getTime()) + '</div></div></div></div>');
 					postajax(url + 'addreply', {
@@ -1098,28 +1320,52 @@
 						"fromuid": fromuid,
 						"touid": touid2,
 						"superiorid": superiorid,
-						"msg": value
+						"msg": value,
+						"isat": isat,
 					}, function(e) {
 						if (e.code == '200') {
 							getcomment();
 							worketman(fromuid,touid2);
+							atworketman(fromuid, e.data);
+						}else{
+							toast(e.message);
 						}
 					})
 				}
 
-				$('.keyboard').text('').blur();
+				$('.keyboard').text('');
 				superiorid = 0;
+				$('<style>[contentEditable=true]:empty::before{content:"留下你精彩的评论吧";color:gray;}</style>').appendTo('head');
 
 			}
+			function atworketman(fromuid, atuser) {
+				
+				var ws = new WebSocket("ws://socket.chaodashe.com:8282");
 
-			function jiaodian() {
+				ws.onmessage = function(e) {
+					
+					var message = eval("(" + e.data + ")");
+					switch (message.type) {
+						case 'init':
+							var bild = '{"type":"bind","fromid":"' + fromuid + '"}';
+							ws.send(bild);
+							// setTimeout(function() {
+								var message = '{"type":"at","toid":"' + atuser + '"}';
+								ws.send(message);
+							// }, 888)
 
-				$('.keybtn').css('color', 'gray');
-				// touid2=touid;
-				// superiorid=0;
-				$('<style>[contentEditable=true]:empty::before{content:"添加评论";color:gray;}</style>').appendTo('head');
+							return;
 
+					}
+
+				}
+				ws.onclose = function() {
+					console.log('关闭了1');
+					
+				}
 			}
+
+			
 
 			function comment() {
 				touid2 = touid;
@@ -1242,12 +1488,17 @@
 				copyInput.select(); // 选择对象
 				document.execCommand("Copy"); // 执行浏览器复制命令
 
-				toast('成功复制链接', 'center', 2000);
+			
+				api.toast({
+				    msg: '成功复制链接'
+				});
 
 			}
 
 			function openmusic() {
-				toast('此功能暂时还未开发', 'bottom');
+				api.toast({
+				    msg: '此功能暂时还未开发'
+				});
 			}
 			
 			// 渲染单张图片的穿搭链接
@@ -1322,9 +1573,292 @@
 				}
 				
 			}
-			// let b = document.querySelector('button');
-			// setTimeout(()=>b.focus(), 100);
-			// setTimeout(()=>b.blur(), 1000);
+				function openat(_loadMore) {
+				// 光标处插入内容
+
+				isopenat = 1;
+				if (_loadMore) {
+					atskip += atlimit;
+				} else {
+					insertHtmlAtCaret('@:');
+					atskip = 0;
+
+					$('body,html').addClass('noscroll');
+					$('.atlist').css('display', 'block');
+					$('.loadingxz').html(
+						'<div id="xuanzhun" class="atxz" style="width:30px; height: 30px; margin:0 auto; margin-top:12px;border-bottom:2px solid #FF4466;"></div>'
+					)
+					$('.keybox').prepend($('.atlist'));
+					// 点击atbg背景关闭@功能
+					$('body').append('<div class="atbg"></div>');
+					$('.atbg').click(function() {
+
+						$(".atlist").hide(366);
+						$('.at').attr("onclick", "openat()");
+						isopenat = 0;
+						setTimeout(function() {
+							$(".atbox").empty();
+
+						}, 366);
+						$('.atbg').remove();
+						$('body,html').removeClass('noscroll');
+						if (atsearchval) {
+							var str = '@:' + atsearchval;
+						} else {
+							var str = '@:';
+						}
+						var inputval = $('.keyboard').html();
+						// insertHtmlAtCaret(inputval.replace(new RegExp(str), ''));
+
+						$('.keyboard').html(inputval.replace(new RegExp(str), ''));
+
+
+					})
+				}
+
+
+
+				$('.at').removeAttr("onclick");
+
+
+				getajax(url + 'getatname', {
+					'userid': userInfo.id,
+					'atskip': atskip,
+					'atlimit': atlimit
+				}, function(ret) {
+					if (ret.code == 200) {
+						updateatlist(ret.data, _loadMore);
+					} else {
+
+						$(".atbox").append(
+							'<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-暂无数据-</p>');
+					}
+				})
+			}
+
+			function updateatlist(ret, _loadMore) {
+				var param = {
+					list: ret,
+					imgurl: imgurl,
+				};
+				var tempFn = doT.template($('#template5').text());
+				// 使用模板函数生成HTML文本
+				var resultHTML = tempFn(param);
+				if (_loadMore) {
+					$(".atbox").append(resultHTML);
+				} else {
+					// return;
+					$(".atbox").html(resultHTML);
+
+
+					// 实时搜索
+
+
+				}
+				$(".atuserhead").lazyload({
+					effect: "fadeIn",
+					threshold: 500,
+				});
+				// $('.keyboard').append('@');
+				$('.loadingxz').empty().css('height', '0px');
+				atoff_on = true;
+			}
+
+			function clickat(atuid, atname) {
+				// 第一种方法(查找输入框是否已存在@对象)
+				// for(var i=0;i<$('.keyboard span').length;i++){
+				// 	if($('.keyboard span').eq(i).attr('data-atuid')==atuid){
+				// 		toast('此用户已经@过了');
+				// 		return;
+				// 	}
+				// }
+				// 第二种方法简洁轻便
+				if ($('.keyboard').children('.at_' + atuid).attr('data-atuid') == atuid) {
+					
+					api.toast({
+					    msg: '此用户已经@过了'
+					});
+					return;
+				}
+
+				intissetval();
+				if ($(".keyboard span").length == 5) {
+					
+					api.toast({
+					    msg: '一次只能@5个好友'
+					});
+					return;
+				}
+
+				// $('.keyboard').append('@'+atname+'&nbsp');
+				// $('.keyboard').append('<span class="atnamecls at_' + atuid + '" data-atuid="' + atuid +
+				// 	'" contenteditable="false" style="margin-left:6px; display: inline-block;color:' +
+				// 	userInfo.Dressingbgcolor + '">@' + atname + '</span>&nbsp;');
+				insertHtmlAtCaret('<span class="atnamecls at_' + atuid + '" data-atuid="' + atuid +
+					'" contenteditable="false" style="margin-left:6px; display: inline-block;color:' +
+					userInfo.Dressingbgcolor + '">@' + atname + '</span>&nbsp;')
+				var inputval = $('.keyboard').html();
+				$('.keyboard').html('');
+				if (atsearchval) {
+					var str = '@:' + atsearchval;
+				} else {
+					var str = '@:';
+				}
+
+				insertHtmlAtCaret(inputval.replace(new RegExp(str), ''));
+
+				$(".atlist").hide(366);
+				setTimeout(function() {
+					$(".atbox").empty();
+				}, 366)
+				atsearchval = '';
+				$('.atbg').remove();
+				$('body,html').removeClass('noscroll');
+				$('.at').attr("onclick", "openat()");
+				// $('.keyboard').html();
+
+			}
+
+			function jiaodian() {
+
+
+
+				if ($('.keyboard').text().length == 0 && $('.disat button').length == 0) {
+					touid2 = touid;
+					superiorid = 0;
+					console.log('失焦')
+					$('<style>[contentEditable=true]:empty::before{content:"留下你精彩的评论吧";color:gray;}</style>').appendTo('head');
+					$('.keyboard').attr('data-placeholder', '留下你精彩的评论吧');
+				}
+
+				// },366)
+
+
+
+				// $('.keybtn').css('color', 'gray');
+
+			}
+
+			function jishisearch(val, _loadMore) {
+				if (_loadMore) {
+					atsearchskip += atsearchlimit;
+				} else {
+					atsearchskip = 0;
+				}
+
+				getajax(url + 'getatname', {
+					'userid': userInfo.id,
+					'searchname': val,
+					'atskip': atsearchskip,
+					'atlimit': atsearchlimit
+				}, function(ret) {
+					if (ret.code == 200) {
+						updateatsearchlist(ret.data, _loadMore);
+					} else {
+						// $(".atbox").append(
+						// 	'<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-暂无数据-</p>');
+					}
+				})
+
+
+			}
+
+			function updateatsearchlist(ret, _loadMore) {
+				var param = {
+					list: ret,
+					imgurl: imgurl,
+				};
+				var tempFn = doT.template($('#template5').text());
+				// 使用模板函数生成HTML文本
+				var resultHTML = tempFn(param);
+				if (_loadMore) {
+					$(".atbox").append(resultHTML);
+				} else {
+					$(".atbox").html(resultHTML);
+				}
+				$(".atuserhead").lazyload({
+					effect: "fadeIn",
+					threshold: 500,
+				});
+				atoff_on = true;
+
+			}
+
+			function insertHtmlAtCaret(html) {
+				let sel, range;
+				if (window.getSelection) {
+					// IE9 and non-IE
+					sel = window.getSelection();
+					if (sel.getRangeAt && sel.rangeCount) {
+						range = sel.getRangeAt(0);
+						range.deleteContents();
+						// Range.createContextualFragment() would be useful here but is
+						// non-standard and not supported in all browsers (IE9, for one)
+						let el = document.createElement("div");
+						el.innerHTML = html;
+						let frag = document.createDocumentFragment(),
+							node, lastNode;
+						while ((node = el.firstChild)) {
+							lastNode = frag.appendChild(node);
+						}
+						range.insertNode(frag);
+
+						// Preserve the selection
+						if (lastNode) {
+							range = range.cloneRange();
+							range.setStartAfter(lastNode);
+							range.collapse(true);
+							sel.removeAllRanges();
+							sel.addRange(range);
+						}
+					}
+				} else if (document.selection && document.selection.type != "Control") {
+					// IE < 9
+					document.selection.createRange().pasteHTML(html);
+				}
+			}
+
+			function delDressing(id) {
+				$(document).dialog({
+					type: 'confirm',
+					style: 'ios',
+					titleText: '删除动态',
+					content: '是否确认删除此动态',
+					buttons: [{
+							name: '取消',
+							callback: function() {
+
+							}
+						},
+						{
+							name: '确认',
+							callback: function() {
+
+								var userInfo = $api.getStorage('userInfo');
+
+								postajax(url + 'delDressing', {
+									'userid': userInfo.id,
+									'id': id
+								}, function(ret) {
+									if (ret.code == 200) {
+										api.sendEvent({
+										    name: 'delDressing',
+										    extra: {
+										        value:id, 
+										    }
+										});
+										api.closeWin();
+									}
+								})
+
+							}
+						},
+
+
+					]
+				});
+
+			}
 		</script>
 	</body>
 </html>

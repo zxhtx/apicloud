@@ -92,7 +92,7 @@ body {
 	position: relative;
 	overflow: hidden;
 	overflow-y:scroll;
-	max-height: 82vh !important;
+	max-height: 86vh !important;
 	-webkit-overflow-scrolling:touch;
 
 }
@@ -228,6 +228,7 @@ body {
  	color: #fff;
  	width: 66px;
  	height: 28px;
+ 	line-height: 28px;
  	display:flex;
 	justify-content: center; align-items: center;
  	text-align: center;

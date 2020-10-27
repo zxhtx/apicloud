@@ -55,7 +55,10 @@
 			<div class="textinfo">
 				<div class="sex"></div>
 				<div class="line"></div>
-				<div class="authority" onclick="isauthority()"></div>
+				<div class="rzdiv">
+					<div class="authority"></div>
+					<div class="authoritytext"></div>
+				</div>
 				<div class="autograph"></div>
 			</div>
 			<div class="cdslist">
@@ -64,7 +67,7 @@
 		</div>
 		<script id="template" type="text/template">
 			{{~it.list:value:index}}
-				<div onclick="openDressing({{=value.id}})" class="cdsimg "  data-original="{{=it.imgurl}}{{=value.imglist}}">
+				<div onclick="openDressing('{{=value.id}}')" class="cdsimg bgcolor "  data-original="{{=it.imgurl}}{{=value.imglist}}">
 					{{if(value.showimgtype=='1'){}}
 					 <img src="../image/longimg.png" alt="">
 					{{ }else{ }}
@@ -123,7 +126,13 @@
 							dotupdate(e.data.cdslist, _LoadMore);
 							updatehtml(e.data);
 						}
-
+						if(e.data.user.authority){
+							$('.headimg').addClass('iconauthority');
+						}
+						if(e.data.user.Dressingbgcolor){
+							$('.is_dinyue,.bgcolor ').css("cssText", "background-color:" + e.data.user.Dressingbgcolor + " !important;");
+							
+						}
 
 					} else if (e.code == '201') {
 						if (_LoadMore) {
@@ -133,12 +142,12 @@
 							updatehtml(e.data);
 						}
 						$('.cdslist').append(
-							'<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-暂无数据-</p>'
+							'<p class="nodata" style=" text-align: center;color: #ddd;height: 50px;line-height: 50px;">-暂无数据-</p>'
 						);
 					} else {
 						$('.xz').remove();
 						$('.cdslist').append(
-							'<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-暂无数据-</p>'
+							'<p class="nodata" style=" text-align: center;color: #ddd;height: 50px;line-height: 50px;">-暂无数据-</p>'
 						);
 					}
 				})
@@ -147,9 +156,9 @@
 			function updatehtml(data) {
 				if(data.user.id==userInfo.id){
 					$('.head').css('height','92px');
-					$('.headimg>.img').css('margin-top','5px')
+					$('.headinfo').css('margin-top','12px');
 					$('.is_dinyueandchat').css('display','none')
-					$('.userlist').css('margin-top','38px')
+					$('.textinfo').css('margin-top','16px');
 				}
 				authority = data.user.authority;
 				authoritytext = data.user.authoritytext;
@@ -170,6 +179,7 @@
 
 				if (authority == '1') {
 					$('.authority').css('background-image', 'url(../image/authority.png)');
+					$('.authoritytext').html(authoritytext)
 				} else {
 					$('.authority').css('background-image', 'url(../image/noauthority.png)');
 				}
@@ -203,13 +213,7 @@
 				$('.xz').remove();
 			}
 
-			function isauthority() {
-				if (authority == '1') {
-					toast(authoritytext, 'center', 800);
-				} else {
-					toast('未认证', 'center', 800);
-				}
-			}
+			
 
 			window.addEventListener("scroll", function() {
 				//当时滚动条离底部0px时开始加载下一页的内容
@@ -226,7 +230,7 @@
 
 			function openDressing(id) {
 				 api.openWin({
-		           name: 'Dressingdetails'+uid,
+		           name: 'Dressingdetails'+id,
 		           url: './Dressingdetails.html',
 		           pageParam: {
 		               articleid:id
@@ -291,7 +295,16 @@
 				
 			}
 			function openchat(){
-				window.location.href="./chat.html?"+window.btoa(encodeURI("fromid="+userInfo.id+"&toid="+uid));
+				
+					api.openWin({
+		    	    name: 'chat',
+		    	    url: './chat.html',
+		    	    pageParam: {
+		    	        fromid:userInfo.id,
+		    	        toid:uid
+		    	    },
+		    	   
+		    	});
 			}
 			
 		</script>

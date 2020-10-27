@@ -31,6 +31,7 @@
           },
           pageParam: {
             wareId:api.pageParam.wareId,
+            shareuid:api.pageParam.shareuid,
             // wareTypeId:api.pageParam.wareTypeId
           },
           bounces: false,
@@ -61,7 +62,7 @@
            // alert($api.jsonToStr(ret))
             if (ret) {
               isback=ret.value.isback;
-
+              // alert(isback);
             } 
         });
       };

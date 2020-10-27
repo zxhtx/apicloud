@@ -4,97 +4,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-    <title>APICloud APP</title>
+    <title>1</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
     <style>
-    header {
-        background: #fcfcfc;
-        height: 50px;
-        border-bottom: 1px solid #DDDFE3;
-    }
-
-    .left {
-        float: left;
-        width: 50px;
-        height: 50px;
-        background: url(../image/backimg.png) no-repeat center center;
-        background-size: 28px auto;
-        /*border: 1px solid red;*/
-    }
-
-    .right {
-        float: right;
-        width: 50px;
-        line-height: 50px;
-        color: black;
-        font-size: 16px;
-        text-align: center;
-    }
-
-    .right-hov {
-        color: #DD8400;
-    }
-
-    .middle {
-        position: absolute;
-        left: 50px;
-        right: 60px;
-        margin-top: 8px;
-        height: 34px;
-        border-radius: 34px;
-        background-color: #E8E8E8;
-    }
-
-    .middle>img:first-child {
-        float: left;
-        padding-top: 7px;
-        height: 20px;
-        vertical-align: top;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
-    .middle>input {
-        position: absolute;
-        left: 40px;
-        right: 50px;
-        margin-top: 8px;
-        height: 18px;
-        line-height: 18px;
-        color: #999;
-        font-size: 14px;
-        outline: none;
-    }
-
-    .middle>input::-webkit-input-placeholder {
-        color: #666;
-        line-height: 18px;
-        font-size: 14px;
-    }
-
-    .middle>img:last-child {
-        float: right;
-        padding-top: 4px;
-        height: 27px;
-        vertical-align: top;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
 </style>
 </head>
 
 <body>
-    <header id="header">
-        <div class="left event-back" tapmode onclick="api.closeWin();"></div>
-        <div class="right" tapmode="highlight" onclick="fnSearch();">搜索</div>
-        <div class="middle">
-            <img src="../image/search_groupbuy.png">
-            <input id="searchText" type="text" placeholder="请输入搜索内容">
-        </div>
-    </header>
+   
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
-<script type="text/javascript" src="../script/common.js"></script>
+
 <script type="text/javascript">
     apiready = function() {
 
@@ -103,7 +23,7 @@
           url: './search_frame.html',
           rect: {
               x: 0,
-              y: 50,
+              y: 0,
               w: 'auto',
               h: 'auto'
           },
@@ -114,17 +34,7 @@
   };
 
 
-  function fnSearch() {
-    var searchText=$api.byId('searchText').value;
-    api.sendEvent({
-        name: 'search',
-        extra: {
-            key1: searchText, 
-        }
-    });
-
-
-};
+  
 </script>
 
 </html>

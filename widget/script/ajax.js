@@ -1,7 +1,9 @@
 
+
+    
  // var url='http://www.chaoxi.com/';
  var url='http://api.chaodashe.com/index.php/';
- 
+  var userInfo=$api.getStorage('userInfo')?$api.getStorage('userInfo'):0;
  var imgurl='http://img.chaodashe.com/';
   // var headimgurl='http://www.666.com/chaoxiapi/';
  //  var now = Date.now();
@@ -11,22 +13,27 @@
  //   "X-APICloud-AppKey":   appKey
  // }
  // if ($api.getStorage('userInfo')) {
-   var userInfo=$api.getStorage('userInfo')?$api.getStorage('userInfo'):0;
+  
  // }
+ var AppVersion='0.14';
+ var userInfo=$api.getStorage('userInfo')?$api.getStorage('userInfo'):0;
+ var header={
+  "Token":$api.getStorage('token') ? $api.getStorage('token') : 0,
+}
 
- if(userInfo){
-   token=$api.getStorage('token');
-   header={
-    // 'Content-Type': 'application/json;charset=utf8',
-      "Token":token,
-   }
- }else{
-   header='';
- }
- 
 // 我的数据库
 function getajax(url,data,callback){
-	
+ userInfo=$api.getStorage('userInfo')?$api.getStorage('userInfo'):0;
+   if(userInfo){
+     token=$api.getStorage('token');
+     header={
+      // 'Content-Type': 'application/json;charset=utf8',
+        "Token":token,
+     }
+   }else{
+     header='';
+   }
+
   $.ajax({
     type: 'get',
     url: url,
@@ -34,6 +41,14 @@ function getajax(url,data,callback){
     data:data,
     headers:header,
     success: function (data) {
+       if (data.code == 403) {
+        api.toast({
+            msg: '登录信息失效,请重新登录'
+        });
+          $api.clearStorage('userInfo');
+         $api.clearStorage('token');
+        return;
+      }
       callback(data);
     },
     error: function (data) {
@@ -43,7 +58,16 @@ function getajax(url,data,callback){
 
 }
 function postajax(url, data, callback){
-
+   userInfo=$api.getStorage('userInfo')?$api.getStorage('userInfo'):0;
+   if(userInfo){
+     token=$api.getStorage('token');
+     header={
+      // 'Content-Type': 'application/json;charset=utf8',
+        "Token":token,
+     }
+   }else{
+     header='';
+   }
   $.ajax({
     type: 'post',
     url: url,
@@ -51,6 +75,14 @@ function postajax(url, data, callback){
     data: data,
     headers:header,
     success: function (data) {
+      if (data.code == 403) {
+        api.toast({
+            msg: '登录信息失效,请重新登录'
+        });
+          $api.clearStorage('userInfo');
+         $api.clearStorage('token');
+        return;
+      }
       callback(data);
     },
     error: function (data) {
@@ -96,8 +128,8 @@ function dialog(text){
   var doc=window;
    dl=$(doc).dialog({
         type : 'toast',
-        infoIcon: '../image/icon/275.png',
-        // infoText: text,
+        infoIcon: '../image/icon/loading.gif',
+        infoText: 'chaodashe',
 
     });
 

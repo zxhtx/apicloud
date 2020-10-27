@@ -320,6 +320,11 @@
         api.toast({
             msg: '该地址已是默认地址'
         });
+         notice.update({
+                infoIcon: '../image/icon/success.png',
+                infoText: '该地址已是默认地址',
+                autoClose: 1000
+                });   
        // toast('','bottom',1500);
    }else if( _data!=1) {
     var params={

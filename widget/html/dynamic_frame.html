@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+        <script src="../script/commonjs.js">
+        </script>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>    
+     *,html,body{
+        padding: 0px;
+        margin: 0px;
+        list-style: none;
+        width: 100%;
+     }   
+     header{
+        width: 100%;
+        height: 40px;
+        background: white;
+        box-shadow:0px 6px 6px -6px black;
+        position: fixed;
+        top: 0px;
+        left:0px;
+        z-index: 999;
+    }
+    header .back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 40px;
+        height: 40px;
+        z-index: 2;
+    }
+
+    header .back img {
+        margin-top: 5px;
+        margin-left: 4px;
+        width: 28px;
+        height: 30px;
+    }
+    header a{
+        display: block;
+        text-align: center;
+        line-height: 40px;
+        font-size: 16px;
+        font-weight: bold;
+
+    }
+    .add{
+       position: absolute;
+       top: 0;
+       right: 0;
+       width: 40px;
+       height: 40px;
+       z-index: 2;
+       line-height: 40px;
+       text-align: center;
+       font-weight: bold;
+   }
+   .boby{
+    margin-top: 50px;
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    
+   }
+   .text{
+    width: 95%;
+    height: 88px;
+    outline: 0px;
+    border: 0px;
+    font-size: 16px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    text-align: left;
+    padding: 3px;
+   }
+
+    .addimage{
+                width: 108px;
+                height: 108px;
+                background-image: url(../image/add_black.png);
+                background-size: cover;
+                background-position: center;  
+                margin: 3px;        
+
+    }
+    .imglist{
+                 width: 108px;
+                height: 108px;
+                display: inline-block;
+                background-size: cover;
+                background-position: center;
+                margin: 3px;
+            } 
+
+    #file-list{
+        margin-top:8px; 
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    } 
+    .setting{
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        border-top: 0.03em solid #F1F1F1;
+         border-bottom: 0.03em solid #F1F1F1;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .imgshowtype{
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+    }
+    .imgshowtype .ct{
+        width: 56px;
+        height: 30px;
+       line-height: 30px;
+       border-radius: 6px 0px 0px 6px ;
+    }
+    .imgshowtype .lb{
+         width: 56px;
+        height: 30px;
+          border-radius: 0px 6px 6px 0px ;
+         line-height: 30px;
+    }
+    .music{
+        height: 30px;
+        line-height: 30px;
+    }
+    .music>img{
+        width: 12px;
+        height: 12px;
+        vertical-align: middle;
+        display: inline-block;
+    }
+    .music{
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    }
+    .at{
+        width: 58px;
+        height: 26px;
+        line-height: 26px;
+      
+    }
+    .at span{
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 26px;
+        color: #fff;
+        background-color: #000;
+    }
+     .atnamecls {
+     width: auto;   
+    background: #fff;
+    line-height: 20px;
+    font-size: 14px;
+    border: none;
+    color: blue;
+    outline: none;
+    /*border: 1px solid red;*/
+}
+   /*[contentEditable=true]:empty::before{content:attr(data-placeholder);color:gray;}*/
+</style>
+</head>
+
+<body>
+<header>
+    <div class="back" tapmode onclick="api.closeWin();">
+        <img src="../image/back.png">
+    </div>
+    <a>发动态</a>
+    <div class="add" onclick="add()">发表</div>
+</header>
+<div class="boby">
+   <div contenteditable="true"  onblur="getblur()" class="text" id="test" ></div>
+   <div class="setting">
+       <div class="imgshowtype">
+           <div class="ct" tapmode onclick="imgshowtype('1',this)">长图</div>
+           <div class="lb" tapmode onclick="imgshowtype('0',this)">轮播图</div>
+       </div>
+       <div class="at" tapmode onclick="openatframe()">
+        <span class="bgcolor">@</span>
+        </div>
+       <div class="music" tapmode onclick="gomusic()"><img src="../image/music_black.png">&nbsp;音乐</div>
+   </div>
+    <div id="file-list">
+        <div class="addimage" onclick="uploadimg()"></div>
+                
+   </div>
+</div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/guangbiao.js"></script>
+<script type="text/javascript">
+    $list = $('#file-list');
+    fileList = [];
+    var addInfo={};
+    var laseguangb;
+    addInfo.showimgtype=1;
+    var userInfo;
+    apiready = function() {
+        $('.text').focus();
+
+        userInfo=$api.getStorage('userInfo');
+        if(userInfo){
+            $(".bgcolor").css("cssText", "background-color:" + userInfo.Dressingbgcolor + " !important;");
+            
+        }
+        event();
+        imgshowtype('1',$('.ct'));
+
+    };
+    function getblur(){
+        var s=$('.text');
+     // alert(getCurrentCursorPosition('test'));
+     
+    }
+   
+
+    function event(){
+        api.addEventListener({
+            name: 'addonclick'
+        }, function(ret, err) {
+            if (ret) {
+             addonclick();
+            }
+        });
+        api.addEventListener({
+            name: 'getmusic'
+        }, function(ret, err) {
+            if (ret) {
+                addInfo.musicid=ret.value.musicid;
+                // alert($api.jsonToStr(ret));
+                $('.music').html('<img src="../image/music_black.png">&nbsp;'+ret.value.musicname)
+            } else {
+                api.toast({
+                    msg: '选取失败'
+                });
+            }
+        });
+        api.addEventListener({
+            name: 'reloaddynamic'
+        }, function(ret, err) {
+            if (ret) {
+                fileList=[];
+                addInfo={}
+                addInfo.showimgtype=1;
+                $('.text').val('');
+                imgshowtype('1',$('.ct'));
+                $('.addimage').siblings().remove(); 
+            }
+        });
+        api.addEventListener({
+            name: 'addat'
+        }, function(ret, err) {
+            if (ret) {
+                if ($('.text').children('.at_' + ret.value.atuid).attr('data-atuid') == ret.value.atuid) {
+                   api.toast({
+                       msg: '此用户已经@过了'
+                   });
+                    return;
+                }
+                $('.text').focus();
+                if (laseguangb>1) {
+                     setCurrentCursorPosition(laseguangb+4)
+                }
+                
+                 insertHtmlAtCaret('<span class="atnamecls at_' +ret.value.atuid + '" data-atuid="' + ret.value.atuid +
+                    '" contenteditable="false" style="margin-left:6px; display: inline-block;color:' +
+                    userInfo.Dressingbgcolor + '">@' + ret.value.atname + '</span>&nbsp;')
+                
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+    }
+    function openatframe(){
+    laseguangb=getCurrentCursorPosition('test');
+        if ($(".text span").length == 5) {
+            api.toast({
+                msg: '一次只能@5个好友'
+              });        
+             return;
+          }
+        api.openWin({
+            name: 'selectat',
+            url: './selectat.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+      
+
+    }
+   function uploadimg(){
+        if (fileList.length==12){
+                    api.toast({
+                        msg: '最多只能上传12张图片'
+                    });
+                    return;
+                }
+                var UIAlbumBrowser = api.require('UIAlbumBrowser');
+                    UIAlbumBrowser.open({
+                        max: 12,
+                        styles: {
+                            bg: '#fff',
+                            mark: {
+                                icon: '',
+                                position: 'bottom_left',
+                                size: 20
+                            },
+                            nav: {
+                                bg: 'rgba(0,0,0,0.6)',
+                                titleColor: '#fff',
+                                titleSize: 18,
+                                cancelColor: '#fff',
+                                cancelSize: 16,
+                                finishColor: '#fff',
+                                finishSize: 16
+                            }
+                        },
+                        rotation: true
+                    }, function(ret) {
+                        if (ret) {
+                            if (ret.list == '[]' || ret.list == '' || ret.list == undefined) {
+                                api.toast({
+                                    msg: '未检测到图片路径',
+                                    duration: 2000,
+                                    location: 'bottom'
+                                });
+
+                            }else {
+                                
+                                for (var i =0; i < ret.list.length; i++) {
+                                    if(ret.list[i].size/1024>3072){
+                                        api.toast({
+                                            msg: '图片大小不能超过3Mb'
+                                        });
+                                        continue;
+                                    }
+                                    
+                                
+                                        $list.prepend('<div style="background-image:url(' + ret.list[i].path + ')" class="imglist" ></div>');
+                              
+                                        fileList.push(ret.list[i].path);
+                                
+                                }
+
+                         }
+                    }
+                });
+   }
+   function imgshowtype(index,_this){
+    
+        // alert(userInfo.Dressingbgcolor)
+        $(_this).css({'color':'#fff','background-color': userInfo.Dressingbgcolor}).siblings().css({'background-color':'#fff','color':'#000'});
+   }
+   function gomusic(){
+    api.openWin({
+        name: 'musiclist',
+        url: './musiclist.html',
+        pageParam: {
+            name: 'test'
+        }
+    });
+   }
+   function add(){
+    $('.add').removeAttr('onclick');
+    var isat = 0;
+    if($('.text span').length>0){
+        isat = 1;
+    }
+    var userInfo=$api.getStorage('userInfo');
+    var text = $('.text').html();
+    addInfo.text = text;
+    addInfo.userid = userInfo.id;
+    addInfo.type=1;
+    addInfo.isat=isat;
+    api.ajax({
+                url: 'http://api.chaodashe.com/index.php/moreimg',
+                method: 'post',
+                data: {
+                    values: addInfo,
+                    files: {
+                        "image[]": fileList,
+                    },
+                },
+                headers:{'Token':$api.getStorage('token')},
+                report: true,
+            }, function(ret, err) {
+                if (ret){
+                        
+                       api.sendEvent({
+                          name: 'progress',
+                          extra: {
+                              v1: ret.progress,
+                              img:fileList[0],
+                              text:text,
+                          }
+                      });
+                       atworketman(userInfo.id,ret.body.data);
+                        api.closeWin();
+                }else{
+
+                    api.toast({
+                        msg: '服务器开小差'
+                    });
+                    setTimeout(function(){
+                          api.closeWin();
+                      },1800)
+                  
+                }
+                  
+            });
+                
+
+   }
+
+   function atworketman(fromuid, atuser) {
+                
+                var ws = new WebSocket("ws://socket.chaodashe.com:8282");
+
+                ws.onmessage = function(e) {
+                    
+                    var message = eval("(" + e.data + ")");
+                    switch (message.type) {
+                        case 'init':
+                            var bild = '{"type":"bind","fromid":"' + fromuid + '"}';
+                            ws.send(bild);
+                            // setTimeout(function() {
+                                var message = '{"type":"at","toid":"' + atuser + '"}';
+                                ws.send(message);
+                            // }, 888)
+
+                            return;
+
+                    }
+
+                }
+                ws.onclose = function() {
+                    console.log('关闭了1');
+                    
+                }
+            }
+
+            function addonclick(){
+                $('.add').attr('onclick','add()');
+            }
+</script>
+
+</html>

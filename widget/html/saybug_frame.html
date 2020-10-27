@@ -8,8 +8,7 @@
 		<title>bug建议说一说</title>
 		<script src="../script/commonjs.js">
 		</script>
-		<script src="../script/footcom.js">
-		</script>
+		
 
 		<style type="text/css">
 			html,body{
@@ -26,15 +25,21 @@
 				z-index: 12;
 				background-color: #fff;
 			}
-			header h1 {
-			    width: 100%;
+			header div {
+			     width: 49%;
 			    height: 40px;
 			    text-align: center;
 			    color: #000;
 			    font-size: 18px;
 			    line-height: 40px;
 			    margin: 0px;
+				display: inline-block;
 				box-shadow:0px 6px 6px -6px black;
+				font-weight: bold;
+			}
+			header .shangxin{
+				  font-size: 16px;
+				  color: gray;
 			}
 			.inp{
 				margin-top: 56px;
@@ -43,7 +48,7 @@
 			.inp textarea{
 				outline: 0px;
 				border: 0px;
-				width: 96%;
+				width: 93%;
 				margin: 0 auto;
 				height: 66px;
 				/* border: 1px solid red; */
@@ -52,6 +57,9 @@
 				overflow-y: hidden;
 				resize: none;
 				border: 1px solid #CBE4F3;
+				padding: 5px;
+				border-radius: 3px;
+					opacity: 0.5;
 			}
 			textarea[class='text']::-webkit-input-placeholder {
 			   color:#9D9D9D;
@@ -66,6 +74,8 @@
 				border-radius: 3px;
 				color: #fff;
 				background: #CBE4F3;
+				opacity:0.5;
+
 			}
 			.commentBox{
 				margin-bottom: 50px;
@@ -80,35 +90,34 @@
 			}
 
 			.commentBox .icon{
-				display: table-cell;
-				/*position: absolute;*/
-				/*left: 0;*/
-				/*width: 100px;*/
-				width: 60px;
-				/*float: left;*/
-				/*height: 100%;*/
+				width: 46px;
+			    height: 46px;
+			    border-radius: 50%;
+			    display: inline-block;
+				margin-top: 18px;
 
 			}
 			.commentBox .icon .headimg{
-				margin: 6px;
-				margin-top: 18px;
-				width: 39px;
-				height: 39px;
+				
+				width: 38px;
+				height: 38px;
 				background-position: center;
 				background-size: cover;
 				border-radius: 50%;
-				border: 1px solid #BBBBBB;
-				vertical-align: middle;
+				border: 2px solid #fff;
+				margin: 0 auto;
+				margin-top: 2px;
 			}
 
 			.commentBox .content{
 				display: table-cell;
-				width: auto;
+				width: 80%;
 				/*position: absolute;*/
 				/*float: right;*/
 				/*width: 80%;*/
 				/*right: 0;*/
 				/*top: 0;*/
+				margin-left: 12px;
 			}
 
 			.commentBox .name{
@@ -138,17 +147,34 @@
 				font-size: 13px;
 				color: #1DB81D;
 			}
+			.iconauthority{
+				background-image: linear-gradient(to bottom left,#B50C82, #FDA641);
+			}
 
+			.jdlist{
+				color: rgb(202 207 213);
+			}
+			.jd{
+				display: inline-block;
+				background: rgb(248 249 251);
+				width: auto;
+				height: 20px;
+				border-radius: 3px;
+				padding: 3px;
+				color: #b3acac;
+				line-height: 20px;
+			}
 
 		</style>
 	</head>
 	<body>
 		<header>
-			<h1>说一说</h1>
+			<div>说一说</div>
+			<div class="shangxin" onclick="openshangxin()">催上新</div>
 		</header>
 		<div class="inp">
-			<textarea name="" class="text" placeholder="说一说您在本站遇到的BUG以及您对我们的建议或者需要我们新增功能(您的评价就是我们前进的动力)"></textarea>
-			<div class="btn" onclick="sendbtn()">发表看法</div>
+			<textarea name="" class="text color" placeholder="说一说您在本站遇到的BUG以及您对我们的建议或者需要我们新增功能(您的评价就是我们前进的动力)"></textarea>
+			<div class="btn bgcolor" onclick="sendbtn()">发表看法</div>
 		</div>
 			<div class="commentBox">
 				
@@ -158,12 +184,17 @@
 		  <script id="template" type="text/template">
 		  	{{~it.list:value:index}}
 		  		<div class="li">
-		  			<div class="icon">
-						<div class="headimg" onclick="TAuser({{=value.userid}})" style="background-image: url({{=it.imgurl}}{{=value.headimg}});"></div>
-						{{if(value.type=='1'){ }}
-						<div class="is_ok">√已采纳</div>
-						{{ } }}
+		  		   {{if(value.authority==1){ }}
+		  			<div class="icon iconauthority">
+						<div class="headimg" onclick="TAuser('{{=value.userid}}')" style="background-image: url({{=it.imgurl}}{{=value.headimg}});"></div>
 		  			</div>
+		  			{{ }else{ }}
+					<div class="icon">
+						<div class="headimg" onclick="TAuser('{{=value.userid}}')" style="background-image: url({{=it.imgurl}}{{=value.headimg}});"></div>
+						
+					</div>
+					
+					{{ } }}	
 		  			<div class="content">
 		  				<div class="name">
 		  					{{=value.name}}
@@ -174,6 +205,19 @@
 		  				<div class="text">
 		  					{{=value.comment}}
 		  				</div>
+		  				<div class="jdlist">
+							{{if(value.type==1){ }}
+							<div class="jd">已接受</div> 
+							{{ }else if(value.type==2){  }}
+							<div class="jd">已接受</div> > <div class="jd">开发中</div>
+							
+							{{ }else if( value.type==3){  }}
+							<div class="jd">已接受</div> > <div class="jd">开发中</div> > <div class="jd">已开发</div>
+							
+							{{ }else if(value.type==6){ }}
+							<div class="jd">感谢您的评价</div>
+							{{ } }}
+						</div>
 		  			</div>
 		  		</div>
 		  	{{~}}
@@ -185,13 +229,21 @@
 			apiready = function(){
 			    getsaybug();
 			    reshtml();
-				$('.saybug').addClass('now').siblings().removeClass('now');
+			    userInfo=$api.getStorage('userInfo');
+			    if(userInfo){
+			    	 $(".bgcolor").css("cssText", "background-color:" + userInfo.Dressingbgcolor + " !important;");
+			    	  $(".color").css('border','1px solid '+userInfo.Dressingbgcolor);
+			    }
+			  
+				// $('.saybug').addClass('now').siblings().removeClass('now');
 				$('.text').on("keyup paste", function() {
 					// console.log($('.text').val().length)
 					if ($('.text').val().length >= 1) {
-						$('.btn').css('background', '#6AB3DD');
+						$('.btn').css('opacity', '1');
+						$('textarea').css('opacity', '1');
 					} else {
-						$('.btn').css('background', '#CBE4F3');
+						$('.btn').css('opacity', '0.5');
+						$('textarea').css('opacity', '0.5');
 					}
 				})
 			}
@@ -215,7 +267,7 @@
 			        }, function() {
 			            //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
 			            //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
-			           
+			           dl.close();
 			         getsaybug();
 			        });
 			      }
@@ -244,7 +296,10 @@
 				 $('.text').val('');
 				 postajax(url+'addsaybug',{'uid':userInfo.id,'text':comment},function(e){
 					 if(e.code=='200'){
-						 toast('您的建议发表成功','center');
+						
+						 api.toast({
+						     msg: '您的建议发表成功'
+						 });
 						 var html='<div class="li"><div class="icon"><div class="headimg" style="background-image: url('+imgurl+userInfo.headimg+');"></div></div><div class="content"><div class="name">'+userInfo.name+'</div><div class="time">'+timestampFormat(new Date().getTime())+'</div><div class="text">'+comment+'</div></div></div>'
 						$('.commentBox').prepend(html);
 					 }
@@ -260,13 +315,13 @@
 					}
 					postajax(url+'getsaybug',{'skip':skip,'limit':limit},function(e){
 						if(e.code=='200'){
-							updatelist(e.data);
+							updatelist(e.data,_loadMore);
 						}else{
 							
 						}
 					})
 					}
-					function updatelist(ret){
+					function updatelist(ret,_loadMore){
 						var param = {
 							list: ret,
 							imgurl: imgurl,
@@ -274,13 +329,47 @@
 						var tempFn = doT.template($('#template').text());
 						// 使用模板函数生成HTML文本
 						var resultHTML = tempFn(param);
-						$('.commentBox').append(resultHTML);
+						
+						if(_loadMore){
+							$('.commentBox').append(resultHTML);
+						}else{
+							$('.commentBox').html(resultHTML);
+						}
 						dl.close();
 						api.refreshHeaderLoadDone()
 						off_on=true;
 					}
 					function TAuser(uid){
-						window.location.href='./TAusercenter.html?'+window.btoa(encodeURI('uid='+uid));
+					  // window.location.href='./TAusercenter.html?'+window.btoa(encodeURI('uid='+uid));
+					  api.openWin({
+					      name: 'TAusercenter',
+					      url: './TAusercenter.html',
+					      pageParam: {
+					          uid:uid
+					      },
+					      
+					  });
+					}
+					function openshangxin(){
+						api.setFrameAttr({
+						      name: 'saybug_frame',
+						      hidden: true
+						   });
+						// alert(1);
+						api.openFrame({
+						    name: 'shangxin_frame',
+						    url: './shangxin_frame.html',
+						    rect: {
+						        x: 0,
+						        y: 0,
+						        w: api.winWidth,
+       						    h: api.winHeight-54
+						    },
+						    pageParam: {
+						        name: 'value'
+						    },
+						    bounces: false
+						});
 					}
 		</script>
 	</body>

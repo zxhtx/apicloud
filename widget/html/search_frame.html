@@ -1,331 +1,180 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-	<title>title</title>
-	<link rel="stylesheet" type="text/css" href="../css/api.css"/>
-	<style>
-    html,
-    body {
-        background-color: #F0F0F0;
-    }
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>搜索就是这么简单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <script src="../script/commonjs.js"></script>
+     <script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+       <script type="text/javascript" src=" ../script/pinterest_grid.js"></script>
+    <style type="text/css">
+      html,
+      body {
+        margin: 0px;
+        padding: 0px;
+        /* background: #F9F9F9; */
+      }
 
-    #list {
-        padding: 11px;
+      .header {
+        width: 100%;
+        height: 50px;
+        /* border: 1px solid red; */
+      }
+      .header .back{
+        width: 32px;
+        height: 28px;
+        background-image: url('../image/back.png');
+        background-position: center;
+        background-size: cover;
+        display: inline-block;
+        vertical-align: middle;
+        margin-top: 8px;
+        margin-left: 3px;
+      }
 
+      .header .searchpng {
+        display: inline-block;
+        margin-left: 19px;
+        margin-top: 8px;
+        vertical-align: middle;
+        
+      }
 
-    }
-
-    #list>.card {
-      margin-bottom: 18px;
-      position: relative;
-      float: left;
-      padding: 4px;
-      box-sizing: border-box;
-      background-clip: content-box;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-color: white;
-      border-radius: 22px 26px 0px 29px;
-      /*border: 1px solid red;*/
-      /*margin:2px 0px 2px 0px;*/
-  }
-
-  .card>img{
-   background-clip: content-box;
-   background-position: center;
-   background-repeat: no-repeat;
-   background-size: cover;
-   border-radius: 10px 10px 0px 24px;
-   /*border: 1px solid red;*/
-}
-.description{
-    padding-left: 8px;
-    font-size: 13px;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-}
-.price{
-    position: relative;
-    height: 38px;
-    color: #FF2900;
-    line-height: 39px;
-    padding-left:8px;
-    font-size: 16px;
-    /*border: 1px solid red;*/
-
-}
-.price span{
-    position: absolute;
-    right: 1px;
-    line-height: 38px;
-    font-size: 12px;
-    color: black;
-
-}
-.card .add{
-   position: absolute;
-   bottom: 0;
-   right: 6;
-   width: 28px;
-   height: 28px;
-   /*padding-bottom: 10px;*/
-}
-.card .add img{
-    width: 100%;
-
-}
-
-
-.panel {
-    display: none;
-    height: 23px;
-}
-
-.control .minus {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 23px;
-    height: 23px;
-}
-
-.control .count {
-    position: relative;
-    top: 0;
-    margin-left: 31px;
-    margin-right: 31px;
-    width: auto;
-    height: 23px;
-    text-align: center;
-    line-height: 23px;
-    color: #444;
-    font-size: 12px;
-    background-image: url(../image/count.png);
-    background-repeat: no-repeat;
-    background-size: 48px 23px;
-}
-.push-status {
-    width: 100%;
-    height: 40px;
-    font-size: 16px;
-    color: black;
-    line-height: 40px;
-    text-align: center;
-    background-color: #f0f0f0;
-}
-
-</style>
-</head>
-<body>
-   <div id="list">
-
-   </div>
-   <div class="push-status" id="pushStatus"></div>
-
-</body>
-<script type="text/template" id="template">
-
-  {{~it.list:value:index}}
-  <div class="card" style="width:{{= (it.frameWidth -22) / 2}}px;" onclick="openretuivideo('{{=value.id}}')" tapmode>
-    <img src="{{=value.thumbnail}}" style="width:{{= (it.frameWidth -39) / 2}}px; height:{{=(it.frameWidth -16) / 2}}px" >
-    <div class="description">{{=value.description}}</div>
-    <div class="panel" id="panel_{{=value.id}}">
-        <img class="minus" src="../image/jian.png" tapmode onclick="Minus('{{=value.id}}')">
-        <div class="count" id="count_{{=value.id}}">0</div>
+      .header .searchbox {
+        display: inline-block;
+        height: 35px;
+        width: 68%;
+        vertical-align: middle;
+        margin-left:12px;
+        
+      }
+      .header .searchbox .searchtext{
+        width: 100%;
+        height: 100%;
+        border:none;
+        outline: 0px;
+        font-size: 18px;
+        padding-top: 5px;
+        /* background: #F9F9F9; */
+        
+      }
+      ::-webkit-input-placeholder { /* WebKit browsers */
+        color: #ddd;
+        font-size: 19px;
+      }
+      .list{
+        position: relative;
+      }
+      .img{
+        
+        position: absolute;
+        height: auto;
+        border: 0px;
+        padding: 0px;
+        margin: 0px;
+        line-height: 0px;
+        border: 0px;
+        outline: 0px;
+        }
+        .toast{
+          margin-left: 12px;
+          color: #ddd;
+          width: 100%;
+          margin-bottom: 3px;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="back" onclick="api.closeWin();"></div>
+      
+      
+      <div class="searchbox">
+        <input type="text" class="searchtext" placeholder="搜你想要的">
+      </div>
+      <div class="searchpng" onclick="search()" style="width:32px;height: 32px; background-image: url('../image/search_groupbuy.png'); background-position: center; background-size: cover;"></div>
     </div>
-    <div class="price">￥{{=value.price}}<span class='add' tapmode onclick="Add('{{=value.id}}')"><img src="../image/minicart.png" alt=""></span></div>
-</div>
-
-{{~}}
-
-</script>
-<script type="text/javascript" src="../script/api.js"></script>
-<script type="text/javascript" src="../script/SHA1.js"></script>
-<script type="text/javascript" src="../script/doT.min.js"></script>
-<script type="text/javascript">
-    apiready = function() {
-        init();
-        // getWareList();
-        initRefresh();
-        initEventListenter();
-        
-
-    };
-    var searchvalue;
-    var activity ;
-    var wareTypeList;
-    var skip=0;
-    var LIMIT=18;
-    function init(){
-        // alert(1)
-        wareTypeList=$api.getStorage('WareTypeList');
-    }
-    function openretuivideo(_wareId){
-     api.openWin({
-        name: 'ware',
-        url: './ware.html',
-        pageParam: {
-            wareId: _wareId,
-           
-        },
-        animation: {
-            type: "fade"
-        }
-    });
-
- }
-// 获取列表页数据
-function searchval(val,_LoadMore){
-	// alert($api.jsonToStr($api.getStorage('history_list')))
-	searchvalue=val
-	// alert(val)
-    if (_LoadMore) {
-
-    }else{
-       activity = api.require('UILoading');
-       activity.flower({
-        center: {
-            x: api.winWidth/2,
-            y: api.winHeight/2
-        },
-        mask:'rgba(20,0,0,0.5)',
-        size: 30,
-    // fixed: true,
-
-}, function(ret) {
-  flowerid=ret.id;
-});
-   }
-
-   var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
-      if (_LoadMore) {
-        skip+=LIMIT;
-    }else{
-        skip=0;
-    }
-    var params={
-        fields:{},
-        fields: {},
-        where: {
-            "description":{"like":'%'+val+'%'},
-        },
-        skip:skip,
-        limit:LIMIT,
-        order:"createdAt DESC"
-    }
-    params=$api.jsonToStr(params);
-    api.ajax({
-        url: 'http://d.apicloud.com/mcm/api/shoppinginformation?filter='+params,
-        method: 'get',
-        headers: {
-            "X-APICloud-AppId": "A6099267504667",
-            "X-APICloud-AppKey":   appKey
-        },
-        
-    },function(ret, err){
-        if (ret) {
-          // 隐藏下拉刷新
-          // api.refreshHeaderLoadDone();
-         // 模板渲染
-         // alert($api.jsonToStr(ret))
-         api.refreshHeaderLoadDone()
-         activity.closeFlower({
-            id:flowerid 
+    <div class="toast" style="display: none;">
+      最近热门
+    </div>
+    <div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>
+    <div class="list">
+      
+    </div>
+    <script id="template" type="text/template">
+      {{~it.list:value:index}}
+            <img  data-original={{=it.imgurl}}{{=value.fm}}  onclick="openDressing('{{=value.id}}')" class='img'>
+      
+        {{~}}
+    </script>
+    <script>
+      $(function(){
+        postajax(url+'getcdsimgs',{},function(e){
+          if(e.code=='200'){
+            update(e.data);
+          }else{
+            
+          }
+        })
+      })
+      function update(ret){
+        // 编译模板函数
+        var param = {
+          list: ret,
+          imgurl: imgurl,
+        };
+        initWaterFall();
+        var tempFn = doT.template($('#template').text());
+        // 使用模板函数生成HTML文本
+        var resultHTML = tempFn(param);
+        // console.log(resultHTML)
+        $(".list").append(resultHTML);
+          $('.toast').css('display','');
+          $('.xz').remove();
+        $(".img").lazyload({
+          effect: "fadeIn",
+          threshold: 88,
         });
-         alert(ret.length);
-         // updateWareList(ret,_LoadMore);
-     } 
- });
-}
-function updateWareList(_data,_LoadMore){
-	var pushStatus=$api.byId('pushStatus');
-  pushStatus.innerHTML="";
-  if (_data[0]==undefined) {
-    pushStatus.innerHTML="该商品暂未上架"
-
-}
-var param = {
-    list:_data,
-    frameWidth: api.frameWidth,
-};
-var list=$api.byId('list');
-var tempFn=doT.template($api.byId('template').innerHTML);
-var resultText=tempFn(param)
-if (_LoadMore) {
-    $api.append(list, resultText);
-}else{
-    $api.html(list, resultText);
-}
-    // 优化
-    api.parseTapmode();
-    if (_LoadMore) {
-        if (_data.length<LIMIT) {
-
-            pushStatus.innerHTML="我是有底线滴"
-        }
-    }
-
-}
-
-
-// 监听 
-function initEventListenter(){
-    api.addEventListener({
-        name:'scrolltobottom',
-        extra:{
-            threshold:300
-        }
-    }, function(ret, err){        
-     searchval(searchvalue,true);
- });
-    api.addEventListener({
-        name: 'search'
-    }, function(ret, err){
-     searchval(ret.value.key1)
- });
-}
-// 下拉刷新
-function initRefresh(){
-    api.setCustomRefreshHeaderInfo({
-        bgColor: '#C0C0C0',
-        isScale: true
-    }, function() {
-  
-        searchval(searchvalue);
         
-    });
-
-}
-function Add(_wareId){
-   event.stopPropagation();
-
-   var count = $api.byId('count_' + _wareId);
-   var panel = $api.byId('panel_' + _wareId);
-
-    // 更新商品数量及显示状态
-    var countNumber = parseInt(count.innerHTML);
-    countNumber = 1;
-    count.innerHTML = countNumber;
-    api.sendEvent({
-        name: 'updateshoppingcart',
-        extra: {
-            wareId:_wareId, 
-            wareCount:countNumber
+      }
+      function initWaterFall(){
+        
+        $(".list").pinterest_grid({
+          no_columns: 3,
+          padding_x: 1,
+          padding_y: 1,
+          margin_bottom:1,
+          single_column_breakpoint: 100
+        });
+      
+        
+      }
+      function openDressing(id) {
+         api.openWin({
+               name: 'Dressingdetails',
+               url: './Dressingdetails.html',
+               pageParam: {
+                   articleid:id
+               },
+             
+           });
+      }
+      function search(){
+        var value=$('.searchtext').val();
+        if(value.length>0){
+          api.openWin({
+              name: 'searchlist',
+              url: './searchlist.html',
+              pageParam: {
+                  val:value
+              }
+          });
+        }else{
+          api.toast({
+              msg: '请输入搜索关键词'
+          });
         }
-    });
-    api.toast({
-       msg: '已加入购物车',
-       duration: 2000,
-       location: 'bottom'
-   });
-    
-}
-</script>
+      }
+    </script>
+  </body>
 </html>

@@ -149,7 +149,7 @@
 			}
 			footer .avgprice{
 				display: inline-block;
-				width:calc(100%/1.8);
+				width:calc(100%/1.3);
 				height: 50px;
 				line-height: 50px;
 				margin: 0px;
@@ -157,15 +157,15 @@
 			}
 			footer .generate{
 				display: inline-block;
-				height: 50px;
-				width: calc(100%/2.5);
+				height: 47px;
+				width: 47px;
+				margin-top: 1.5px;
+				border-radius: 50%;
 				vertical-align: top;
 				line-height: 50px;
 				text-align: center;
 				color: #fff;
 				background-color: #000;
-				margin: 0px;
-				border-radius: 12px;
 				font-size: 16px;
 				font-weight: bold;
 			}
@@ -186,12 +186,12 @@
 		</section>
 		<footer>
 			<div class="avgprice">计算得出：0.00</div>
-			<div class="generate" onclick="generate()">生成购物券</div>
+			<div class="generate bgcolor" onclick="generate()">生成</div>
 		</footer>
 		<script id="template" type="text/template">
-			{{~it:value:index}}
+			{{~it.list:value:index}}
 			<div class="item" data-select='0' tapmode onclick="select(this,'{{=value.id}}',{{=value.newprice}})">
-				<div class="wareimg" style="background-image: url({{=value.url}});"></div>
+				<div class="wareimg" style="background-image: url({{=it.imgurl}}{{=value.url}})"></div>
 				<div class="waretext">{{=value.description}}</div>
 				<div class="wareprice">{{=value.newprice}}</div>
 			</div>
@@ -264,7 +264,10 @@
 					           pricelist.splice(i,1)
 					       }
 					   }
-					 toast('只能选择五件商品','',500);
+					   api.toast({
+					       msg: '只能选择五件商品'
+					   });
+					
 					 // console.log(pricelist.length)
 					 // console.log(pricelist)
 					 return;
@@ -303,13 +306,13 @@
 					limit: limit,
 				}
 
-
+					$(".bgcolor").css("cssText", "background-color:" + userInfo.Dressingbgcolor + " !important;");
 				getajax(url + 'getmyshopping', params, function(ret) {
 					if (ret.code == '200') {
-						updateuser(ret.data);
+						updateuser(ret.data,_loadMore);
 					} else {
 						$('.list').append(
-							'<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;margin-top: 50px;">-'+ret.message+'-</p>'
+							'<p class="nodata" style=" text-align: center;color: #ddd;height: 50px;line-height: 50px;margin-top: 50px;">-'+ret.message+'-</p>'
 						);
 						$('.xz').remove();
 							dl.close();
@@ -318,13 +321,21 @@
 
 			}
 
-			function updateuser(data_) {
+			function updateuser(data_,_loadMore) {
 				// 编译模板函数
-				
+				var params={
+					list:data_,
+					imgurl:imgurl
+				}
+			
 				var tempFn = doT.template($('#template').text());
 				// 使用模板函数生成HTML文本
-				var resultHTML = tempFn(data_);
-				$("#list").append(resultHTML);
+				var resultHTML = tempFn(params);
+				if(_loadMore){
+					$("#list").append(resultHTML);
+				}else{
+					$("#list").html(resultHTML);
+				}
 
 				dl.close();
 				$("img.lazy").lazyload({
@@ -341,7 +352,10 @@
 			function generate(){
 				console.log(pricelist.length)
 				if(pricelist.length<5){
-					toast('需要选择五件商品','',800);
+					
+					api.toast({
+					    msg: '需要选择五件商品'
+					});
 					return;
 				}
 				
@@ -353,8 +367,16 @@
 				
 				postajax(url+'generategwq',params,function(e){
 					if(e.code==200){
-						toast('成功！快去使用吧');
-						location.replace('./gwq_frame.html')
+						
+						api.toast({
+						    msg: '生成成功,快去使用吧'
+						});
+						api.sendEvent({
+						    name: 'reloadgwq',
+						    extra: {
+						    }
+						});
+						api.closeWin();
 					}
 				})
 			}

@@ -266,18 +266,21 @@
 					if (ret.code == '200') {
 
 						// return;
-						updatechaodashe(ret.data.cdata);
+						updatechaodashe(ret.data.cdata,_loadMore);
 						updateuser(ret.data.udata);
+						  api.refreshHeaderLoadDone()
 					}else if(ret.code=='201'){
-						updatechaodashe(ret.data.cdata);
+						  api.refreshHeaderLoadDone()
+						updatechaodashe(ret.data.cdata,_loadMore);
 					}else{
 						$('.xz').remove();
+						  api.refreshHeaderLoadDone()
 					}
 				})
 
 			}
 
-			function updatechaodashe(data_) {
+			function updatechaodashe(data_,_loadMore) {
 				// 编译模板函数
 				var param = {
 					list: data_,
@@ -286,7 +289,12 @@
 				var tempFn = doT.template($('#template').text());
 				// 使用模板函数生成HTML文本
 				var resultHTML = tempFn(param);
-				$("#list").prepend(resultHTML);
+				if(_loadMore){
+					$("#list").prepend(resultHTML);
+				}else{
+					$("#list").html(resultHTML);
+				}
+				
 
 
 				$("img.lazy").lazyload({

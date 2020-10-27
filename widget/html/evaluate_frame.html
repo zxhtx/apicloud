@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="shortcut icon" href="../image/chao.ico" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>商品评价</title>
+		<script src="../script/commonjs.js">
+		</script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/raty/2.9.0/jquery.raty.min.js"></script>
+
+		<style type="text/css">
+			html,
+			body {
+				margin: 0px;
+				padding: 0px;
+
+			}
+
+			header {
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				width: 100%;
+				z-index: 12;
+				background-color: #fff;
+			}
+
+			header div {
+				width: 100%;
+				height: 40px;
+				text-align: center;
+				color: #000;
+				font-size: 18px;
+				line-height: 40px;
+				margin: 0px;
+				display: inline-block;
+				box-shadow: 0px 6px 6px -6px black;
+				font-weight: bold;
+			}
+
+			header .back {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 40px;
+				height: 40px;
+				z-index: 2;
+			}
+
+			header .back img {
+				margin-top: 5px;
+				/* margin-left: 4px; */
+				width: 28px;
+				height: 30px;
+			}
+
+			.body {
+				margin-top: 50px;
+
+			}
+
+			ul {
+
+				list-style: none;
+				margin: 0;
+				width: 100%;
+				height: 66px;
+				padding: 0px;
+				text-align: center;
+			}
+
+			.item {
+				display: inline-block;
+				/* border:solid 1px red; */
+				width: 50px;
+				height: 50px;
+				background-image: url(../image/speak/xing1.png);
+				background-position: center;
+				background-size: cover;
+			}
+
+			.tt {
+				width: 100%;
+				text-align: center;
+				font-size: 17px;
+				font-weight: bold;
+			}
+
+			.inp {
+				margin-top: 56px;
+				text-align: center;
+			}
+
+			.inp textarea {
+				outline: 0px;
+				border: 0px;
+				width: 96%;
+				margin: 0 auto;
+				height: 166px;
+				/* border: 1px solid red; */
+				font-size: 16px;
+				overflow-x: hidden;
+				overflow-y: hidden;
+				resize: none;
+				border: 1px solid #CBE4F3;
+			}
+
+			textarea[class='text']::-webkit-input-placeholder {
+				color: #9D9D9D;
+			}
+
+			.inp .btn {
+				width: 98%;
+				height: 38px;
+				text-align: center;
+				line-height: 38px;
+				margin: 0 auto;
+				border-radius: 3px;
+				color: #fff;
+				background: #CBE4F3;
+				margin-top: 24px;
+			}
+
+			.warning {
+				text-align: center;
+				color: gray;
+				font-size: 14px;
+			}
+
+			.addimage {
+				width: 88px;
+				height: 88px;
+				display: inline-block;
+				background-image: url(../image/add.png);
+				background-size: cover;
+				background-position: center;
+				margin-top: 19px;
+
+			}
+
+			.imglist {
+				width: 88px;
+				height: 88px;
+				display: inline-block;
+				background-size: cover;
+				background-position: center;
+			}
+
+			.getimglist {
+				width: 100%;
+				height: auto;
+
+			}
+
+			.itemimg {
+				width: calc(100%/3.1);
+				height: 100px;
+				background-position: center;
+				background-size: cover;
+				display: inline-block;
+				border: 1px solid #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="back" tapmode onclick="api.closeWin();">
+				<img src="../image/back.png">
+			</div>
+			<div class="title">商品评价</div>
+		</header>
+		<input type="file" name="" style="display: none;" id="choose-file" multiple="multiple">
+		<div class="body">
+			<ul class="itemlist">
+				<li class="item" data-tt="很差"></li>
+				<li class="item" data-tt="不好"></li>
+				<li class="item" data-tt="一般"></li>
+				<li class="item" data-tt="很好"></li>
+				<li class="item" data-tt="非常好"></li>
+			</ul>
+			<div class="tt">
+				综合评价：一般
+			</div>
+		</div>
+		<div class="inp">
+			<textarea name="" class="text" placeholder="您的坏评价是给我们自查自纠的机会，您的好评价是我们前进道路上的有力支持！"></textarea>
+			<div id="file-list">
+				<div class="addimage" onclick="uploadimg()"></div>
+
+			</div>
+			<div class="btn" onclick="sendbtn()">发表评价</div>
+		</div>
+		<p class="warning">大力打击好评返现、刷单等有损广大用户利益的行为</p>
+		<script type="text/javascript">
+			apiready = function(){
+			  if (api.pageParam.evaluateid) {
+					$('.body').remove();
+					$('.text').attr('placeholder', '已经用了一段时间了,想必有更多宝贝心得吧,分享给广大的用户吧')
+					$('.title').html('追加评价')
+				}  
+			}
+			    
+			
+			$list = $('#file-list');
+			var fileList = [];
+			var addInfo={};
+			var stars = 3;
+			// 星星特效
+			var num = 3; //点亮个数
+			$item = $('.itemlist').find('.item'); //获取的所有li
+			//点亮星星函数
+			var dianLiang = function(num) {
+				// console.log(num)
+				stars = num
+				$item.each(function(index) { //遍历所有li,即所有星星
+					if (index < num) {
+						$(this).css('background-image', 'url(../image/speak/xing2.png)') //点亮
+					} else {
+						$(this).css('background-image', 'url(../image/speak/xing1.png)') //未点亮
+					}
+				})
+			}
+			//    初始化,默认点亮2颗
+			dianLiang(num)
+			//    绑定事件
+			$item.on('click', function() {
+				dianLiang($(this).index() + 1);
+				num = $(this).index() + 1
+				// console.log();
+				$('.tt').html('综合评价：' + this.dataset.tt)
+			})
+			$('#rating').on('mouseout', function() {
+				dianLiang(num)
+			})
+
+			// 上传图片
+			function uploadimg() {
+				if (fileList.length==3){
+					api.toast({
+					    msg: '最多只能上传3张图片'
+					});
+					return;
+				}
+				var UIAlbumBrowser = api.require('UIAlbumBrowser');
+					UIAlbumBrowser.open({
+					    max: 3,
+					    styles: {
+					        bg: '#fff',
+					        mark: {
+					            icon: '',
+					            position: 'bottom_left',
+					            size: 20
+					        },
+					        nav: {
+					            bg: 'rgba(0,0,0,0.6)',
+					            titleColor: '#fff',
+					            titleSize: 18,
+					            cancelColor: '#fff',
+					            cancelSize: 16,
+					            finishColor: '#fff',
+					            finishSize: 16
+					        }
+					    },
+					    rotation: true
+					}, function(ret) {
+					 	if (ret) {
+							if (ret.list == '[]' || ret.list == '' || ret.list == undefined) {
+								api.toast({
+									msg: '未检测到图片路径',
+									duration: 2000,
+									location: 'bottom'
+								});
+
+							}else {
+								
+								for (var i =0; i < ret.list.length; i++) {
+									if(ret.list[i].size/1024>3072){
+										api.toast({
+										    msg: '图片大小不能超过3Mb'
+										});
+										continue;
+									}
+									
+								
+							            $list.append('<div style="background-image:url(' + ret.list[i].path + ')" class="imglist" ></div>').children(':last').hide().fadeIn(2500);
+							  
+							            fileList.push(ret.list[i].path);
+							    
+								}
+
+						 }
+					}
+				});
+			}
+
+			
+
+			function sendbtn() {
+				
+				if (api.pageParam.evaluateid){
+					replyevaluate();
+				} else {
+					evaluate();
+				}
+
+			}
+			// 追加评价
+			function replyevaluate() {
+
+				if (fileList.length > 3) {
+					alert('最多允许上传3张图片');
+					return;
+				} else {
+					
+
+					if ($('.text').val().length == 0) {
+						addInfo.text=0;
+					} else {
+						addInfo.text=$('.text').val();
+					}
+					addInfo.wareid= api.pageParam.wareid;
+					addInfo.shoppingid=api.pageParam.id;
+					addInfo.userid=userInfo.id;
+					addInfo.evaluateid=api.pageParam.evaluateid;
+					if (fileList.length > 0) {
+						 api.ajax({
+						url: 'http://api.chaodashe.com/index.php/replyevaluate',
+						method: 'post',
+						data: {
+							values: addInfo,
+							files: {
+								"imagelist[]": fileList,
+							},
+						},
+						headers:{'Token':$api.getStorage('token')},
+						// report: true,
+					}, function(ret, err) {
+						if (ret) {
+							alert($api.jsonToStr(ret));
+							if(ret.code==200){
+								
+							}else{
+								api.toast('服务器开小差了');
+							}
+						}
+			        })
+					}else{
+						 api.ajax({
+						url: 'http://api.chaodashe.com/index.php/replyevaluate',
+						method: 'post',
+						data: {
+							values: addInfo,
+						},
+						headers:{'Token':$api.getStorage('token')},
+						// report: true,
+					}, function(ret, err) {
+						if (ret) {
+							alert($api.jsonToStr(ret));
+							if(ret.code==200){
+								
+							}else{
+								api.toast('服务器开小差了');
+							}
+						}
+			        })
+
+					}
+					
+					
+				}
+
+			}
+			// 第一次评价
+			function evaluate() {
+
+				if (fileList.length > 3) {
+					alert('最多允许上传3张图片');
+					return;
+				} else {
+					
+					
+					if ($('.text').val().length == 0) {
+						addInfo.text=0;
+					} else {
+						addInfo.text=$('.text').val();
+					}
+				
+					addInfo.wareid= api.pageParam.wareid;
+					addInfo.shoppingid=api.pageParam.id;
+			  		addInfo.userid=userInfo.id;
+			  		addInfo.stars=stars;
+					if (fileList.length > 0) {
+						 api.ajax({
+						url: 'http://api.chaodashe.com/index.php/addevaluate',
+						method: 'post',
+						data: {
+							values: addInfo,
+							files: {
+								"imagelist[]": fileList,
+							},
+						},
+						headers:{'Token':$api.getStorage('token')},
+						// report: true,
+					}, function(ret, err) {
+						if (ret) {
+							alert($api.jsonToStr(ret));
+							if(ret.code==200){
+								
+							}else{
+								api.toast('服务器开小差了');
+							}
+						}
+			        })
+					}else{
+					
+						 api.ajax({
+						url: 'http://api.chaodashe.com/index.php/addevaluate',
+						method: 'post',
+						data: {
+							values: addInfo,
+						},
+						headers:{'Token':$api.getStorage('token')},
+						// report: true,
+					}, function(ret, err) {
+						alert($api.jsonToStr(ret));
+						if (ret) {
+							
+							if(ret.code==200){
+								
+							}else{
+								api.toast('服务器开小差了');
+							}
+						}
+			        })
+					}
+			  		
+					
+				}
+
+			}
+		</script>
+	</body>
+</html>

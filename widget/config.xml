@@ -39,10 +39,6 @@
 
  	<preference name="fullScreen" value="false"/>
 
- 	<preference name="autoUpdate" value="true" />
-
- 	<preference name="smartUpdate" value="true" />
-
  	<preference name="debug" value="true"/>
 
  	<preference name="statusBarAppearance" value="false"/>
@@ -60,6 +56,8 @@
  	<permission name="internet" />
 
  	<permission name="bootCompleted" />
+ 	<preference name="autoUpdate" value="false" />
+<preference name="font" value="widget/css/fonts/Arial.ttf | widget/css/fonts/fff.ttf | widget/css/fonts/DINCondensed.ttf | widget/css/fonts/GurmukhiSangamMN.ttc | widget/css/fonts/iconfont.ttf | widget/css/fonts/PTMono.ttc"/>
 
  	<permission name="hardware" />
  	<feature name="bMap">

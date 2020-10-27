@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<link rel="shortcut icon" href="../image/chao.ico" />
+		<meta charset="utf-8">
+		<meta content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" name="viewport" />
+		<meta content="telephone=no,email=no,date=no,address=no" name="format-detection">
+		<meta name="referrer" content="no-referrer" />
+		<title>商品详情</title>
+		<script src="../script/commonjs.js"></script>
+		<!-- <script src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script> -->
+		<script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+		<!-- <script  type="text/javascript" src="../script/siema.min.js"></script> -->
+		<script src="https://cdn.bootcss.com/clipboard.js/2.0.4/clipboard.min.js"></script>
+		<style>
+			html,
+  body {
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    background: white;
+    padding: 0;
+    margin:0;
+  }
+ header {
+ 	position: fixed;
+ 	top: 0px;
+ 	left: 0px;
+ 	width: 100%;
+ 	height: 40px;
+ 	background-color: white;
+ 	z-index: 999;
+ 	box-shadow: 0px 6px 6px -6px black;
+ }
+ 
+ 
+ header h1 {
+ 	width: 100%;
+ 	height: 40px;
+ 	text-align: center;
+ 	color: #000;
+ 	font-size: 18px;
+ 	line-height: 40px;
+ 	margin: 0px;
+ }
+ 
+ header .back {
+ 	position: absolute;
+ 	top: 0;
+ 	left: 0;
+ 	width: 32px;
+ 	height: 28px;
+ 	margin-left: 5px;
+ 	margin-top: 6px;
+ 	/*border: 1px solid red;*/
+ 	background: url(../image/back.png);
+ 	background-position:center;
+ 	background-size:cover;
+ 	background-repeat: no-repeat;
+ }
+ header .right{
+	 position: absolute;
+	 top: 0;
+	 right: 0;
+	 width: 75px;
+	 height: 28px;
+	 margin-left: 5px;
+	 margin-top: 8px;
+ }
+ .balancediv{
+	 width: 92%;
+	 margin: 0 auto;
+	 background: #000000;
+	 height: 122px;
+	 
+	 margin-top: 50px;
+	 border-radius: 9px;
+	  text-align: center;
+ }
+ .balance{
+	 color: #fff;
+	 font-size: 32px;
+	 line-height: 96px;
+	 height: 30px;
+ }
+ .kefu{
+	/* line-height: 122px; */
+	height: 30px;
+	line-height: 106px;
+	color: #fff;
+	font-size: 16px;
+ }
+ .item{
+	 width: 96%;
+	 height: 99px;
+	 border-bottom: 1px solid #DDDDDD;
+	
+	 margin: 0 auto;
+	  margin-top: 3px;
+	
+ }
+ .wareimg{
+	 width:52px;
+	 height: 52px;
+	 background-size: cover;
+	 background-position: center;
+	 border-radius: 8px;
+	 display: inline-block;
+	vertical-align: middle;
+ }
+ .text{
+	 height: 45px;
+	 width: 53%;
+	 display: inline-block;
+	 vertical-align: middle;
+	 margin-left: 5px;
+	 overflow: hidden;
+ }
+ .fafang{
+	 display: inline-block;
+	margin-left: 6px;
+ }
+ .gray{
+	  color: darkgray;
+ }
+ .tishi{
+	/* font-size: 15px;
+	 color: darkgray;
+	 margin-left: 5px;
+	 margin-top: 16px; */
+ }
+ .buyuser{
+	 font-size: 14px;
+	 color: darkgray;
+	 margin-top: 2px;
+ }
+ .tixian{
+	 width: 92%;
+	 height: 38px;
+	 text-align: center;
+	 line-height: 38px;
+	 margin: 0 auto;
+	 margin-top: 16px;
+	 border-radius: 6px;
+	 color: #fff;
+ }
+ .commissionhead{
+	 width: 96%;
+	 display: flex;
+	 justify-content: space-between;
+	 color: darkgray;
+	  margin: 0 auto;
+	 margin-top: 9px;
+	
+ }
+</style>
+	</head>
+
+	<body>
+		<header id="header">
+			<div class="back" tapmode onclick="window.history.back(-1)"></div>
+			<h1>我的余额</h1>
+			<div class="right" onclick="openbalancehistory()">明细记录</div>
+		</header>
+		<div class="balancediv bgcolor">
+			<div class="balance">0.00</div>
+			<div class="kefu">联系客服</div>
+		</div>
+		<div class="tixian bgcolor" onclick="tixian()">全部提现</div>
+		
+		<div class="list"></div>
+	</body>
+	<script id="template" type="text/template">
+		<div class="commissionhead">
+		<div class="tishi">*我分享的商品</div>
+		<div class="commissionhistory" onclick="opencommission()">领取记录</div>
+		</div>
+		
+		{{~it.list:value:index}}
+		<div class="item" onclick="openware('{{=value.wareid}}')">
+			<div class="wareimg" style="background-image: url({{=it.imgurl}}{{=value.url}});"></div>
+			<div class="text">{{=value.description}}</div>
+			{{if(value.commissionid==null){}}
+			<div class="fafang  apply_{{=value.id}}" onclick="apply('{{=value.id}}')">申请发放</div>
+			{{ }else{ }}
+			<div class="fafang gray">已领取{{=value.price}}元</div>
+			{{ } }}
+			<div class="buyuser">
+				<div>购买人：{{=value.username}}</div>
+				<div>购买时间：{{!timestampFormat('{{=value.addtime}}')}}</div>
+			</div>
+		</div>
+			
+	    {{~}}
+	</script>
+	<script type="text/javascript">
+		var skip = 0;
+		var limit = 18;
+		var off_on = false;
+		var userInfo;
+		apiready = function(){
+			userInfo= $api.getStorage('userInfo');
+		   getbalance();
+			setbalance();
+			$(".bgcolor").css("cssText", "background-color:" + userInfo.Dressingbgcolor + " !important;");
+			window.addEventListener("scroll", function() {
+				//当时滚动条离底部0px时开始加载下一页的内容
+
+				if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+					if (off_on) {
+						off_on = false;
+						getbalance(true);
+						// toast("动态加载中...",'bottom',1000);
+						$('.list').append(
+							'<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>')
+					}
+
+
+				}
+			}); 
+		}
+		    
+			
+		
+
+		function getbalance(_LoadMore) {
+			if (_LoadMore) {
+				skip += limit;
+			} else {
+				skip = 0;
+			}
+			getajax(url + 'getbalabcelist', {
+				'userid': userInfo.id,
+				'skip': skip,
+				'limit': limit
+			}, function(ret) {
+				// console.log(ret)
+				if (ret.code == 200) {
+					updateuser(ret.data, _LoadMore)
+				} else {
+					$('.list').append(
+						'<p class="nodata" style=" text-align: center;color: #ddd;height: 50px;line-height: 50px;">-木有数据了-</p>');
+					$('.xz').remove();
+				}
+			})
+		}
+
+		function updateuser(data_, _LoadMore) {
+			// 编译模板函数
+			var params = {
+				list: data_,
+				imgurl: imgurl
+			}
+
+			var tempFn = doT.template($('#template').text());
+			// 使用模板函数生成HTML文本
+			var resultHTML = tempFn(params);
+			if (_LoadMore) {
+				$(".list").append(resultHTML);
+			} else {
+				$(".list").html(resultHTML);
+			}
+
+
+			// dl.close();
+			$("img.lazy").lazyload({
+				effect: "fadeIn",
+				threshold: 88,
+			});
+			off_on = true;
+			$('.xz').remove();
+		}
+
+		function apply(shoppingid) {
+			// window.event ? window.event.cancelBubble = true : e.stopPropagation();
+			event.stopPropagation();
+
+			postajax(url + 'apply', {
+				'shoppingid': shoppingid,
+				'userid': userInfo.id
+			}, function(ret) {
+				if (ret.code == 200) {
+					$('.apply_' + shoppingid).html('已领取' + ret.data + '元').addClass('gray').removeAttr('onclick');
+					getuser();
+				} else {
+					alert(ret.message)
+				}
+
+			})
+		}
+
+		function openware(wareid) {
+			// window.location.href = "./ware_frame.html?" + window.btoa(encodeURI("=" + wareid));
+			api.openWin({
+			    name: 'ware',
+			    url: './ware.html',
+			    pageParam: {
+			        wareId: wareid
+			    }
+			});
+		}
+
+		function getuser() {
+			var params = {
+				id: userInfo.id
+			}
+		
+			getajax(url + 'getuser', params, function(ret) {
+				if (ret.code == 200) {
+					// localStorage.setItem('userInfo', JSON.stringify(ret.data.user));
+					
+					$api.setStorage('userInfo',ret.data.user)
+
+					setbalance();
+					api.sendEvent({
+					    name: 'getbalance',
+					});
+					// alert($api.jsonToStr(ret))
+					
+				}
+			})
+		}
+
+		function setbalance() {
+			 userInfo = $api.getStorage('userInfo');
+			$('.balance').html(userInfo.balance);
+			
+		}
+
+		function tixian() {
+			postajax(url + 'alltx', {
+				'userid': userInfo.id
+			}, function(ret) {
+				if (ret.code == 200) {
+					getuser();
+					$(document).dialog({
+						titleText: '提现成功',
+						content: ret.message,
+					});
+				}else{
+					api.toast({
+					    msg: ret.message
+					});
+				}
+			})
+		}
+
+		function openbalancehistory() {
+		
+			api.openWin({
+			    name: 'balancehistory',
+			    url: './balancehistory.html',
+			    pageParam: {
+			        name: 'test'
+			    }
+			});
+		}
+		function opencommission(){
+			
+			api.openWin({
+			    name: 'commissionhistory',
+			    url: './commissionhistory.html',
+			    pageParam: {
+			        name: 'test'
+			    }
+			});
+		}
+	</script>
+
+</html>

@@ -1,221 +1,221 @@
 <!DOCTYPE doctype html>
 <html>
-    <head>
-        <link rel="shortcut icon" href="../image/chao.ico" />
-        <meta charset="utf-8">
-        <meta content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" name="viewport" />
-        <meta content="telephone=no,email=no,date=no,address=no" name="format-detection">
-        <title>
-            我的粉丝
-        </title>
-        <script src="../script/commonjs.js">
-        </script>
-        <script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+	<head>
+		<link rel="shortcut icon" href="../image/chao.ico" />
+		<meta charset="utf-8">
+		<meta content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" name="viewport" />
+		<meta content="telephone=no,email=no,date=no,address=no" name="format-detection">
+		<title>
+			我的粉丝
+		</title>
+		<script src="../script/commonjs.js">
+		</script>
+		<script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
 
 
-        <style type="text/css">
-            @font-face {
-                font-family: chaodashefont;
-                src: url('../css/Dobkin Script.ttf');
-            }
+		<style type="text/css">
+			@font-face {
+				font-family: chaodashefont;
+				src: url('../css/Dobkin Script.ttf');
+			}
 
-            html,
-            body {
-                height: 100%;
-                background-color: white;
-                padding: 0;
-                margin: 0;
-            }
+			html,
+			body {
+				height: 100%;
+				background-color: white;
+				padding: 0;
+				margin: 0;
+			}
 
-            a {
-                text-decoration: none;
-                color: #fff;
-                -webkit-tap-highlight-color: rgba(255, 0, 0, 0);
-            }
+			a {
+				text-decoration: none;
+				color: #fff;
+				-webkit-tap-highlight-color: rgba(255, 0, 0, 0);
+			}
 
-            header {
-                position: fixed;
-                top: 0px;
-                left: 0px;
-                width: 100%;
-                height: 40px;
-                background-color: white;
-                z-index: 999;
-                box-shadow: 0px 6px 6px -6px black;
-            }
+			header {
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				width: 100%;
+				height: 40px;
+				background-color: white;
+				z-index: 999;
+				box-shadow: 0px 6px 6px -6px black;
+			}
 
 
-            header h1 {
-                width: 100%;
-                height: 40px;
-                text-align: center;
-                color: #000;
-                font-size: 18px;
-                line-height: 40px;
-                margin: 0px;
-            }
+			header h1 {
+				width: 100%;
+				height: 40px;
+				text-align: center;
+				color: #000;
+				font-size: 18px;
+				line-height: 40px;
+				margin: 0px;
+			}
 
-            header .back {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 32px;
-                height: 28px;
-                /*border: 1px solid red;*/
-                background: url(../image/back.png);
-                background-position: center;
-                background-size: cover;
-                background-repeat: no-repeat;
-                margin-top: 6px;
-                margin-left: 4px;
-            }
+			header .back {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 32px;
+				height: 28px;
+				/*border: 1px solid red;*/
+				background: url(../image/back.png);
+				background-position: center;
+				background-size: cover;
+				background-repeat: no-repeat;
+				margin-top: 6px;
+				margin-left: 4px;
+			}
 
-            .list {
-                margin-top: 52px;
-            }
+			.list {
+				margin-top: 52px;
+			}
 
-            .fensi {
-                position: relative;
-                /*border: 1px solid red;*/
-                margin-top: 10px;
-                min-width: 52px;
-                border-bottom: 1px solid black;
-            }
+			.fensi {
+				position: relative;
+				/*border: 1px solid red;*/
+				margin-top: 10px;
+				min-width: 52px;
+				border-bottom: 1px solid black;
+			}
 
-            .fensiimg {
-                width: 47px;
-                height: 47px;
-                margin: 6px;
-                border-radius: 25px;
-                background-size: cover;
-                background-position: center center;
-                display: inline-block;
-            }
+			.fensiimg {
+				width: 47px;
+				height: 47px;
+				margin: 6px;
+				border-radius: 25px;
+				background-size: cover;
+				background-position: center center;
+				display: inline-block;
+			}
 
-            .uname {
-                position: absolute;
-                left: 62px;
-                top: 9px;
-                display: inline-block;
-                vertical-align: middle;
-            }
+			.uname {
+				position: absolute;
+				left: 62px;
+				top: 9px;
+				display: inline-block;
+				vertical-align: middle;
+			}
 
-            .dinyue {
-                position: absolute;
-                right: 18px;
-                top: 12px;
-                font-weight: bold;
-            }
+			.dinyue {
+				position: absolute;
+				right: 18px;
+				top: 12px;
+				font-weight: bold;
+			}
 
-            .text {
-                position: absolute;
-                top: 12px;
-                margin-left: 59px;
-                display: inline-block;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
-                -webkit-line-clamp: 2;
+			.text {
+				position: absolute;
+				top: 12px;
+				margin-left: 59px;
+				display: inline-block;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 2;
 
-            }
+			}
 
-            .autograph {
-                position: absolute;
-                left: 63px;
-                top: 35px;
-                font-size: 13px;
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
-                -webkit-line-clamp: 1;
-                overflow: hidden;
-            }
+			.autograph {
+				position: absolute;
+				left: 63px;
+				top: 35px;
+				font-size: 13px;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 1;
+				overflow: hidden;
+			}
 
-            .authority {
-                display: inline-block;
-                vertical-align: top;
-                margin-left: 3px;
-                width: 16px;
-                height: 16px;
-                background-image: url('../image/authority.png');
-                background-size: cover;
-                background-position: center;
-            }
+			.authority {
+				display: inline-block;
+				vertical-align: top;
+				margin-left: 3px;
+				width: 16px;
+				height: 16px;
+				background-image: url('../image/authority.png');
+				background-size: cover;
+				background-position: center;
+			}
 
-            #loading {
-                z-index: 9999;
-            }
+			#loading {
+				z-index: 9999;
+			}
 
-            .hidden {
-                display: none;
-            }
-        </style>
-        </meta>
-        </meta>
-    </head>
-    <body>
+			.hidden {
+				display: none;
+			}
+		</style>
+		</meta>
+		</meta>
+	</head>
+	<body>
 
-        <header id="header">
-            <div class="back" tapmode onclick="goback()"></div>
-            <h1>我的粉丝</h1>
-        </header>
+		<header id="header">
+			<div class="back" tapmode onclick="goback()"></div>
+			<h1>我的粉丝</h1>
+		</header>
 
-        <!-- 订阅人动态 -->
-        <section class="list" id="list">
+		<!-- 订阅人动态 -->
+		<section class="list" id="list">
 
-        </section>
-        <section class="empty" id="empty">
-        </section>
-        <script id="template" type="text/template">
-            {{~it.list:value:index}}
+		</section>
+		<section class="empty" id="empty">
+		</section>
+		<script id="template" type="text/template">
+			{{~it.list:value:index}}
 
                 <div class='fensi'>
                     <div class="fensiimg" onclick="TAuser('{{=value.id}}')" style=background-image:url('{{=it.imgurl}}{{=value.headimg}}');></div>
                     <div class="uname">{{=value.name}}
-                    {{if(value.authority){ }}
-                    <div class="authority"></div>
-                    {{ } }}
-                    </div>
-                    
-                    {{if(value.autograph!=null && value.autograph!='null' ){ }}
-                    <div class="autograph">{{=value.autograph}}</div>
-                    {{ }else{ }}
-                    <div class="autograph">...</div>
-                    {{ } }}
+					{{if(value.authority){ }}
+					<div class="authority"></div>
+					{{ } }}
+					</div>
+					
+					{{if(value.autograph!=null && value.autograph!='null' ){ }}
+					<div class="autograph">{{=value.autograph}}</div>
+					{{ }else{ }}
+					<div class="autograph">...</div>
+					{{ } }}
                     {{if(value.mutual){ }}
-                        <div class="dinyue dinyue_{{=value.id}}" onclick="dinyue({{=value.id}})" data-is_dy={{=value.mutual}}>相互订阅</div>
+                        <div class="dinyue dinyue_{{=value.id}}" onclick="dinyue('{{=value.id}}')" data-is_dy={{=value.mutual}}>相互订阅</div>
                     {{ }else{ }}
-                        <div class="dinyue dinyue_{{=value.id}}" onclick="dinyue({{=value.id}})" data-is_dy={{=value.mutual}}>订阅</div>
+                        <div class="dinyue dinyue_{{=value.id}}" onclick="dinyue('{{=value.id}}')" data-is_dy={{=value.mutual}}>订阅</div>
                     {{ } }}
                 </div>
               
             {{~}}
         </script>
-        <script type="text/javascript">
-            var warelist;
-            var music;
-            var off_on = false;
-            var skip = 0;
-            var limit = 12;
+		<script type="text/javascript">
+			var warelist;
+			var music;
+			var off_on = false;
+			var skip = 0;
+			var limit = 12;
             apiready = function(){
                 getchaodashe();
-            reshtml();   
+                reshtml();
             }
                 
-         
-            window.addEventListener("scroll", function() {
-                //当时滚动条离底部0px时开始加载下一页的内容
-                if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
-                    if (off_on) {
-                        off_on = false;
-                        getchaodashe(true);
-                        $('#list').append(
-                            '<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>')
-                    }
+		
+			window.addEventListener("scroll", function() {
+				//当时滚动条离底部0px时开始加载下一页的内容
+				if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+					if (off_on) {
+						off_on = false;
+						getchaodashe(true);
+						$('#list').append(
+							'<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>')
+					}
 
 
-                }
-            });
+				}
+			});
 
              function reshtml(){
                
@@ -239,104 +239,110 @@
                 });
               }
 
-            function getchaodashe(_loadMore) {
-                if (_loadMore) {
-                    skip += limit;
-                } else {
-                    skip = 0;
-                    dialog('粉丝加载中');
+			function getchaodashe(_loadMore) {
+				if (_loadMore) {
+					skip += limit;
+				} else {
+					skip = 0;
+					dialog('粉丝加载中');
+				}
+				// var articleid=getQueryString(0);
+
+				var params = {
+					id: userInfo.id,
+					skip: skip,
+					limit: limit,
+				}
+
+
+				postajax(url + 'getfensi', params, function(ret) {
+					if (ret.code == '200') {
+
+
+						updateuser(ret.data,_loadMore);
+					} else {
+						$('.list').append(
+							'<p class="nodata" style=" text-align: center;color: #ddd;height: 50px;line-height: 50px;">-暂无动态-</p>'
+						);
+						$('.xz').remove();
+					}
+                     api.refreshHeaderLoadDone();
+				})
+
+			}
+
+			function updateuser(data_,_loadMore) {
+				// 编译模板函数
+				var param = {
+					list: data_,
+					imgurl: imgurl,
+				};
+				var tempFn = doT.template($('#template').text());
+				// 使用模板函数生成HTML文本
+				var resultHTML = tempFn(param);
+				// console.log(resultHTML)
+                if(_loadMore){
+                    $("#list").append(resultHTML);
+                }else{
+                    $("#list").html(resultHTML);
                 }
-                // var articleid=getQueryString(0);
+				
 
-                var params = {
-                    id: userInfo.id,
-                    skip: skip,
-                    limit: limit,
-                }
+				dl.close();
+				$("img.lazy").lazyload({
+					effect: "fadeIn",
+					threshold: 88,
+				});
+				off_on = true;
+				$('.xz').remove();
+			}
 
-
-                postajax(url + 'getfensi', params, function(ret) {
-                    if (ret.code == '200') {
-
-
-                        updateuser(ret.data);
-                    } else {
-                        $('.list').append(
-                            '<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-暂无动态-</p>'
-                        );
-                        $('.xz').remove();
-                    }
-                })
-
-            }
-
-            function updateuser(data_) {
-                // 编译模板函数
-                var param = {
-                    list: data_,
-                    imgurl: imgurl,
-                };
-                var tempFn = doT.template($('#template').text());
-                // 使用模板函数生成HTML文本
-                var resultHTML = tempFn(param);
-                console.log(resultHTML)
-                $("#list").append(resultHTML);
-
-                dl.close();
-                $("img.lazy").lazyload({
-                    effect: "fadeIn",
-                    threshold: 88,
-                });
-                off_on = true;
-                $('.xz').remove();
-            }
-
-            function dinyue(uid) {
-                var dy = $('.dinyue_' + uid).attr('data-is_dy');
-                if (dy == '1') {
-                    var type = '0';
-                } else {
-                    var type = '1';
-                }
-                var params = {
-                    Subscribeman: userInfo.id,
-                    beSubscribeman: uid,
-                    type: type
-                }
-                postajax(url + 'dinyue', params, function(ret) {
-                    if (ret.code == '400') {
-                        toast('服务器在开小差', 'bottom', 800)
-                    } else {
-                        if (type == '1') {
-                            $('.dinyue_' + uid).html('相互订阅');
-                            $('.dinyue_' + uid).attr('data-is_dy', '1');
-                        } else {
-                            $('.dinyue_' + uid).html('订阅');
-                            $('.dinyue_' + uid).attr('data-is_dy', '0');
-                        }
+			function dinyue(uid) {
+				var dy = $('.dinyue_' + uid).attr('data-is_dy');
+				if (dy == '1') {
+					var type = '0';
+				} else {
+					var type = '1';
+				}
+				var params = {
+					Subscribeman: userInfo.id,
+					beSubscribeman: uid,
+					type: type
+				}
+				postajax(url + 'dinyue', params, function(ret) {
+					if (ret.code == '400') {
+						toast('服务器在开小差', 'bottom', 800)
+					} else {
+						if (type == '1') {
+							$('.dinyue_' + uid).html('相互订阅');
+							$('.dinyue_' + uid).attr('data-is_dy', '1');
+						} else {
+							$('.dinyue_' + uid).html('订阅');
+							$('.dinyue_' + uid).attr('data-is_dy', '0');
+						}
 
 
-                    }
-                });
+					}
+				});
 
-            }
+			}
 
-           function TAuser(uid){
-        
-              api.openWin({
-                  name: 'TAusercenter',
-                  url: './TAusercenter.html',
-                  pageParam: {
-                      uid:uid
-                  },
-                  
-              });
-            }
-            function goback() {
-                api.closeWin();
-            }
+			function TAuser(uid) {
+				  api.openWin({
+					      name: 'TAusercenter',
+					      url: './TAusercenter.html',
+					      pageParam: {
+					          uid:uid
+					      },
+					      
+					  });
+			}
 
-          
-        </script>
-    </body>
+			function goback() {
+				api.closeWin();
+			}
+
+			
+		</script>
+	</body>
 </html>

@@ -10,7 +10,7 @@
     <script src="../script/commonjs.js"></script>
 
     <style>
-html,
+    html,
     body {
         padding:0;
         margin:0;
@@ -21,12 +21,17 @@ html,
     .address {
         position: relative;
         box-sizing: border-box;
-        width: 100%;
+        width: 98%;
         height: auto;
-        margin-bottom: 8px;
+        
         padding: 8px 16px;
         background-color: #fff;
-        margin-top: 6px;
+       
+        border-radius:6px ;
+        /* padding: 3px; */
+        margin: 0 auto;
+         margin-top: 52px;
+         margin-bottom: 8px;
     }
     
     .address .icon {
@@ -215,7 +220,7 @@ html,
     .order .row {
         position: relative;
         box-sizing: border-box;
-        padding-left: 16px;
+        padding-left: 12px;
         padding-right: 16px;
         width: 100%;
         height: 44px;
@@ -338,13 +343,18 @@ html,
     font-size: 12px;
     margin-left: 8px;
     color: #888;
+    width: 108px;
+    display: inline-block;
 }
 header{
     width: 100%;
     height: 40px;
     background: white;
     margin: 0px;
-    position: relative;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 99;
 }
 header .back {
     position: absolute;
@@ -369,17 +379,20 @@ header a {
  font-weight: bold;
 
 }
-.tuihuan{
+.sevenH,.sevenT{
     display: inline-block;
     font-size: 12px;
     background-color:#FFF2EC;
     color:#FF5406;
     border-radius: 3px;
-    padding: 2px;
+    padding:2px;
+    padding-left: 3px;
+    padding-right: 3px;
     /* margin-left: 8px; */
     text-align: center;
-    width: 89px;
-    margin-top: 6px;
+    width: auto;
+    margin-top: 3px;
+    
 }
 .fahuotime{
     display: inline-block;
@@ -391,14 +404,71 @@ header a {
     /* margin-left: 8px; */
     text-align: center;
     width: 78px;
-    margin-top: 6px;
+    margin-top: 3px;
 }
+#wareprice{
+margin-top: 6px;    
+display: inline-block;
+font-size: 14px;
+}
+#cb{
+    color: #0062CC;
+}
+.gwqlist{
+    width: 100%;
+    height:200px;
+    /* border: 1px solid red; */
+    display: none;
+    background: #fff;
+    overflow-y: auto;
+    /* overflow: hidden; */
+}
+.item{
+    width: 100%;
+    height: 66px;
+    /* border: 1px solid red; */
+    border-bottom: 1px solid #e5e1e1;
+    margin-top: 3px;
+    
+
+}
+.item .price{
+    margin-left: 12px;
+    width:100px;
+    height: 100%;
+    line-height: 66px;
+    font-size: 16px;
+    font-weight: bold;
+    /* border: 1px solid red; */
+    display: inline-block;
+}
+.item .gz{
+    line-height: 66px;
+    height: 100%;
+    font-size:13px;
+    color: darkgray;
+    display: inline-block;
+    
+}
+.liuyan{
+    background: #fff;
+    width: 93%;
+    height: 69px;
+    margin: 0 auto;
+    outline:none;
+
+    
+}
+[contentEditable=true]:empty::before {
+        content:"    给卖家留言";
+        color: gray;
+    }
 </style>
 </head>
 
 <body>
     <header>
-     <div class="back" tapmode onclick="javascript:history.back(-1);">
+     <div class="back" tapmode onclick="api.closeWin()">
         <img src="../image/back.png">
     </div>
     <a>购买进行中</a>
@@ -428,21 +498,21 @@ header a {
         <div class="info">
             <!-- <div class="top" id="warename"></div> -->
             <div class="description" id="description"></div>
-            <span class="" id="wareprice" style=""></span>
-            <span class="" id="colorandsize">.../...</span>
+            <div class="" id="wareprice"></div>
+            <div class="" id="colorandsize">.../...</div>
             <div id="">
                 
             </div>
-            <div class="tuihuan">
-                七天无理由退换
+            <div class="sevenT">
+                七天退货
+            </div>
+            <div class="sevenH">
+                七天换货
             </div>
             <div class="fahuotime">24小时内发货</div>
         </div>
     </div>
-    <div class="row">
-        <div class="text">商品金额:</div>
-        <div class="value value-2" id="price1">+&nbsp;</div>
-    </div>
+   
     <div class="row">
         <div class="text">退换须知:</div>
         <div class="value value-2" onclick="tuihuanxuzhi()" style="color:#000; font-weight: bold;">查看详情</div>
@@ -451,30 +521,49 @@ header a {
         <div class="text">运费：</div>
         <div class="value value-2">&nbsp;运费平台付</div>
     </div>
-    <div class="row">
-        <div class="text">VIP优惠：</div>
-        <div class="value value-2" id="viptext">-&nbsp;￥0.0</div>
+    <div class="row buy0">
+        <div class="text">潮贝抵用：</div>
+        <div class="value value-2" id="cb" onclick="usecb()"></div>
     </div>
     <div class="row">
-        <div class="text">返现金(商品中扣除):</div>
-        <div class="value value-2" id="fanqian">&nbsp;￥0.0</div>
+        <div class="text">单单减:</div>
+        <div class="value value-2" id="dandanjian">正在开发</div>
     </div>
-    <div class="row-1">
-        <div class="value value-2">实付款：&nbsp;<span class="color" id="price2"></span></div>
+    <div id="" class="" style="background: #fff; border-bottom: 0.5px solid #edebeb;">
+        <div contenteditable="true"  class="liuyan" ></div>
+    </div>
+    
+    <div class="row buy1">
+        <div class="text">购物券:</div>
+        <div class="value value-2 gwqselect" onclick="getgwqclick()">选择购物券</div>
+    </div>
+    <div class="gwqlist">
+        
     </div>
 </section>
 <footer id="footer">
-    <div class="panel" id="price3">总金额:</div>
+    <div class="panel" id="newprice">总金额:</div>
     <div class="buy" onclick="yesadd()">
         <div class="buybtn">购买</div>
     </div>
 </footer>
+<script id="template" type="text/template">
+    {{~it:value:index}}
+        <div class="item" onclick="selectgwq('{{=value.id}}')">
+            <div class="price">金额:{{=value.price}}</div>
+            <div class="gz">商品金额不能高于{{=value.price}}元,无需其他费用</div>
+        </div>
+    {{~}}
+</script>
 <script type="text/javascript">
     var price3;
     var dizhinull;
     var loading;
     var jiage;
     var myDate = new Date();
+    var pchaobeishow;
+    var gwqprice=0;
+    
     var Y=myDate.getFullYear();
     var M=myDate.getMonth()+1;
     var D=myDate.getDate();  
@@ -484,28 +573,51 @@ header a {
     var addInfo = {
         dindantypeid:'5c2a3991af3114d73d9ddfc2',
         addtime:Y+'-'+M+'-'+D+' '+h+':'+m+':'+s,
-    };
-    var types = ['公司', '住宅', '学校', '其它'];
-    apiready = function(){
-        getware();
-    }
-        
+        gouwuquan:0,
     
 
+    };
+    var types = ['公司', '住宅', '学校', '其它'];
+    var datashoppingid;
+    apiready = function(){
+        getware();
+
+        if(api.pageParam.buytype==0){
+            $('.buy1').css('display','none');
+        }else{
+            $('.buy0').css('display','none');
+        }
+          
+     }
+                    
+      
+    
     
     function getware(){
         dialog('订单加载中');
-        $('#colorandsize').html(api.pageParam.size+'/'+ api.pageParam.color)
-        // alert(api.pageParam.size)
-       var params={
-             bid:api.pageParam.wareId
+        $('#colorandsize').html(api.pageParam.size+'/'+api.pageParam.color);
+        // alert(api.pageParam.shoppingid)
+        var params={
+             bid:api.pageParam.wareId,
+             uid:userInfo.id
         }
         getajax(url+'payware',params,function(ret){
             if (ret){
-                // alert($api.jsonToStr(ret.data))
+                
                 var data=ret.data;
-                jiage=data.price;
+                if(!data.sevenT){
+                    $('.sevenT').remove();
+                }
+                if(!data.sevenH){
+                    $('.sevenH').remove();
+                }
+                jiage=data.oldprice;
                 updateWare(data);
+                psign=data.sign;
+                gwqprice=addInfo.newprice;
+                pchaobeishow=data.chaobeishow;
+                addInfo.chaobei=data.chaobei;
+                addInfo.sign=data.sign;
                 addInfo.size=api.pageParam.size;
                 addInfo.color=api.pageParam.color;
                 addInfo.wareid=data.bid;
@@ -517,80 +629,39 @@ header a {
         });
 
     }
-     function updateWare(_data){
+    function updateWare(_data){
         var warename=$('#warename');
         var wareprice=$('#wareprice');
-        var price1=$('#price1');
         var image=$('#image');    
         var description=$('#description');
+        var dandanjian=$('#dandanjian');
+        $('#cb').html('点击使用'+_data.chaobeishow+'枚');
+    
         warename.html(_data.name);
         description.html(_data.description);
         wareprice.html('￥'+_data.price);
-        price1.html('￥'+_data.price);
-    // price2.innerHTML='￥'+_data[0].price;
+        
+        dandanjian.html(_data.dandanjian);
+        
+        addInfo.dandanjian=_data.dandanjian;
+
     image.attr('src',_data.image);
-    var price2=$('#price2');
-    var price3 =$('#price3');
-    price2.html(_data.price);
-    price3.html(_data.price)
-    addInfo.price=_data.price;
+    // var price2=$('#price2');
+    var newprice =$('#newprice');
+    // price2.html(_data.price);
+    newprice.html('活动优惠：'+_data.newprice);
+    
+    addInfo.oldprice=_data.price;
+    addInfo.newprice=_data.newprice;
      var usernameinfo=$api.getStorage('userInfo');
     addInfo.username=usernameinfo.username;
     addInfo.userid=usernameinfo.id;
      getaddress();
     
 }
-function vip(dataprice){
 
-  var usernameinfo=$api.getStorage('userInfo');;
-  var price2=$('#price2');
-  price3=$('#price3');
-  var viptext=$('#viptext');
-  var fanqian=$('#fanqian');
-  var vipprice=dataprice * 0.95;
-  var ceilprice =Math.round(vipprice);
-    // console.log(ret);
-    addInfo.username=usernameinfo.username;
-    addInfo.userid=usernameinfo.id;
-    // return;
-    if (jiage>29) {
-
-
-        if (usernameinfo.vip==1) {
-            viptext.html('9.5折'+'(-'+(dataprice-ceilprice)+'元)');
-            var fan=Math.round(ceilprice*0.03);
-            price2.html('￥'+(ceilprice-fan));
-            price3.html('总金额：'+(ceilprice-fan));
-            fanqian.html(fan);
-            addInfo.price=ceilprice-fan;
-        } else{
-          viptext.html('分享应用获取vip打9.5折');
-          var fan=Math.round(dataprice*0.03);
-          price2.html('￥'+(dataprice-fan));
-          price3.html('总金额：'+(dataprice-fan));
-          fanqian.html(fan);
-          addInfo.price=dataprice-fan;
-      }
-
-  }else{
-      viptext.html('商品价格大于30元即可打折');
-      var fan=Math.round(dataprice*0.03);
-      price2.html('￥'+(dataprice-fan));
-      price3.html('总金额：'+(dataprice-fan));
-      fanqian.html(fan);
-      addInfo.price=dataprice-fan;
-
-  }
-  // loading=$('#loading');
-  // loading.addClass("hidden").removeClass("show");
-  // getaddress();
-
-
-
-
-}
 function getaddress(){
-       // alert(1)
+    
     var userInfo=$api.getStorage('userInfo');
     var params={
      default:1,
@@ -598,7 +669,6 @@ function getaddress(){
  }
  getajax(url+'getdefaultaddress',params,function(ret){  
     dl.close();
-
      if (ret.code==200) {
         // console.log(ret.data);
         dizhinull=ret.data[0];
@@ -645,13 +715,16 @@ function updateaddress(_data){
 
 function yesadd(){ 
     if(dizhinull==null){
-      // toast('请完善收货地址','center',2000)
-      api.toast({
-          msg: '请完善收货地址'
-      });
+      toast('请完善收货地址','center',2000)
      return;
 
  }
+ if($('.liuyan').html()){
+    addInfo.liuyan=$('.liuyan').html(); 
+ }else{
+     addInfo.liuyan=0; 
+ }
+ 
   var notice = $(document).dialog({
             type : 'notice',
             infoIcon: '../image/icon/loading.gif',
@@ -662,29 +735,33 @@ function yesadd(){
     if (ret.code==200) {
           notice.update({
                 infoIcon: '../image/icon/success.png',
-                infoText: '下单成功！！',
-                autoClose: 1500
+                infoText: '下单成功',
+                autoClose: 1000
             });
-          setTimeout(function(){
-              // body...
-              api.closeWin({
-                  name: 'order'
-              });
-          },1000)
-         
+            // return;
           // setTimeout(function(){
-            // window.location.href="./dindan_frame.html?"+window.btoa(encodeURI('nav=0'));
-             
-            api.openWin({
-                name: 'dindan',
-                url: './dindan.html',
-                pageParam: {
-                    nav:0
-                },
-              
-            });
+              if(addInfo.gwqid){
+                 api.openWin({
+                       name: 'dindan',
+                       url: './dindan.html',
+                       pageParam: {
+                           nav:1
+                       },
+                      
+                   });
+              }else{
+                 api.openWin({
+                       name: 'dindan',
+                       url: './dindan.html',
+                       pageParam: {
+                           nav:0
+                       },
+                      
+                   });
+              }
           
-          // },2000);
+            
+          // },1000);
     }
 
 });
@@ -692,13 +769,86 @@ function yesadd(){
 }
 
 function tuihuanxuzhi(){
-    api.openWin({
-        name: 'tuihuanxuzhi',
-        url: './tuihuanxuzhi.html',
-        pageParam: {
-            name: 'test'
+    location.href="tuihuanxuzhi_frame.html"
+}
+
+function usecb(){
+    var parms={
+        newprice:addInfo.newprice,
+        chaobei:addInfo.chaobei,
+        dandanjian:addInfo.dandanjian,
+        sign:addInfo.sign,
+        uid:userInfo.id,
+        chaobeishow:pchaobeishow
+    }
+    postajax(url+'usechaobei',parms,function(e){
+        if(e.code==200){
+                $('#newprice').html('活动优惠：'+e.data.newprice);
+                $('#cb').removeAttr('onclick').css('color','gray');
+                $('#cb').html('已使用'+e.data.chaobei+'枚(抵用'+e.data.chaobei/100+'元)');
+                addInfo.chaobei=e.data.chaobei;
+                addInfo.newprice=e.data.newprice;
+                addInfo.sign=e.data.sign;
+                
+        }else{
+            toast(e.message,'',1000);
+            $('#cb').removeAttr('onclick').css('color','gray');
+            $('#cb').html(e.message);
+        }
+    })
+}
+
+function getgwqclick(){
+    
+    $('.gwqlist').slideToggle(function(){
+        if($(this).is(":visible")==false){
+            $('.gwqlist').empty();
+        }else{
+            getgwq();
         }
     });
+    
+}
+
+function getgwq(){
+     var userInfo=$api.getStorage('userInfo');
+    
+    getajax(url+'getgwq',{'uid':userInfo.id,'price':gwqprice},function(e){
+        if(e.code==200){
+            var tempFn = doT.template($('#template').text());
+            // 使用模板函数生成HTML文本
+            var resultHTML = tempFn(e.data);
+            // alert(1)
+            $(".gwqlist").append(resultHTML);
+        }else{
+            $('.gwqlist').append('<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-'+e.message+'-</p>');
+        }
+    })
+}
+
+function selectgwq(id){
+    // console.log(id)
+    var parms={
+        newprice:addInfo.newprice,
+        chaobei:addInfo.chaobei,
+        dandanjian:addInfo.dandanjian,
+        sign:addInfo.sign,
+        id:id,
+        uid:userInfo.id
+    }
+    postajax(url+'selectgwq',parms,function(e){
+        if(e.code==200){
+            $('.gwqselect').html('已选择'+e.data.gwq+'元购物券');
+            addInfo.gwqid=id;
+            addInfo.chaobei=e.data.chaobei;
+            addInfo.newprice=e.data.newprice;
+            addInfo.sign=e.data.sign;
+            addInfo.gouwuquan=e.data.gwq;
+            $('#newprice').html('活动优惠：'+e.data.newprice);
+            $('#cb').removeAttr('onclick').css('color','gray');
+            $('#cb').html('已使用'+e.data.chaobei+'枚(抵用'+e.data.chaobei/100+'元)');
+        }
+    })
 }
 </script>
 </body>

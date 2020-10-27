@@ -17,17 +17,12 @@
             <a onclick="back()"> < <span>登录</span> </a>
         </div>
         <div class="form-group">
-			<div class="form-item">
-			    <label for="user">
-			        <img src="../image/login/user.png" alt="">
-			    </label>
-			    <input id="user" type="text" autocomplete="off" placeholder="请输入账号">
-			</div>
+			
             <div class="form-item">
-                <label for="phone">
-                    <img src="../image/login/phone.png" alt="">
+                <label for="email">
+                    <img src="../image/login/email.png" alt="">
                 </label>
-                <input id="phone" type="text" autocomplete="off" placeholder="请输入手机号">
+                <input id="email" type="text" autocomplete="off" placeholder="请输入邮箱">
             </div>
             <div class="form-item">
                 <label for="code">
@@ -61,7 +56,7 @@
 			api.toast({
 			    msg: '请稍等...'
 			});
-			postajax(url+'Retrievepwd_Sendsms',{'phone':$('#phone').val()},function(e){
+			postajax(url+'Retrievepwd_Sendsms',{'email':$('#email').val()},function(e){
 				
 				if(e.code==200){
 					// toast('发送成功');
@@ -85,8 +80,8 @@
 		
 	}
 	function checkPhone(){ 
-	    var phone=$('#phone').val();
-	    if(!(/^1[3456789]\d{9}$/.test(phone))){ 
+	    var email=$('#email').val();
+	    if(!(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/.test(email))){ 
 	        // alert("手机号码有误，请重填");  
 	        return false; 
 	    }
@@ -106,7 +101,7 @@
 	
 	            obj.html("重新发送(" + num + ")").attr("disabled", "disabled");
 	
-	            obj.css('color', '#888');
+	            obj.css('color', '#C0C0C0');
 	
 	        } else {
 	
@@ -145,31 +140,13 @@
 	}
 	
 	function yanzheng(){
-		var user=$('#user').val();
-		var phone=$('#phone').val();
+		
+		var email=$('#email').val();
 		var code=$('.code').val();
 		var password=$('#password').val();
 		// alert($('.code').val().length)
-		if (/[\u4E00-\u9FA5]/i.test(user)) {
-			// toast('账号必须为英文和数字');
-			api.toast({
-			    msg: '账号必须为英文和数字'
-			});
-			return false;
-		}
-		if(user.length<6){
-			// toast('账号字数需大于5位数');
-			api.toast({
-			    msg: '账号字数需大于5位数'
-			});
-			return false;
-		}else if(phone.length!=11){
-			// toast('手机号位11位数');
-			api.toast({
-			    msg: '手机号位11位数'
-			});
-			return false;
-		}else if(code.length!=4){
+		
+		if(code.length!=4){
 			// toast('手机验证码4位数');
 			api.toast({
 			    msg: '手机验证码4位数'
@@ -178,14 +155,13 @@
 		}else if(password.length<6){
 			// toast('密码字数需大于6位数');
 			api.toast({
-			    msg: '密码字数需大于6位数'
+			    msg: '密码长度需大于6位数'
 			});
 			return false;
 		}
 		 addInfo={
-			'username':user,
 			'pwd':md5(password),
-			'phone':phone,
+			'email':email,
 			'msmcode':code
 		}
 		// console.log(addInfo);

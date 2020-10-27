@@ -186,6 +186,7 @@
 }
 .userlist{
     position: absolute;
+    top: 38px;
     left: 108px;
     width: 66%;
     height:120px;
@@ -336,19 +337,7 @@
 }
 
 
-.mycenter{
-    position: absolute;
-    right: 0px;
-    top: 8px;
-    border-top-left-radius:50px;
-    /*border-radius: */
-    border-bottom-left-radius: 50px;
-    background-color: #F3F3F3;
-    /*width: 88px;*/
-    /*margin-left:10px;*/
-    padding-left: 8px;
-    font-size: 15px;
-}
+
 .dfkcount{
 	position:absolute;
 	right: -10px;
@@ -434,7 +423,7 @@
     margin-top: 9px;
     margin-bottom: 50px;
     border-radius: 6px;
-    background: #11C1F3;
+    /*background: #11C1F3;*/
     color: #fff;
 }
 .gwqcount{
@@ -448,4 +437,31 @@
     text-align: center;
     font-size: 18px;
     font-weight: bold;
+}
+.yue{
+    width: 75px;
+    height: 75px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    /*background: #000000;*/
+    border-radius: 0px 0px 0px 100px;
+    text-align: center;
+    color: #fff;
+}
+.money{
+    
+    position: absolute;
+    right: 0px;
+    /* top:10px; */
+    margin-top: 9px;
+    width: 88%;
+    height: 20px;
+}
+.moneytext{
+    position: absolute;
+    right: 0px;
+    top:30px;
+    width: 68%;
+    height: 20px;
 }

@@ -499,6 +499,7 @@ function updateWare(_data){
 	var mobile=$api.byId('mobile');
 	var type=$api.byId('type');
 	var text=$api.byId('text');
+	alert($api.jsonToStr(_data))
 	var description=$api.byId('description');
 	description.innerHTML=_data[0].description;
 	shouhuoren.innerHTML='收货人:'+_data[0].shoppingname;

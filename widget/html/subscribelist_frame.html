@@ -12,7 +12,7 @@
 	</head>
 <body>
 	<header>
-		<div class="back" tapmode onclick="rechat_lists()"></div>
+		<div class="back" tapmode onclick="api.closeWin();"></div>
 		<span class="title">新增订阅</span>
 	</header>
 	<div class="nodata"></div>
@@ -111,24 +111,18 @@
 		})
 	}
 	
-	function rechat_lists(){
-		window.location.href="./chat_lists.php?"+window.btoa(encodeURI("fromid=" + uid));
+	function TAuser(uid){
+		api.openWin({
+	      name: 'TAusercenter',
+	      url: './TAusercenter.html',
+	      pageParam: {
+	          uid:uid
+	      },
+	      
+	  });
 	}
 	
-	pushHistory();
-	window.addEventListener("popstate", function(e) {
-	    window.location.href="./chat_lists.php?"+window.btoa(encodeURI("fromid=" + uid));
-	}, false);
-	function pushHistory() {
-	var state = {
-	title: "title",
-	url: "#"
-	};
-	window.history.pushState(state, "title", "");
-	}
-  function TAuser(uid){
-  	window.location.href='./TAusercenter.html?'+window.btoa(encodeURI('uid='+uid));
-  }
+	
  </script>
 </body>
 </html>

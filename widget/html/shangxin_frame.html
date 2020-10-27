@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="shortcut icon" href="../image/chao.ico" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>bug建议说一说</title>
+		<script src="../script/commonjs.js">
+		</script>
+		<script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+		
+		<style type="text/css">
+			html,body{
+				margin: 0px;
+				padding: 0px;
+				
+			}
+			
+			header{
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				width: 100%;
+				z-index: 12;
+				background-color: #fff;
+			}
+			header div{
+			    width: 49%;
+			    height: 40px;
+			    text-align: center;
+			    color: #000;
+			    font-size: 18px;
+			    line-height: 40px;
+			    margin: 0px;
+				display: inline-block;
+				box-shadow:0px 6px 6px -6px black;
+				font-weight: bold;
+			}
+			header .saybug{
+				  font-size: 16px;
+				    color: gray;
+			}
+			.inp{
+				margin-top: 56px;
+				text-align: center;
+			}
+			.inp textarea{
+				outline: 0px;
+				border: 0px;
+				width: 93%;
+				margin: 0 auto;
+				height: 66px;
+				/* border: 1px solid red; */
+				font-size: 16px;
+				overflow-x: hidden;
+				overflow-y: hidden;
+				resize: none;
+				padding: 5px;
+				border: 1px solid #CBE4F3;
+				opacity: 0.5;
+				border-radius: 3px;
+			}
+			textarea[class='text']::-webkit-input-placeholder {
+			   color:#9D9D9D;
+			}
+			
+			.inp .btn{
+				width: 98%;
+				height: 38px;
+				text-align: center;
+				line-height: 38px;
+				margin: 0 auto;
+				border-radius: 3px;
+				color: #fff;
+				background: #CBE4F3;
+				opacity: 0.5;
+			}
+			.commentBox{
+				margin-bottom: 50px;
+			}
+
+			.commentBox .li{
+				padding: 5px;
+				/*position: relative;*/
+				 display: -webkit-flex;
+				  /*display: table;*/
+				border-bottom: 1px solid #f2f4f5;
+			}
+
+			.commentBox .icon{
+				width: 46px;
+				height: 46px;
+				margin-top: 18px;
+				border-radius: 50%;
+
+			}
+			.commentBox .icon .headimg{
+				
+				width: 38px;
+				height: 38px;
+				background-position: center;
+				background-size: cover;
+				border-radius: 50%;
+				border: 2px solid #fff;
+				vertical-align: middle;
+				margin: 2px;
+			}
+
+			.commentBox .content{
+				width: 100%;
+				height: auto;
+				margin-left: 12px;
+			}
+
+			.commentBox .name{
+				color: #acb0b3;
+				font-family: "微软雅黑";
+				font-size: 16px;
+				margin-top: 5px;
+
+			}
+
+			.commentBox .time{
+				margin-top: 2px;
+				font-family: "微软雅黑";
+				color: #d6d8da;
+				font-size: 10px;
+			}
+
+			.commentBox .text{
+				margin-top: 8px;
+				margin-bottom: 8px;
+				font-family: "微软雅黑";
+				color: #656b70;
+
+
+			}
+			.is_ok{
+				font-size: 13px;
+				color: #1DB81D;
+			}
+
+			.addimage{
+				width: 88px;
+				height: 88px;
+				display: inline-block;
+				background-image: url(../image/add.png);
+				background-size: cover;
+				background-position: center;
+			}
+			.imglist{
+				width: 88px;
+				height: 88px;
+				display: inline-block;
+				background-size: cover;
+				background-position: center;
+			}
+			.getimglist{
+				width: 100%;
+				height: auto;
+	
+			}
+			.itemimg{
+				width: calc(100%/3.1);
+				height:100px;
+				background-position: center;
+				background-size:cover;
+				display: inline-block;
+				border: 1px solid #fff;
+				}
+				.tishi{
+					font-size: 15px;
+					color: gray;
+					
+				}
+				.iconauthority{
+					background-image: linear-gradient(to bottom left,#B50C82, #FDA641);
+				}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="saybug" onclick="opensaybug()">说一说</div>
+			<div >催上新</div>
+		</header>
+		<input type="file" name="" style="display: none;" id="choose-file" multiple="multiple">
+		<div class="inp">
+			<textarea name="" class="text color" placeholder="您是否遇到一些App博主发布的穿搭推荐或者服装推荐没有链接，自己又找不到。我们有专门的工作人员通过用户上传的图片进行查找并上架"></textarea>
+			 <div id="file-list">
+			 	<div class="addimage" onclick="uploadimg()"></div>
+				
+			 </div>
+			<div class="btn bgcolor">催催催</div>
+		</div>
+			<div class="commentBox">
+				
+			</div>
+		  <script id="template" type="text/template">
+		  	{{~it.list:value:index}}
+		  		<div class="li">
+		  			 {{if(value.authority==1){ }}
+		  			<div class="icon iconauthority">
+						<div class="headimg" onclick="TAuser('{{=value.userid}}')" style="background-image: url({{=it.imgurl}}{{=value.headimg}});"></div>
+		  			</div>
+					{{ }else{ }}
+						<div class="icon">
+							<div class="headimg" onclick="TAuser('{{=value.userid}}')" style="background-image: url({{=it.imgurl}}{{=value.headimg}});"></div>
+						</div>
+					{{ } }}
+		  			
+		  			<div class="content">
+		  				<div class="name">
+		  					{{=value.name}}
+		  				</div>
+		  				<div class="time">
+							{{!timestampFormat('{{=value.time}}')}}
+		  				</div>
+		  				<div class="text">
+		  					{{=value.text}}
+		  				</div>
+						<div class="getimglist">
+							{{for(var i=0;i<value.imagelist.length;i++){ }}
+								<div class="itemimg lazy" data-original="{{=it.imgurl}}{{=value.imagelist[i]}}"></div>
+							{{ } }}
+						</div>
+						<div>
+							{{ if(value.url){ }}
+								<span style="display: inline-block; font-weight: bold;font-size: 17px; line-height: 30px;  height: 30px; color: #0062CC;" tapmode onclick="getware('{{=value.url}}')">~进入传送门~</span>
+							{{ }else{ }}
+								<span class="tishi">请等待工作人员上新</span>
+							{{ } }}
+						</div>
+		  			</div>
+					
+		  		</div>
+			
+		  	{{~}}
+		  </script>
+		<script type="text/javascript">
+			var skip=0;
+			var limit=18;
+			var off_on=false;
+			$list = $('#file-list');
+			fileList = [];
+			var curFile;
+			apiready = function(){
+			  
+						getshangxin();
+						reshtml();
+				 userInfo=$api.getStorage('userInfo');
+			    if(userInfo){
+			    	 $(".bgcolor").css("cssText", "background-color:" + userInfo.Dressingbgcolor + " !important;");
+			    	  $(".color").css('border','1px solid '+userInfo.Dressingbgcolor);
+			    }
+			
+			
+				$('.saybug').addClass('now').siblings().removeClass('now');
+				$('.text').on("keyup paste", function() {
+					// console.log($('.text').val().length)
+					if ($('.text').val().length >= 1) {
+						$('.btn').css('opacity', '1');
+						$('textarea').css('opacity', '1');
+					} else {
+						$('.btn').css('opacity', '0.5');
+						$('textarea').css('opacity', '0.5');
+					}
+				})
+			}
+			    
+			
+			
+			function reshtml(){
+       
+			        api.setCustomRefreshHeaderInfo({
+			            bgColor: '#fff',
+			            images: [
+			                 'widget://image/icon/chaodashe.png',
+			               
+			            ],
+			            tips: {
+			                pull: '下拉刷新',
+			                threshold: '松开立即刷新',
+			                load: '正在刷新'
+			            },
+			            animationRate:0.2
+			        }, function() {
+			            //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+			            //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
+			           dl.close();
+			         getshangxin();
+			        });
+			      }
+			//上拉加载
+					 window.addEventListener("scroll", function (){
+					      //当时滚动条离底部0px时开始加载下一页的内容
+					      if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+								if(off_on){
+									off_on=false;
+										getshangxin(true);
+									// toast("加载中...",'bottom',1000);
+								}
+					            
+					         
+					      }
+					  });
+			function uploadimg(){
+				// alert(fileList.length)
+				if (fileList.length==3){
+					api.toast({
+					    msg: '最多只能上传3张图片'
+					});
+					return;
+				}
+				var UIAlbumBrowser = api.require('UIAlbumBrowser');
+					UIAlbumBrowser.open({
+					    max: 3,
+					    styles: {
+					        bg: '#fff',
+					        mark: {
+					            icon: '',
+					            position: 'bottom_left',
+					            size: 20
+					        },
+					        nav: {
+					            bg: 'rgba(0,0,0,0.6)',
+					            titleColor: '#fff',
+					            titleSize: 18,
+					            cancelColor: '#fff',
+					            cancelSize: 16,
+					            finishColor: '#fff',
+					            finishSize: 16
+					        }
+					    },
+					    rotation: true
+					}, function(ret) {
+					 	if (ret) {
+							if (ret.list == '[]' || ret.list == '' || ret.list == undefined) {
+								api.toast({
+									msg: '未检测到图片路径',
+									duration: 2000,
+									location: 'bottom'
+								});
+
+							}else {
+								
+								for (var i =0; i < ret.list.length; i++) {
+									if(ret.list[i].size/1024>3072){
+										api.toast({
+										    msg: '图片大小不能超过3Mb'
+										});
+										continue;
+									}
+									
+								
+							            $list.append('<div style="background-image:url(' + ret.list[i].path + ')" class="imglist" ></div>').children(':last').hide().fadeIn(2500);
+							  
+							            fileList.push(ret.list[i].path);
+							    
+								}
+
+						 }
+					}
+				});
+			}
+			
+			function getware(wareurl){
+				console.log(wareurl)
+				if(wareurl.split('/')[0]=='ware'){
+					api.openWin({
+					     name: 'ware',
+					     url: './ware.html',
+					     pageParam: {
+					         wareId: wareurl.split('/')[1]
+					     },
+					  });
+					
+				}else if(wareurl.split('/')[0]=='chaodashe'){
+					
+					 api.openWin({
+			           name: 'Dressingdetails',
+			           url: './Dressingdetails.html',
+			           pageParam: {
+			               articleid:wareurl.split('/')[1]
+			           },
+			          
+			       });
+				}
+			}
+			
+			// //点击删除按钮事件：
+			// $(".file-del").on('click', function () {
+			// 	alert(1)
+			//     let $parent = $(this).parent();
+			//     console.log($parent);
+			//     let index = $parent.index();
+			//     fileList.splice(index, 1);
+			//     $parent.fadeOut(850, function () {
+			//         $parent.remove()
+			//     });
+			//     //$parent.remove()
+			// });
+			//点击上传按钮事件：
+			$('.btn').on('click', function () {
+			 
+			     if(fileList.length >3 ){
+			            alert('最多允许上传3张图片');
+			            return;
+			    } else {
+			        var addInfo={};
+					var userInfo=$api.getStorage('userInfo');
+					if(!userInfo){
+					
+						api.toast({
+						    msg: '请登录后再试'
+						});
+						return;
+					}
+					 
+					 	addInfo.userid= userInfo.id;
+					 if($('.text').val().length==0){
+						  
+						   addInfo.text='...';
+					 }else{
+					 	   addInfo.text=$('.text').val();
+						
+					 }
+					 if(fileList.length==0){
+					 	api.toast({
+					 	    msg: '请选择要上传的图片'
+					 	});
+						
+						 return;
+					 }
+
+					 api.ajax({
+						url: 'http://api.chaodashe.com/index.php/shangxin',
+						method: 'post',
+						data: {
+							values: addInfo,
+							files: {
+								"imagelist[]": fileList,
+							},
+						},
+						headers:{'Token':$api.getStorage('token')},
+						// report: true,
+					}, function(ret, err) {
+						if (ret) {
+							if(ret.code==200){
+								$('.text').val('');
+								fileList=[];
+								$('.imglist').remove();
+								getshangxin();
+							}else{
+								api.toast('没有催成功哟,请联系客服o(╥﹏╥)o');
+							}
+						}
+			        })
+			    }
+			})
+			
+			
+			function getshangxin(_loadMore){
+					if(_loadMore){
+						skip+=limit;
+					}else{
+						skip=0;
+						dialog('正在加载潮友建议');
+					}
+					getajax(url+'getshangxin',{'skip':skip,'limit':limit},function(e){
+						if(e.code=='200'){
+							updatelist(e.data,_loadMore);
+						}else{
+							off_on=false;
+							dl.close();
+						}
+					})
+					}
+					function updatelist(ret,_loadMore){
+						var param = {
+							list: ret,
+							imgurl: imgurl,
+						};
+						var tempFn = doT.template($('#template').text());
+						// 使用模板函数生成HTML文本
+						var resultHTML = tempFn(param);
+						if(_loadMore){
+							$('.commentBox').append(resultHTML);
+						}else{
+							$('.commentBox').html(resultHTML);
+							
+						}
+						api.refreshHeaderLoadDone();
+						dl.close();
+						off_on=true;
+						$(".lazy").lazyload({
+							 effect: 'fadeIn',
+						});
+					}
+					function TAuser(uid){
+					  // window.location.href='./TAusercenter.html?'+window.btoa(encodeURI('uid='+uid));
+					  api.openWin({
+					      name: 'TAusercenter',
+					      url: './TAusercenter.html',
+					      pageParam: {
+					          uid:uid
+					      },
+					      
+					  });
+					}
+					
+					function opensaybug(){
+						  api.setFrameAttr({
+						      name: 'shangxin_frame',
+						      hidden: true
+						   });
+						api.openFrame({
+						    name: 'saybug_frame',
+						    url: './saybug_frame.html',
+						    rect: {
+						        x: 0,
+						        y: 0,
+						        w: api.winWidth,
+       						    h: api.winHeight-54
+						    },
+						    pageParam: {
+						        name: 'value'
+						    },
+						    bounces: false
+						});
+					}
+		</script>
+	</body>
+</html>

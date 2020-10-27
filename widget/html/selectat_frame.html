@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>收货地址</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <script src="../script/commonjs.js">
+        </script>
+        <script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+    <style>    
+   *,html,body{
+        padding: 0px;
+        margin: 0px;
+        list-style: none;
+        width: 100%;
+     }   
+     header{
+        width: 100%;
+        height: 40px;
+        background: white;
+        box-shadow:0px 6px 6px -6px black;
+        position: fixed;
+        top: 0px;
+        left:0px;
+        z-index: 999;
+    }
+    header .back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 40px;
+        height: 40px;
+        z-index: 2;
+    }
+
+    header .back img {
+        margin-top: 5px;
+        margin-left: 4px;
+        width: 28px;
+        height: 30px;
+    }
+    header a{
+        display: block;
+        text-align: center;
+        line-height: 40px;
+        font-size: 16px;
+        font-weight: bold;
+
+    }
+    .search{
+        margin-top: 50px;
+        width: 100%;
+        height: 30px;
+        text-align: center;
+    }
+    .search .inp{
+        margin: 0 auto;
+        width: 96%;
+        text-align: center;
+        height: 90%;
+        border-radius: 10px;
+        background-color: #EEEFF3;
+        text-align: center;
+    }
+    input::-webkit-input-placeholder { /* WebKit browsers 适配谷歌 */
+    color: #68696B;
+}
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 适配火狐 */
+    color: #68696B;
+}
+input::-moz-placeholder { /* Mozilla Firefox 19+ 适配火狐 */
+    color: #68696B;
+}
+input:-ms-input-placeholder { /* Internet Explorer 10+  适配ie*/
+    color: #68696B;
+}
+.atlist {
+    margin-top: 18px;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+
+}
+.atuser {
+    height: 50px;
+    
+}
+
+
+.atuserhead {
+    margin-left: 6px;
+    width: 38px;
+    height: 38px;
+    background-size: cover;
+    background-position: center;
+   
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.atusername {
+ color: gray;
+}
+
+.atuname {
+    font-weight: bold;
+    color: #000;
+}
+
+.atusernameandusername {
+   
+     border-bottom: 1px solid #EAEAEA;
+    display: inline-block;
+    width: 82%;
+}
+</style>
+</head>
+
+<body>
+   <header>
+    <div class="back" tapmode onclick="api.closeWin();">
+        <img src="../image/back.png">
+    </div>
+    <a>@好友</a>
+</header>
+<div class="search">
+    <input type="text" placeholder="请输入需要@好友的名字"  class="inp">
+</div>
+<div class="atlist">
+    
+</div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script id="template" type="text/template">
+
+            {{~it.list:value:index}}
+                <div class="atuser" onclick="clickat('{{=value.id}}','{{=value.name}}')">
+                 <div class="atuserhead" data-original="{{=it.imgurl}}{{=value.headimg}}"></div>
+                 <div class="atusernameandusername">
+                     <div class="atuname">{{=value.name}}</div>
+                     <div class="atusername">账号:{{=value.username}}</div>
+                 </div>
+                
+                </div>
+            {{~}}
+            
+        </script>
+<script type="text/javascript">
+    var atsearchskip=0;
+    var atsearchlimit=18;
+    var userInfo;
+    var searchval;
+    apiready = function() {
+        userInfo=$api.getStorage('userInfo');
+        jishisearch();
+        keyup();
+    };
+
+            function keyup(){
+                $('.inp').keyup(function(){
+                   searchval= $(this).val();
+                   jishisearch(searchval);
+
+                })
+
+            }
+
+
+            function jishisearch(val, _loadMore) {
+                if (_loadMore) {
+                    atsearchskip += atsearchlimit;
+                } else {
+                    atsearchskip = 0;
+                }
+
+                getajax(url + 'getatname', {
+                    'userid': userInfo.id,
+                    'searchname': val,
+                    'atskip': atsearchskip,
+                    'atlimit': atsearchlimit
+                }, function(ret) {
+                    if (ret.code == 200) {
+                      
+                        updateatsearchlist(ret.data, _loadMore);
+                    } else {
+                        // $(".atbox").append(
+                        //  '<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-暂无数据-</p>');
+                    }
+                })
+
+
+            }
+
+            function updateatsearchlist(ret, _loadMore) {
+                var param = {
+                    list: ret,
+                    imgurl: imgurl,
+                };
+                var tempFn = doT.template($('#template').text());
+                // 使用模板函数生成HTML文本
+                var resultHTML = tempFn(param);
+                if (_loadMore) {
+                    $(".atlist").append(resultHTML);
+                } else {
+                    $(".atlist").html(resultHTML);
+                }
+                $(".atuserhead").lazyload({
+                    effect: "fadeIn",
+                    threshold: 500,
+                });
+                atoff_on = true;
+
+            }
+        
+        function clickat(atuid, atname) {
+            api.closeWin();
+            api.sendEvent({
+                name: 'addat',
+                extra: {
+                    atuid: atuid, 
+                    atname: atname,
+                }
+            });
+            
+
+        }
+</script>
+
+</html>

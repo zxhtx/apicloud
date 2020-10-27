@@ -62,56 +62,45 @@
  }
 
  .info-name {
-  /*box-sizing: border-box;*/
+  box-sizing: border-box;
   margin-top: 10px;
   width: 100%;
-  /*min-height:50px;*/
-  /*max-height: 90px;*/
+  height: auto;
+  max-height: 120px;
   /*padding-top: 2px;*/
   /*padding-left: 8px;*/
   border-bottom: 1px solid #ddd;
-  /*position: relative;*/
+  position: relative;
 }
 
-/*.info-name .name {
+.info-name .name {
   width: 80%;
   height: 20px;
   line-height: 20px;
   color: #444;
   font-size: 18px;
   padding-left: 8px;
-}*/
+}
 
 .info-name .description {
-  margin-top: 3px;
-  margin-bottom: 3px;
-  width: 80%;
-  height: 20px;
-  line-height: 20px;
-
+  /* margin-top: 5px; */
+  width: 100%;
+  height: auto;
+  max-height: 60px;
   color: #888;
-  font-size: 14px;
-  margin-bottom: 10px;
-  padding-left: 10px;
-  display: inline-block;
-  /*vertical-align: middle;*/
+  font-size: 15px;
+   font-weight: bold;
+text-align: center;
+overflow: hidden;
 }
 
 .price {
-  /*box-sizing: border-box;*/
-  width: 38px;
-  height: 22px;
-  /*border:1px solid red;*/
-  padding-left: 3px;
-  margin-bottom: 12px;
-  /*vertical-align: center;*/
-  /*padding-top: 8px;*/
-  display: inline-block;
-  font-size: 15px;
-  /*padding-right: 8px;*/
-/*  position: absolute;
-  right: 8px;
-  bottom: 8px;*/
+  
+  text-align: center;
+  width: 100%;
+  height: 38px;
+  line-height: 38px;
+  font-weight: bold;
 }
 
 
@@ -176,7 +165,7 @@
   line-height: 20px;
 }
 
-.info-discount span{
+.info-discount .cima{
   padding: 5px 8px 5px 8px;
   margin:3px;
   font-size: 12px;
@@ -184,8 +173,9 @@
   background: black;
   border: 1px solid #ccc;
   border-radius: 6px;
+  display: inline-block;
 }
-.info-discount span.now{
+.info-discount .cima.now{
  padding: 5px 8px 5px 8px;
  font-size: 12px;
  color: black;
@@ -196,7 +186,7 @@
 }
 
 
-.info-color span{
+.info-color .yanse{
   padding: 5px 8px 5px 8px;
   margin:3px;
   font-size: 12px;
@@ -204,9 +194,10 @@
   background: black;
   border: 1px solid #ccc;
   border-radius: 6px;
+  display: inline-block;
 
 }
-.info-color span.now{
+.info-color .yanse.now{
   padding: 5px 8px 5px 8px;
   font-size: 12px;
   color: black;
@@ -231,7 +222,7 @@ footer{
 
 }
 .lt_option > #cart{
-  width: 28%;
+  width: 38%;
   padding:0px 6px 2px 6px;
   /*border: 1px solid red;*/
 }
@@ -278,15 +269,21 @@ footer{
 }
 .baolist{
   
-  border-bottom: 8px solid #F2F2F2;
+  border-bottom: 2px solid #F2F2F2;
+  display: flex;
+  justify-content: space-around;
+  height: 38px;
+  line-height: 38px;
+  font-size: 14px;
+  font-weight: bold;
+  
 }
 .baolist span{
   padding-left: 6px;
   color: #58595B;
 }
 .quan{
-  margin-top: 6px;
-  margin-bottom: 8px;
+
   border-bottom: 2px solid #F2F2F2;
   padding-left: 6px;
 }
@@ -303,7 +300,7 @@ footer{
 .quan .twospan{
   color: #58595B;
   margin-left: 6px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
 }
 #sixtext{
@@ -330,6 +327,106 @@ footer{
            min-height: 20rem !important;
           
         }
+.cds{
+  width: 100%;
+  height: 180px;
+  border-bottom: 8px solid #F2F2F2;
+  font-size: 15px;
+  
+}
+.cdslist2{
+  width: 100%;
+  height: 138px;
+  display: flex;
+  justify-content: flex-start;
+}
+.lazy2{
+  background-size: cover;
+  background-position: center;
+}
+.cdstitle{
+  text-align: center;
+  color: #d0cccc;
+  height: 30px;
+  width: 100%;
+}
+.cdsitem{
+  display: inline-block;
+  margin-left: 12px;
+
+
+}
+#quality{
+  width: 100%;
+  height: auto;
+  padding-bottom: 8px;
+  border-bottom:1px solid #ddd;
+}
+.modi{
+  margin: 0px;
+  padding: 0px;
+  text-align: center;
+  font-weight: 16px;
+  font-weight: bold;
+}
+.modititle{
+  text-align: center;
+  font-size: 14px;
+  color: #464141;
+}
+.modibody{
+  text-align: center;
+  font-size: 14px;
+  color: #464141;
+}
+.qualitytitle{
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+.qualitybody{
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+.shareuserdiv{
+  position: relative;
+  width: 100%;
+  height: 66px;
+  border-bottom:1px solid #ddd ;
+  display: none;
+}
+.shareheadimg{
+  width: 45px;
+  height: 45px;
+  background-position: center;
+  background-size: cover;
+  /* background-image: url(../image/1.png); */
+  position: absolute;
+  top: 50%;
+  margin-top: -22px;
+  margin-left: 6px;
+  border-radius: 50%;
+  /* border: 1px solid red; */
+}
+.sharename{
+  width: 82%;
+  height: 20px;
+  position: absolute;
+  right: 0px;
+  top: 10px;
+  font-weight: bold;
+  font-size: 17px;
+}
+.sharetext{
+    width: 82%;
+    height: 20px;
+    position: absolute;
+    right: 0px;
+    top: 33px;
+    font-weight: bold;
+    font-size: 15px;
+}
 </style>
   </head>
 
@@ -343,15 +440,15 @@ footer{
     <footer class="lt_option">
       <div id="share" onclick="share()"><img class="speak" src="../image/shareware.png" alt=""></div>
       <div id="speak" onclick="openspeak()"><img class="speak" src="../image/speak.png" alt=""></div>
-      <div id="cart"><a class="addCart" href="javascript:;">加入收藏</a></div>
-      <div id="buy"><a class="pay" href="javascript:;">立即下单</a></div>
+      <div id="cart" class="buy" data-buy="1"><a class="addCart" href="javascript:;">购物券下单</a></div>
+      <div id="buy" class="buy" data-buy="0"><a class="pay" href="javascript:;">立即下单</a></div>
     </footer>
-   <script id="template" type="text/x-dot-template">
-        <div class="swiper-container">
+  <script id="template" type="text/x-dot-template">
+      <div class="swiper-container">
                        <div class="swiper-wrapper" style="height:100%">
                     {{for(var i=0; i<it.list.wareimglist.length;i++) { }}
                       
-                         <div class="swiper-slide" onclick="openp({{=i}})"  style=" width:100%;height:auto;background-image: url({{=it.list.wareimglist[i]}});" ></div>
+                         <div class="swiper-slide" tapmode onclick="openp('{{=i}}')"  style=" width:100%;height:auto;background-image: url({{=it.list.wareimglist[i]}});" ></div>
              
                     {{  }  }}
                   </div>
@@ -361,35 +458,73 @@ footer{
                       <div id="description" class="description">{{=it.list.description}}</div>
                       <div id="price" class="price">￥{{=it.list.price}}</div>
                     </div>
+                     <p class="modi">市场摸底</p>
+                      <div id="quality">
+                      
+                        <div class="modititle">title</div>
+                        {{if(it.list.qualitytitle==0){ }}
+                          <div class="qualitytitle">
+                            暂无摸底消息
+                          </div>
+                        {{ }else{ }}
+                          <div class="qualitytitle">
+                            {{=it.list.qualitytitle}}                 
+                          </div>
+                        {{ } }}
+                        <div class="modibody">body</div>
+                        {{if(it.list.qualitybody==0) { }}
+                          <div class="qualitybody">
+                             暂无摸底消息
+                          </div>
+                        {{ }else{ }}
+                          <div class="qualitybody">
+                            {{=it.list.qualitybody}}                        
+                          </div>
+                        {{ } }}
+                      </div>
+                    <div class="shareuserdiv">
+                      <div class="shareheadimg" onclick="openTAusercenter()"></div>
+                      <div class="sharename"></div>
+                      <div class="sharetext">您下单后,此分享者将获得3元奖励</div>
+                     </div>
                     <div class="quan">
-                      <span class="onespan">返现(单单返)</span><span class="twospan">全站每单都会获得商品相应的优惠</span><br/>
-                      <span class="onespan">VIP优惠</span><span class="twospan">VIP用户全站购物均9.5折</span>
+                      <span class="onespan">单单减</span><span class="twospan">全站每单都会获得商品相应的优惠</span><br/>
+                      <span class="onespan">5+返利活动</span><span class="twospan">全站用户都享有参与权</span>
           
                     </div>
                     <div class="baolist" >
-                     <span>全场包邮</span>
-                     <span>7天退换</span>
-                     <span>24小时发货</span>
+                     <span>√全场包邮</span>
+                 {{if(it.list.sevenT){ }}
+                  <span>√7天退货</span>
+                 {{ } }}
+                 {{if(it.list.sevenH){ }}
+                  <span>√7天换货</span>
+                 {{ } }}
+                    
+                     <span>√24小时发货</span>
           
                    </div>
                    <div class="sizeandcolor">
                     <div class="info-color">
                       <div class="name">颜色</div>
                       {{ for(var i=0; i< it.list.color.length;i++) { }}
-                      <span data-color="{{=it.list.color[i]}}" class="yanse">{{=it.list.color[i]}}</span>
+                      <div data-color="{{=it.list.color[i]}}" class="yanse">{{=it.list.color[i]}}</div>
                       {{ } }}
                     </div>
           
           
           
-                    <input id="copyInput" value="https://chaodashe.com/html/ware_frame.html?{{!sharetle()}}" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
+                    <input id="copyInput" value="http://www.chaodashe.com/html/ware_frame.html?{{!sharetle()}}" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
                     <div class="info-discount">
                       <div class="name">尺码</div>
                       {{for(var i=0; i< it.list.size.length ;i++) { }}
-                      <span data-value="{{=it.list.size[i]}}" class="cima">{{=it.list.size[i]}}</span>
+                      <div data-value="{{=it.list.size[i]}}" class="cima">{{=it.list.size[i]}}</div>
                       {{ } }}
                     </div>
                   </div>
+              <div class="cds">
+                
+              </div>
                   <div id="" style="width: {{=it.frameWidth}}px; margin-top: 28px; ">
                     {{for(var i=0; i< it.alllist.length;i++) { }}
                     <div   data-wareid="{{=it.alllist[i].bid}}" class="listwareid" style="width: {{=it.frameWidth/4}}px; margin-left:{{=(it.frameWidth/4)/4}}px ;  display: inline-block;">
@@ -407,6 +542,16 @@ footer{
 
     
         </script>
+        <script id="template2" type="text/x-dot-template">
+      <div class="cdstitle">-此商品在以下动态运用-</div>
+      <div class="cdslist2">
+      {{~it.list:value:index}}
+        <div class="cdsitem" style="width: {{=it.frameWidth/3.5}}px;height: 98%;" onclick="openDressing('{{=value.id}}')" >
+        <div class="lazy2"  data-original="{{=it.imgurl}}{{=value.fm}}"  style="width:100% ; border-radius:6px ;height: 100%; "></div>
+        </div>
+      {{~}}
+      </div>
+    </script>
     <script type="text/javascript">
       var size;
       var color;
@@ -439,8 +584,37 @@ footer{
         });
       }
       function sharetle() {
-        return window.btoa(encodeURI("wareId=" +api.pageParam.wareId));
+        if(userInfo){
+          return window.btoa(encodeURI("wareId=" + api.pageParam.wareId+'&userid='+userInfo.id));
+          
+        }else{
+          return window.btoa(encodeURI("wareId=" + api.pageParam.wareId));
+          
+        }
 
+      }
+
+      function getuser(shareuid){
+          getajax(url+'getshareuid',{'shareuid':shareuid},function(ret){
+            if(ret.code==200){
+            
+              // console.log(imgurl + ret.data.headimg  )
+              TAuserid=ret.data.id;
+              $('.shareuserdiv').show(888);
+              $('.sharename').html(ret.data.name)
+              $('.shareheadimg').css('background-image','url('+ imgurl + ret.data.headimg +')');
+            }
+          });
+      }
+      function openTAusercenter(){
+       
+        api.openWin({
+            name: 'TAusercenter',
+            url: './TAusercenter.html',
+            pageParam: {
+                 uid:TAuserid
+            }
+        });
       }
 
       function getWareInfo(_wareId) {
@@ -498,6 +672,7 @@ footer{
         var resultText = tempFn(param)
         // console.log(resultText);
         $("#list").append(resultText);
+        getcds(_ware.bid);
         dl.close();
         var swiper = new Swiper('.swiper-container', {
           pagination: {
@@ -523,9 +698,13 @@ footer{
         size();
         color();
         listware();
-        Addcart();
         oporderWin();
-
+        if(api.pageParam.shareuid){
+            if(api.pageParam.shareuid!=userInfo.id){
+              getuser(api.pageParam.shareuid);
+            }
+              
+          }
 
 
 
@@ -569,7 +748,7 @@ footer{
 
 
       function oporderWin() {
-        $("#buy").on('click', function() {
+        $(".buy").on('click', function() {
 
 
           if (!datacolor) {
@@ -604,13 +783,15 @@ footer{
           }
           // var canshu = window.btoa(encodeURI("wareId=" + shoppingid + "&size=" + datasize + "&color=" + datacolor));
           // var url = './order_frame.html?' + canshu;
+
            api.openWin({
                 name: 'order',
                 url: './order.html',
                 pageParam: {
                     wareId:shoppingid,
                     size:datasize,
-                    color:datacolor
+                    color:datacolor,
+                    buytype:this.dataset.buy,
                 },
                 
             }); 
@@ -618,48 +799,17 @@ footer{
         })
       }
 
-      function Addcart() {
-        $("#cart").on('click', function() {
-          // localStorage.setItem
-          // localStorage.getItem
-          var cart = JSON.parse(localStorage.getItem('cart'));
-          console.log(cart);
-          var list = [];
-          if (cart == null && cart == undefined) {
-            list.push(
-              shoppingid
-            );
-            localStorage.setItem('cart', JSON.stringify(list));
-            toast('成功添加到收藏夹', 'center', 2000);
-
-          } else {
-            for (var i = 0; i < cart.length; i++) {
-              if (cart[i] == shoppingid) {
-
-                toast('此商品已存在收藏夹', 'center', 2000);
-                return;
-
-              };
-            };
-
-            cart.push(
-              shoppingid
-            );
-            localStorage.setItem('cart', JSON.stringify(cart));
-
-            toast('成功添加到收藏夹', 'center', 2000);
-
-          }
-
-        });
-
-
-
-      }
+     
 
       function openspeak() {
 
-        toast('正在修复', 'center', 2000);
+      api.openWin({
+          name: 'evaluatelist',
+          url: './evaluatelist.html',
+          pageParam: {
+              wareid:shoppingid
+          }
+      });
       }
 
 
@@ -669,16 +819,13 @@ footer{
         copyInput.select(); // 选择对象
         document.execCommand("Copy"); // 执行浏览器复制命令
 
-        toast('成功复制链接', 'center', 2000);
+        api.toast({
+            msg: '成功复制链接'
+        });
 
       }
         function openp(inde){
-        setTimeout(function(){
-           api.toast({
-            msg: '单击图片关闭查看器'
-        });
-        },666)
-       
+    
          if (isopen==0) {
              isback=1;          
            UIPhotoViewer.open({
@@ -688,10 +835,11 @@ footer{
               activeIndex:inde,
           }, function(ret, err) {   
              if(ret.eventType == 'click'){
-                UIPhotoViewer.hide();      
+              
                 isopen=1;
                 isback=0;
-          
+                sendevent(isback); 
+               UIPhotoViewer.hide();
                
               }
           });
@@ -705,6 +853,7 @@ footer{
                 // alert(1111)
             
          }
+         
        sendevent(isback);
       }
       
@@ -727,6 +876,35 @@ footer{
             extra: {
                 isback: ret, 
             }
+        });
+      }
+        function getcds(id) {
+
+        postajax(url + 'waregetcds', {
+          'id': id
+        }, function(e) {
+          if (e.code == 200) {
+            updatcds(e.data);
+          }else{
+            $('.cds').remove();
+          }
+        })
+      }
+
+      function updatcds(data) {
+        var wh = $(window).width();
+        var param = {
+          list: data,
+          imgurl: imgurl,
+          frameWidth: wh,
+        };
+        var tempFn = doT.template($('#template2').text());
+        // 使用模板函数生成HTML文本
+        var resultHTML = tempFn(param);
+        $(".cds").append(resultHTML);
+        $(".lazy2").lazyload({
+          effect: "fadeIn",
+          // threshold:388,
         });
       }
     </script>

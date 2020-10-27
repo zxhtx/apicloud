@@ -12,7 +12,7 @@
 	</head>
 	<body>
 		<header>
-			<div class="back" tapmode onclick="rechat_lists()"></div>
+			<div class="back" tapmode onclick="api.closeWin();"></div>
 			<span class="title">赞和书签</span>
 		</header>
 		<div class="nodata"></div>
@@ -84,13 +84,13 @@
 									');"></div><p class="name">' + data.name +
 									'<span>&nbsp;赞了您的动态</span></p><p class="text"></p><p class="time">' + timestampFormat(data.time) +
 									'</p><div class="cdsimg"  onclick=openDressing("' + data.fatherid + '") style="background-image:url(' +
-									imgurl + data.imglist + ')"></div></div>'
+									imgurl + data.fm + ')"></div></div>'
 							} else {
 								reshtml += '<div  class="list"><div class="head_img" style="background-image: url(' + imgurl + data.headimg +
 									');"></div><p class="name">' + data.name +
 									'<span>&nbsp;把您的动态收藏至书签</span></p><p class="text"></p><p class="time">' + timestampFormat(data.time) +
 									'</p><div class="cdsimg" onclick=openDressing("' + data.fatherid + '") style="background-image:url(' +
-									imgurl + data.imglist + ')"></div></div>'
+									imgurl + data.fm + ')"></div></div>'
 							}
 
 
@@ -107,7 +107,7 @@
 					} else {
 						$('.xz').remove();
 						$('body').append(
-							'<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">-暂无数据-</p>');
+							'<p class="nodata" style=" text-align: center;color: #ddd;height: 50px;line-height: 50px;">-暂无数据-</p>');
 					}
 
 					dl.close();
@@ -136,25 +136,20 @@
 			}
 
 			function openDressing(id) {
-				window.location.href = './Dressingdetails_frame.html?' + window.btoa(encodeURI('articleid=' + id));
+				
+				 api.openWin({
+		           name: 'Dressingdetails',
+		           url: './Dressingdetails.html',
+		           pageParam: {
+		               articleid:id
+		           },
+		          
+		       });
 			}
 
-			function rechat_lists() {
-				window.location.href = "./chat_lists.php?" + window.btoa(encodeURI("fromid=" + uid));
-			}
+		
 
-			pushHistory();
-			window.addEventListener("popstate", function(e) {
-				window.location.href = "./chat_lists.php?" + window.btoa(encodeURI("fromid=" + uid));
-			}, false);
-
-			function pushHistory() {
-				var state = {
-					title: "title",
-					url: "#"
-				};
-				window.history.pushState(state, "title", "");
-			}
+		
 		</script>
 	</body>
 </html>

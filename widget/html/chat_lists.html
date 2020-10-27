@@ -25,6 +25,11 @@
 		<div class="likecount"></div>
 		<div class="text">赞和书签</div>
 	</div>
+	<div class="at txlist" onclick="openatlist()">
+		<div class="atimg"></div>
+		<div class="atcount">···</div>
+		<div class="text">@我的</div>
+	</div>
 	<div class="comment txlist" onclick="opencommandreplylist()">
 		<div class="commentimg"></div>
 		<div class="commentcount"></div>
@@ -57,7 +62,8 @@
 		$('.chat').addClass('now').siblings().removeClass('now');
 		$('.likecount').css('background-color',userInfo.Dressingbgcolor);	
 		$('.dinyuecount').css('background-color',userInfo.Dressingbgcolor);	
-		$('.commentcount').css('background-color',userInfo.Dressingbgcolor);	
+		$('.commentcount').css('background-color',userInfo.Dressingbgcolor);
+		$('.atcount').css('background-color',userInfo.Dressingbgcolor);	
 		
 	 }
 	     
@@ -110,6 +116,11 @@
 			 },1000)
 			return;
 			 case 'cds_say':
+		      setTimeout(function(){
+		        u_allNoreadcount();
+		      },1000)
+		      return;
+		       case 'serverat':
 		      setTimeout(function(){
 		        u_allNoreadcount();
 		      },1000)
@@ -215,6 +226,14 @@
 				 }
 
 
+				if(e.data.atcount){
+					$('.atcount').html(e.data.atcount).css('display','block');
+					
+				}else{
+					
+					 $('.atcount').html('').css('display','none');
+				}
+
 			 }
 		 })
 	}
@@ -237,6 +256,15 @@
 		        name: 'test'
 		    },
 		  
+		});
+	}
+	function openatlist(){
+		api.openWin({
+		    name: 'atlist',
+		    url: './atlist.html',
+		    pageParam: {
+		        name: 'test'
+		    }
 		});
 	}
 	function opencommandreplylist(){
@@ -287,11 +315,14 @@
  			}else if(ret.value.page=='likeandshuqianlist'){
  				// alert('喜欢')
  				$('.likecount').html('').css('display','none');
- 			}else{
+ 			}else if(ret.value.page=='subscribelist'){
  				// subscribelist
  				// alert('订阅')
  				 $('.dinyuecount').html('').css('display','none');
 
+ 			}else if(ret.value.page=='atlist'){
+
+ 				$('.atcount').html('').css('display','none');
  			}
  		    
  		});

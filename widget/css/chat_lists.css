@@ -86,6 +86,30 @@ header{
 	/* background-color: #F74C31; */
 	color: #fff;
 }
+.tongxin .at .atimg{
+	background-image: url('../image/at.png');
+	background-size: cover;
+	background-position: center center;
+	width: 45px;
+	height: 45px;
+	margin:  0 auto;
+	margin-top: 15px;
+	
+	
+}
+.tongxin .at .atcount{
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	font-size:12px;
+	width:18px;
+	height: 18px;
+	line-height:18px;
+	text-align: center;
+	border-radius: 50%;
+	/* background-color: #F74C31; */
+	color: #fff;
+}
 .tongxin .comment .commentimg{
 	background-image: url('../image/commentandreply.png');
 	background-size: cover;

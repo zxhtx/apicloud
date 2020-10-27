@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+	  <link rel="shortcut icon" href="../image/chao.ico" />
 	<meta charset="utf-8">
 	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
 	<title>title</title>
-	<link rel="stylesheet" type="text/css" href="../css/api.csss"/>
+	<!-- <script src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script> -->
+	<!-- <script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.11.1/jquery.min.js"></script> -->
+	<!-- <script type="text/javascript" src="http://39.108.10.146/js/SHA1.js"></script> -->
+	<script src="../script/commonjs.js"></script>
 	<style>
 	.text{
 		text-align: center;
@@ -71,10 +75,18 @@
 
 		<div class="paygengduo" tapmode onclick="openpaygengduo()">支付步骤</div>
 	</div>
-
+	 <form style='display:none;' id='formpay' name='formpay' method='post' action='https://gateway.xddpay.com/?input_charset=utf-8'>
+		<input name='order_no' id='order_no' type='text' value=''/>
+        <input name='subject' id='subject' type='text' value='' />
+        <input name='pay_type' id='pay_type' type='text' value='' />
+        <input name='money' id='money' type='text' value=''/>
+        <input name='app_id' id='app_id' type='text' value=''/>        
+        <input name='extra' id='extra' type='text' value=''/>
+		<input name='sign' id='sign' type='text' value=''/>
+        <input type='submit' id='submitdemo1'>
+    </form>
 </body>
-<script type="text/javascript" src="../script/api.js"></script>
-<script type="text/javascript" src="../script/SHA1.js"></script>
+
 <script type="text/javascript">
 	var name;
 	var price1;
@@ -85,9 +97,10 @@
 	var value;
 	var pay_type;
 	apiready = function(){
-		getshoppinginformation();
-		
-	};
+	    getshoppinginformation();
+	}
+	    
+	
 	function openpaygengduo(){
 		api.openWin({
 			name: 'paygengduo',
@@ -97,88 +110,90 @@
 			}
 		});
 	}
-	var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
-      function getshoppinginformation(){
-      	var params={
-      		fields:{},
-      		fields: {},
-      		where: {
-      			id:api.pageParam.ware.id
-      		},
-      		skip:0
-      	}
-      	params=$api.jsonToStr(params);
-      	api.ajax({
-      		url: 'http://d.apicloud.com/mcm/api/shoppinginformation?filter='+params,
-      		method: 'get',
-      		headers: {
-      			"X-APICloud-AppId": "A6099267504667",
-      			"X-APICloud-AppKey":   appKey
-      		},
 
-      	},function(ret, err){
-      		if (ret) {
-            // 赋值
-            // updateWare(ret);
-            name=ret[0].warename;
-            price1=ret[0].price;
-            wareid=ret[0].id;
-            var text=$api.byId('text');
-            text.innerHTML=ret[0].description;
-
-            // alert($api.jsonToStr(ret))
-            
-        } else {
-        	api.toast({
-        		msg: err.msg,
-        		duration: 2000,
-        		location: 'bottom'
-        	});
-        }
-    });
+	function getshoppinginformation(){
+		var params={
+			id:api.pageParam.ware,
+			uid:userInfo.id
+		}
+		dl=$(document).dialog({
+		    type : 'notice',
+		    infoIcon: '../image/icon/loading.gif',
+		    infoText: '商品支付验证...'
+		});
+		postajax(url+'getoneshopping',params,function(ret){
+			if (ret.code==200) {
+				// 随便写一个都行
+				name=ret.data[0].id;
+				price1=ret.data[0].newprice;
+				wareid=ret.data[0].id;
+				$("#text").html(ret.data[0].description);
+				dl.close();
+	
+			}
+		})
 
 
-      }
+	}
 
-      function weixin(){
-      	api.openWin({
-      		name: 'page1',
-      		url: "http://104.168.184.84/bufpay_/bufpay_api_demo.php?price=" + price1 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=wechat"
-      	});
-      	// api.openApp({
-      	// 	androidPkg: 'android.intent.action.VIEW',
-      	// 	mimeType: 'text/html',
-      	// 	uri: "http://www.zxh.yueaa.com/bufpay_/bufpay_api_demo.php?price=" + price1 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=wechat"
-      	// }, function(ret, err) {
-      	// 	if (ret) {
-
-      	// 	}
-      	// });
-      	// location.href = "http://www.zxh.yueaa.com/bufpay_/bufpay_api_demo.php?price=" + price1 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=wechat";
+	function weixin(){
+		// var extra={'wareid':wareid};
+				dl=$(document).dialog({
+		    type : 'notice',
+		    infoIcon: '../image/icon/loading.gif',
+		    infoText: '正在进入支付页面'
+		});
+        $.get(
+            "http://pay.chaodashe.com/pay.php",
+            {
+                money :price1,
+                pay_type : 44,
+                extra:wareid
+            },
+            function(data){
+                $("#order_no").val(data.order_no);
+				$('#subject').val(data.subject);
+                $("#pay_type").val(data.pay_type);                
+                $('#money').val(data.money);
+                $('#app_id').val(data.app_id);
+                $('#extra').val(data.extra);
+                $('#sign').val(data.sign);
+				// return;
+                $('#submitdemo1').click();
+            }, "json"
+        );
+      	// window.location.href = "http://104.168.184.84/bufpay_/bufpay_api_demo.php?price=" + price1 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=wechat";
 
 
       }
 
       function alipay(){
-      	api.openWin({
-      		name: 'page1',
-      		url: "http://104.168.184.84/bufpay_/bufpay_api_demo.php?price=" + price1 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=alipay"
-      	});
-      	// api.openApp({
-      	// 	androidPkg: 'android.intent.action.VIEW',
-      	// 	mimeType: 'text/html',
-      	// 	uri:  "http://www.zxh.yueaa.com/bufpay_/bufpay_api_demo.php?price=" + price1 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=alipay"
-      	// }, function(ret, err) {
-      	// 	if (ret) {
-
-      	// 	}
-      	// });
-
-
-      	// location.href = "http://www.zxh.yueaa.com/bufpay_/bufpay_api_demo.php?price=" + price1 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=alipay";
-
+   
+      	dl=$(document).dialog({
+		    type : 'notice',
+		    infoIcon: '../image/icon/loading.gif',
+		    infoText: '正在进入支付页面'
+		});
+     $.get(
+            "http://pay.chaodashe.com/pay.php",
+            {
+                money :price1,
+                pay_type : 43,
+                 extra:wareid
+            },
+            function(data){
+            	// console.log(data);
+				// return;
+                $("#order_no").val(data.order_no);
+				$('#subject').val(data.subject);
+                $("#pay_type").val(data.pay_type);                
+                $('#money').val(data.money);
+                $('#app_id').val(data.app_id);
+                $('#extra').val(data.extra);
+                $('#sign').val(data.sign);
+                $('#submitdemo1').click();
+            }, "json"
+        );
 
 
       }

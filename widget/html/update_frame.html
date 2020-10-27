@@ -1,0 +1,292 @@
+<!doctype html>
+<html>
+
+<head>
+      <link rel="shortcut icon" href="../image/chao.ico" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>个人中心</title>
+    <script src="../script/commonjs.js"></script>
+	<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+    <style>
+    html,
+    body {
+        height: 100%;
+        background-color: white;
+        padding: 0;
+        margin: 0;
+
+    }
+    header{
+        width: 100%;
+        height: 40px;
+        background: white;
+         border-bottom: 0.3px solid #F1F1F1;
+        /*border-style: ridge;*/
+    }
+    header .back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 40px;
+        height: 40px;
+        z-index: 2;
+    }
+
+    header .back img {
+        margin-top: 5px;
+        margin-left: 4px;
+        width: 28px;
+        height: 32px;
+    }
+    header a{
+        display: block;
+        text-align: center;
+        line-height: 40px;
+        font-size: 16px;
+        font-weight: bold;
+
+    }
+    header .ok{
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        width: 50px;
+        height: 40px;
+        /*background: red;*/
+        z-index: 999;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 40px;
+    }
+
+    .inp{
+        width: 100%;
+        /*border: 1px solid red;*/
+    }
+    .row {
+        width: auto;
+        height: 30px;
+        box-sizing: border-box;
+        margin-left: 18px;
+        margin-right: 18px;
+        /*padding-top: 40px;*/
+        border-bottom: 1px solid #888;
+        /*border: 1px solid red;*/
+    }
+
+    .input {
+        width: 100%;
+        height: 20px;
+        border: none;
+        font-size: 16px;
+        line-height: 20px;
+        outline:none;
+        background: white;
+
+    }
+    p{
+        /*width: 100px;*/
+        height: 20px;
+        margin-left: 18px;
+        color: #999999;
+
+        /*border: 1px solid red;*/
+    }
+    ::-webkit-input-placeholder { color:#C7C7C7; }
+    ::-moz-placeholder { color:#C7C7C7; } /* firefox 19+ */
+    :-ms-input-placeholder { color:#C7C7C7; } /* Internet Explorer 10+ */
+    :-moz-placeholder { color:#C7C7C7; } /* firefox 14-18 */
+    #file{
+        opacity:0;
+        filter:alpha(opacity=0);
+        height: 88px;
+        width: 88px;
+        position: absolute;
+        top: 38px;
+        left: 135px;
+        z-index: 9;
+        border: 1px solid red;
+    }
+    .emailtoast{
+        /*margin-top: 66px;*/
+        padding: 3px;
+        font-size: 14px;
+        text-align: center;
+        color: red;
+        display: none;
+    }
+</style>
+</head>
+
+<body>
+    <header>
+        <div class="back" tapmode onclick="api.closeWin();">
+            <img src="../image/back.png">
+        </div>
+        <div class="ok" onclick="isok()">确定</div>
+        <a class="title">变更</a>
+    </header>
+    
+    <div class="inp">
+       <p>原来的</p>
+       <div class="row">
+        <input id="old"  autocomplete="off" class="input" type="text" placeholder="">
+    </div>
+
+    <p>更改后的</p>
+    <div class="row">
+        <input id="newone"   autocomplete="off" class="input" type="password" placeholder="">
+    </div>
+
+    <p>请再次输入更改后的</p>
+    <div class="row">
+        <input id="newtwo"  autocomplete="off" class="input" type="password" placeholder="">
+    </div>
+</div>
+<div class="emailtoast">*重置邮箱时请仔细检查,以防邮箱输入错误导致重置密码时接收不到验证码</div>
+</body>
+
+
+<script type="text/javascript">
+   
+    apiready = function(){
+        title();
+        if (api.pageParam.pagename=='邮箱'){
+            $('.emailtoast').css('display','block');
+            $('#newone').attr('type','text');
+             $('#newtwo').attr('type','text');
+        }
+
+    }
+        
+    function title() {
+        $(".title").html('变更'+api.pageParam.pagename);
+    }
+    function isok(){
+        var old=$("#old").val();
+        var newone=$("#newone").val();
+        var newtwo=$("#newtwo").val();
+        if (old.length<1) {
+            
+            api.toast({
+                msg: '请填写完整'
+            });
+            return;
+        }else if(newone.length<1){
+            api.toast({
+                msg: '请填写完整'
+            });
+           return;
+       }else if(newtwo.length<1){
+            api.toast({
+                msg: '请填写完整'
+            });
+           return;
+       }else if (newone.length<6) {
+          
+           api.toast({
+               msg: api.pageParam.pagename+'不能低于6位字符'
+           });
+          return;
+      }
+      if (newone!=newtwo) {
+         api.toast({
+               msg: api.pageParam.pagename+'两次输入不一致'
+           });
+        return;
+        }
+        var userInfo=$api.getStorage('userInfo');
+        var notice = $(document).dialog({
+            type : 'notice',
+            infoIcon: '../image/icon/loading.gif',
+            infoText: '正在修改中'
+        });
+        if (api.pageParam.pagename=='密码') {
+           var params={
+            id:userInfo.id,
+            oldpwd:md5(old),
+            newpwd:md5(newone)
+
+           }
+           postajax(url+'updatepwd',params,function(ret){
+            if (ret.code==200) {
+               notice.update({
+                    infoIcon: '../image/icon/success.png',
+                    infoText: '修改成功！！',
+                    autoClose: 1500
+                });
+                setTimeout(function(){
+                   api.closeWin();
+                },1000)
+               
+            }else if (ret.code==201){
+               
+                   notice.update({
+                    infoIcon: '../image/icon/fail.png',
+                    infoText: ret.message,
+                    autoClose: 1500
+                });
+            }else{
+                  notice.update({
+                    infoIcon: '../image/icon/fail.png',
+                    infoText: ret.message,
+                    autoClose: 1500
+                });
+                
+            }
+           })
+        }else{
+            var params={
+            id:userInfo.id,
+            oldqq:old,
+            newqq:newone
+
+           }
+		   if(!(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/.test(old))){
+		 
+                api.toast({
+                    msg: '邮箱格式不正确'
+                });
+		       return; 
+		   }
+		   if(!(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/.test(newone))){
+		        api.toast({
+                    msg: '邮箱格式不正确'
+                });
+		       return; 
+		   }
+		   
+           postajax(url+'updateqqorwx',params,function(ret){
+            if (ret.code==200) {
+             notice.update({
+                    infoIcon: '../image/icon/success.png',
+                    infoText: '修改成功！！',
+                    autoClose: 1500
+                });
+                  setTimeout(function(){
+                      api.closeWin();
+                },1000)
+            }else if(ret.code==201){
+                notice.update({
+                    infoIcon: '../image/icon/fail.png',
+                    infoText: ret.message,
+                    autoClose: 1500
+                });
+                
+            }else{
+                notice.update({
+                    infoIcon: '../image/icon/fail.png',
+                    infoText: ret.message,
+                    autoClose: 1500
+                });
+                 
+            }
+           })
+           
+        }
+}
+
+</script>
+
+</html>

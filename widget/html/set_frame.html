@@ -201,16 +201,16 @@
                 <input id="autograph" autocomplete="off" class="input" type="text" placeholder="个性签名只为自己代言">
             </div>
 
-            <p>密码</p>
+            <p>重置密码</p>
             <div class="row">
                 <input id="password" onfocus=this.blur() onclick="updatepwd()" autocomplete="off" class="input" type="text"
-                 placeholder="修改密码">
+                 placeholder="重置密码">
             </div>
 
-            <p>手机/QQ/微信</p>
+            <p>重置邮箱</p>
             <div class="row">
                 <input id="qqorwx" onfocus=this.blur() onclick="updateqqorwx()" autocomplete="off" class="input" type="text"
-                 placeholder="找回密码凭证">
+                 placeholder="重置邮箱">
             </div>
         </div>
         <div class="sex">
@@ -233,51 +233,93 @@
 
         function upperCase() {
 
-            $('#file').click();
+           var UIAlbumBrowser = api.require('UIAlbumBrowser');
+                    UIAlbumBrowser.open({
+                        max: 1,
+                        styles: {
+                            bg: '#fff',
+                            mark: {
+                                icon: '',
+                                position: 'bottom_left',
+                                size: 20
+                            },
+                            nav: {
+                                bg: 'rgba(0,0,0,0.6)',
+                                titleColor: '#fff',
+                                titleSize: 18,
+                                cancelColor: '#fff',
+                                cancelSize: 16,
+                                finishColor: '#fff',
+                                finishSize: 16
+                            }
+                        },
+                        rotation: true
+                    }, function(ret) {
+                        if (ret) {
+                            if (ret.list == '[]' || ret.list == '' || ret.list == undefined) {
+                                api.toast({
+                                    msg: '未检测到图片路径',
+                                    duration: 2000,
+                                    location: 'bottom'
+                                });
+
+                            }else {
+                                
+                                
+                                    
+                                
+                                        
+                               if (!userInfo) {
+                        
+                                    api.openWin({
+                                        name: 'login',
+                                        url: './login.html',
+                                        pageParam: {
+                                            name: 'test'
+                                        }
+                                    });
+                                    return;
+                                }
+                               
+                                var addInfo={
+                                    userid:userInfo.id,
+                                };
+                                 api.toast({
+                                    msg: '请稍等'
+                                });
+                                 api.ajax({
+                                        url: 'http://api.chaodashe.com/index.php/uploadshead',
+                                        method: 'post',
+                                        data: {
+                                            values: addInfo,
+                                            files: {
+                                                "img": ret.list[0].path,
+                                            },
+                                        },
+                                        headers:{'Token':$api.getStorage('token')},
+                                        // report: true,
+                                    }, function(ret, err) {
+                                        if (ret) {
+                                            
+                                            if(ret.code==200){
+                                           
+                                                getUsername();
+                                            }else{
+                                              api.toast({
+                                                    msg: data.message
+                                            });
+                                            }
+                                        }
+                                    })
+                                
+                              
+                         }
+                    }
+                });
+            
 
         }
-        $('#file').change(function() {
-            if (!userInfo) {
-                window.location.href = "./login_frame.html";
-                return;
-            }
-            var formData = new FormData();
-            var file = $('#file')[0].files[0];
-            if (!file) {
-                toast('没有检测到路径', 'bottom', 800)
-                return;
-            }
-            formData.append("img", file);
-            formData.append("userid", userInfo.id);
-            // toast('请稍等...', 'center', 2000);
-            api.toast({
-                msg: '请稍等'
-            });
-            $.ajax({
-                type: 'post',
-                url: url + 'uploadshead',
-                dataType: 'json',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                    if(data.code==200){
-                        getUsername();
-                    }else{
-                        api.toast({
-                            msg: data.message
-                        });
-                        // toast(,'center', 2000);
-                    }
-                    
-
-                },
-                error: function(data) {
-                    console.log(data);
-                },
-            });
-        })
-
+      
         function isok() {
             var notice = $(document).dialog({
                 type: 'notice',
@@ -355,11 +397,25 @@
         }
 
         function updatepwd() {
-            window.location.href = "./update_frame.html?" + window.btoa(encodeURI('title=密码'));
+            
+            api.openWin({
+                name: 'update',
+                url: './update.html',
+                pageParam: {
+                    pagename: '密码'
+                }
+            });
         }
 
         function updateqqorwx() {
-            window.location.href = "./update_frame.html?" + window.btoa(encodeURI('title=凭证'));
+          
+             api.openWin({
+                name: 'update',
+                url: './update.html',
+                pageParam: {
+                    pagename: '邮箱'
+                }
+            });
         }
 
         function getUsername() {
@@ -368,7 +424,7 @@
             var params = {
                 id: userInfo.id
             }
-            postajax(url + 'getuser', params, function(ret) {
+            getajax(url + 'getuser', params, function(ret) {
                 if (ret.code == 200) {
                     $("#headimg").css({
                         'background': 'url(' + imgurl + ret.data.user.headimg + ')',
@@ -433,14 +489,20 @@
                         name: '确定',
                         callback: function() {
                         // clearStorage
+                        $api.clearStorage();
+                        api.sendEvent({
+                            name: 'reschaodashe',
+                        });
                         api.sendEvent({
                             name: 'closeallframe',
                            
                         });
+                         
                         $api.clearStorage('userInfo');
+                         $api.clearStorage('token');
                             // $api.setStorage('userInfo', '');
                             // window.location.href="./my_frame.php";
-                            goback();
+                         goback();
                         }
                     },
                     

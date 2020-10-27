@@ -52,7 +52,7 @@ a {
 
 
 .swiper-pagination-bullet-active {
-	background-color: #000;
+	background-color: #F9F9F9;
 }
 
 .Dressing {
@@ -86,7 +86,7 @@ a {
 	background-size: cover;
 	background-position: center center;
 	border-radius: 50%;
-	margin:0 auto;
+	margin:2px;
 		border: 2px solid #fff;
 }
 .Dressing .back{
@@ -167,15 +167,14 @@ a {
 .footbox .duogongneng img {
 	width: 32px;
 	height: 32px;
-	padding-left: 9px;
-	padding-top: 6px;
+	
 
 }
 
 .footbox .duogongneng .shuqian {
 	float: right;
 	display: inline-block;
-
+	z-index: 999
 }
 
 .swiper-lazy-preloader {
@@ -231,12 +230,13 @@ a {
 	display: inline-block;
 }
 
+
 .keybox {
 	width: 100%;
 	padding-top: 3px;
 	padding-bottom: 3px;
-	max-height: 88px;
-	background: #F7F7F7;
+	/* max-height: 136px; */
+	background: #fff;
 	/*border: 1px solid red;*/
 	position: fixed;
 	bottom: 0px;
@@ -247,23 +247,27 @@ a {
 }
 
 .myheadimg {
-	/*background:url(../image/empty_page_nothing.png),*/
-	background-size: cover;
-	background-position: center center;
+	
+	z-index: 999;
 	width: 39px;
 	height: 39px;
 	border-radius: 25px;
 	display: inline-block;
 	vertical-align: middle;
 	margin-left: 6px;
+	
+	background-image:url('../image/empty_page_nothing.png');
+	background-size: cover;
+	background-position: center;
 }
 
+
 .keyboard {
-	/* margin-top: 6px; */
-	width: 69%;
-	min-height: 28px;
+	padding-top: 6px;
+	width: 100%;
+	min-height: 30px;
 	max-height: 88px;
-	font-size: 18px;
+	font-size: 16px;
 	padding-left: 6px;
 	border: 0px;
 	resize: none;
@@ -272,18 +276,23 @@ a {
 	border-color: white;
 	overflow-y: hidden;
 	overflow-x: hidden;
-	display: inline-block;
-	vertical-align: middle;
+	/* padding-top: 19px; */
+	
 	border-radius: 10px;
 	line-height: normal;
 	font-family: arial !important;
 
 }
 
+.keyboardbox {
+	width: 60%;
+	display: inline-block;
+	vertical-align: middle;
+}
 .keybtn {
 	display: inline-block;
 	color: gray;
-	background: #F7F7F7;
+	background: #fff;
 	text-align: center;
 	line-height: 28px;
 	width: 40px;
@@ -294,7 +303,20 @@ a {
 
 
 }
-
+.at {
+	display: inline-block;
+	width: 30px;
+	height: 28px;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 28px;
+	text-align: center;
+	vertical-align: middle;
+}
+.noscroll {
+	/* height: 100%; */
+	overflow: hidden;
+}
 .commentBox{
 	/* padding-bottom: 50px; */
 	margin-bottom: 50px;
@@ -322,31 +344,27 @@ height: 20px;
 	/*position: absolute;*/
 	/*left: 0;*/
 	/*width: 100px;*/
-	width: 43px;
-	height: 43px;
+	width: 42px;
+	height: 42px;
 	border-radius: 50%;
 	vertical-align: top;
 	margin-top: 8px;
 
 	
 }
-.iconnoauthority{
-	border: 2px solid #D5D5D5;
-}
+
 .iconauthority{
-		border: 2px transparent solid;
+	
 	background-image: linear-gradient(to bottom left,#B50C82, #FDA641);
 }
 .commentBox .icon .head_img{
-	margin: 5px;
-	width: 39px;
-	height:39px;
+
+	width: 38px;
+	height:38px;
 	background-position: center center;
 	background-size: cover;
 	border-radius: 50%;
-	/* padding: 2px; */
-	margin: 0 auto;
-	/* margin-top: 2px; */
+	margin: 2px;
 	border: 2px solid #fff;
 	
 	
@@ -413,9 +431,7 @@ height: 20px;
 	height: 32px;
 	border-radius: 50%;
 	border: 2px solid #fff;
-	/* display: inline-block; */
-	/* vertical-align: center; */
-	margin:0 auto;
+	margin:2px;
 	background-size: cover;
 	background-position: center center; 
 }
@@ -606,3 +622,141 @@ display: inline-block;
     /*border: 1px solid red;*/
 
   }
+
+  .speakbtn{
+						background: transparent;
+						width: 88px;
+						height: 88px;
+						position: fixed;
+						right: 12px;
+						bottom: 12%;
+						box-shadow: 0 0.3em 0.6em rgba(0, 0, 0, 0.3);
+						border-radius: 50%;
+
+
+					}
+					.speakbtn .speakimg{
+						width: 38px;
+						height: 38px;
+						margin: 0 auto;
+						margin-top: 25px;
+						background-image: url('../image/Dressing_speak_gray.png');
+						background-size: cover;
+						background-position: center;
+					}
+
+					.downpic{
+						background: transparent;
+						width: 56px;
+						height: 56px;
+						position: fixed;
+						left:12px;
+						bottom: 18%;
+						box-shadow: 0 0.3em 0.6em rgba(0, 0, 0, 0.3);
+						border-radius: 50%;
+
+
+					}
+					.downpic .downimg{
+						width: 24px;
+						height: 24px;
+						margin: 0 auto;
+						margin-top: 16px;
+						background-image: url('../image/downpic.png');
+						background-size: cover;
+						background-position: center;
+					}
+.bgmh{
+	position: fixed;
+	top:0px;
+	left: 0px;
+	/* background-image: url('http://img.chaodashe.com/chaodashe/159994039649424486.jpg'); */
+	background-size: cover;
+	background-position: center;
+	width: 100%;
+	height: 29rem !important;
+	filter: blur(8px);
+}
+.atlist {
+	display: none;
+	width: 100%;
+	height: auto;
+	background: #fff;
+	border-radius: 12px;
+	height: 206px;
+	overflow: hidden;
+	overflow-y: auto;
+	z-index: 1222;
+
+}
+
+.atlist::-webkit-scrollbar {
+	display: none;
+	/* Chrome Safari */
+}
+
+.noscroll {
+	/* height: 100%; */
+	overflow: hidden;
+}
+
+.atuser {
+	height: 50px;
+
+}
+
+.atbox {
+
+	height: 156px;
+	width: 100%;
+}
+
+.atuserhead {
+	margin-left: 6px;
+	width: 38px;
+	height: 38px;
+	background-size: cover;
+	background-position: center;
+	display: inline-block;
+	border-radius: 50%;
+
+}
+
+.atusername {
+	display: inline-block;
+}
+
+.atuname {
+	font-weight: bold;
+	color: #000;
+}
+
+.atusername {
+	color: gray;
+}
+
+.atnamecls {
+	background: #fff;
+	line-height: 20px;
+	font-size: 14px;
+	border: none;
+	color: blue;
+	outline: none;
+
+}
+
+
+
+.loadingxz {
+
+	width: 100%;
+	max-height: 50px;
+}
+.delimg{
+	    position: absolute;
+	    left: 230px;
+	    top: 1px;
+	    width: 30px;
+	    height: 27px;
+	    margin-top: 9px;
+}

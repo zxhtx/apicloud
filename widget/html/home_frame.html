@@ -539,7 +539,7 @@
       border-bottom: 1px solid #46D8AB;
       color: #46D8AB;
     }
-    .navfixed{
+   .navfixed{
       background: white;
       width: 100%;
       z-index: 9999;
@@ -605,6 +605,10 @@
    	font-size: 15px;
    	font-weight: bold;
    	margin-left: 2px;
+   }
+   .navdiv{
+     height: 50px;
+     width: 100%;
    }
    
  </style>
@@ -675,7 +679,7 @@
 	<div class="fircds">
 		
 	</div>
- 
+        <div class="navdiv">
           <div class="nav">
             <p class="active" i="2">男装</p>
             <p i="3">女装</p>
@@ -684,7 +688,7 @@
             <p i="4">优惠购</p>
             <p i="5">12元购</p>
           </div>
-
+        </div>
           <div id="list">
 
 
@@ -732,14 +736,11 @@
           //监听top回到顶部
           window.addEventListener("scroll", function (){
             scrollTop = $(this).scrollTop();
-           if ( scrollTop>'422'){
-             $(".top").css('display','block');
-             $(".nav").css({translate: [60,30] });
-             $(".nav").addClass("navfixed");
+           if ( scrollTop>'520'){
+               $(".nav").addClass("navfixed");
 
-           }else if(scrollTop<'422'){
-             $(".top").css('display','none');
-             $(".nav").removeClass("navfixed");
+           }else if(scrollTop<'520'){
+              $(".nav").removeClass("navfixed");
 
            }
 
@@ -778,7 +779,7 @@
         }, function() {
             //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
             //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
-           
+           dl.close();
             getWareList(wareindex,false);
         });
       }
@@ -807,7 +808,14 @@
 
 
           function opensearch(){
-            window.location.href="./search.html";
+           
+            api.openWin({
+                name: 'search',
+                url: './search.html',
+                pageParam: {
+                    name: 'test'
+                }
+            });
           }
 
 
@@ -856,7 +864,7 @@
        ret.data[8],
        ret.data[6],
        ]
-             updateWareList(data,_index);
+             updateWareList(data,_index,_LoadMore);
              updateWareList1(ret1);
        updateWareList2(ret2);
            });
@@ -866,7 +874,7 @@
 
 
 
-         function updateWareList(_data,_index){
+         function updateWareList(_data,_index,_LoadMore){
            initWaterFall();
            var resultText='';
            for (var i =0; i <_data.length; i++) {
@@ -881,7 +889,12 @@
           }
 
           if (_index==wareindex2){
-           $('#list').append(resultText);
+            if (_LoadMore) {
+              $('#list').append(resultText);
+            }else{
+              $('#list').html(resultText);
+            }
+           
          }else{
            $('#list').html(resultText);
          }

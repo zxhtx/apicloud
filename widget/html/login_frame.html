@@ -25,9 +25,9 @@
         <div class="form-group">
             <div class="form-item">
                 <label for="username">
-                    <img src="../image/login/phone.png" alt="">
+                    <img src="../image/login/email.png" alt="">
                 </label>
-                <input id="username" type="text" autocomplete="off" placeholder="请输入账号或手机号">
+                <input id="username" type="text" autocomplete="off" placeholder="请输入账号或邮箱">
             </div>
             <div class="form-item">
                 <label for="password">
@@ -84,7 +84,11 @@
                             name: 'closeallframe',
                            
                         });
+                        api.sendEvent({
+                            name: 'reschaodashe',
+                        });
                    var page=api.pageParam.page;
+                  
                     if (page=='my_frame'){
                         api.sendEvent({
                             name: 'resmy',
@@ -128,7 +132,8 @@
                          api.sendEvent({
                             name: 'resmy',
                         });
-                        api.closeWin();
+
+                          api.closeWin();
                         api.openWin({
                             name: 'ware',
                             url: './ware.html',
@@ -138,6 +143,7 @@
                          
                             bounces: false
                         });
+                            
                     }else{
                          api.sendEvent({
                             name: 'resmy',
