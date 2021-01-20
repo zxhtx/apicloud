@@ -39,12 +39,13 @@
                 <div class="text">书签</div>
             </div>
         </div>
-        <div class="userinfo">
+        <div class="userinfo" >
             <div id="userRegion" class="subtitle" tapmode onclick="updatauser()">用户名：未设置</div>
-            <div id="vip" class="vip"></div>
-
-            
         </div>
+        <div class="userma" tapmode onclick="openuserma()">
+          <div class="usermaimg"></div>
+        </div>
+
         <div class="setuser" onclick="setuser()">编辑主页</div>
     </div>
    <div class="wareandcds">
@@ -77,7 +78,7 @@
             <div class="getVIPimg"></div>
             <div class="text">5+返利活动</div>   
             </div>
-           <div class="kefu list">
+           <div class="kefu list" onclick="openchat()">
             <div class="kefuimg"></div>
             <div class="text">官方客服</div>  
             </div>
@@ -99,10 +100,19 @@
     <div class="gzimg"></div>
   </div>
   </div>
-     <div class="gwq bgcolor" onclick="opengwq()">
-    <div class="gwqcount">0</div>
-    <div class="gwqtitle">购物券</div>
-  </div>   
+   <div class="footer">
+    <div class="gwq bgcolor" onclick="opengwq()">
+        <div class="gwqcount">0</div>
+        <div class="gwqtitle">购物券</div>
+    </div>
+    <div class="cdiv">
+      <div class="guifandiv" tapmode onclick="openshequguifan()">
+        <div class="guifanimg"></div>
+        <div class="guifantitle">社区规范</div>
+      </div>
+      <div class="copyemail">联系我们</div>
+    </div>
+  </div>
 </body>
 
 <script id="template" type="text/template">
@@ -125,7 +135,7 @@
           var userInfo=$api.getStorage('userInfo');
         if(userInfo){
           $('.dfkcount').css('background-color',userInfo.Dressingbgcolor);  
-          $('.dshcount').css('background-color',userInfo.Dressingbgcolor);  
+          $('.dshcount,.guifandiv,.copyemail').css('background-color',userInfo.Dressingbgcolor);  
         }
 
             })
@@ -791,6 +801,47 @@ function sharemyurl() {
 
   userInfo=$api.getStorage('userInfo');
     $('.money').html(userInfo.balance);
+  }
+
+  function openchat(){
+    userInfo=$api.getStorage('userInfo');
+    api.openWin({
+       name: 'chat',
+       url: './chat.html',
+       pageParam: {
+          fromid:userInfo.id,
+          toid:'20dc90e32f6a787f609532b45028675e'
+      },
+             
+   });
+  }
+
+  function openuserma(){
+    var userInfo=$api.getStorage('userInfo');
+    // alert(1)
+    if (!userInfo) {
+      api.toast({
+          msg: '请登录后操作'
+      });
+      return;
+    }
+     quanxian('storage-w,camera,storage-r,photos-w')
+    api.openWin({
+        name: 'userma',
+        url: './userma.html',
+        pageParam: {
+            name: 'test'
+        }
+    });
+  }
+  function openshequguifan(){
+    api.openWin({
+        name: 'shequguifan',
+        url: './shequguifan.html',
+        pageParam: {
+            name: 'test'
+        }
+    });
   }
 </script>
 

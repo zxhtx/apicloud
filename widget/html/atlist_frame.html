@@ -82,7 +82,7 @@
 					if (e.code == 200) {
 						var reshtml = '';
 						$.each(e.data, function(index, data) {
-							reshtml += '<div class="list"><div class="head_img" style="background-image: url(' + imgurl + data.headimg +
+							reshtml += '<div class="list"><div class="head_img" onclick="TAuser(' +"'" + data.userid+ "'"+ ')" style="background-image: url(' + imgurl + data.headimg +
 								');"></div><div class="usermsg"><p class="name">' + data.name +
 								'<span>&nbsp;</span></p><div class="msg">' + data.msg + '</div><p class="time">' + timestampFormat(
 									data.time) + '</p> </div><div class="cdsimg"  onclick=openDressing("' + data.artid +
@@ -152,7 +152,16 @@
 				
 			}
 
-			
+			function TAuser(uid){
+				api.openWin({
+	     		 name: 'TAusercenter',
+	      		url: './TAusercenter.html',
+	     		 pageParam: {
+	        		  uid:uid
+	    		  },
+	      
+			  });
+			}
 
 			
 		</script>

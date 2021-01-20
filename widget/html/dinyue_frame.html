@@ -71,11 +71,15 @@
 			}
 
 			.ulist {
+				position: fixed;
+				top: 40px;
+				left: 0px;
+				z-index: 9999;
 				width: 100%;
 				height: 50px;
-				position: relative;
-				margin-top: 45px;
-			
+				/*position: relative;*/
+				/*margin-top: 45px;*/
+				background: #fff;
 				border-bottom: 1px solid #ddd;
 			}
 
@@ -102,7 +106,7 @@
 			}
 
 			.list {
-				
+				margin-top: 100px;
 			}
 
 			.cdsimg {
@@ -135,13 +139,13 @@
 			.text {
 				position: absolute;
 				top: 12px;
+				height: 42px;
 				margin-left: 59px;
 				display: inline-block;
-				overflow: hidden;
-				text-overflow: ellipsis;
 				display: -webkit-box;
-				-webkit-box-orient: vertical;
-				-webkit-line-clamp: 2;
+			    -webkit-box-orient: vertical;
+			    -webkit-line-clamp: 2;
+			    overflow: hidden;
 
 			}
 
@@ -172,7 +176,7 @@
 		</section>
 		<!-- 订阅人动态 -->
 		<section class="list" id="list">
-		<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;">--木有动态了--</p>
+			
 		</section>
 		<section class="empty" id="empty">
 		</section>
@@ -274,6 +278,7 @@
 						updatechaodashe(ret.data.cdata,_loadMore);
 					}else{
 						$('.xz').remove();
+							$('#list').append('<p class="nodata" style=" text-align: center;color: #ddd;height: 50px;line-height: 50px;">--木有动态了--</p>');
 						  api.refreshHeaderLoadDone()
 					}
 				})
@@ -290,7 +295,7 @@
 				// 使用模板函数生成HTML文本
 				var resultHTML = tempFn(param);
 				if(_loadMore){
-					$("#list").prepend(resultHTML);
+					$("#list").append(resultHTML);
 				}else{
 					$("#list").html(resultHTML);
 				}

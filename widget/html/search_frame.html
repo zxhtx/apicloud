@@ -76,12 +76,7 @@
         border: 0px;
         outline: 0px;
         }
-        .toast{
-          margin-left: 12px;
-          color: #ddd;
-          width: 100%;
-          margin-bottom: 3px;
-        }
+     
     </style>
   </head>
   <body>
@@ -94,9 +89,7 @@
       </div>
       <div class="searchpng" onclick="search()" style="width:32px;height: 32px; background-image: url('../image/search_groupbuy.png'); background-position: center; background-size: cover;"></div>
     </div>
-    <div class="toast" style="display: none;">
-      最近热门
-    </div>
+  
     <div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>
     <div class="list">
       
@@ -113,7 +106,7 @@
           if(e.code=='200'){
             update(e.data);
           }else{
-            
+            $('.xz').remove();
           }
         })
       })

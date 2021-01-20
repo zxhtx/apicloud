@@ -1,0 +1,985 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="shortcut icon" href="../image/chao.ico" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+  <title>购物大厅</title>
+  <script src="../script/commonjs.js"></script>
+  <script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  <script type="text/javascript" src=" ../script/pinterest_grid.js"></script>
+  <script type="text/javascript" src=" ../script/ajax.js"></script>
+
+  
+  <style>
+  html,
+  body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin:0;
+    background-color:#F4F7F9;
+  }
+  a{
+    text-decoration: none;
+    color: #fff;
+    -webkit-tap-highlight-color:rgba(255,0,0,0);
+  }
+  * {
+    box-sizing: border-box;
+    font-family: Georgia;
+  }
+
+  /* swipe begin. */
+
+
+  header {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 999;
+    height: 40px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    line-height: 44px;
+    font-size: 20px;
+    background: white;
+  }
+  
+  .home-search {
+    position: absolute;
+    left: 8px;
+    right: 42px;
+    top: 5px;
+    bottom: 2px;
+    height: 32px;
+    line-height: 32px;
+    background-color:#F4F4F4;
+    border-radius: 34px;
+    color:#999999;
+    font-size: 14px;
+  }
+	.cart{
+		position:absolute;
+		top: 4px;
+		right:6px;
+		 width:33px;
+		 height:33px;
+		 background-image: url('../image/cart.png');
+		 background-position: center;
+		 background-size: cover;
+	}
+  .home-search>img {
+    height: 20px;
+    /*padding-top: 8px;*/
+    /*padding-left: 10px;*/
+    padding-right: 10px;
+    vertical-align: middle;
+  }
+  .h80 {
+    height: 80px;
+  }
+
+  .h40 {
+    height: 40px;
+  }
+
+  .h20 {
+    height: 20px;
+  }
+
+  .h10 {
+    height: 10px;
+    background: #f0f0f0;
+  }
+
+  .h1 {
+    height: 1px;
+    margin-left: 15px;
+    background: #f0f0f0;
+  }
+
+  .fr {
+    float: right;
+  }
+
+  .fl {
+    float: left;
+  }
+
+  .hightitem {
+
+  }
+  /* 抢购样式 */
+
+  .snapup {
+    height: 80px;
+  }
+
+  .snapup .infologo {
+    height: 60px;
+    margin: 10px;
+    border-radius: 10px;
+  }
+
+  .snapup .shelf2 {
+    display: table;
+    height: inherit;
+    margin-left: 10px;
+  }
+
+  .snapup .shelfcell {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .snapup .shelfcell .title {
+    margin-bottom: 10px;
+    width: 200px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+  }
+
+  .snapup .arrow {
+    width: 20px;
+    padding-top: 30px;
+    padding-right: 10px;
+  }
+  /* 2X2样式 */
+
+  .row {
+    display: -webkit-box;
+    display: -webkit-flex;
+  }
+
+  .col {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    position: relative;
+  }
+
+  .col img {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 80px;
+  }
+  .pinzhi{
+    width: 53px;
+    height: 62px;
+  }
+  .col .matrixcell {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 10px;
+  }
+
+  .col .matrixcell .title {
+    margin-bottom: 10px;
+  }
+
+  .matrix {
+    display: table;
+    height: inherit;
+  }
+  /* 猜你喜欢 */
+
+  .guesstitle {
+    height: 20px;
+    line-height: 20px;
+    padding-left: 8px;
+    vertical-align: top;
+    font-size: 12px;
+    color: #999;
+    /*margin-top: 30px;*/
+	/* background-color: #fff; */
+  }
+
+  .guesstitle img {
+    height: 15px;
+    padding-top: px;
+    padding-left: 10px;
+	vertical-align: middle;
+  }
+
+  .home-tuan-list .item {
+    position: relative;
+    display: block;
+    padding-left: 10px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .home-tuan-list .cnt {
+    padding: 7px 10px 10px 0;
+    display: box;
+    display: -webkit-box;
+    min-height: 78px;
+    background-size: auto 1px;
+  }
+
+  .home-tuan-list .pic {
+    margin-right: 10px;
+    background: center;
+  }
+
+  .home-tuan-list img {
+    width: 90px;
+    height: 66px;
+    margin-top: 7px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+  }
+
+  .home-tuan-list .wrap {
+    -webkit-box-flex: 1;
+  }
+
+  .home-tuan-list .wrap2 {
+    display: table;
+    height: 88px;
+    width: 100%;
+  }
+
+  .home-tuan-list .content {
+    -webkit-box-flex: 1;
+    box-flex: 1;
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .home-tuan-list .shopname {
+    color: #333;
+    /*line-height: 16px;*/
+    font-size: 17px;
+    max-width: 11em;
+    white-space: nowrap;
+    word-wrap: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    min-height: 10px;
+    padding-bottom: 2px;
+    padding-top: 3px;
+    display: inline-block;
+  }
+
+  .home-tuan-list .title {
+    color: #666;
+    line-height: 16px;
+    font-size: 13px;
+    max-height: 30px;
+    overflow: hidden;
+    padding-top: 3px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .home-tuan-list .hot-title {
+    margin-bottom: 8px;
+  }
+
+  .home-tuan-list .hot-subtitle {
+    margin-bottom: 9px;
+  }
+
+  .home-tuan-list .info {
+    margin-top: 9px;
+    /*margin-bottom: 11px;*/
+    color: #666;
+    font-size: 12px;
+    position: relative;
+    line-height: 15px;
+    display: box;
+    display: -webkit-box;
+    height: 15px;
+  }
+
+  .home-tuan-list .symbol {
+    font-size: 14px;
+    color: #f60;
+    display: block;
+    margin-top: 1px;
+  }
+
+  
+
+  .home-tuan-list .o-price {
+    color: #999;
+    margin-top: 5px;
+    line-height: 10px;
+  }
+
+  .home-tuan-list .sale {
+    color: #f63;
+    border: solid 1px #ff916e;
+    padding: 3px 2px 2px;
+    font-size: 10px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    margin-left: 5px;
+    line-height: 10px;
+    height: 10px;
+  }
+
+  .home-tuan-list .distance {
+    -webkit-box-flex: 1;
+    box-flex: 1;
+    -ms-box-flex: 1;
+    -ms-flex: 1;
+    text-align: right;
+    line-height: 10px;
+    margin-top: 5px;
+    color: #999;
+    float: right;
+    font-size: 12px;
+  }
+
+  .home-tuan-list .price,
+  .index-rec .home-tuan-list .o-price,
+  .index-rec .home-tuan-list .distance,
+  .index-rec .home-tuan-list .sale {
+    display: block;
+    line-height: 15px;
+    font-size: 12px;
+  }
+
+  .Fix:after {
+    display: block;
+    content: '';
+    height: 0;
+    clear: both;
+  }
+  /* 3. */
+
+  .section03 .col img {
+    width: 60px;
+    top: 10px;
+  }
+
+  .section03 .title01 .title {
+    color: #000;
+  }
+
+  .section03 .title02 .title {
+    color: #000;
+  }
+
+  .section03 .title03 .title {
+    color: #000;
+  }
+
+  .section03 .title04 .title {
+    color: #000;
+  }
+
+  .section03 .matrixcell .info {
+    color: #666;
+  }
+  /* 2. */
+
+  .section02 .shelfcell .title span {
+    color: #ff6633;
+  }
+
+  .section02 .shelfcell .subtitel {
+    color: #666;
+    font-size: 14px;
+  }
+
+  .swiper-container {
+    background-color: #fff;
+  }
+
+  .item-hov {
+    background-color: #FAFAFA;
+  }
+
+  .brb {
+    border-bottom: 1px solid #F5F5F5;
+    border-right: 1px solid #F5F5F5;
+  }
+
+  .bb {
+    border-bottom: 1px solid #F5F5F5;
+  }
+
+  .br {
+    border-right: 1px solid #F5F5F5;
+  }
+
+  .highlight {
+    opacity: 0.7;
+  }
+
+
+  #list{
+    /*position: relative;*/
+    width:100%;
+    background: #fff;
+	/* margin-bottom: px; */
+	height: 100%;
+	
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: flex-start;
+
+  }
+
+
+  .item {
+    /*position: absolute;*/
+    width: calc(100%/2.1);
+    padding:0px;
+    margin:0px;
+    /*margin-left: 3px;*/
+    /*margin: 0 auto;*/
+    margin-top: 8px;
+    border-radius: 22px 26px 0px 29px;
+    transition:all 0.3s ease-in-out;
+    box-shadow:0px 6px 6px -6px black;
+    display: inline-block;
+  }
+  .item>.itemwareimg{
+    width: 100%;
+    max-height: 322px;
+    min-height: 166px;
+    display: block;
+    background-position: center;
+    background-size: cover;
+    border-radius: 10px 10px 0px 24px;
+  }
+  .item .description{
+    /*padding: 6px;*/
+    font-size: 13px;
+     display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+
+    /*border: 1px solid red;*/
+  }
+  .item .price{
+   display: inline-block;
+    color: #FF4521;
+  margin-right: 12px;
+  font-size: 15px;
+
+  }
+
+  .gezi{
+    margin-top: 50px;
+    margin-left: 6px;
+    margin-right: 10px;
+    background: #fff;
+    border-radius: 20px;
+  }
+  #list1{
+    background: white;
+  }
+  .bb{
+    background: url("../image/swipe/2.png");
+    background-repeat: no-repeat;
+    background-size: 200px 200px;
+    /*background-position: 0px 20px;*/
+    background-origin: 10px 180px;
+  }
+  .bg{
+    background: url("../image/swipe/4.jpg");
+    background-repeat: no-repeat;
+    background-size: 96px 160px;
+    background-position: 100px 0;
+  }
+
+  .top{
+    position: fixed;
+    bottom: 58px;
+    right: 20px;
+    z-index: 999;
+    width: 32px;
+    height: 32px;
+    background-color: gray;
+    opacity: 0.5;
+    border-radius: 30px;
+    display:none;
+  }
+  .top>a{
+    line-height: 32px;
+    text-align: center;
+    color: white;
+
+  }
+  
+ 
+ /* #list{
+    margin-bottom: 50px;
+    }*/
+
+    .nav{
+      margin-top: 3px;
+   
+      height: 50px;
+      /*border: 1px solid red;*/
+	  background-color: #fff;
+
+
+    }
+    .nav p{
+      display: inline-block;
+      width: 15%;
+      padding: 5px 0;
+      /*padding-left: 2px;*/
+      margin-left: 0.1rem;
+      text-align: center;
+      font-size: 13px;
+      margin-top: 8px;
+      /*border: 1px solid red;*/
+
+    }
+    .nav .active{
+      font-weight: bold;
+      border-bottom: 1px solid #46D8AB;
+      color: #46D8AB;
+    }
+   .navfixed{
+      background: white;
+      width: 100%;
+      z-index: 9999;
+      position: fixed;
+      top: 36px;
+      transition: all 1s;
+      /*left:0px;*/
+
+    }
+   /* .fircds{
+	   width: 100%;
+	   height: 69px;
+   } */
+   .fircds{
+   	/* height: 69px; */
+   	width: 100%;
+   	/* border: 1px solid red; */
+   	display: flex;
+   	/* flex-shrink:0; */
+   	flex-wrap: nowrap;
+   	overflow-x: scroll;
+	background-color:#fff;
+	margin-bottom: 8px;
+   	
+   	
+   	
+   }
+   .fircds::-webkit-scrollbar {display:none}
+   .fircds .wareitem{
+   	flex-grow:0;
+   	flex-shrink:0;
+   	width:calc(100%/2.2) !important;
+   	/* height: 100%; */
+   	display: flex;
+   	border-right:0.0125rem solid #F1F1F1;
+   	justify-content: flex-start;
+   	/* display: inline-block; */
+   	align-items:center;
+   	
+   }
+   .wareitem .wareimg{
+   	height: 56px;
+   	width: 56px;
+   	border-radius: 6px;
+   	background-position: center;
+   	background-size: cover;
+   	display: inline-block;
+   	flex-grow:0;
+   	flex-shrink:0;
+   	margin-left: 2px;
+   }
+   .wareitem .wareinfo .waretext{
+   	display: -webkit-box;
+   	-webkit-line-clamp: 2;
+   	-webkit-box-orient: vertical;
+   	overflow: hidden;
+   	padding-left: 6px;
+   	font-size: 15px;
+    word-wrap:break-word;
+    word-break:break-all;
+   }
+   
+   .wareitem .wareinfo .wareprice{
+   	color:#FF4466;
+   	font-size: 15px;
+   	font-weight: bold;
+   	margin-left: 2px;
+   }
+   .navdiv{
+     height: 50px;
+     width: 100%;
+   }
+  .pricelist{
+     display: flex;
+     justify-content: flex-end;
+     align-items: center;
+     margin-bottom: 10px;
+   }
+   .newprice{
+    color:#FF4521;
+    margin-right: 12px;
+   }
+   
+ </style>
+</head>
+
+<body>
+  
+ 
+          <div id="list">
+
+
+          </div>
+     
+         
+
+      <!--     <script id="template" type="text/template">
+          	{{~it:value:index}}
+          		<div class="wareitem" tapmode onclick="openware('{{=value.bid}}')">
+          		 <div class="wareimg wareimgs" data-original="{{=value.image}}"></div>
+          		 <div class="wareinfo">
+          			 <div class="waretext">{{=value.description}}</div>
+          			 <div class="wareprice">￥{{=value.price}}</div>
+          		 </div>
+          		
+          		</div>
+          	{{~}}
+          </script> -->
+          <script id="template2" type="text/template">
+        {{~it:value:index}}
+        <div class='item' tapmode onclick="openware('{{=value.bid}}')" data-ware='{{=value.bid}}'  style='background:white'>
+        
+          <div class="itemwareimg"  data-original='{{=value.image}}' ></div>
+          <span class='description'>{{=value.description}}</span>
+          {{if(value.price>=30){ }}
+          <div class="pricelist">
+            <div class='price' style="font-size: 13px;"><s>￥{{=value.price}}</s></div>
+            <div class='newprice' style="font-size: 15px;">{{!newprice('{{=value.price}}')}}</div>
+          </div>
+          
+          {{ }else{ }}
+          <div class="pricelist">
+           <div class='price'>￥{{=value.price}}</div>
+           </div>
+          {{ } }}
+          
+        </div>
+       {{~}}
+      </script>
+          <script type="text/javascript">
+               var wareindex=2;
+          var wareindex2=2;
+          var mescroll;
+          var flowerid ;
+          var activity ;
+          var wareTypeList;
+          var skip=0;
+          var LIMIT=22;
+            var scrollTop; 
+          var wareTypeList;
+          var off_on=false;
+          var warefall=1;
+           
+          apiready = function(){
+              // reshtml();
+               getWareList(wareindex);
+              // nav();
+          }
+              
+       
+        
+         
+          // initEventListenter();
+          //监听top回到顶部
+          window.addEventListener("scroll", function (){
+            scrollTop = $(this).scrollTop();
+           if ( scrollTop>'520'){
+               $(".nav").addClass("navfixed");
+
+           }else if(scrollTop<'520'){
+              $(".nav").removeClass("navfixed");
+
+           }
+
+         })
+          //上拉加载
+		 window.addEventListener("scroll", function (){
+		      //当时滚动条离底部0px时开始加载下一页的内容
+		      if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+					if(off_on){
+						off_on=false;
+						getWareList(wareindex,true);
+						// toast("商品加载中",'bottom',1000);
+            api.toast({
+                msg: '商品加载中'
+            });
+					}
+		            
+		         
+		      }
+		  });
+
+     function reshtml(){
+       
+        api.setCustomRefreshHeaderInfo({
+            bgColor: '#fff',
+            images: [
+                 'widget://image/icon/chaodashe.png',
+               
+            ],
+            tips: {
+                pull: '下拉刷新',
+                threshold: '松开立即刷新',
+                load: '正在刷新'
+            },
+            animationRate:0.2
+        }, function() {
+            //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
+            //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
+           dl.close();
+            getWareList(wareindex,false);
+        });
+      }
+		
+          function nav(){
+            $(".nav p").click(function(){
+              var i=$(this).attr("i");
+              $(".nav .active").removeClass("active");
+              $(this).addClass("active");
+              $("#loading").addClass('show').removeClass('hidden');
+              wareindex=i;
+              getWareList(wareindex);
+              // 点击列表分类
+            
+
+              if (scrollTop>438){
+                scrollTo('.nav',462)
+              }
+              
+              
+            })
+
+
+          }
+
+
+
+          function opensearch(){
+           
+            api.openWin({
+                name: 'search',
+                url: './search.html',
+                pageParam: {
+                    name: 'test'
+                }
+            });
+          }
+
+
+
+          function getWareList(_index,_LoadMore){
+            
+         
+            if(wareTypeList==undefined){
+              wareTypeList=[
+                {id: "56c80dc031da9e480de1cb49", name: "男装"},
+              {id: "56c80dc383af652643474b6d", name: "女装"},
+              {id: "56c80da883af652643474b6b", name: "男鞋"},
+              {id: "56c80db78d04c83d3d1dedea", name: "女鞋"},
+              {id: "5c6e5cc2d772329a6f2562dd", name: "优惠购"},
+              {id: "5cdbbff7bb71b97347c883c1", name: "12元购"},
+              {id: "5ced332a9ae79abc715ce643", name: "高品质"},
+              {id: "5d0b369cb2d5c22418ad7a49", name: "配件"},
+              ]
+            }
+
+            if (_LoadMore) {
+
+              skip+=LIMIT;
+            }else{
+
+             skip=0;
+			dialog('商品加载中');
+            }
+           var params={
+             waretypeid:wareTypeList[api.pageParam.wareTypeIndex].id,
+             skip:skip,
+             limit:LIMIT,
+           };
+           getajax(url+'allware',params,function(ret){
+              var data=ret.data;
+             var ret1=[
+             ret.data[3],
+             ret.data[6],
+             ret.data[2]
+             ]
+       var ret2=[
+       ret.data[16],   
+       ret.data[18],
+       ret.data[12],
+       ret.data[9],
+       ret.data[8],
+       ret.data[6],
+       ]
+             updateWareList(data,_index,_LoadMore);
+             updateWareList1(ret1);
+       updateWareList2(ret2);
+           });
+
+         }
+
+
+
+
+         function updateWareList(_data,_index,_LoadMore){
+           // if(warefall==1){
+           //  initWaterFall();
+           //  warefall=0;
+           // }
+            var tempFn = doT.template($('#template2').text());
+          // 使用模板函数生成HTML文本
+          var resultHTML = tempFn(_data);
+          
+
+          if (_index==wareindex2){
+            if (_LoadMore) {
+              $('#list').append(resultHTML);
+            }else{
+              $('#list').html(resultHTML);
+            }
+           
+         }else{
+           $('#list').html(resultHTML);
+
+         }
+
+         
+
+
+         wareindex2=_index;
+		    off_on=true;
+
+
+       }
+       function initWaterFall(){
+
+        $("#list").pinterest_grid({
+          no_columns: 2,
+          padding_x: 2,
+          padding_y: 8,
+          margin_bottom: 50,
+          single_column_breakpoint: 700
+        });
+
+        
+      }
+      function updateWareList1(_data){
+        var text='';
+        for (var i =0; i<_data.length; i++) {
+          text+="<div class='snapup hightitem section02 open-win' tapmode onclick='openware("+ '"' +_data[i].bid+ '"' +")' data-ware="+_data[i].bid+"  ><img  data-original="+_data[i].image+" class='fl infologo'><div class='shelf2 fl'><div class='shelfcell'><div class='title'>"+_data[i].description+"<span>￥"+_data[i].price+"</span></div><span class='subtitel'>周计火爆商品</span></div></div><img src='../image/arrow.png' class='arrow fr'></div>";
+        }
+    // console.log(text);
+    $('#list1').html(text);
+
+
+    
+    dl.close();
+    api.refreshHeaderLoadDone()
+    $("img,.itemwareimg").lazyload({
+      threshold : 200
+    });
+   
+
+// $('.foot').load('../comm/footer.html');
+
+  }
+
+function updateWareList2(ret){
+	var tempFn = doT.template($('#template').text());
+	// 使用模板函数生成HTML文本
+	var resultHTML = tempFn(ret);
+	// console.log(resultHTML)
+	$('.fircds').css('border-bottom','0.0125rem solid #F1F1F1')
+	$(".fircds").html(resultHTML);
+	
+	$(".wareimgs").lazyload({
+		 effect: 'fadeIn',
+	});
+}
+function highware(){
+  api.openWin({
+      name: 'highware',
+      url: './highware.html',
+      pageParam: {
+          name: 'test'
+      }
+  });
+}
+
+
+function partsware(){
+  api.openWin({
+      name: 'partsware',
+      url: './partsware.html',
+      pageParam: {
+          name: 'test'
+      }
+  });
+}
+function openware(wareid){
+			 // window.location.href="./ware_frame.html?"+window.btoa(encodeURI("wareId="+wareid));
+       api.openWin({
+           name: 'ware',
+           url: './ware.html',
+           pageParam: {
+               wareId: wareid
+           },
+           
+
+       });
+		}
+
+
+
+function newprice(price){
+        var dandanjian;
+        var cb;
+        var oldprice=price;
+        if(price>=30 && price<=70){
+          dandanjian=1;
+          cb=1;
+        }else if(price>=70 && price<=160){
+          dandanjian=2;
+          cb=3;
+        }else if(price>160){
+          dandanjian=3;
+          cb=5;
+        }else{
+          dandanjian=0;
+          cb=0;
+        }
+        var price=price-dandanjian-cb;
+        if(oldprice>price){
+          return '折后￥'+price;
+        }
+        
+}
+</script>
+
+</body>
+
+
+
+
+</html>

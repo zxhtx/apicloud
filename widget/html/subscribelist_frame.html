@@ -74,7 +74,7 @@
 			if(e.code==200){
 				var reshtml='';
 				$.each(e.data,function(index,data){ 				
-					reshtml+='<div  class="list"><div class="head_img" style="background-image: url('+imgurl+data.headimg+');"></div><p class="name">'+data.name+'<span>&nbsp;开始订阅您啦</span></p><p class="text"></p><p class="time">'+timestampFormat(data.time)+'</p><p class="lookusercenter" onclick="TAuser('+data.uid+')">看TA主页</p></div>'
+					reshtml+='<div  class="list"><div class="head_img" style="background-image: url('+imgurl+data.headimg+');"></div><p class="name">'+data.name+'<span>&nbsp;开始订阅您啦</span></p><p class="text"></p><p class="time">'+timestampFormat(data.time)+'</p><p class="lookusercenter" onclick="TAuser('+ "'"+data.uid+"'"+')">看TA主页</p></div>'
 					
 				})
 				if(index){

@@ -11,9 +11,11 @@
 		</title>
 		<script src="../script/commonjs.js">
 		</script>
+		<link rel="stylesheet" type="text/css" href="../script/H5actionButton/action-button.css">
 		<link rel="stylesheet" type="text/css" href="../css/liketx/style.css"/>
 		<link href="https://cdn.bootcss.com/Swiper/4.5.0/css/swiper.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="../css/Dressingdetails_frame.css">
+		 <script type="text/javascript" src="../script/H5actionButton/action-button.js"></script>
 		<script src="https://cdn.bootcss.com/Swiper/4.5.0/js/swiper.min.js"></script>
 		<script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
 		<script src="https://cdn.bootcss.com/clipboard.js/2.0.4/clipboard.min.js"></script>
@@ -65,7 +67,9 @@
 					.sharebg-active { opacity: 111; display:block; }
 					.am-share-sns::-webkit-scrollbar {display:none}
 					.atbg{ background-color: rgba(0, 0, 0, 0.6); bottom: 0; height: 100%; left: 0; opacity: 0.7; position: fixed; right: 0; top: 0; width: 100%; z-index: 1100; }
-
+					.addcdzhezhao{
+						background-color: rgba(0, 0, 0, 0.6); bottom: 0; height: 100%; left: 0; opacity: 0.7; position: fixed; right: 0; top: 0; width: 100%; z-index: 1112;
+					}
 				
 		</style>
 		<script type="text/javascript">
@@ -95,7 +99,11 @@
 	</head>
 
 	<body>
-
+		<div class="cdalert">
+			<div class="title">添加链接</div>
+			<textarea class="cdalerttext" placeholder="复制商品详情页链接可为图片添加同款链接(仅限本站链接)"></textarea>
+			<div class="updiv" onclick="uploadurl()">上传链接</div>
+		</div>
 		<button class="like-button" onclick="likeright()">
 		  <div class="like-wrapper">
 		    <div class="ripple"></div>
@@ -134,9 +142,9 @@
 			<div class="speakimg" ></div>
 		</div>
 
-		<div class="downpic" tapmode onclick="downpic(0)">
+	<!-- 	<div class="downpic" tapmode onclick="downpic(0)">
 			<div class="downimg" ></div>
-		</div>
+		</div> -->
 	
 		<div class="keybox">
 		   <div class="myheadimg" ></div>
@@ -157,9 +165,7 @@
                <input id="copyInput" value="http://www.chaodashe.com/html/Dressingdetails_frame.html?{{!sharetle()}}" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
                 {{if(value.showimgtype=='0'){ }}
                  <div class="Dressing" style="position: fixed;">
-                    {{if(value.type=='0'){ }}
-                      <div class="buytoast buytoasthidden">√点击钟意的穿搭图片进入穿搭详情</div>
-                    {{ } }}
+                   
 					{{if(value.uauthority==1){ }}
 						<div class="icon iconauthority">
 							<div class="headimg" onclick="TAuser('{{=value.userid}}')" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
@@ -169,6 +175,7 @@
 							<div class="headimg" onclick="TAuser('{{=value.userid}}')" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
 						</div>	
 					{{ } }}	
+				<div class="meun">
                     <div class="back">
 						<div class="backimg"  tap onclick="goback()"></div>
 					</div>
@@ -179,18 +186,32 @@
                          <img onclick="belike('{{=value.id}}',this,'{{=value.userid}}')" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likea_red.png">
                         {{ } }}
 
-                    <img class="share" onclick="share()" src="../image/share_white.png">
-                     <img class="home" src="../image/home.png" tap onclick="gohome()">
-                     {{ if(value.userid == it.userid){ }}
+                    <img class="share" onclick="Dressingmore('{{=value.id}}')" src="../image/yuangengduo.png">
+                    
+                    
+                 </div>
+                  {{ if(value.userid == it.userid){ }}
 						 <img src="../image/del.png" class="delimg" onclick="delDressing('{{=value.id}}')" alt="">
 					 {{ } }}
-                 </div>
+                </div> 
                 <div class="swiper-container bgcolor" style="height:auto">
                 	<div class="bgmh"></div>
                      <div class="swiper-wrapper"  style="height:auto" >
                      {{for(var i=0; i< value.imglist.length;i++) { }}
                           <div class="swiper-slide"  style=" width:100%;height: 20rem;background-image: url({{=it.imgurl}}{{=value.imglist[i]}});"   data-articleid="{{=value.id}}" data-like_userid="{{=value.like_userid}}"  data-likeid="like{{=value.id}}" data-userid="{{=value.userid}}" onclick="Dressingimg('{{=value.imglist[i]}}')" data-Dressingimg="{{=value.imglist[i]}}"  >
-						
+							<div class="imgwareset">
+								{{ if(value.type==0){ }}
+									{{ if(value.userid == it.userid){ }}
+										<div class="addcd" style="background-image:url(../image/addcd.png) ;" onclick="openaddcdurl('{{=value.imglist[i]}}')"></div>
+
+										<div class="cdimglist" style="background-image: url(../image/cdimglist.png);" onclick="getimgDressing('{{=value.imglist[i]}}',{{!i+1}})"> </div>
+									{{ } }}	
+									{{ if(value.userid != it.userid){ }}
+									<div class="cdimglist" style="margin-left:18px; background-image: url(../image/cdimglist.png);" onclick="getimgDressing('{{=value.imglist[i]}}',{{!i+1}})"> </div>
+									{{ } }}
+									<div class="warelist warelist_{{!i+1}}"></div>	
+								{{ } }}	
+							</div>
                           </div>
                           
                         
@@ -201,39 +222,45 @@
 				<div class="warelists">
 					<div id="xuanzhun" class="xz1 " style="width:30px; height: 30px; margin:0 auto; margin-top:12px;border-bottom:1px solid #FF4466;"></div>
 				</div>
-                <div class="footbox">
-                    <div class="duogongneng" >
-                       
-                        {{if(value.shuqian_userid==0){ }}
-                        <img onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')" data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqianb.png">
-                        {{ }else{ }}
-                        <img onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')"  data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqiana.png">
-                        {{ } }}
-                    </div>
+            
 					
                     <div class="textanduser">
-						{{if(value.musicname){ }}
-						<div class="musicpng"></div>
-						<div class="musicname" onclick="openmusic()">{{#musicname}}</div>
-						{{ } }}
-						<div></div>
-						 <div class="user" style="margin-left:2px;"><div class="shuxiepng"></div>{{=value.uname}}：{{=value.text}}</div>
-						 <div></div>
-						<div class="likesmall"></div>
-                         <div class="likecount" id="likecount_{{=value.id}}" data-likecount="{{=value.like}}">{{=value.like}}个赞</div>
-						 <div></div>
-						 <div class="shuqiansmall"></div>
-						 <div class="sqcount" id="sqcount_{{=value.id}}" data-sqcount="{{=value.shuqian}}">{{=value.shuqian}}次收入书签</div>
-						 <!-- <div onclick="comment()" style="margin-left: 5px;font-weight: bold;">评论该动态</div> -->
+						<div class="foothead">
+							<div class="music">
+								<div class="musicpng"></div>
+								{{if(value.musicname){ }}
+								<div class="musicname" onclick="openmusic()">{{#musicname}}</div>
+								{{ }else{ }}
+								<div class="musicname" >无</div>	
+								{{ } }}
+							</div>
+							{{if(value.shuqian_userid==0){ }}
+							<img onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')" data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqianb.png">
+							{{ }else{ }}
+							<img onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')"  data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqiana.png">
+							{{ } }}
+						</div>
+						
+						 <div class="user"><b>{{=value.uname}}</b>:&nbsp;{{=value.text}}</div>
+               
+							
+						<div class="likelist">
+							<div class="likesmall"></div>
+							 <div class="likecount" id="likecount_{{=value.id}}" data-likecount="{{=value.like}}"><b>{{=value.like}}</b>&nbsp;次赞</div>
+						</div>
+						
+						<div class="shuqianlist">
+							<div class="shuqiansmall"></div>
+							<div class="sqcount" id="sqcount_{{=value.id}}" data-sqcount="{{=value.shuqian}}"><b>{{=value.shuqian}}</b>&nbsp;次收入书签</div>
+						</div>
                     </div>
                  
 
                 </div>
                 {{ }else{ }}
                         <div class="Dressing" style="position: fixed;" >
-                          {{if(value.type=='0'){ }}
-                            <div  class="buytoast buytoasthidden">√点击钟意的穿搭图片进入穿搭详情</div>
-                          {{ } }}
+                     
+                     
                         <!-- <img  src=""> -->
 						{{if(value.uauthority==1){ }}
 							<div class="icon iconauthority">
@@ -244,7 +271,7 @@
 								<div class="headimg" onclick="TAuser('{{=value.userid}}')" style="background-image: url({{=it.imgurl}}{{=value.userheadimg}});" ></div>
 							</div>	
 						{{ } }}	
-						
+					 <div class="meun">		
                        <div class="back">
                        	<div class="backimg"  tap onclick="goback()"></div>
                        </div>
@@ -255,48 +282,69 @@
                              <img onclick="belike('{{=value.id}}',this,'{{=value.userid}}')" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likea_red.png">
                             {{ } }}
 
-                            <img class="share"  onclick="share()"  src="../image/share_white.png">
-                         <img class="home" src="../image/home.png" tap onclick="gohome()">
+                            <img class="share"  onclick="Dressingmore('{{=value.id}}')"  src="../image/yuangengduo.png">
+                        
+                        </div>
                          {{ if(value.userid == it.userid){ }}
 						 <img src="../image/del.png" class="delimg" onclick="delDressing('{{=value.id}}')" alt="">
-					 {{ } }}
-                        </div>
+						 {{ } }}
+                      </div>  
                         {{for(var i=0;i<value.imglist.length;i++){ }}
 						<div class="dongtaiimglist bgcolor">
                         
 						<img style="width:100%;" src="../image/tm.png" style="" data-original="{{=it.imgurl}}{{=value.imglist[i]}}" class="lazy" onclick="Dressingimg('{{=value.imglist[i]}}')" >
+							<div class="imgwareset">
+								{{ if(value.type==0){ }}
+									{{ if(value.userid == it.userid){ }}
+										<div class="addcd" style="background-image:url(../image/addcd.png) ;" onclick="openaddcdurl('{{=value.imglist[i]}}')"></div>
+
+										<div class="cdimglist" style="background-image: url(../image/cdimglist.png);" onclick="getimgDressing('{{=value.imglist[i]}}',{{!i+1}})"> </div>
+									{{ } }}
+									{{ if(value.userid != it.userid){ }}
+										<div class="cdimglist" style="margin-left:18px; background-image: url(../image/cdimglist.png);" onclick="getimgDressing('{{=value.imglist[i]}}',{{!i+1}})"> </div>
+									{{ } }}	
+									<div class="warelist warelist_{{!i+1}}"></div>	
+								{{ } }}	
+							</div>
                         </div>
 						{{ } }}
 						<div class="warelists">
 							
 							<div id="xuanzhun" class="xz1" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px;border-bottom:1px solid #FF4466; "></div>
 						</div>
-                         <div class="footbox">
-                            <div class="duogongneng" >
-                       
-                        {{if(value.shuqian_userid==0){ }}
-                        <img onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')" data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqianb.png">
-                        {{ }else{ }}
-                        <img onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')"  data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqiana.png">
-                        {{ } }}
-                    </div>
+                        
 					
                     <div class="textanduser">
-					{{if(value.musicname){ }}
-						<div class="musicpng"></div>
+					<div class="foothead">
+							<div class="music">
+								<div class="musicpng"></div>
+								{{if(value.musicname){ }}
+								<div class="musicname" onclick="openmusic()">{{#musicname}}</div>
+								{{ }else{ }}
+								<div class="musicname" >无</div>	
+								{{ } }}
+							</div>
+							{{if(value.shuqian_userid==0){ }}
+							<img onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')" data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqianb.png">
+							{{ }else{ }}
+							<img onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')"  data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" id="shuqian{{=value.id}}" src="../image/shuqiana.png">
+							{{ } }}
+						</div>
 						
-						<div class="musicname" onclick="openmusic()">{{#musicname}}</div>
-						{{ } }}
-						<div></div>
 						
-						 <div class="user" style="margin-left:2px;"><div class="shuxiepng"></div>{{=value.uname}}：{{=value.text}}</div>
-						<div></div>
-						<div class="likesmall"></div>
-                         <div class="likecount" id="likecount_{{=value.id}}" data-likecount="{{=value.like}}">{{=value.like}}个赞</div>
-						<div></div>
-						 <div class="shuqiansmall"></div>
-						 <div class="sqcount" id="sqcount_{{=value.id}}" data-sqcount="{{=value.shuqian}}">{{=value.shuqian}}次收入书签</div>
+						 <div class="user"><b>{{=value.uname}}</b>:&nbsp;{{=value.text}}</div>
+               
+							
+						<div class="likelist">
+							<div class="likesmall"></div>
+							 <div class="likecount" id="likecount_{{=value.id}}" data-likecount="{{=value.like}}"><b>{{=value.like}}</b>&nbsp;次赞</div>
+						</div>
 						
+						<div class="shuqianlist">
+							<div class="shuqiansmall"></div>
+							<div class="sqcount" id="sqcount_{{=value.id}}" data-sqcount="{{=value.shuqian}}"><b>{{=value.shuqian}}</b>&nbsp;次收入书签</div>
+						</div>
+						<div class="tibutoast"><div class="yiwen"></div>当搭配图服装缺货时,会把相似度达到95%以上的服装进行上架替补</div>
                     </div>
                    
 
@@ -314,7 +362,7 @@
 
 		<script id="template2" type="text/template">
 			{{~it.list:value:index}}
-				<div class="li" >
+				<div class="li delcomment_{{=value.superiorid}}" >
 				{{if(value.userinfo.authority==1){ }}
 				 <div class="icon iconauthority">
 				  <div class="head_img " onclick="TAuser('{{=value.userinfo.id}}')" style="background-image:url({{=it.imgurl}}{{=value.userinfo.headimg}})"></div>
@@ -328,10 +376,16 @@
 					 <div class="name">{{=value.userinfo.name}}</div>
 					 <div class = "text" >{{=value.msg}}<div class = "time" >{{!timestampFormat('{{=value.time}}')}}</div></div>
 				</div>
+				{{ if(it.userid==value.userinfo.id){ }}
+					<div class="delcomment" onclick="delcomment('{{=value.superiorid}}','0')"></div>
+				{{ } }}
+				{{ if(it.userid!=value.userinfo.id){ }}
+					<div class="reportcomment" onclick="reportcomment('{{=value.superiorid}}','0')"></div>
+				{{ } }}
 					{{if(value.sonmsg){ }}
 					<div class="sonbox sonbox_{{=value.superiorid}}">
 						{{for(var i=0;i<value.sonmsg.length;i++){ }}
-						<div class="son"   onclick="reply('{{=value.sonmsg[i].frominfo.id}}','{{=value.sonmsg[i].frominfo.name}}','{{=value.sonmsg[i].msg.superiorid}}')">
+						<div class="son delcomment_{{=value.sonmsg[i].msg.id}}"   onclick="reply('{{=value.sonmsg[i].frominfo.id}}','{{=value.sonmsg[i].frominfo.name}}','{{=value.sonmsg[i].msg.superiorid}}')">
 							{{ if(value.sonmsg[i].frominfo.authority==1){ }}
 							<div class="icon iconauthority">
 								<div class="son_head" onclick="TAuser('{{=value.sonmsg[i].frominfo.id}}')" style="background-image:url({{=it.imgurl}}{{=value.sonmsg[i].frominfo.headimg}})" ></div>
@@ -345,6 +399,12 @@
 								<div class="sonname"><div class="fromname">{{=value.sonmsg[i].frominfo.name}}</div>&nbsp;{{if(value.sonmsg[i].toinfo){ }} 回复 &nbsp;<div class="toname" onclick="TAuser('{{=value.sonmsg[i].toinfo.id}}')"> {{=value.sonmsg[i].toinfo.name}}</div>{{ } }}</div>
 								<div class="text">{{=value.sonmsg[i].msg.msg}} <div class="time">{{!timestampFormat('{{=value.sonmsg[i].msg.time}}')}}</div></div>
 							</div>
+							{{ if(it.userid==value.sonmsg[i].frominfo.id){ }}
+								<div class="delsoncomment" onclick="delcomment('{{=value.sonmsg[i].msg.id}}','1')"></div>
+							{{ } }}
+							{{ if(it.userid!=value.sonmsg[i].frominfo.id){ }}
+								<div class="reportsoncomment" onclick="reportcomment('{{=value.sonmsg[i].msg.id}}','1')"></div>
+							{{ } }}
 						</div>
 						{{ } }}
 						</div>
@@ -360,7 +420,7 @@
 		</script>
 		<script id="template3" type="text/template">
 			{{~it.list:value:index}}
-			<div class="son"   onclick="reply('{{=value.frominfo.id}}','{{=value.frominfo.name}}','{{=value.msg.superiorid}}')">
+			<div class="son delcomment_{{=value.msg.id}}"   onclick="reply('{{=value.frominfo.id}}','{{=value.frominfo.name}}','{{=value.msg.superiorid}}')">
 			{{ if(value.frominfo.authority==1){ }}
 			  <div class="icon iconauthority">
 				<div class="son_head" onclick="TAuser('{{=value.frominfo.id}}')"  style="background-image:url({{=it.imgurl}}{{=value.frominfo.headimg}})" ></div>
@@ -376,6 +436,12 @@
 					<div class="sonname"><div class="fromname">{{=value.frominfo.name}}</div>&nbsp;{{if(value.toinfo){ }} 回复 &nbsp;<div class="toname" onclick="{{=value.toinfo.id}}"> {{=value.toinfo.name}}</div>{{ } }}</div>
 					<div class="text">{{=value.msg.msg}} <div class="time">{{!timestampFormat('{{=value.msg.time}}')}}</div></div>
 				</div>
+				{{ if(it.userid==value.frominfo.id){ }}
+					<div class="delsoncomment" onclick="delcomment('{{=value.msg.id}}','1')"></div>
+				{{ } }}
+				{{ if(it.userid!=value.frominfo.id){ }}
+					<div class="reportsoncomment" onclick="reportcomment('{{=value.msg.id}}','1')"></div>
+				{{ } }}
 			</div>
 			{{~}}
 		</script>
@@ -405,6 +471,19 @@
 			{{~}}
 			
 		</script>
+		<script id="template6" type="text/template">
+			{{~it.list:value:index}}
+				<div class="wareitem" onclick="openware('{{=value.bid}}')">
+				 <div class="wareimg wareimgs" data-original="{{=it.imgurl}}{{=value.image}}"></div>
+				 <div class="wareinfo">
+					 <div class="waretext">{{=value.description}}</div>
+					 <div class="wareprice">￥{{=value.price}}</div>
+					 <div class="newwareprice">{{!newprice('{{=value.price}}')}}</div>
+				 </div>
+				
+				</div>
+			{{~}}
+		</script>
 		<script type="text/javascript">
 			// $(window).height()=0;
 			var wareid;
@@ -419,8 +498,8 @@
 			var off_on = false;
 			var chaodashetext;
 			var allchaodashetext;
-			var sqtime = 0;
-			var liketime = 0;
+			
+			
 			var musicname;
 			var downpiclist;
 			var liker_userid;
@@ -434,13 +513,38 @@
 			var atsearchskip = 0;
 			var atsearchval;
 			var isopenat = 0; 
-			 
+			var alerturl;
+			var audioStreamer;
 			// var picindex=0;
 			apiready = function(){
 				 fs = api.require('fs');
+				  audioStreamer = api.require('audioStreamer');
 				 isfocus();
+				
 			    getchaodashe();
 				getcomment();
+				
+			}
+			function event(url){
+			 api.addEventListener({
+                name : 'pause'
+		        }, function(ret, err) {
+		           audioStreamer.pause();
+		        });
+
+			 api.addEventListener({
+                name : 'resume'
+                }, function(ret, err) {
+             		playAudio(url)           
+                });
+			 api.addEventListener({
+			     name: 'playmusic'
+			 }, function(ret, err) {
+			     if (ret) {
+			     	// alert('1')
+			      	playAudio(url) 
+			     }
+			 });
 			}
 			function isfocus(){
 				$('.keyboard').focus();
@@ -517,14 +621,28 @@
 	         
 	      }
 			function TAuser(uid){
-					api.openWin({
-			      name: 'TAusercenter',
-			      url: './TAusercenter.html',
-			      pageParam: {
-			          uid:uid
-			      },
-			     
-			  });
+				// if(userInfo){
+					audioStreamer.pause();
+				      api.openWin({
+				          name: 'TAusercenter',
+				          url: './TAusercenter.html',
+				          pageParam: {
+				              uid: uid,
+				              page:'Dressing',
+				          }
+				      });
+				    // }else{
+				    //  audioStreamer.pause();
+				    //   api.openWin({
+				    //       name: 'login',
+				    //       url: './login.html',
+				    //       pageParam: {
+				    //          page:'Dressing',
+				    //          Dressingid:api.pageParam.articleid,
+				    //       }
+				    //   });
+				    //   return;
+				    // }
 			}
 			$(function(){
 				$('.am-share').height( $(window).height()/1.6+'px');
@@ -535,22 +653,20 @@
 
 
 			function likeright(){
+				var userInfo=$api.getStorage('userInfo');
 				if (!userInfo) {
-					window.location.href = "./login_frame.html";
-					return;
+					audioStreamer.pause();
+				      api.openWin({
+				          name: 'login',
+				          url: './login.html',
+				          pageParam: {
+				             page:'Dressing',
+				             Dressingid:api.pageParam.articleid,
+				          }
+				      });
+				      return;
 				}
-				if (liketime == 0) {
-					liketime = 1;
-					setTimeout(function() {
-						liketime = 0;
-					}, 3000)
-				} else {
-					
-					api.toast({
-					    msg: '不能连续点赞哟'
-					});
-					return;
-				}
+			
 				var img='like'+art_id;
 				var imgid=$('#like'+art_id);
 				if(liker_userid){
@@ -633,7 +749,7 @@
 			//上拉加载
 			window.addEventListener("scroll", function() {
 
-				if ($(".box").height() - 100 < $(window).scrollTop()) {
+				if ($(".textanduser").offset().top-$(window).scrollTop()<=52) {
 					$("Dressing").css({
 						translate: [60, 30]
 					});
@@ -703,6 +819,7 @@
 						liker_userid=ret.data[0].like_userid;
 						art_id=ret.data[0].id;
 						uid=ret.data[0].userid;
+						
 						islike(liker_userid);
 
 						var ware = ret.data[0].warelist;
@@ -750,17 +867,42 @@
 
 
 			function playAudio(url) {
-				var netAudio = api.require('netAudio');
-                netAudio.play({
-                path: url
-                },function(ret, err){
-                    if(ret.complete)
-                       {
-                           playAudio(url);
-                      }
-                                            
-                });
+			
+				audioStreamer.openPlayer({
+				    path: url,
+				}, function(ret) {
+				    if (ret.status==false) {
+				    	api.toast({
+				    	    msg: '音乐播放失败'
+				    	});
+				        // api.alert({ msg: JSON.stringify(ret) });
+				    }else{
+				    	audioStreamer.setLoop({loop:true});
+				    	// 播放开始后，监听来电
+				    	eventaudio(url)
+						// 播放开始后，监听前后台切换
+						 event(url)
+				    }
+				});
               }
+             var idle=1; 	
+             function eventaudio(url){
+             	var phoneListener = api.require('phoneListener');
+				phoneListener.callStateListener({
+				   enable : true
+				}, function(ret) {
+					// alert(ret.state);
+					if(ret.state=='RINGING'){
+				     	audioStreamer.pause();
+					}else if(ret.state=='IDLE'){
+						if(idle==0){
+							playAudio(url)
+						}
+						idle=0;
+					}
+				});
+
+             } 
 			function fnUpdateWareListByShoppingCart(data_) {
 				// 编译模板函数
 				var userInfo = $api.getStorage('userInfo');
@@ -784,12 +926,7 @@
 				// 使用模板函数生成HTML文本
 				var resultHTML = tempFn(param);
 				$("#list").html(resultHTML);
-				setTimeout(function() {
-					$(".buytoast").addClass('buytoastshow').removeClass('buytoasthidden');
-				}, 1000);
-				setTimeout(function() {
-					$(".buytoast").fadeOut();
-				}, 6000);
+				
 
 			
 				$(".bgcolor").css("cssText", "background-color:" + data_[0].Dressingbgcolor + " !important;");
@@ -810,7 +947,7 @@
 					})
 				} 
 				var swiper = new Swiper('.swiper-container', {
-					slidesPerView: 1.1,
+					slidesPerView: 1,
 					spaceBetween: 6,
 					centeredSlides: true,
 					// speed:666,
@@ -825,21 +962,19 @@
 					on: {
 						doubleTap: function(e) {
 							if (!userInfo) {
-								window.location.href = "./login_frame.html";
-								return;
+								audioStreamer.pause();
+							      api.openWin({
+							          name: 'login',
+							          url: './login.html',
+							          pageParam: {
+							             page:'Dressing',
+							             Dressingid:api.pageParam.articleid,
+							          }
+							      });
+							      return;
+							    
 							}
-							if (liketime == 0) {
-								liketime = 1;
-								setTimeout(function() {
-									liketime = 0;
-								}, 3000)
-							} else {
-								
-								api.toast({
-								    msg: '不能连续点赞哟'
-								});
-								return;
-							}
+							
 							var likeid = e.target.dataset.likeid;
 							var touid = e.target.dataset.userid;
 							if ($('#' + likeid).attr('data-like_userid') == '0') {
@@ -915,22 +1050,20 @@
 
 			function belike(articleid, _this, touid) {
 				// 判断这条动态是否被点赞
+				var userInfo=$api.getStorage('userInfo');
 				if (!userInfo) {
-					window.location.href = "./login_frame.html";
-					return;
+					audioStreamer.pause();
+					api.openWin({
+						name: 'login',
+						url: './login.html',
+						pageParam: {
+								 page:'Dressing',
+								 Dressingid:api.pageParam.articleid,
+						}
+ 					});
+ 					return;
 				}
-				if (liketime == 0) {
-					liketime = 1;
-					setTimeout(function() {
-						liketime = 0;
-					}, 3000)
-				} else {
 				
-					api.toast({
-					    msg: '不能连续点赞哟'
-					});
-					return;
-				}
 
 				var like_userid = $(_this).attr('data-like_userid');
 				if (like_userid == '0') {
@@ -957,18 +1090,7 @@
 			}
 			// 加入书签
 			function beshuqian(articleid, _this, touid) {
-				if (sqtime == 0) {
-					sqtime = 1;
-					setTimeout(function() {
-						sqtime = 0;
-					}, 3000)
-				} else {
-					
-					api.toast({
-					    msg: '不能连续操作哟'
-					});
-					return;
-				}
+				
 				var shuqian_userid = $(_this).attr('data-shuqian_userid');
 				if (shuqian_userid == '0') {
 					$(_this).fadeOut();
@@ -994,9 +1116,18 @@
 			}
 			// 加入书签
 			function addshuqian(index, articleid, sqid, touid) {
+				var userInfo=$api.getStorage('userInfo');
 				if (!userInfo) {
-					window.location.href = "./login_frame.html";
-					return;
+					audioStreamer.pause();
+	 					api.openWin({
+							name: 'login',
+							url: './login.html',
+							pageParam: {
+								  page:'Dressing',
+								  Dressingid:api.pageParam.articleid,
+							}
+						});
+						return;
 				}
 				// console.log(likeid)
 				if (index == '1') {
@@ -1024,7 +1155,7 @@
 							var sqcount = $('#sqcount_' + articleid).attr('data-sqcount');
 							var sqcount = ++sqcount;
 							$('#sqcount_' + articleid).attr('data-sqcount', sqcount);
-							$('#sqcount_' + articleid).html(sqcount + '次收入书签');
+							$('#sqcount_' + articleid).html('<b>'+sqcount + '</b>&nbsp;次收入书签');
 						}
 					});
 				} else {
@@ -1050,14 +1181,14 @@
 							var sqcount = --sqcount;
 
 							$('#sqcount_' + articleid).attr('data-sqcount', sqcount);
-							$('#sqcount_' + articleid).html(sqcount + '次收入书签');
+							$('#sqcount_' + articleid).html('<b>'+sqcount + '</b>&nbsp;次收入书签');
 						}
 					});
 				}
 			}
 			// 点赞入库
 			function addlike(index, articleid, likeid, touid) {
-
+				var userInfo=$api.getStorage('userInfo');
 				if (index == '1') {
 					var params = {
 						userid: userInfo.id,
@@ -1077,7 +1208,7 @@
 							var likecount = $('#likecount_' + articleid).attr('data-likecount');
 							var likecount = ++likecount;
 							$('#likecount_' + articleid).attr('data-likecount', likecount);
-							$('#likecount_' + articleid).html(likecount + '个赞');
+							$('#likecount_' + articleid).html('<b>'+likecount + '</b>&nbsp;次赞');
 								$('.heart>path').removeClass('nolike');
 							$('.heart>path').addClass('redlike');
 							$('.like-button').addClass('heartbs');
@@ -1104,7 +1235,7 @@
 							var likecount = $('#likecount_' + articleid).attr('data-likecount');
 							var likecount = --likecount;
 							$('#likecount_' + articleid).attr('data-likecount', likecount);
-							$('#likecount_' + articleid).html(likecount + '个赞');
+							$('#likecount_' + articleid).html('<b>'+likecount + '</b>&nbsp;次赞');
 							$('.heart>path').removeClass('redlike');
 							$('.like-button').removeClass('heartbs');
 							$('.particle').removeClass('particledh');
@@ -1178,9 +1309,11 @@
 			}
 
 			function fnupdate(ret, _loadMore)	{
+				var userInfo=$api.getStorage('userInfo');
 				var param = {
 					list: ret,
 					imgurl: imgurl,
+					userid:userInfo?userInfo.id:0
 				};
 				var tempFn = doT.template($('#template2').text());
 				// 使用模板函数生成HTML文本
@@ -1201,14 +1334,29 @@
 				}
 
 				$('.atnamecls').click(function() {
+					// if(userInfo){
+						audioStreamer.pause();
+						api.openWin({
+						    name: 'TAusercenter',
+						    url: './TAusercenter.html',
+						    pageParam: {
+						        uid: $(this).data('atuid'),
+						        page:'Dressing',
+						    }
+						});
+					// }else{
+					// 	audioStreamer.pause();
+					// 	api.openWin({
+				 //          name: 'login',
+				 //          url: './login.html',
+				 //          pageParam: {
+				 //              page:'Dressing',
+				 //              Dressingid:api.pageParam.articleid
+				 //          }
+				 //      });
+				 //      return;
+					// }
 					
-					api.openWin({
-					    name: 'TAusercenter',
-					    url: './TAusercenter.html',
-					    pageParam: {
-					        uid: $(this).data('atuid')
-					    }
-					});
 
 				})
 
@@ -1216,6 +1364,18 @@
 			}
 
 			function key() {
+					$('.atnamecls').click(function() {
+					
+						audioStreamer.pause();
+						api.openWin({
+						    name: 'TAusercenter',
+						    url: './TAusercenter.html',
+						    pageParam: {
+						        uid: $(this).data('atuid'),
+						        page:'Dressing',
+						    }
+						});
+				})
 				$('.keyboard').focus(function() {
 					this.scrollIntoViewIfNeeded();
 
@@ -1269,9 +1429,19 @@
 			}
 
 			function sendbtn() {
+				var userInfo=$api.getStorage('userInfo');
 				var isat = 0;
 				if (!userInfo) {
-					window.location.href = './login_frame.html';
+					audioStreamer.pause();
+				      api.openWin({
+				          name: 'login',
+				          url: './login.html',
+				          pageParam: {
+				             page:'Dressing',
+				             Dressingid:api.pageParam.articleid,
+				          }
+				      });
+				    
 					return;
 				}
 				var value = $('.keyboard').html();
@@ -1281,7 +1451,10 @@
 				}
 
 				if (value.length == 0) {
-					toast('请输入内容');
+				
+					api.toast({
+					    msg: '请输入内容'
+					});
 					return;
 				}
 				fromuid = userInfo.id;
@@ -1305,7 +1478,10 @@
 							worketman(fromuid,touid2);
 							atworketman(fromuid, e.data);
 						}else{
-							toast(e.message);
+							
+							api.toast({
+							    msg: e.message
+							});
 						}
 
 					})
@@ -1404,6 +1580,7 @@
 				var param = {
 					list: ret,
 					imgurl: imgurl,
+					userid:userInfo.id?userInfo.id:0
 				};
 				var tempFn = doT.template($('#template3').text());
 				// 使用模板函数生成HTML文本
@@ -1850,6 +2027,362 @@
 										api.closeWin();
 									}
 								})
+
+							}
+						},
+
+
+					]
+				});
+
+			}
+
+			function openaddcdurl(imgname) {
+				alerturl = imgname;
+				// 遮罩层
+				$('body').append('<div class="addcdzhezhao"></div>');
+				$('.addcdzhezhao').click(function() {
+					$('.cdalert').fadeOut(300);
+					$('.addcdzhezhao').fadeOut();
+					$('.cdalerttext').val('');
+				})
+				$('.cdalert').fadeIn(300);
+				$('.cdalert>textarea').focus();
+
+
+				var userInfo = $api.getStorage('userInfo');
+				if (userInfo) {
+					$(".updiv").css("cssText", "background-color:" + userInfo.Dressingbgcolor + " !important;");
+				}
+
+			
+			}
+
+			function uploadurl() {
+				var userInfo = $api.getStorage('userInfo');
+				if (!userInfo) {
+					api.toast({
+					    msg: '请登录后再操作'
+					});
+					return;
+				}
+				var cdalerttext = $('.cdalerttext').val();
+				if(!cdalerttext){
+					api.toast({
+					    msg: '请粘贴链接后再试'
+					});
+					return;
+				}
+				var imgname = alerturl;
+				if (cdalerttext.match(/www.chaodashe.com\/html\/ware_frame.html/)) {
+
+					var wareurl0 = cdalerttext.split('/');
+					var wareurl1 = wareurl0[wareurl0.length - 1];
+					var wareurl2 = wareurl1.split('?')[1];
+					var wareurl3 = window.atob(decodeURI(wareurl2));
+					if (wareurl3.split('=')[1].split('&')) {
+						var wareurl4 = wareurl3.split('=')[1].split('&')[0];
+					} else {
+						var wareurl4 = wareurl3.split('=')[1];
+					}
+
+					postajax(url + 'addcdimgware', {
+						'userid': userInfo.id,
+						'imgname': imgname,
+						'Dressingid': art_id,
+						'wareid': wareurl4
+					}, function(ret) {
+						if (ret.code == 200) {
+							api.toast({
+							    msg: '您提供的链接已上传，请您等待审核'
+							});
+							$('.cdalert').fadeOut(300);
+							$('.addcdzhezhao').fadeOut();
+							$('.cdalerttext').val('');
+							
+						} else {
+							
+							api.toast({
+							    msg: ret.message
+							});
+						}
+					})
+				} else {
+					
+					api.toast({
+					    msg: '您粘贴的链接不是本站商品详情页链接'
+					});
+				}
+
+			}
+
+			function getimgDressing(imgname,index) {
+				
+				getajax(url + 'getcdimgware', {
+					'Dressingid': art_id,
+					'imgname': imgname
+				}, function(ret) {
+					if (ret.code == 200) {
+						// console.log(ret);
+						updateimgware(ret.data,index);
+					} else {
+						api.toast({
+							    msg: ret.message
+							});
+					}
+				})
+			}
+			function updateimgware(ret,index){
+				var param={
+					list:ret,
+					imgurl:imgurl
+				};
+				var tempFn = doT.template($('#template6').text());
+				var resultHTML = tempFn(param);
+				// console.log(resultHTML)
+				// $('.warelists_'+_id).css('border-bottom','0.0125rem solid #F1F1F1')
+				$(".warelist_"+index).html(resultHTML).fadeIn(666);
+				if(ret.length<2){
+					$(".warelist_"+index).css('justify-content','flex-end');
+				}
+				$(".wareimg").lazyload({
+					container:$('.warelist_'+index),
+					 effect: 'fadeIn',
+				});
+				
+			}
+			function newprice(price){
+				var dandanjian;
+				var cb;
+				var oldprice=price;
+				if(price>=30 && price<=70){
+					dandanjian=1;
+					cb=1;
+				}else if(price>=70 && price<=160){
+					dandanjian=2;
+					cb=3;
+				}else if(price>160){
+					dandanjian=3;
+					cb=5;
+				}else{
+					dandanjian=0;
+					cb=0;
+				}
+				var price=price-dandanjian-cb;
+				if(oldprice>price){
+					return '折后￥'+price;
+				}
+				
+			}
+
+			function reportcomment(id,type){
+					var userInfo=$api.getStorage('userInfo');
+					if(!userInfo){
+						audioStreamer.pause();
+				      api.openWin({
+				          name: 'login',
+				          url: './login.html',
+				          pageParam: {
+				             page:'Dressing',
+				             Dressingid:api.pageParam.articleid,
+				          }
+				      });
+				      return;
+					}
+					$(document).dialog({
+						type: 'confirm',
+						style: 'ios',
+						titleText: '举报评论',
+						content: '确认举报此评论吗?',
+						buttons: [{
+								name: '取消',
+								callback: function() {
+				
+								}
+							},
+							{
+								name: '举报',
+								callback: function() {
+									reportcandr(id, type);
+								}
+							},
+				
+				
+						]
+					});
+				
+				}
+				// 举报评论或回复
+				function reportcandr(id, type) {
+					postajax(url + 'reportcandr', {
+						'whistleblower': userInfo.id,
+						'Violationid': id,
+						'type': type
+					}, function(ret) {
+						if (ret.code == 200) {
+							api.toast({
+							    msg: ret.message
+							});
+						
+						} else {
+							api.toast({
+							    msg: ret.message
+							});
+						}
+					})
+			}
+
+			function delcomment(id,type){
+				console.log(id);
+				// return;
+				// event.stopPropagation();
+				$(document).dialog({
+					type: 'confirm',
+					style: 'ios',
+					titleText: '删除评论',
+					content: '确认删除此评论吗?',
+					buttons: [{
+							name: '取消',
+							callback: function() {
+				
+							}
+						},
+						{
+							name: '删除',
+							callback: function() {
+								delcandr(id,type);
+							}
+						},
+				
+				
+					]
+				});
+				
+			}
+			// 删除评论或回复
+			function delcandr(id,type){
+				postajax(url+'delcandr',{'userid':userInfo.id,'id':id,'type':type},function(ret){
+					if(ret.code==200){
+						$('.delcomment_'+id).slideUp();
+						api.toast({
+						    msg: ret.message
+						});
+					}else{
+						api.toast({
+						    msg: ret.message
+						});
+						// toast(ret.message);
+					}
+				})
+			}
+
+			function Dressingmore(id) {
+					var userInfo = $api.getStorage('userInfo');
+				var actionButton = new ActionButton({
+					tapHidden: true,
+					itemClick: function(item) {
+						if (item.index == '0') {
+							share('0', id)
+						} else if (item.index == '1') {
+							share('1', id)
+						} else if (item.index == '2') {
+							share('2', id)
+						} else if (item.index == '3') {
+							downpic(0)
+						} else {
+							if(userInfo){
+								jubao(id);
+							}else{
+								api.toast({
+								    msg: '请登录后再操作'
+								});
+							}
+							
+						}
+					},
+					items: [{
+						img: '../image/action_botton/wx.png',
+						text: '微信'
+					}, {
+						img: '../image/action_botton/qq.png',
+						text: 'QQ'
+					}, {
+						img: '../image/action_botton/fuzhi.png',
+						text: '复制链接'
+					}, {
+						img: '../image/action_botton/picture.png',
+						text: '下载图片'
+					}, {
+						img: '../image/action_botton/jubao.png',
+						text: '举报'
+					}]
+				})
+				actionButton.show()
+			}
+
+
+			function share(type, id) {
+				var html = "<input id='copyInput'  value='http://www.chaodashe.com/html/Dressingdetails_frame.html?" + window.btoa(
+					encodeURI('articleid=' + id)) + "'/>";
+				$('body').append(html);
+				var copyInput = document.getElementById('copyInput')
+				copyInput.select(); // 选择对象
+				document.execCommand("Copy"); // 执行浏览器复制命令
+				// console.log(copyInput.val())
+				if (type == '0') {
+					api.toast({
+					    msg: '已复制，快去微信转发吧'
+					});
+	
+				} else if (type == '1') {
+					api.toast({
+					    msg: '已复制，快去QQ转发吧'
+					});
+					
+				} else if (type == '2') {
+					api.toast({
+					    msg: '成功复制链接'
+					});
+				}
+
+				$('#copyInput').remove();
+			}
+
+
+			function jubao(id) {
+				$(document).dialog({
+					type: 'confirm',
+					style: 'ios',
+					titleText: '动态违规?',
+					content: '此动态是否已违反社区规范?>>详细规范请在个人中心查看',
+					buttons: [{
+							name: '取消',
+							callback: function() {
+
+							}
+						},
+						{
+							name: '是的,举报',
+							callback: function() {
+
+								var userInfo = $api.getStorage('userInfo');
+								postajax(url + 'addreport', {
+									'type': 'Dressing',
+									'Violationid': id,
+									'whistleblower': userInfo.id
+								}, function(ret) {
+									if(ret.code=='200'){
+										// toast(ret.message);
+										api.toast({
+										    msg: ret.message
+										});
+									}else{
+										api.toast({
+										    msg: ret.message
+										});
+									}
+								})
+
 
 							}
 						},

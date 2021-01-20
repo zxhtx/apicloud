@@ -97,31 +97,23 @@
 		background: '';
 		/* color: #000; */
 	}
-	.divupdateMask{
+		.divupdateMask{
 		position: fixed;
-		top: 0px;
-		left: 0px;
-		width: 100%;
-		height: 100%;
-		/* background: #000; */
+		top: 50%;
+		left: 50%;
+	    width: 88%;
+	    height: 39%;
+	    z-index: 2;
 	}
 	.divupdate{
 		position: relative;
-		width: 88%;
-		height: 40%;
+		width: 100%;
+		height: 100%;
 		background: #fff;
 		margin: 0 auto;
-		margin-top:50%;
 		border: 2px solid  #b4b1b1;
 		border-radius: 5px;
 		background: #fbf9f9;
-	}
-	.updateback{
-		position: absolute;
-		right: 9px;
-		top: -2px;
-		font-size: 22px;
-		color: gray;
 		
 	}
 	#xuanzhun{
@@ -141,7 +133,7 @@
 	  margin:3px;
 	  font-size: 12px;
 	  color: white;
-	  background: #b4b1b1;
+	  background: gray;
 	  border: 1px solid #ccc;
 	  border-radius: 6px;
 	  display: inline-block;
@@ -150,7 +142,7 @@
 	.info-color .yanse.now{
 	  padding: 5px 8px 5px 8px;
 	  font-size: 12px;
-	  color: #999797;
+	  color: gray;
 	  background: white;
 	  border: 1px solid #b4b1b1;
 	  font-weight: bold;
@@ -161,7 +153,7 @@
 	  margin:3px;
 	  font-size: 12px;
 	  color: white;
-	  background: #b4b1b1;
+	  background: gray;
 	  border: 1px solid #ccc;
 	  border-radius: 6px;
 	  display: inline-block;
@@ -169,7 +161,7 @@
 	.info-discount .cima.now{
 	 padding: 5px 8px 5px 8px;
 	 font-size: 12px;
-	 color: #999797;
+	 color: gray;
 	 background: gray;
 	 background: white;
 	 border: 1px solid #b4b1b1;
@@ -183,7 +175,7 @@
 		height: 40px;
 		text-align: center;
 		line-height: 40px;
-	   background:#b4b1b1;
+	   background:gray;
 	   border-radius: 3px;
 		/* margin: 0 auto; */
 		color: #fff;
@@ -200,6 +192,7 @@
 		text-align: center;
 		font-size: 12px;
 	}
+	.closebg{ background-color: rgba(0, 0, 0, 0.6); bottom: 0; height: 100%; left: 0; opacity: 0.7; position: fixed; right: 0; top: 0; width: 100%; z-index: 1; }
 </style>
 </head>
 <body>
@@ -220,7 +213,6 @@
 	<div class="btn" onclick="updatedata()">确认</div>
 	<div class="divupdateMask hidden">
 		<div class="divupdate">
-			<div class="updateback" onclick="updateback(0)">x</div>
 			<div id="xuanzhun" class="xz" style="width: 30px; height: 30px;border-bottom: 2px solid #b4b1b1; margin:0 auto; margin-top:50%; "></div>
 			<div class="wareInfo"></div>
 		</div>
@@ -241,7 +233,7 @@
 	  {{ } }}
 	</div>
 	
-	<div  class="btn2" onclick="updateback(1)" >确认修改</div>
+	<div  class="btn2" onclick="updateback()" >确认修改</div>
 </script>
 <script type="text/javascript">
 	var index;
@@ -293,28 +285,36 @@
 		$(_this).addClass('bgcolor');
 		$(_this).siblings().addClass('tranbgcolor').removeClass('bgcolor');
 		index=_index;
+		if(_index==0){
+			$('.h').html('换货');	
+		}
 		
 		if(_index==1){
 			$('.divupdateMask').addClass('show').removeClass('hidden');
+			$('.divupdateMask').css('marginTop',-$('.divupdateMask').height()/2);
+			$('.divupdateMask').css('margin-left',-$('.divupdateMask').width()/2);
+			$('body').append('<div class="closebg"></div>');
+			$('.closebg').click(function() {
+			    $('.divupdateMask').addClass('hidden').removeClass('show');
+				$('.th').removeClass('bgcolor');
+				$('.closebg').remove();
+				
+			})
 			getwaredata();
 		}
 		
 	}
 	
 	function updateback(_index){
-		if(_index==0){
+		if (datasize && datacolor) {
+			$('.closebg').remove();
 			$('.divupdateMask').addClass('hidden').removeClass('show');
-			$('.th').removeClass('bgcolor');
-			index=null;
-			// console.log()
-		}else if(_index==1){
-			if(datasize && datacolor){
-				$('.divupdateMask').addClass('hidden').removeClass('show');
-				$('.h').html('换货(颜色：'+datacolor+' 尺寸：'+datasize+')');
-		}else{
-				toast('请点击您需要修改的尺寸和颜色')
-		}
-			
+			$('.h').html('换货(颜色：' + datacolor + ' 尺寸：' + datasize + ')');
+					
+		} else {
+			api.toast({
+			    msg: '请点击您需要修改的尺寸和颜色'
+			});
 		}
 		
 	}
@@ -392,9 +392,13 @@
 				       infoText: '申请成功,',
 				       autoClose: 2000
 				   });
-				   setTimeout(function(){
-					     location.replace('./dindan_frame.html?bmF2PTE=')
-				   },2000);
+				  api.sendEvent({
+				      name: 'updatedindantype',
+				      extra: {
+				        
+				      }
+				  });
+				  api.closeWin();
 			}else{
 				// toast(ret.message,'bottom',1500);
 				notice.update({

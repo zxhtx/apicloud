@@ -143,6 +143,7 @@
 		    infoIcon: '../image/icon/loading.gif',
 		    infoText: '正在进入支付页面'
 		});
+
         $.get(
             "http://pay.chaodashe.com/pay.php",
             {
@@ -160,6 +161,11 @@
                 $('#sign').val(data.sign);
 				// return;
                 $('#submitdemo1').click();
+                api.sendEvent({
+                    name: 'jietu',
+                    extra: {
+                    }
+                });
             }, "json"
         );
       	// window.location.href = "http://104.168.184.84/bufpay_/bufpay_api_demo.php?price=" + price1 +"&date="+ order_id +"&wareid="+ wareid +"&name="+ name + "&pay_type=wechat";
@@ -192,6 +198,11 @@
                 $('#extra').val(data.extra);
                 $('#sign').val(data.sign);
                 $('#submitdemo1').click();
+                 api.sendEvent({
+                    name: 'jietu',
+                    extra: {
+                    }
+                });
             }, "json"
         );
 

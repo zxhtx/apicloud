@@ -509,7 +509,7 @@ font-size: 14px;
             <div class="sevenH">
                 七天换货
             </div>
-            <div class="fahuotime">24小时内发货</div>
+            <div class="fahuotime">48小时内发货</div>
         </div>
     </div>
    
@@ -605,10 +605,10 @@ font-size: 14px;
             if (ret){
                 
                 var data=ret.data;
-                if(!data.sevenT){
-                    $('.sevenT').remove();
+              if(data.sevenT!='1'){
+                $('.sevenT').remove();
                 }
-                if(!data.sevenH){
+                if(data.sevenH!='1'){
                     $('.sevenH').remove();
                 }
                 jiage=data.oldprice;

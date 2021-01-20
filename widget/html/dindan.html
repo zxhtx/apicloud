@@ -8,36 +8,196 @@
     <title>Hello APP</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
     <style>
-   
+    
+    header {
+                width: 100%;
+                height: 40px;
+                background: white;
+                border-bottom: 0.3px solid #F1F1F1;
+                box-shadow: 0px 6px 6px -6px black;
+            }
+
+            header .back {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 40px;
+                height: 40px;
+                z-index: 2;
+            }
+
+            header .back img {
+                margin-top: 5px;
+                margin-left: 4px;
+                width: 28px;
+                height: 30px;
+            }
+
+            header a {
+                display: block;
+                text-align: center;
+                line-height: 40px;
+                font-size: 16px;
+                font-weight: bold;
+
+            }
+             nav {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-flex-flow: row;
+        flex-flow: row;
+        position: relative;
+        width: 100%;
+        height: 40px;
+        background-color: #fff;
+    }
+    
+    nav .menu {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        font-size: 13px;
+        color: gray;
+        text-align: center;
+    }
+    
+    nav .menu.selected {
+        font-size: 14px;
+        color: #000;
+        font-weight: bolder;
+    }
 </style>
 </head>
 
 <body>
-   
+        <header id="header">
+            <div class="back" tapmode onclick="api.closeWin();">
+                <img src="../image/back.png">
+            </div>
+            <a>我的订单</a>
+        </header>
+        <nav id="nav">
+            <div class="menu selected" tapmode="selected" onclick="fnSetNavMenuIndex(0);">待付款</div>
+            <div class="menu" tapmode="selected" onclick="fnSetNavMenuIndex(1);">待收货</div>
+            <div class="menu" tapmode="selected" onclick="fnSetNavMenuIndex(2);">已签收</div>
+            <div class="menu" tapmode="selected" onclick="fnSetNavMenuIndex(3);">换货</div>
+             <div class="menu" tapmode="selected" onclick="fnSetNavMenuIndex(4);">退货</div>
+             <div class="menu" tapmode="selected" onclick="fnSetNavMenuIndex(5);">全部商品</div>
+        </nav>
+      <!--   <div class="nav">
+            <p class="active nav0" i="0">待付款</p>
+            <p class="nav1" i="1">待收货</p>
+            <p class="nav2" i="2">已签收</p>
+            <p i="all">全部商品</p>
+            <p class="nav3" i="3">换货</p>
+            <p class="nav4" i="4">退货</p>
+
+        </div> -->
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/SHA1.js"></script>
 <script type="text/javascript">
+    var framesOpened = false,
+    menus, headerH, navH;
     apiready = function() {
 
-        api.openFrame({
-            name: 'dindan_frame',
-            url: 'dindan_frame.html',
-            rect: {
-                x: 0,
-                y: 0,
-                w: 'auto',
-                h: 'auto'
-            },
-            pageParam: {
-                nav:api.pageParam.nav
-            },
-            bounces: false
-        });
+        var header = $api.byId('header');
+        var nav = $api.byId('nav');
+        // 计算header和nav元素的高度
+        headerH = $api.offset(header).h;
+        navH = $api.offset(nav).h;
 
-    
+        // 获取所有的分类菜单
+        menus = $api.domAll(nav, '.menu');
 
+        // api.openFrame({
+        //     name: 'dindan_frame',
+        //     url: 'dindan_frame.html',
+        //     rect: {
+        //         x: 0,
+        //         y: 0,
+        //         w: 'auto',
+        //         h: 'auto'
+        //     },
+        //     pageParam: {
+        //         nav:api.pageParam.nav
+        //     },
+        //     bounces: false
+        // });
+    openFrames();
     };
+    function openFrames() {
+
+    // 判断这些Frame是否已经打开
+    if (framesOpened) {
+        return;
+    }
+
+    // 构造FrameGroup中的Frame数组
+    var frames = [];
+    for (var i = 0; i < menus.length; i++) {
+        frames.push({
+            name: 'dindan_frame_' + i,
+            url: './dindan_frame.html',
+            pageParam: {
+                nav: i
+            }
+        });
+    }
+
+    // 打开FrameGroup
+    api.openFrameGroup({
+        name: 'mainFrameGroup',
+        scrollEnabled: true, // 支持手势滑动切换
+        rect: {
+            x: 0,
+            y: headerH + navH,
+            w: 'auto', // 自动填充所在Window的宽度
+            h: 'auto' // 自动填充所在Window的高度
+        },
+        index: api.pageParam.nav, // 默认显示第一个Frame
+        frames: frames,
+        preload: frames.length // 预加载所有Frame
+    }, function(ret, err) {
+        // Frame切换完成的响应函数，更新分类菜单的选中状态
+        fnSetNavMenuSelected(ret.index);
+    });
+
+  
+
+    // 标记为已经打开
+    framesOpened = true;
+}
+
+// 分类菜单点击的响应函数，切换Frame
+function fnSetNavMenuIndex(index_) {
+    // 首先更新菜单选中状态
+    fnSetNavMenuSelected(index_);
+
+    // 切换FrameGroup中的当前Frame
+    api.setFrameGroupIndex({
+        name: 'mainFrameGroup',
+        index: index_,
+        scroll: true
+    });
+}
+
+// 更新分类菜单的选中状态
+function fnSetNavMenuSelected(index_) {
+    for (var i = 0; i < menus.length; i++) {
+        if (index_ == i) {
+            $api.addCls(menus[i], 'selected');
+        } else {
+            $api.removeCls(menus[i], 'selected');
+        }
+    }
+}
+
 
 </script>
 

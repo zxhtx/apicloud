@@ -159,7 +159,7 @@
 
 	<body>
 		<header id="header">
-			<div class="back" tapmode onclick="window.history.back(-1)"></div>
+			<div class="back" tapmode onclick="api.closeWin()"></div>
 			<h1>我的余额</h1>
 			<div class="right" onclick="openbalancehistory()">明细记录</div>
 		</header>
@@ -172,10 +172,7 @@
 		<div class="list"></div>
 	</body>
 	<script id="template" type="text/template">
-		<div class="commissionhead">
-		<div class="tishi">*我分享的商品</div>
-		<div class="commissionhistory" onclick="opencommission()">领取记录</div>
-		</div>
+		
 		
 		{{~it.list:value:index}}
 		<div class="item" onclick="openware('{{=value.wareid}}')">

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <link rel="shortcut icon" href="../image/chao.ico" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>收货地址Frame</title>
+    <script src="../script/commonjs.js"></script>
+    <style>
+    html,body{
+        height: 100%;
+        padding: 0px;
+        margin:0px;
+        min-height: 100%;
+        background-color: #EDEDED;
+    }
+    
+    header{
+        width: 100%;
+        height: 40px;
+        background: white;
+        box-shadow:0px 6px 6px -6px black;
+        position: fixed;
+        top: 0px;
+        left:0px;
+        z-index: 999;
+    }
+    header .back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 40px;
+        height: 40px;
+        z-index: 2;
+    }
+
+    header .back img {
+        margin-top: 5px;
+        margin-left: 4px;
+        width: 28px;
+        height: 30px;
+    }
+    header a{
+        display: block;
+        text-align: center;
+        line-height: 40px;
+        font-size: 16px;
+        font-weight: bold;
+
+    }
+    .add{
+       position: absolute;
+       top: 0;
+       right: 0;
+       width: 40px;
+       height: 40px;
+       z-index: 2;
+       line-height: 40px;
+       text-align: center;
+       font-weight: bold;
+   }
+.usermadiv{
+    width: 76%;
+    height: 296px;
+    margin-top: 88px;
+    margin: 0 auto;
+    margin-top: 96px;
+    border: 1px solid #fff;
+    position: relative;
+    background-color: #fff;
+    border-radius: 6px;
+}
+.usermaimg{
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+ background-position: center;
+ background-size: cover;
+ width: 200px;
+ height: 200px;
+    margin-left: -100px;
+ /*border: 1px solid red;*/
+}
+.bottomtoast{
+    position: absolute;
+    bottom: 6px;
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    color: gray;
+
+}
+.headimg{
+    width: 50px;
+    height: 50px;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+   margin:0 auto; 
+   margin-top: 16px;
+}
+.saveimgbtn{
+    margin: 0 auto;
+    width: 30%;
+    height: 38px;
+    line-height: 38px;
+    background-color: #fff;
+    color: gray;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 6px;
+    margin-top: 38px;
+}
+</style>
+</head>
+
+<body>
+   
+<header>
+    <div class="back" tapmode onclick="api.closeWin()">
+        <img src="../image/back.png">
+    </div>
+    <a>我的二维码</a>
+    <div class="add" onclick="saomao()">扫码</div>
+</header>
+<div class="usermadiv">
+    <div class="headimg"></div>
+    <div class="usermaimg"></div>
+    <div class="bottomtoast">扫一扫上面的二维码图案，订阅我吧</div>
+</div>
+<div class="saveimgbtn" tapmode onclick="saveimg()">
+    保存二维码
+</div>
+  
+</body>
+
+<script type="text/javascript">
+ var FNScanner;
+ var userInfo;
+ var path;
+apiready = function(){
+    FNScanner = api.require('FNScanner');
+    userInfo=$api.getStorage('userInfo');
+    if(userInfo){
+        inituserma() 
+    }
+    
+}
+ function inituserma(){        
+     
+       var pic =new Date().getTime();
+            FNScanner.encodeImg({
+                content: 'CDSuser/'+userInfo.id,
+                saveToAlbum: false,
+                saveImg: {
+                    path: 'fs://CDSimage/CDS_userma_'+pic+'.png',
+                    w: 500,
+                    h: 500
+                }
+            }, function(ret, err) {
+                if (ret.status==true) {
+                    // alert(JSON.stringify(ret));
+                    path=ret.imgPath;
+                    $('.headimg').css('background-image','url('+imgurl+userInfo.headimg+')');
+                    $('.usermaimg').css('background-image','url('+ret.imgPath+')');
+                } 
+            });
+}
+
+function saomao(){
+    
+    FNScanner.open({
+        autorotation: true
+    }, function(ret, err) {
+        if (ret) {
+            if(ret.eventType=='success'){
+                if(ret.content.split('/')[0]=='CDSuser'){
+                    api.openWin({
+                        name: 'TAusercenter',
+                        url: './TAusercenter.html',
+                        pageParam: {
+                            uid: ret.content.split('/')[1]
+                        }
+                    });
+                }
+            }else if(ret.eventType=='fail'){
+                api.toast({
+                    msg: '扫码失败,非法图片'
+                });
+            }else if(ret.eventType=='cameraError'){
+                api.toast({
+                    msg: '访问摄像头失败'
+                });
+            }else if(ret.eventType=='albumError'){
+                api.toast({
+                    msg: '访问相册失败'
+                });
+            }
+        } 
+    });
+}
+
+function saveimg(){
+    
+     api.saveMediaToAlbum({
+         path: path,
+         groupName:'CDS'
+    }, function(ret, err) {
+        if (ret && ret.status) {
+            api.toast({
+                msg: '保存成功'
+            });
+         }
+         
+      });      
+}
+</script>
+
+</html>

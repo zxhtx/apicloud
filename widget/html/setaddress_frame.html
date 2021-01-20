@@ -271,7 +271,9 @@ header .right {
 
     };
     var consignee, mobile, focus, house;
+    var userInfo;
     apiready = function(){
+      userInfo=$api.getStorage('userInfo');
            init();
     }
       function back(){
@@ -320,20 +322,39 @@ function fnSelectAddressType(index_) {
 
 function fnSave() {
    
-  var notice = $(document).dialog({
-    type : 'notice',
-    infoIcon: '../image/icon/loading.gif',
-     infoText: '保存中'
-     });
+  
     addressInfo.name = $("#consignee").val();
     addressInfo.mobile = $("#mobile").val();
     addressInfo.address =$("#focus").html();
     addressInfo.house = $("#house").val();
     addressInfo.userId = userInfo.id;
     
+    if(!addressInfo.name){
+      toast('请填写收件人姓名');
+       return;
+    }else if(!addressInfo.mobile){
+      toast('请填写收件人电话')
+      return;
+    }else if(!addressInfo.address){
+      toast('请填写收件人所在省市区')
+      return;
+    }else if(!addressInfo.house){
+      toast('请填写收件人详细地址')
+      return;
+    }
+  
+   if(!(/^1[3-9]\d{9}$/.test(addressInfo.mobile))){ 
+          toast("手机号码有误，请重填");  
+          return; 
+      } 
     // 修改条件
     addressInfo.addressid=addressid;
 
+    var notice = $(document).dialog({
+      type : 'notice',
+      infoIcon: '../image/icon/loading.gif',
+       infoText: '保存中'
+     });
 
     if (addressid) {
         postajax(url+'putaddress',addressInfo,function(ret){
@@ -350,6 +371,11 @@ function fnSave() {
                       api.closeWin();
                   },1500)
              
+          }else{
+            api.toast({
+                msg: ret.message
+            });
+            notice.close();
           }
       });
 
@@ -367,6 +393,12 @@ function fnSave() {
                   setTimeout(function(){
                     api.closeWin();
                   },1500)
+          }else{
+            api.toast({
+                msg: ret.message
+            });
+            
+            notice.close();
           }
       })
 
@@ -375,9 +407,11 @@ function fnSave() {
 
 
 function fnDelete(){
+  userInfo=$api.getStorage('userInfo');
     $("#loading").addClass("show").removeClass("hidden");
     var param={
         addressid:addressid,
+        userid:userInfo.id
     }
     postajax(url+'deloneaddress',param,function(ret){
         if (ret.code==200) {

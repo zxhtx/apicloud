@@ -17,7 +17,7 @@
 				<div class="name">...</div>
 				<div class="usern">潮袭号：...</div>
 			</div>
-			<div class="share"></div>
+			<div class="report" onclick="jubao()"></div>
 		</header>
 		<div class="userinfo">
 			<div class="head">
@@ -53,10 +53,13 @@
 				</div>
 			</div>
 			<div class="textinfo">
-				<div class="sex"></div>
-				<div class="line"></div>
 				<div class="rzdiv">
-					<div class="authority"></div>
+					<div class="sex"></div>
+					<!-- <div class="line"></div> -->
+					<div class="birthday"></div>
+					<div class="authority bgcolor">
+
+					</div>
 					<div class="authoritytext"></div>
 				</div>
 				<div class="autograph"></div>
@@ -83,7 +86,10 @@
 			var skip = 0;
 			var limit = 16;
 			var uid;
+			var userInfo;
+			var meid;
 			apiready = function(){
+				userInfo=$api.getStorage('userInfo');
 				uid =api.pageParam.uid;
 			    TAusercenter();
 			}
@@ -93,20 +99,12 @@
 			}
 
 			function TAusercenter(_LoadMore) {
-				var userInfo=$api.getStorage('userInfo');
 				if (!userInfo) {
-					api.openWin({
-					    name: 'login',
-					    url: './login.html',
-					    pageParam: {
-					        page:'TAusercenter',
-					        TAusercenteruid:api.pageParam.uid
-					    },
-					   
-					});
-					api.closeWin();
-					return;
+					meid=0;
+				}else{
+					meid=userInfo.id
 				}
+				
 				if (_LoadMore) {
 					skip += limit;
 				} else {
@@ -115,7 +113,7 @@
 				}
 				postajax(url + 'getTAusercenter', {
 					'uid': uid,
-					'meid': userInfo.id,
+					'meid': meid,
 					'skip': skip,
 					'limit': limit
 				}, function(e) {
@@ -126,6 +124,7 @@
 							dotupdate(e.data.cdslist, _LoadMore);
 							updatehtml(e.data);
 						}
+						// alert(e.data.user.authority)
 						if(e.data.user.authority){
 							$('.headimg').addClass('iconauthority');
 						}
@@ -157,7 +156,8 @@
 				if(data.user.id==userInfo.id){
 					$('.head').css('height','92px');
 					$('.headinfo').css('margin-top','12px');
-					$('.is_dinyueandchat').css('display','none')
+					$('.is_dinyueandchat').css('display','none');
+					$('.report').css('display', 'none');
 					$('.textinfo').css('margin-top','16px');
 				}
 				authority = data.user.authority;
@@ -171,17 +171,32 @@
 				if (data.user.autograph != 'null') {
 					$('.autograph').html(data.user.autograph);
 				}
+				if(data.user.birthday!='0'){
+					// #FF7F8F
+					var myDate = new Date();
+					var time = myDate.toLocaleDateString().split('/').join('-');
+					$('.birthday').html(getDay(data.user.birthday,time)+'岁');
+				}else{
+					$('.birthday').remove();
+				}
+
 				if (data.user.sex == '0') {
 					$('.textinfo .sex').css('background-image', 'url(../image/boy.png)');
+					$('.birthday').css('background-color','#2E9BFF');
 				} else {
 					$('.textinfo .sex').css('background-image', 'url(../image/girl.png)');
+					$('.birthday').css('background-color','#FF7F8F');
 				}
 
 				if (authority == '1') {
-					$('.authority').css('background-image', 'url(../image/authority.png)');
-					$('.authoritytext').html(authoritytext)
-				} else {
-					$('.authority').css('background-image', 'url(../image/noauthority.png)');
+
+					// $(".bgcolor").css("cssText", "background-color:" + data.user.Dressingbgcolor + " !important;");
+
+					$('.authority').html(' <img src="../image/authority.png">');
+					$('.authoritytext').html(authoritytext);
+
+				}else{
+					$('.authority,.authoritytext').remove();
 				}
 				if (data.isdy == '1') {
 					$('.is_dinyue').html('取消订阅');
@@ -189,6 +204,13 @@
 				} else {
 					$('.is_dinyue').html('订阅');
 				}
+			}
+			function getDay(a, b) {
+				a = new Date(a.replace(/-/g, '-'));
+				b = new Date(b.replace(/-/g, '-'));
+				var d = Math.abs(a.getTime() - b.getTime()) / 1000 / 24 / 60 / 60;
+				var year = Math.floor(d / 365); //不整除取最小的年数或者直接进位（Math.ceil），或者四舍五入Math.round，自己改这个罗
+				return year;
 			}
 
 			function dotupdate(ret, _LoadMore) {
@@ -241,6 +263,19 @@
 			}
 
 			function dinyue() {
+				if (!userInfo) {
+					api.openWin({
+					    name: 'login',
+					    url: './login.html',
+					    pageParam: {
+					        page:'TAusercenter',
+					        TAusercenteruid:api.pageParam.uid
+					    },
+					   
+					});
+					// api.closeWin();
+					return;
+				}
 				$('.is_dinyue').prepend('<div class="loading"></div>');
 				// return;
 				var dy = $('.is_dinyue').attr('data-is_dy');
@@ -295,8 +330,20 @@
 				
 			}
 			function openchat(){
-				
+				if (!userInfo) {
 					api.openWin({
+					    name: 'login',
+					    url: './login.html',
+					    pageParam: {
+					        page:'TAusercenter',
+					        TAusercenteruid:api.pageParam.uid
+					    },
+					   
+					});
+					// api.closeWin();
+					return;
+				}
+				api.openWin({
 		    	    name: 'chat',
 		    	    url: './chat.html',
 		    	    pageParam: {
@@ -307,6 +354,62 @@
 		    	});
 			}
 			
+			function jubao(){
+				if (!userInfo) {
+					api.openWin({
+					    name: 'login',
+					    url: './login.html',
+					    pageParam: {
+					        page:'TAusercenter',
+					        TAusercenteruid:api.pageParam.uid
+					    },
+					   
+					});
+					// api.closeWin();
+					return;
+				}
+				$(document).dialog({
+					type: 'confirm',
+					style: 'ios',
+					titleText: '动态违规?',
+					content: '此动态是否已违反社区规范?>>详细规范请在个人中心查看',
+					buttons: [{
+							name: '取消',
+							callback: function() {
+				
+							}
+						},
+						{
+							name: '是的,举报',
+							callback: function() {
+				
+								var userInfo =$api.getStorage('userInfo');
+								postajax(url + 'addreport', {
+									'type': 'user',
+									'Violationid': api.pageParam.uid,
+									'whistleblower': userInfo.id
+								}, function(ret) {
+									if(ret.code=='200'){
+										api.toast({
+										    msg: ret.message,
+										});
+										// toast(ret.message);
+									}else{
+										api.toast({
+										    msg: ret.message,
+										});
+										// toast(ret.message);
+									}
+								})
+						
+							}
+						},
+				
+				
+					]
+				});
+				
+			}
 		</script>
 	</body>
 </html>

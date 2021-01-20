@@ -74,14 +74,15 @@
     border: 0px;
     font-size: 16px;
     overflow-x: hidden;
-    overflow-y: hidden;
     text-align: left;
     padding: 3px;
+    overflow-y: scroll;
+  
+    margin: 0 auto;
    }
 
     .addimage{
-                width: 108px;
-                height: 108px;
+                width: calc(100%/4.5);
                 background-image: url(../image/add_black.png);
                 background-size: cover;
                 background-position: center;  
@@ -89,8 +90,7 @@
 
     }
     .imglist{
-                 width: 108px;
-                height: 108px;
+                width: calc(100%/4.5);
                 display: inline-block;
                 background-size: cover;
                 background-position: center;
@@ -113,6 +113,26 @@
         flex-wrap: nowrap;
         justify-content: space-around;
         align-items: center;
+        margin-top: 12px;
+    }
+    .Dressingtype{
+         display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+    }
+     .Dressingtype .ctpng{
+        width: 56px;
+        height: 30px;
+       line-height: 30px;
+       border-radius: 6px 0px 0px 6px ;
+        
+
+    }
+    .Dressingtype .dp{
+         width: 56px;
+        height: 30px;
+          border-radius: 0px 6px 6px 0px ;
+         line-height: 30px;
     }
     .imgshowtype{
         display: flex;
@@ -124,6 +144,7 @@
         height: 30px;
        line-height: 30px;
        border-radius: 6px 0px 0px 6px ;
+       
     }
     .imgshowtype .lb{
          width: 56px;
@@ -132,20 +153,51 @@
          line-height: 30px;
     }
     .music{
-        height: 30px;
-        line-height: 30px;
+        height: 52px;
+        margin-top: 12px;
+        border-top: 1px solid #F7F7F7;
+         border-bottom: 1px solid #F7F7F7;
+        background: #fff;
+        display:flex;
+        justify-content: space-around; 
+        align-items: center;
+     
     }
-    .music>img{
+    .music>.musicpng{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width:30%;
+        padding-left: 24px;
+        
+
+     }
+    .music>.musicpng>img{
         width: 12px;
         height: 12px;
-        vertical-align: middle;
-        display: inline-block;
+       /*border: 1px solid red;*/
+
     }
-    .music{
+    .music>.musicpng>.title{
+        color: #303249;
+        width: auto;
+        height: 20px;
+        line-height: 20px;
+        font-size: 17px;
+
+        /*border: 1px solid red;*/
+        
+    }
+   .music>.musicname{
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    color: #B7B7B7;
+    width: 70%;
+    font-size: 15px;
+    text-align:right;
+    padding-right: 16px;
     }
     .at{
         width: 58px;
@@ -174,7 +226,10 @@
     outline: none;
     /*border: 1px solid red;*/
 }
-   /*[contentEditable=true]:empty::before{content:attr(data-placeholder);color:gray;}*/
+  div[contenteditable]:empty:before{
+    content: attr(data-placeholder);
+    color: #CCCCCC;
+}
 </style>
 </head>
 
@@ -187,7 +242,7 @@
     <div class="add" onclick="add()">发表</div>
 </header>
 <div class="boby">
-   <div contenteditable="true"  onblur="getblur()" class="text" id="test" ></div>
+   <div contenteditable="true" data-placeholder="说两句吧..."  onblur="getblur()" class="text" id="test" ></div>
    <div class="setting">
        <div class="imgshowtype">
            <div class="ct" tapmode onclick="imgshowtype('1',this)">长图</div>
@@ -195,9 +250,21 @@
        </div>
        <div class="at" tapmode onclick="openatframe()">
         <span class="bgcolor">@</span>
-        </div>
-       <div class="music" tapmode onclick="gomusic()"><img src="../image/music_black.png">&nbsp;音乐</div>
+       </div>
+        <div class="Dressingtype">
+           <div class="ctpng" tapmode onclick="Dressingtype('1',this)">潮图</div>
+           <div class="dp" tapmode onclick="Dressingtype('0',this)">搭配</div>
+       </div>
+    
    </div>
+   <div class="music" tapmode onclick="gomusic()">
+       <div class="musicpng">
+           <img src="../image/music_black.png">&nbsp;
+           <div class="title">音乐</div>
+       </div>
+       <div class="musicname">选择合适的音乐,会获取更多曝光</div>
+   </div>
+
     <div id="file-list">
         <div class="addimage" onclick="uploadimg()"></div>
                 
@@ -212,10 +279,12 @@
     var addInfo={};
     var laseguangb;
     addInfo.showimgtype=1;
+    addInfo.type=1;
     var userInfo;
     apiready = function() {
+         quanxian('storage-w,camera,storage-r,photos-w')
         $('.text').focus();
-
+        $('.addimage,.imglist').height($(window).width()/4.5+'px');
         userInfo=$api.getStorage('userInfo');
         if(userInfo){
             $(".bgcolor").css("cssText", "background-color:" + userInfo.Dressingbgcolor + " !important;");
@@ -223,7 +292,7 @@
         }
         event();
         imgshowtype('1',$('.ct'));
-
+        Dressingtype('1',$('.ctpng'));
     };
     function getblur(){
         var s=$('.text');
@@ -246,7 +315,7 @@
             if (ret) {
                 addInfo.musicid=ret.value.musicid;
                 // alert($api.jsonToStr(ret));
-                $('.music').html('<img src="../image/music_black.png">&nbsp;'+ret.value.musicname)
+                $('.musicname').html(ret.value.musicname)
             } else {
                 api.toast({
                     msg: '选取失败'
@@ -260,8 +329,12 @@
                 fileList=[];
                 addInfo={}
                 addInfo.showimgtype=1;
+                 addInfo.type=1;
                 $('.text').val('');
                 imgshowtype('1',$('.ct'));
+                Dressingtype('1',$('.ctpng'));
+                 $('.text').html('');
+                $('.musicname').html('选择合适的音乐,会获取更多曝光');
                 $('.addimage').siblings().remove(); 
             }
         });
@@ -355,10 +428,10 @@
                                     }
                                     
                                 
-                                        $list.prepend('<div style="background-image:url(' + ret.list[i].path + ')" class="imglist" ></div>');
+                                        $list.prepend('<div style=background-image:url("'+ ret.list[i].path + '") class="imglist" ></div>');
                               
                                         fileList.push(ret.list[i].path);
-                                
+                                        $('.addimage,.imglist').height($(window).width()/4.5+'px');
                                 }
 
                          }
@@ -369,6 +442,13 @@
     
         // alert(userInfo.Dressingbgcolor)
         $(_this).css({'color':'#fff','background-color': userInfo.Dressingbgcolor}).siblings().css({'background-color':'#fff','color':'#000'});
+        addInfo.showimgtype=index;
+   }
+   function Dressingtype(index,_this){
+    
+        // alert(userInfo.Dressingbgcolor)
+        $(_this).css({'color':'#fff','background-color': userInfo.Dressingbgcolor}).siblings().css({'background-color':'#fff','color':'#000'});
+        addInfo.type=index;
    }
    function gomusic(){
     api.openWin({
@@ -380,6 +460,7 @@
     });
    }
    function add(){
+
     $('.add').removeAttr('onclick');
     var isat = 0;
     if($('.text span').length>0){
@@ -387,9 +468,9 @@
     }
     var userInfo=$api.getStorage('userInfo');
     var text = $('.text').html();
+
     addInfo.text = text;
     addInfo.userid = userInfo.id;
-    addInfo.type=1;
     addInfo.isat=isat;
     api.ajax({
                 url: 'http://api.chaodashe.com/index.php/moreimg',

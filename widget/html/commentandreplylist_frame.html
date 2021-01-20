@@ -76,9 +76,9 @@
 				var reshtml='';
 				$.each(e.data,function(index,data){ 	
 						if(data.superiorid=='0'){
-							reshtml+='<div class="list"><div class="head_img" style="background-image: url('+imgurl+data.headimg+');"></div><div class="usermsg"><p class="name">'+data.name+'<span>&nbsp;评论了您的动态</span></p><div class="msg">'+data.msg+'</div><p class="time">'+timestampFormat(data.time)+'</p> </div><div class="cdsimg"  onclick=openDressing("'+data.artid+'") style="background-image:url('+imgurl+data.fm+')"></div></div>'
+							reshtml+='<div class="list"><div class="head_img" onclick="TAuser('+"'"+ data.fromuid+"'"+')" style="background-image: url('+imgurl+data.headimg+');"></div><div class="usermsg"><p class="name">'+data.name+'<span>&nbsp;评论了您的动态</span></p><div class="msg">'+data.msg+'</div><p class="time">'+timestampFormat(data.time)+'</p> </div><div class="cdsimg"  onclick=openDressing("'+data.artid+'") style="background-image:url('+imgurl+data.fm+')"></div></div>'
 						}else{
-							reshtml+='<div class="list"><div class="head_img" style="background-image: url('+imgurl+data.headimg+');"></div><div class="usermsg"><p class="name">'+data.name+'<span>&nbsp;回复了您</span></p><div class="msg">'+data.msg+'</div>	<p class="time">'+timestampFormat(data.time)+'</p></div> <div class="cdsimg"  onclick=openDressing("'+data.artid+'") style="background-image:url('+imgurl+data.fm+')"></div></div>'
+							reshtml+='<div class="list"><div class="head_img" onclick="TAuser('+"'"+ data.fromuid+"'"+')" style="background-image: url('+imgurl+data.headimg+');"></div><div class="usermsg"><p class="name">'+data.name+'<span>&nbsp;回复了您</span></p><div class="msg">'+data.msg+'</div>	<p class="time">'+timestampFormat(data.time)+'</p></div> <div class="cdsimg"  onclick=openDressing("'+data.artid+'") style="background-image:url('+imgurl+data.fm+')"></div></div>'
 						}
 						
 					
@@ -148,7 +148,17 @@
           
        });
 	}
-  
+  function TAuser(uid){
+ 
+  api.openWin({
+      name: 'TAusercenter',
+      url: './TAusercenter.html',
+      pageParam: {
+          uid:uid
+      },
+      
+  });
+}
    
       
  </script>

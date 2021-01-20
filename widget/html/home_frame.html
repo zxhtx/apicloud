@@ -11,6 +11,8 @@
   <script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
   <script type="text/javascript" src=" ../script/pinterest_grid.js"></script>
   <script type="text/javascript" src=" ../script/ajax.js"></script>
+  <link href="https://cdn.bootcss.com/Swiper/4.5.1/css/swiper.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/Swiper/4.5.1/js/swiper.min.js"></script>
 
   
   <style>
@@ -20,7 +22,7 @@
     width: 100%;
     padding: 0;
     margin:0;
-    background-color:#F4F7F9;
+    background-color:#fff;
   }
   a{
     text-decoration: none;
@@ -46,7 +48,7 @@
     color: #fff;
     line-height: 44px;
     font-size: 20px;
-    background: white;
+    background: rgb(251 253 255);
   }
   
   .home-search {
@@ -62,16 +64,16 @@
     color:#999999;
     font-size: 14px;
   }
-	.cart{
-		position:absolute;
-		top: 4px;
-		right:6px;
-		 width:33px;
-		 height:33px;
-		 background-image: url('../image/cart.png');
-		 background-position: center;
-		 background-size: cover;
-	}
+  .cart{
+    position:absolute;
+    top: 4px;
+    right:6px;
+     width:33px;
+     height:33px;
+     background-image: url('../image/cart.png');
+     background-position: center;
+     background-size: cover;
+  }
   .home-search>img {
     height: 20px;
     /*padding-top: 8px;*/
@@ -155,6 +157,8 @@
   .row {
     display: -webkit-box;
     display: -webkit-flex;
+    width: 99%;
+  margin: 0 auto;
   }
 
   .col {
@@ -192,20 +196,21 @@
 
   .guesstitle {
     height: 20px;
-    line-height: 20px;
+    /*line-height: 20px;*/
     padding-left: 8px;
     vertical-align: top;
     font-size: 12px;
     color: #999;
-    /*margin-top: 30px;*/
-	/* background-color: #fff; */
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
   }
 
   .guesstitle img {
     height: 15px;
     padding-top: px;
     padding-left: 10px;
-	vertical-align: middle;
+  vertical-align: middle;
   }
 
   .home-tuan-list .item {
@@ -307,13 +312,7 @@
     margin-top: 1px;
   }
 
-  .home-tuan-list .price {
-    color: #f60;
-    font-size: 20px;
-    line-height: 15px;
-    margin-right: 5px;
-    margin-top: 1px;
-  }
+  
 
   .home-tuan-list .o-price {
     color: #999;
@@ -366,10 +365,11 @@
   .section03 .col img {
     width: 60px;
     top: 10px;
+    border-radius: 5px;
   }
 
   .section03 .title01 .title {
-    color: #000;
+    color: #fff;
   }
 
   .section03 .title02 .title {
@@ -407,6 +407,11 @@
   }
 
   .brb {
+   background: url("../image/swipe/1-1.jpg");
+    background-repeat: no-repeat;
+    background-size: 200px 200px;
+    background-position: -2px -32px;
+    background-origin: 10px 180px;
     border-bottom: 1px solid #F5F5F5;
     border-right: 1px solid #F5F5F5;
   }
@@ -425,50 +430,64 @@
 
 
   #list{
-    position: relative;
+    /*position: relative;*/
     width:100%;
     background: #fff;
-	/* margin-bottom: px; */
-	height: 100%;
-	
-
+  /* margin-bottom: px; */
+  height: 100%;
+  
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: flex-start;
 
   }
 
 
   .item {
-    position: absolute;
-    /*width: calc(100%/1);*/
-    margin-left: 1px;
+    /*position: absolute;*/
+    width: calc(100%/2.1);
+    padding:0px;
+    margin:0px;
+    /*margin-left: 3px;*/
     /*margin: 0 auto;*/
+    margin-top: 8px;
     border-radius: 22px 26px 0px 29px;
     transition:all 0.3s ease-in-out;
     box-shadow:0px 6px 6px -6px black;
-
+    display: inline-block;
   }
-  .item>img{
+  .item>.itemwareimg{
     width: 100%;
+    max-height: 322px;
+    min-height: 166px;
     display: block;
+    background-position: center;
+    background-size: cover;
     border-radius: 10px 10px 0px 24px;
   }
   .item .description{
     /*padding: 6px;*/
     font-size: 13px;
+     display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+
     /*border: 1px solid red;*/
   }
   .item .price{
-    display: inline-block;
-    padding-left:69%;
+   display: inline-block;
     color: #FF4521;
-    margin-bottom: 10px;
-    /*border: 1px solid red;*/
+  margin-right: 12px;
+  font-size: 15px;
 
   }
 
   .gezi{
-    margin-top: 50px;
-    margin-left: 6px;
-    margin-right: 10px;
+    margin-top: 9px;
+    /*margin-left: 6px;*/
+    /*margin-right: 10px;*/
     background: #fff;
     border-radius: 20px;
   }
@@ -476,11 +495,10 @@
     background: white;
   }
   .bb{
-    background: url("../image/swipe/2.png");
+     background: url("../image/swipe/2-2.png");
     background-repeat: no-repeat;
     background-size: 200px 200px;
-    /*background-position: 0px 20px;*/
-    background-origin: 10px 180px;
+    background-position: -25px -90px;
   }
   .bg{
     background: url("../image/swipe/4.jpg");
@@ -518,7 +536,7 @@
    
       height: 50px;
       /*border: 1px solid red;*/
-	  background-color: #fff;
+    background-color: #fff;
 
 
     }
@@ -550,67 +568,120 @@
 
     }
    /* .fircds{
-	   width: 100%;
-	   height: 69px;
+     width: 100%;
+     height: 69px;
    } */
    .fircds{
-   	/* height: 69px; */
-   	width: 100%;
-   	/* border: 1px solid red; */
-   	display: flex;
-   	/* flex-shrink:0; */
-   	flex-wrap: nowrap;
-   	overflow-x: scroll;
-	background-color:#fff;
-	margin-bottom: 8px;
-   	
-   	
-   	
+    /* height: 69px; */
+    width: 100%;
+    /* border: 1px solid red; */
+    display: flex;
+    /* flex-shrink:0; */
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+  background-color:#fff;
+  margin-bottom: 8px;
+    
+    
+    
    }
    .fircds::-webkit-scrollbar {display:none}
    .fircds .wareitem{
-   	flex-grow:0;
-   	flex-shrink:0;
-   	width:calc(100%/2.2) !important;
-   	/* height: 100%; */
-   	display: flex;
-   	border-right:0.0125rem solid #F1F1F1;
-   	justify-content: flex-start;
-   	/* display: inline-block; */
-   	align-items:center;
-   	
+    flex-grow:0;
+    flex-shrink:0;
+    width:calc(100%/2.2) !important;
+    /* height: 100%; */
+    display: flex;
+    border-right:0.0125rem solid #F1F1F1;
+    justify-content: flex-start;
+    /* display: inline-block; */
+    align-items:center;
+    
    }
    .wareitem .wareimg{
-   	height: 56px;
-   	width: 56px;
-   	border-radius: 6px;
-   	background-position: center;
-   	background-size: cover;
-   	display: inline-block;
-   	flex-grow:0;
-   	flex-shrink:0;
-   	margin-left: 2px;
+    height: 56px;
+    width: 56px;
+    border-radius: 6px;
+    background-position: center;
+    background-size: cover;
+    display: inline-block;
+    flex-grow:0;
+    flex-shrink:0;
+    margin-left: 2px;
    }
    .wareitem .wareinfo .waretext{
-   	display: -webkit-box;
-   	-webkit-line-clamp: 2;
-   	-webkit-box-orient: vertical;
-   	overflow: hidden;
-   	padding-left: 6px;
-   	font-size: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    padding-left: 6px;
+    font-size: 15px;
+    word-wrap:break-word;
+    word-break:break-all;
    }
    
    .wareitem .wareinfo .wareprice{
-   	color:#FF4466;
-   	font-size: 15px;
-   	font-weight: bold;
-   	margin-left: 2px;
+    color:#FF4466;
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 2px;
    }
    .navdiv{
      height: 50px;
      width: 100%;
    }
-   
+  .pricelist{
+     display: flex;
+     justify-content: flex-end;
+     align-items: center;
+     margin-bottom: 10px;
+   }
+   .newprice{
+    color:#FF4521;
+    margin-right: 12px;
+   }
+   .sprice{
+    color: gray;
+   }
+   .hotware{
+    width: 100%;
+    min-height: 200px;
+    /* border: 1px solid red; */
+    /*margin-top: 50px;*/
+    display: none;
+  }
+  .swiper-container {
+    width: 100%;
+    height: 100%;
+  }
+  .swiper-slide{
+    /* border: 1px solid black; */
+     background-size: contain !important;
+      -webkit-background-size: contain !important;
+      -o-background-size: contain !important;
+      background-position: center center;
+      background-repeat: no-repeat !important;
+     min-height: 12rem !important;
+      display: -webkit-box;
+           display: -ms-flexbox;
+           display: -webkit-flex;
+           display: flex;
+           -webkit-box-pack: center;
+           -ms-flex-pack: center;
+           -webkit-justify-content: center;
+           justify-content: center;
+           -webkit-box-align: center;
+           -ms-flex-align: center;
+           -webkit-align-items: center;
+           align-items: center;
+        transition: 300ms;
+        transform: scale(0.9) !important;
+        /*box-shadow:0px 6px 6px -6px gray;*/
+  }
+  
+  .swiper-slide-active,.swiper-slide-duplicate-active{
+    transform: scale(1) !important;
+  }
  </style>
 </head>
 
@@ -622,23 +693,28 @@
       <img src="../image/search_groupbuy.png">
       <span>搜索其实很简单</span>
     </div>
-	<div class="cart" onclick="opencart()"></div>
+  <div class="cart" onclick="opencart()"></div>
   </header>
   <!-- <div class="h20"></div> -->
+  <div class="guesstitle" style="margin-top:40px; ">限时爆单商品<img src="../image/competitive_icon.png" alt=""></div>
+  <div class="hotware">
+    
+  </div>
+  <div class="guesstitle">简易分类<img src="../image/competitive_icon.png" alt=""></div>
   <div class="gezi">
 
 
     <div class="row hightitem section03">
-      <div class="col h80 brb open-win"tapmode onclick="highware()" >
+      <div class="col h80 brb open-win" tapmode onclick="highware()" >
         <div class="matrix">
           <div class="matrixcell title01">
             <div class="title">高品质</div>
-            <div class="info" style="font-size: 12px">全站火爆商品</div>
+            <div class="info" style="font-size: 12px;color: #fff;">全站高规格商品</div>
           </div>
         </div>
-        <img src="../image/swipe/1.png" class="fl">
+        <!-- <img src="../image/swipe/1.jpg" class="fl"> -->
       </div>
-      <div class="col h80 bb open-win" tapmode onclick="partsware(8)">
+      <div class="col h80 bb open-win" tapmode onclick="partsware()">
         <div class="matrix">
           <div class="matrixcell title02">
             <div class="title" style="color: white;">配件</div>
@@ -649,7 +725,7 @@
       </div>
     </div>
     <div class="row hightitem section03">
-      <div class="col h80 br open-win" tapmode onclick="shop(4)" style="background: #050007; border-radius:0 0 0 20px; " >
+      <div class="col h80 br open-win" tapmode onclick="openDressinglist(1)" style="background: #050007; border-radius:0 0 0 20px; " >
         <div class="matrix">
           <div class="matrixcell title03">
             <div class="title" style="color: white;">海量潮图</div>
@@ -658,7 +734,7 @@
         </div>
         <img src="../image/swipe/3.jpg" class="fl pinzhi">
       </div>
-      <div class="col h80 bg open-win" tapmode onclick="shop(5)" >
+      <div class="col h80 bg open-win" tapmode onclick="openDressinglist(0)" >
         <div class="matrix">
           <div class="matrixcell title04" >
             <div class="title">个性穿搭</div>
@@ -676,9 +752,9 @@
 
   </div>
    <div class="guesstitle">潮搭社火爆服装<img src="../image/competitive_icon.png" alt=""></div>
-	<div class="fircds">
-		
-	</div>
+  <div class="fircds">
+    
+  </div>
         <div class="navdiv">
           <div class="nav">
             <p class="active" i="2">男装</p>
@@ -699,17 +775,47 @@
           </div>
 
           <script id="template" type="text/template">
-          	{{~it:value:index}}
-          		<div class="wareitem" onclick="openware('{{=value.bid}}')">
-          		 <div class="wareimg wareimgs" data-original="{{=value.image}}"></div>
-          		 <div class="wareinfo">
-          			 <div class="waretext">{{=value.description}}</div>
-          			 <div class="wareprice">￥{{=value.price}}</div>
-          		 </div>
-          		
-          		</div>
-          	{{~}}
+            {{~it:value:index}}
+              <div class="wareitem" tapmode onclick="openware('{{=value.bid}}')">
+               <div class="wareimg wareimgs" data-original="{{=value.image}}"></div>
+               <div class="wareinfo">
+                 <div class="waretext">{{=value.description}}</div>
+                 <div class="wareprice">￥{{=value.price}}</div>
+               </div>
+              
+              </div>
+            {{~}}
           </script>
+          <script id="template2" type="text/template">
+        {{~it:value:index}}
+        <div class='item' tapmode onclick="openware('{{=value.bid}}')" data-ware='{{=value.bid}}'  style='background:white'>
+        
+          <div class="itemwareimg"  data-original='{{=value.image}}' ></div>
+          <span class='description'>{{=value.description}}</span>
+          {{if(value.price>=30){ }}
+          <div class="pricelist">
+            <div class='price' style="font-size: 13px;"><s class='sprice'>￥{{=value.price}}</s></div>
+            <div class='newprice' style="font-size: 15px;">{{!newprice('{{=value.price}}')}}</div>
+          </div>
+          
+          {{ }else{ }}
+          <div class="pricelist">
+           <div class='price'>￥{{=value.price}}</div>
+           </div>
+          {{ } }}
+          
+        </div>
+       {{~}}
+      </script>
+       <script id="hotwaretemplate" type="text/template">
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+          {{for(var i=0; i<it.list.length;i++) { }}   
+              <div class="swiper-slide" tapmode onclick="openware('{{=it.list[i].bid}}')"  style="background-image: url({{=it.imgurl}}{{=it.list[i].image}});" ></div>
+          {{  }  }}
+          </div>
+        </div>
+      </script>
           <script type="text/javascript">
                var wareindex=2;
           var wareindex2=2;
@@ -722,10 +828,12 @@
             var scrollTop; 
           var wareTypeList;
           var off_on=false;
+          var warefall=1;
            
           apiready = function(){
               reshtml();
                getWareList(wareindex);
+               gethotware();
               nav();
           }
               
@@ -735,33 +843,54 @@
           // initEventListenter();
           //监听top回到顶部
           window.addEventListener("scroll", function (){
-            scrollTop = $(this).scrollTop();
-           if ( scrollTop>'520'){
+            
+           if ( $(".navdiv").offset().top-$(window).scrollTop()<=50){
                $(".nav").addClass("navfixed");
 
-           }else if(scrollTop<'520'){
+           }else{
               $(".nav").removeClass("navfixed");
 
            }
 
          })
           //上拉加载
-		 window.addEventListener("scroll", function (){
-		      //当时滚动条离底部0px时开始加载下一页的内容
-		      if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
-					if(off_on){
-						off_on=false;
-						getWareList(wareindex,true);
-						// toast("商品加载中",'bottom',1000);
-            api.toast({
-                msg: '商品加载中'
-            });
-					}
-		            
-		         
-		      }
-		  });
-
+     window.addEventListener("scroll", function (){
+          //当时滚动条离底部0px时开始加载下一页的内容
+          if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+          if(off_on){
+            off_on=false;
+            getWareList(wareindex,true);
+            // toast("商品加载中",'bottom',1000);
+            // api.toast({
+            //     msg: '商品加载中'
+            // });
+          }
+                
+             
+          }
+      });
+       // 限时火爆商品
+     function gethotware(){
+       getajax(url+'gethotware',{},function(ret){
+         if(ret.code==200){
+           var tempFn = doT.template($('#hotwaretemplate').text());
+           var params={
+             imgurl:imgurl,
+             list:ret.data
+           }
+           var resultHTML = tempFn(params);
+           $('.hotware').html(resultHTML).slideDown(666);
+           var swiper = new Swiper('.swiper-container', {
+                 slidesPerView: 2,
+                 spaceBetween: 6,
+                centeredSlides: true,
+                loop: true,
+                speed: 666,
+                
+              });
+         }
+       })
+     }
      function reshtml(){
        
         api.setCustomRefreshHeaderInfo({
@@ -783,7 +912,7 @@
             getWareList(wareindex,false);
         });
       }
-		
+    
           function nav(){
             $(".nav p").click(function(){
               var i=$(this).attr("i");
@@ -791,12 +920,12 @@
               $(this).addClass("active");
               $("#loading").addClass('show').removeClass('hidden');
               wareindex=i;
-              getWareList(wareindex,false);
+              getWareList(wareindex);
               // 点击列表分类
             
 
               if (scrollTop>438){
-                scrollTo('.nav',462)
+                scrollTo('.nav',522)
               }
               
               
@@ -842,7 +971,7 @@
             }else{
 
              skip=0;
-			dialog('商品加载中');
+      dialog('商品加载中');
             }
            var params={
              waretypeid:wareTypeList[_index].id,
@@ -875,49 +1004,32 @@
 
 
          function updateWareList(_data,_index,_LoadMore){
-           initWaterFall();
-           var resultText='';
-           for (var i =0; i <_data.length; i++) {
-
-            resultText+="<div class='item'  data-ware="+_data[i].bid+"  style='background:white'><img   data-original="+_data[i].image+" ><span class='description'>"+_data[i].description+"</span><span class='price'>￥"+_data[i].price+"</span></div>";
-
-
-          }
-          if (resultText==0) {
-            toast("没有资源啦",'center',1000)
-            return;
-          }
+           // if(warefall==1){
+           //  initWaterFall();
+           //  warefall=0;
+           // }
+            var tempFn = doT.template($('#template2').text());
+          // 使用模板函数生成HTML文本
+          var resultHTML = tempFn(_data);
+          
 
           if (_index==wareindex2){
             if (_LoadMore) {
-              $('#list').append(resultText);
+              $('#list').append(resultHTML);
             }else{
-              $('#list').html(resultText);
+              $('#list').html(resultHTML);
             }
            
          }else{
-           $('#list').html(resultText);
+           $('#list').html(resultHTML);
+
          }
 
-         $('.item').on('click',function(e){
-          var wareid=$(this).attr('data-ware');
-          // var url='./ware_frame.html?'+window.btoa(encodeURI('wareId='+wareid));
-           api.openWin({
-           name: 'ware',
-           url: './ware.html',
-           pageParam: {
-               wareId: wareid
-           },
-           
-       });
-          // window.location.href=url;
-
-
-        })
+         
 
 
          wareindex2=_index;
-		off_on=true;
+        off_on=true;
 
 
        }
@@ -927,8 +1039,8 @@
           no_columns: 2,
           padding_x: 2,
           padding_y: 8,
-          margin_bottom: 10,
-          single_column_breakpoint: 100
+          margin_bottom: 50,
+          single_column_breakpoint: 700
         });
 
         
@@ -936,7 +1048,7 @@
       function updateWareList1(_data){
         var text='';
         for (var i =0; i<_data.length; i++) {
-          text+="<div class='snapup hightitem section02 open-win' data-ware="+_data[i].bid+"  ><img  data-original="+_data[i].image+" class='fl infologo'><div class='shelf2 fl'><div class='shelfcell'><div class='title'>"+_data[i].description+"<span>￥"+_data[i].price+"</span></div><span class='subtitel'>周计火爆商品</span></div></div><img src='../image/arrow.png' class='arrow fr'></div>";
+          text+="<div class='snapup hightitem section02 open-win' tapmode onclick='openware("+ '"' +_data[i].bid+ '"' +")' data-ware="+_data[i].bid+"  ><img  data-original="+_data[i].image+" class='fl infologo'><div class='shelf2 fl'><div class='shelfcell'><div class='title'>"+_data[i].description+"<span>￥"+_data[i].price+"</span></div><span class='subtitel'>周计火爆商品</span></div></div><img src='../image/arrow.png' class='arrow fr'></div>";
         }
     // console.log(text);
     $('#list1').html(text);
@@ -945,50 +1057,49 @@
     
     dl.close();
     api.refreshHeaderLoadDone()
-    $("img").lazyload({
+    $("img,.itemwareimg").lazyload({
       threshold : 200
     });
-    $('.snapup').on('click',function(e){
-      var wareid=$(this).attr('data-ware');
-      // window.location.href="./ware_frame.html?"+window.btoa(encodeURI("wareId="+wareid));
-       api.openWin({
-           name: 'ware',
-           url: './ware.html',
-           pageParam: {
-               wareId: wareid
-           },
-           
-       });
-
-
-    })
+   
 
 // $('.foot').load('../comm/footer.html');
 
   }
 
 function updateWareList2(ret){
-	var tempFn = doT.template($('#template').text());
-	// 使用模板函数生成HTML文本
-	var resultHTML = tempFn(ret);
-	// console.log(resultHTML)
-	$('.fircds').css('border-bottom','0.0125rem solid #F1F1F1')
-	$(".fircds").html(resultHTML);
-	
-	$(".wareimgs").lazyload({
-		 effect: 'fadeIn',
-	});
+  var tempFn = doT.template($('#template').text());
+  // 使用模板函数生成HTML文本
+  var resultHTML = tempFn(ret);
+  // console.log(resultHTML)
+  $('.fircds').css('border-bottom','0.0125rem solid #F1F1F1')
+  $(".fircds").html(resultHTML);
+  
+  $(".wareimgs").lazyload({
+     effect: 'fadeIn',
+  });
 }
 function highware(){
-  window.location.href="./highware_frame.html";
+  api.openWin({
+      name: 'highware',
+      url: './highware.html',
+      pageParam: {
+          name: 'test'
+      }
+  });
 }
 
 
 function partsware(){
-  window.location.href="./partsware_frame.html";
+  api.openWin({
+      name: 'partsware',
+      url: './partsware.html',
+      pageParam: {
+          name: 'test'
+      }
+  });
 }
 function openware(wareid){
-			 // window.location.href="./ware_frame.html?"+window.btoa(encodeURI("wareId="+wareid));
+       // window.location.href="./ware_frame.html?"+window.btoa(encodeURI("wareId="+wareid));
        api.openWin({
            name: 'ware',
            url: './ware.html',
@@ -998,11 +1109,11 @@ function openware(wareid){
            
 
        });
-		}
+    }
 
 function opencart(){
-	// window.location.href="./shoppingcart_frame.php";
-	
+  // window.location.href="./shoppingcart_frame.php";
+  
   api.openWin({
       name: 'shoppingcart',
       url: './shoppingcart.html',
@@ -1010,6 +1121,40 @@ function opencart(){
           name: 'test'
       },
       
+  });
+}
+
+function newprice(price){
+        var dandanjian;
+        var cb;
+        var oldprice=price;
+        if(price>=30 && price<=70){
+          dandanjian=1;
+          cb=1;
+        }else if(price>=70 && price<=160){
+          dandanjian=2;
+          cb=3;
+        }else if(price>160){
+          dandanjian=3;
+          cb=5;
+        }else{
+          dandanjian=0;
+          cb=0;
+        }
+        var price=price-dandanjian-cb;
+        if(oldprice>price){
+          return '￥'+price;
+        }
+        
+}
+
+function openDressinglist(index){
+  api.openWin({
+      name: 'Dressinglist',
+      url: './Dressinglist.html',
+      pageParam: {
+          type:index 
+      }
   });
 }
 </script>

@@ -186,7 +186,7 @@
 		</header>
 		<input type="file" name="" style="display: none;" id="choose-file" multiple="multiple">
 		<div class="inp">
-			<textarea name="" class="text color" placeholder="您是否遇到一些App博主发布的穿搭推荐或者服装推荐没有链接，自己又找不到。我们有专门的工作人员通过用户上传的图片进行查找并上架"></textarea>
+			<textarea name="" class="text color" placeholder="请您详细描述图片中的服装，我们会有专门的工作人员帮您查找， 上传一件服装会传送到商品页，上传多套服装会传送到CDS动态页，"></textarea>
 			 <div id="file-list">
 			 	<div class="addimage" onclick="uploadimg()"></div>
 				
@@ -225,7 +225,7 @@
 							{{ } }}
 						</div>
 						<div>
-							{{ if(value.url){ }}
+							{{ if(value.url!=0){ }}
 								<span style="display: inline-block; font-weight: bold;font-size: 17px; line-height: 30px;  height: 30px; color: #0062CC;" tapmode onclick="getware('{{=value.url}}')">~进入传送门~</span>
 							{{ }else{ }}
 								<span class="tishi">请等待工作人员上新</span>
@@ -245,7 +245,7 @@
 			fileList = [];
 			var curFile;
 			apiready = function(){
-			  
+			  			 quanxian('storage-w,camera,storage-r,photos-w')
 						getshangxin();
 						reshtml();
 				 userInfo=$api.getStorage('userInfo');
@@ -353,7 +353,7 @@
 									}
 									
 								
-							            $list.append('<div style="background-image:url(' + ret.list[i].path + ')" class="imglist" ></div>').children(':last').hide().fadeIn(2500);
+							            $list.append('<div style=background-image:url("' + ret.list[i].path + '") class="imglist" ></div>').children(':last').hide().fadeIn(2500);
 							  
 							            fileList.push(ret.list[i].path);
 							    

@@ -50,7 +50,7 @@
 <body>
 	<header id="header">
 		<div class="back" tapmode onclick="api.closeWin()"></div>
-		<h1>查看物流</h1>
+		<h1>物流追踪</h1>
 		<!-- <div class="right" tapmode onclick="jietu()">扫描</div> -->
 	</header>
 </body>
@@ -62,8 +62,8 @@
         // 获取header和nav的高
         headerH=$api.offset(header).h
         api.openFrame({
-        	name: 'lookxiangqing_frame',
-        	url: './lookxiangqing_frame.html',
+        	name: 'wuliu_frame',
+        	url: './wuliu_frame.html',
         	rect: {
         		x: 0,
         		y: headerH,
@@ -71,7 +71,7 @@
         		h: 'auto'
         	},
         	pageParam: {
-        		lookid: api.pageParam.lookid
+        		shooping: api.pageParam.shooping
         	},
         	bounces: false
         });

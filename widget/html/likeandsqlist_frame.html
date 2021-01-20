@@ -80,13 +80,13 @@
 						var reshtml = '';
 						$.each(e.data, function(index, data) {
 							if (data.type == 'like') {
-								reshtml += '<div class="list"><div class="head_img" style="background-image: url(' + imgurl + data.headimg +
+								reshtml += '<div class="list"><div class="head_img" onclick="TAuser('+"'"+ data.userid+"'"+')" style="background-image: url(' + imgurl + data.headimg +
 									');"></div><p class="name">' + data.name +
 									'<span>&nbsp;赞了您的动态</span></p><p class="text"></p><p class="time">' + timestampFormat(data.time) +
 									'</p><div class="cdsimg"  onclick=openDressing("' + data.fatherid + '") style="background-image:url(' +
 									imgurl + data.fm + ')"></div></div>'
 							} else {
-								reshtml += '<div  class="list"><div class="head_img" style="background-image: url(' + imgurl + data.headimg +
+								reshtml += '<div  class="list"><div class="head_img" onclick="TAuser('+"'"+ data.userid+"'"+')" style="background-image: url(' + imgurl + data.headimg +
 									');"></div><p class="name">' + data.name +
 									'<span>&nbsp;把您的动态收藏至书签</span></p><p class="text"></p><p class="time">' + timestampFormat(data.time) +
 									'</p><div class="cdsimg" onclick=openDressing("' + data.fatherid + '") style="background-image:url(' +
@@ -146,7 +146,18 @@
 		          
 		       });
 			}
-
+		function TAuser(uid){
+ 
+  			api.openWin({
+     			 name: 'TAusercenter',
+     			 url: './TAusercenter.html',
+     			 pageParam: {
+     			     uid:uid
+     				 },
+  			  			  
+ 				 });
+			}
+ 
 		
 
 		

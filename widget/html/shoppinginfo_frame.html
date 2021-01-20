@@ -195,12 +195,14 @@
 	.order .icon-panel .info .bottom {
 		position: relative;
 		box-sizing: border-box;
-		padding-bottom:2px;
-		width: 100%;
-		height: 32px;
-		font-size: 16px;
-		color: #444;
+		max-width: 38%;
+		min-width: 23%;
+		height: 26px;
+		line-height: 26px;
+		font-size: 15px;
+		color: #4f4a4a;
 		text-align: left;
+		display: inline-block;
 	}
 
 	.order .icon-panel .right {
@@ -354,6 +356,25 @@
 		color: gray;
 		/* border: 1px solid red; */
 	}
+	.colorandsize{
+		font-size: 13px;
+		color: gray;
+	}
+	.sevenH,.sevenT{
+		display: inline-block;
+		font-size: 12px;
+		background-color:#FFF2EC;
+		color:#FF5406;
+		border-radius: 3px;
+		padding:2px;
+		padding-left: 3px;
+		padding-right: 3px;
+		/* margin-left: 8px; */
+		text-align: center;
+		width: auto;
+		margin-top: 3px;
+		
+	}
 </style>
 	</head>
  <input id="copyInput" value="http://www.chaodashe.com" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;" />
@@ -395,8 +416,15 @@
 					<img src="../image/order_ware.gif" id="image" alt="">
 				</div>
 				<div class="info">
-					<div class="description" id="description"></div>
-					<div class="bottom" id="wareprice">￥19.9</div>
+					<div class="description" id="description">...</div>
+					<div class="bottom" id="wareprice">￥0.00</div>
+					<div class="sevenT">
+						七天退货
+					</div>
+					<div class="sevenH">
+						七天换货
+					</div>
+					<div class="colorandsize">.../...</div>
 				</div>
 			</div>
 
@@ -479,7 +507,12 @@
 		}
 
 		function updateWare(_data) {
-
+			if(_data[0].sevenT!='1'){
+				$('.sevenT').remove();
+			}
+			if(_data[0].sevenH!='1'){
+				$('.sevenH').remove();
+			}
 			var warename = $('#warename');
 			var wareprice = $('#wareprice');
 			var newprice = $('#newprice')
@@ -488,6 +521,7 @@
 			var description = $('#description');
 			var color = $('#color');
 			var size = $('#size');
+			var colorandsize=$('.colorandsize');
 			color.html(_data[0].color);
 			size.html(_data[0].size);
 			description.html(_data[0].description);
@@ -495,6 +529,7 @@
 			wareprice.html('￥' + _data[0].oldprice);
 			newprice.html('￥' + _data[0].newprice);
 			image.attr('src', imgurl+_data[0].url);
+			colorandsize.html(_data[0].size+'/'+_data[0].color);
 			// 详细账单
 			$('.dandanjian>.name>span').html(_data[0].dandanjian);
 			$('.cb>.name>span').html(_data[0].cb);

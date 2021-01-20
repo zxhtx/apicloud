@@ -9,7 +9,7 @@
     animation: rotate 2s linear infinite;
 	border-radius: 50%;
 	border: 1px solid #FAFAFA;
-	border-bottom:1px solid #11FFAC;
+	border-bottom:3px solid #11FFAC;
 }
 @-webkit-keyframes rotate{from{-webkit-transform: rotate(0deg)}
     to{-webkit-transform: rotate(360deg)}

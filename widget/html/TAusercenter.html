@@ -17,6 +17,7 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
   apiready = function() {
+    // alert(api.pageParam.uid);
          api.openFrame({
           name: 'TAusercenter_frame.frame',
           url: './TAusercenter_frame.html',
@@ -27,12 +28,27 @@
             h: 'auto' 
           },
           pageParam: {
-          	uid:api.pageParam.uid
+          	uid:api.pageParam.uid,
+           
           },
           bounces: false,
 
 
         }); 
+         event()
        };
+
+       function event(){
+        api.addEventListener({
+            name: 'keyback'
+         }, function(ret, err) {
+            if(api.pageParam.page=='Dressing'){
+               api.sendEvent({
+                  name: 'playmusic',
+               });
+            }
+            api.closeWin();
+        });
+        }
      </script>
      </html>

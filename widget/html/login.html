@@ -30,12 +30,25 @@
             pageParam: {
                 page: api.pageParam.page,
                 TAusercenteruid:api.pageParam.TAusercenteruid,
-                wareId:api.pageParam.wareId
+                wareId:api.pageParam.wareId,
+                Dressingid:api.pageParam.Dressingid,
             },
             bounces: false
         });
+        event();
     };
-  
+     function event(){
+        api.addEventListener({
+            name: 'keyback'
+         }, function(ret, err) {
+            if(api.pageParam.page=='Dressing'){
+               api.sendEvent({
+                  name: 'playmusic',
+               });
+            }
+            api.closeWin();
+        });
+        }
 </script>
 
 </html>

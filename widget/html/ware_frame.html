@@ -108,7 +108,7 @@ overflow: hidden;
   box-sizing: border-box;
   width: 100%;
   /*height: 56px;*/
-  border-bottom: 8px solid  #F2F2F2;
+  border-bottom: 2px solid  #F2F2F2;
   margin-top: 12px;
   padding-bottom: 8px;
   /*margin-bottom: 50px;*/
@@ -121,6 +121,8 @@ overflow: hidden;
   margin-top: 8px;
   margin-left: 8px;
   color: #444;
+  font-size: 13px;
+  font-weight: bold;
 }
 
 .info-color {
@@ -138,6 +140,8 @@ overflow: hidden;
   margin-top: 8px;
   margin-left: 8px;
   color: #444;
+  font-size: 13px;
+  font-weight: bold;
 }
 
 
@@ -169,19 +173,20 @@ overflow: hidden;
   padding: 5px 8px 5px 8px;
   margin:3px;
   font-size: 12px;
-  color: white;
-  background: black;
+   color: #000;
+  background: #fff;
   border: 1px solid #ccc;
   border-radius: 6px;
   display: inline-block;
+  /*font-weight: bold;*/
 }
 .info-discount .cima.now{
  padding: 5px 8px 5px 8px;
  font-size: 12px;
- color: black;
- background: gray;
- background: white;
+  color: #fff;
+ background: #000;
  border: 1px solid black;
+ font-weight: bold;
 
 }
 
@@ -190,8 +195,8 @@ overflow: hidden;
   padding: 5px 8px 5px 8px;
   margin:3px;
   font-size: 12px;
-  color: white;
-  background: black;
+ color: #000;
+  background: #fff;
   border: 1px solid #ccc;
   border-radius: 6px;
   display: inline-block;
@@ -200,8 +205,8 @@ overflow: hidden;
 .info-color .yanse.now{
   padding: 5px 8px 5px 8px;
   font-size: 12px;
-  color: black;
-  background: white;
+  color: #fff;
+  background: #000;
   border: 1px solid black;
   font-weight: bold;
 }
@@ -299,8 +304,8 @@ footer{
 }
 .quan .twospan{
   color: #58595B;
-  margin-left: 6px;
-  font-size: 14px;
+  /*margin-left: 6px;*/
+  font-size: 12px;
   font-weight: bold;
 }
 #sixtext{
@@ -328,6 +333,7 @@ footer{
           
         }
 .cds{
+  display: none;
   width: 100%;
   height: 180px;
   border-bottom: 8px solid #F2F2F2;
@@ -339,6 +345,9 @@ footer{
   height: 138px;
   display: flex;
   justify-content: flex-start;
+  flex-wrap: nowrap;
+  overflow-y:hidden;
+  overflow-x: scroll;
 }
 .lazy2{
   background-size: cover;
@@ -349,12 +358,12 @@ footer{
   color: #d0cccc;
   height: 30px;
   width: 100%;
+  font-size: 13px;
+  line-height: 30px;
 }
 .cdsitem{
   display: inline-block;
   margin-left: 12px;
-
-
 }
 #quality{
   width: 100%;
@@ -427,10 +436,59 @@ footer{
     font-weight: bold;
     font-size: 15px;
 }
+.addcart{
+  position: fixed;
+  right: 28px;
+  bottom: 88px;
+  width: 66px;
+  height: 66px;
+    box-shadow: 0 0.3em 0.6em rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  z-index: 1;
+}
+.addcart .cartpng{
+  width: 38px;
+  height: 38px;
+  background-image: url(../image/cart.png);
+  background-position: center;
+  background-size: cover;
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -19px;
+  margin-top: -19px;
+  /* margin-top: -19px; */
+}
+.toast{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  color: #000;
+  width: 100%;
+  height: 30px;
+  border-bottom: 2px solid #F2F2F2;
+  
+  
+}
+.toast>.yiwen{
+  background-image: url(../image/yiwen.png);
+  width: 16px;
+  height: 16px;
+  background-size: cover;
+  background-position: center;
+  margin-right: 6px;
+  margin-left: 5px;
+}
 </style>
   </head>
 
   <body>
+    <div class="addcart" onclick="addshoppingcart()">
+      <div class="cartpng"></div>
+    </div>
+
     <div class="back" tapmode onclick="goback()"></div>
     <div class="home"></div>
 
@@ -488,8 +546,16 @@ footer{
                       <div class="sharetext">您下单后,此分享者将获得3元奖励</div>
                      </div>
                     <div class="quan">
-                      <span class="onespan">单单减</span><span class="twospan">全站每单都会获得商品相应的优惠</span><br/>
-                      <span class="onespan">5+返利活动</span><span class="twospan">全站用户都享有参与权</span>
+                     <div onclick="opencb()">
+                         <span class="twospan"> <span class="onespan" >潮贝</span>&nbsp;价格≥30元可使用对应潮贝,<b>{{!newprice('{{=it.list.price}}','cb')}}</b></span> 
+                      </div>
+                      <div onclick="opendandanjian()">
+                         <span class="twospan"> <span class="onespan" >单单减</span>&nbsp;全站每单都会获得商品相应的优惠,<b>{{!newprice('{{=it.list.price}}','dandanjian')}}</b></span>
+                      </div>
+                
+                       <div onclick="openfiveact()">
+                         <span class="twospan"><span class="onespan" >5+返利活动</span>&nbsp;全站用户都享有参与权,<b>{{!fiveactivity('{{=it.list.price}}')}}</b></span>
+                      </div>
           
                     </div>
                     <div class="baolist" >
@@ -501,7 +567,7 @@ footer{
                   <span>√7天换货</span>
                  {{ } }}
                     
-                     <span>√24小时发货</span>
+                     <span>√48小时发货</span>
           
                    </div>
                    <div class="sizeandcolor">
@@ -522,17 +588,12 @@ footer{
                       {{ } }}
                     </div>
                   </div>
+                  <div class="toast"><div class="yiwen"></div>部分商品图片拍摄时经过打光美颜,颜色略有泛白</div>
               <div class="cds">
                 
               </div>
-                  <div id="" style="width: {{=it.frameWidth}}px; margin-top: 28px; ">
-                    {{for(var i=0; i< it.alllist.length;i++) { }}
-                    <div   data-wareid="{{=it.alllist[i].bid}}" class="listwareid" style="width: {{=it.frameWidth/4}}px; margin-left:{{=(it.frameWidth/4)/4}}px ;  display: inline-block;">
-                      <img  class="lazy"  data-original="{{=it.alllist[i].image}}" style="width:100% ; border-radius:6px ;  " />
-                      <span id="sixtext" style="font-size: 10px; ">{{=it.alllist[i].description}}</span>
-                    </div>
-                    {{  }  }}
-          
+                  <div id="sjware" style="width: {{=it.frameWidth}}px; margin-top: 8px; ">
+                  
                   </div>
                   <div class="imglist">
                     {{for(var i= it.list.wareimglist.length-1; i>=0 ;i--) { }}
@@ -543,14 +604,23 @@ footer{
     
         </script>
         <script id="template2" type="text/x-dot-template">
-      <div class="cdstitle">-此商品在以下动态运用-</div>
+      <div class="cdstitle">穿搭文章中出现此商品</div>
       <div class="cdslist2">
       {{~it.list:value:index}}
-        <div class="cdsitem" style="width: {{=it.frameWidth/3.5}}px;height: 98%;" onclick="openDressing('{{=value.id}}')" >
-        <div class="lazy2"  data-original="{{=it.imgurl}}{{=value.fm}}"  style="width:100% ; border-radius:6px ;height: 100%; "></div>
+        <div class="cdsitem" style="min-width:93px;height: 98%;" onclick="openDressing('{{=value.id}}')" >
+        <div class="lazy2"  data-original="{{=it.imgurl}}{{=value.fm}}"  style="background-color:#d0cccc; width:100% ; border-radius:6px ;height: 100%; "></div>
         </div>
       {{~}}
       </div>
+    </script>
+    <script id="template3" type="text/x-dot-template">
+  
+      {{for(var i=0; i< it.alllist.length;i++) { }}
+      <div   data-wareid="{{=it.alllist[i].bid}}" class="listwareid" style="width: {{=it.frameWidth/4}}px; margin-left:{{=(it.frameWidth/4)/4}}px ;  display: inline-block;">
+        <img  class="lazy"  data-original="{{=it.alllist[i].image}}" style="width:100% ; border-radius:6px ;  " />
+        <span id="sixtext" style="font-size: 10px; ">{{=it.alllist[i].description}}</span>
+      </div>
+      {{  }  }}
     </script>
     <script type="text/javascript">
       var size;
@@ -629,7 +699,8 @@ footer{
             shoppingid = ret.data.bid;
             
             openwareimglist=ret.data.wareimglist;
-            getallware(ret.data);
+           fnUpdateWareInfo(ret.data);
+            dl.close();
 
 
           }
@@ -638,7 +709,7 @@ footer{
 
       }
 
-      function getallware(ret1) {
+      function getallware() {
      
         var suiji = Math.round(Math.random() * 600);
         var params = {
@@ -647,16 +718,37 @@ footer{
 
         }
         getajax(url+'sjware', params, function(ret) {
-          fnUpdateWareInfo(ret1, ret.data);
+          UpdatesjWareInfo( ret.data);
+
         });
       }
+// 随机商品
+      function UpdatesjWareInfo(ret){
+        var wh = $(window).width();
+        var param = {
+          alllist: ret,
+          frameWidth: wh,
+        };
+   
+        
+        var tempFn = doT.template($('#template3').text());
+        // 使用模板函数生成HTML文本
+        var resultHTML = tempFn(param);
+        
+        $("#sjware").append(resultHTML);
+        $("img.lazy").lazyload({
+          // effect: "fadeIn",
+          // threshold:388,
+        });
+        listware();
+      }
+
       // 更新商品详情展示
-      function fnUpdateWareInfo(_ware, _ware2) {
+      function fnUpdateWareInfo( _ware) {
         var wh = $(window).width();
         var param = {
           list: _ware,
           frameWidth: wh,
-          alllist: _ware2,
         };
         if (_ware == '') {
 
@@ -673,7 +765,8 @@ footer{
         // console.log(resultText);
         $("#list").append(resultText);
         getcds(_ware.bid);
-        dl.close();
+        getallware();
+        
         var swiper = new Swiper('.swiper-container', {
           pagination: {
             el: '.swiper-pagination',
@@ -692,12 +785,11 @@ footer{
         });
         $("#loading").addClass("hidden");
         $("img.lazy").lazyload({
-          effect: "fadeIn",
+          // effect: "fadeIn",
           // threshold:388,
         });
         size();
         color();
-        listware();
         oporderWin();
         if(api.pageParam.shareuid){
             if(api.pageParam.shareuid!=userInfo.id){
@@ -901,12 +993,110 @@ footer{
         var tempFn = doT.template($('#template2').text());
         // 使用模板函数生成HTML文本
         var resultHTML = tempFn(param);
-        $(".cds").append(resultHTML);
+        $(".cds").append(resultHTML).slideDown(888);
         $(".lazy2").lazyload({
           effect: "fadeIn",
-          // threshold:388,
+          threshold:888,
         });
       }
+
+      function addshoppingcart(){
+        if(!userInfo){
+          api.toast({
+              msg: '请登录后重试'
+          });
+          return;
+        }
+        postajax(url+'addshoppingcart',{'userid':userInfo.id,'wareid':shoppingid},function(ret){
+          if(ret.code==200){
+            
+            api.toast({
+                msg: ret.message
+            });
+          }else{
+             api.toast({
+                msg: ret.message
+            });
+          }
+        })
+        
+      }
+
+      function newprice(price,type){
+      var dandanjian;
+      var cb;
+      if(price>=30 && price<=70){
+        dandanjian=1;
+        cb=1;
+      }else if(price>=70 && price<=160){
+        dandanjian=2;
+        cb=3;
+      }else if(price>160){
+        dandanjian=3;
+        cb=5;
+      }else{
+        dandanjian=0;
+        cb=0;
+      }
+      if(type=='cb'){
+        if(cb>0){
+          return '此商品可使用'+(cb*100)+'枚潮贝(100枚=1元)';
+        }
+      }else{
+        if(dandanjian>0){
+          return '此商品可减免'+dandanjian+'元';
+        }
+      }
+    }
+    
+    function fiveactivity(price){
+      if(price>=30){
+        return '累计消费到5单会送一件服装';
+      }else{
+        return '此商品不可参加5+返利活动';
+      }
+      
+    }
+    function opencb(){
+      api.openWin({
+          name: 'chaobeixuzhi',
+          url: './chaobeixuzhi.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+     
+    }
+    function openfiveact(){
+      api.openWin({
+          name: 'wujia',
+          url: './wujia.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+     
+    }
+    function opendandanjian(){
+      api.openWin({
+          name: 'wujia',
+          url: './wujia.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+    }
+    function openDressing(id){
+    api.openWin({
+           name: 'Dressingdetails',
+           url: './Dressingdetails.html',
+           pageParam: {
+               articleid:id
+           },
+          
+       });
+       
+}
     </script>
   </body>
 

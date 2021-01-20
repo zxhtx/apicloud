@@ -6,35 +6,263 @@
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
     <title>1</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <!-- <link rel="stylesheet" href="../css/searchlist.css"> -->
     <style>
+    #top {
+  position: absolute;
+  top: 0;
+  z-index: 5;
+  width: 100%;
+  background: #fff;
+}
+
+#top .addr {
+  height: 36px;
+  margin: 0 auto;
+  display: block;
+}
+
+#top .search {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 36px;
+  display: block;
+}
+
+
+
+
+
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  z-index: 5;
+}
+
+
+
+.header {
+  width: 100%;
+  height: 40px;
+  /* border: 1px solid red; */
+  /* position: fixed; */
+  /* top: 0px; */
+  /* left: 0px; */
+  background: #fff;
+  z-index: 11;
+}
+
+.header .back {
+  width: 32px;
+  height: 28px;
+  background-image: url('../image/back.png');
+  background-position: center;
+  background-size: cover;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 5px;
+  margin-left: 3px;
+}
+
+.header .searchpng {
+  display: inline-block;
+  margin-left: 19px;
+  margin-top: 8px;
+  vertical-align: middle;
+
+}
+
+.header .searchbox {
+  display: inline-block;
+  height: 35px;
+  width: 68%;
+  vertical-align: middle;
+  background: #fff;
+  margin-left: 12px;
+
+}
+
+.header .searchbox .searchtext {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: 0px;
+  font-size: 18px;
+  padding-top: 5px;
+  /* background: #F9F9F9; */
+  background: #fff;
+
+}
+    nav {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-flex-flow: row;
+        flex-flow: row;
+        position: relative;
+        width: 100%;
+        height: 40px;
+        background-color: #fff;
+        /*border: 1px solid red;*/
+        margin-top: 36px;
+    }
+    
+    nav .menu {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        font-size: 13px;
+        color: gray;
+        text-align: center;
+    }
+    
+    nav .menu.selected {
+        font-size: 14px;
+        color: #000;
+        font-weight: bolder;
+    }
 </style>
 </head>
 
 <body>
-   
+   <div id="top">
+      <div class="header">
+        <div class="back" onclick="api.closeWin();"></div>
+        <div class="searchbox">
+          <input type="text" class="searchtext" placeholder="搜你想要的">
+        </div>
+        <div class="searchpng" tapmode onclick="searchbtn()"  style="width:32px;height: 32px; background-image: url('../image/search_groupbuy.png'); background-position: center; background-size: cover;"></div>
+      </div>
+    </div>
+    <nav id="nav">
+        <div class="menu selected" tapmode="selected" onclick="fnSetNavMenuIndex(0);">潮搭社</div>
+        <div class="menu" tapmode="selected" onclick="fnSetNavMenuIndex(1);">用户</div>
+        <div class="menu" tapmode="selected" onclick="fnSetNavMenuIndex(2);">商品</div>
+      
+    </nav>
 </body>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
 <script type="text/javascript" src="../script/api.js"></script>
 
 <script type="text/javascript">
+    var framesOpened = false,
+    menus, headerH, navH;
     apiready = function() {
+      $('.searchtext').val(api.pageParam.val)
+       var header = $api.byId('top');
+        var nav = $api.byId('nav');
+        // 计算header和nav元素的高度
+        headerH = $api.offset(header).h;
+        navH = $api.offset(nav).h;
 
-      api.openFrame({
-          name: 'searchlist_frame',
-          url: './searchlist_frame.html',
-          rect: {
-              x: 0,
-              y: 0,
-              w: 'auto',
-              h: 'auto'
-          },
-          pageParam:{
-            val:api.pageParam.val,
-          }
-          ,bounces: false,
-      });
-
+        // 获取所有的分类菜单
+        menus = $api.domAll(nav, '.menu');
+      // api.openFrame({
+      //     name: 'searchlist_frame',
+      //     url: './searchlist_frame.html',
+      //     rect: {
+      //         x: 0,
+      //         y: 0,
+      //         w: 'auto',
+      //         h: 'auto'
+      //     },
+      //     pageParam:{
+      //       searchval:api.pageParam.val,
+      //     }
+      //     ,bounces: false,
+      // });
+       openFrames();
   };
 
+   function openFrames() {
+
+    // 判断这些Frame是否已经打开
+    if (framesOpened) {
+        return;
+    }
+
+    // 构造FrameGroup中的Frame数组
+    var frames = [];
+    for (var i = 0; i < menus.length; i++) {
+        frames.push({
+            name: 'searchlist_frame_' + i,
+            url: './searchlist_frame.html',
+            pageParam: {
+                 searchval:api.pageParam.val,
+                 index:i
+            }
+        });
+    }
+
+    // 打开FrameGroup
+    api.openFrameGroup({
+        name: 'searchFrameGroup',
+        scrollEnabled: true, // 支持手势滑动切换
+        rect: {
+            x: 0,
+            y: headerH + navH,
+            w: 'auto', // 自动填充所在Window的宽度
+            h: 'auto' // 自动填充所在Window的高度
+        },
+        index:0, // 默认显示第一个Frame
+        frames: frames,
+        preload: frames.length // 预加载所有Frame
+    }, function(ret, err) {
+        // Frame切换完成的响应函数，更新分类菜单的选中状态
+        fnSetNavMenuSelected(ret.index);
+        // alert(ret.index)
+    });
+
+  
+
+    // 标记为已经打开
+    framesOpened = true;
+}
+
+// 分类菜单点击的响应函数，切换Frame
+function fnSetNavMenuIndex(index_) {
+    // 首先更新菜单选中状态
+    fnSetNavMenuSelected(index_);
+
+    // 切换FrameGroup中的当前Frame
+    api.setFrameGroupIndex({
+        name: 'searchFrameGroup',
+        index: index_,
+        scroll: true
+    });
+}
+
+// 更新分类菜单的选中状态
+function fnSetNavMenuSelected(index_) {
+    for (var i = 0; i < menus.length; i++) {
+        if (index_ == i) {
+            $api.addCls(menus[i], 'selected');
+        } else {
+            $api.removeCls(menus[i], 'selected');
+        }
+    }
+}
+
+function searchbtn(){
+if ($('.searchtext').val().length =0) {
+  api.toast({
+     msg: '请输入搜索关键词'
+  });
+  return;
+}
+  api.sendEvent({
+      name: 'searchbtnevent',
+      extra: {
+          searchvalue: $('.searchtext').val(),
+      }
+  });
+}
   
 </script>
 

@@ -7,216 +7,31 @@
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>购物车</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
-    <style>
-    html,
-    body {
-        height: 100%;
-    }
-
-    body {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-flex-flow: column;
-        flex-flow: column;
-    }
     
-    header {
-        width: 100%;
-        height: 40px;
-        background-color: white;
-    }
-    
-    header .back {
-       position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 40px;
-        height: 40px;
-        /*border: 1px solid red;*/
-        background: url(../image/back.png);
-        background-position: 12px 9px;
-        background-size: 11px 18px;
-        background-repeat: no-repeat;
-    }
-    
-    header h1 {
-        width: 100%;
-        height: 40px;
-        text-align: center;
-        color: #000;
-        font-size: 18px;
-        line-height: 40px;
-    }
-    
-    section {
-        -webkit-box-flex: 1;
-        -webkit-flex: 1;
-        flex: 1;
-    }
-    
-    footer {
-        width: 100%;
-        height: 50px;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-orient: horizontal;
-        -webkit-flex-flow: row;
-        flex-flow: row;
-        background-color: #fff;
-        border-top: 1px solid #d1d1d1;
-    }
-    
-    .control {
-        position: relative;
-        width: 100px;
-        height: 50px;
-    }
-    
-    .control .select {
-        position: absolute;
-        top: 17px;
-        left: 8px;
-        width: 16px;
-        height: 16px;
-        background-repeat: no-repeat;
-        background-image: url(../image/select_on.png);
-        background-size: 100% 100%;
-        background-position: center center;
-    }
-    
-    .control .select-off {
-        background-image: url(../image/select_off.png);
-    }
-    
-    .control .info {
-        box-sizing: border-box;
-        width: 100%;
-        height: 50px;
-        padding-left: 32px;
-        padding-top: 8px;
-        padding-bottom: 8px;
-    }
-    
-    
-    
-    .control .info .bottom {
-        height: 14px;
-        font-size: 10px;
-        color: #888;
-        text-align: left;
-        line-height: 14px;
-        margin-top: 8px;
-    }
-    
-    .panel {
-        -webkit-box-flex: 1;
-        -webkit-flex: 1;
-        flex: 1;
-        height: 50px;
-    }
-    
-    .panel .info {
-        box-sizing: border-box;
-        width: 100%;
-        height: 50px;
-        padding-top: 8px;
-        padding-right: 8px;
-    }
-    
-    .panel .info .top {
-        position: relative;
-        width: 100%;
-        height: 20px;
-        text-align: right;
-        font-size: 16px;
-        color: #444;
-        line-height: 20px;
-    }
-    
-    .panel .info .top .amount {
-        font-weight: bold;
-        color: black;
-    }
-    
-    .panel .info .bottom {
-        position: relative;
-        height: 14px;
-        font-size: 13px;
-        color: black;
-        text-align: right;
-        line-height: 14px;
-    }
-    
-    .buy {
-        width: 112px;
-        height: 50px;
-    }
-    
-    .buy .buy-button {
-        width: 112px;
-        height: 40px;
-        margin-top: 5px;
-    }
-    
-    .highlight {
-        opacity: 0.7;
-    }
-    </style>
 </head>
 
 <body>
-    <header id="header">
-        <div class="back" tapmode onclick="api.closeWin();"></div>
-        <h1>购物车</h1>
-    </header>
-    <section></section>
+    
    
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
 apiready = function() {
-     var header=$api.byId('header');
-     
-      
-        // 获取header和nav的高
-        headerH=$api.offset(header).h
-       
+    
 
         api.openFrame({
           name: 'shoppingcart',
           url: './shoppingcart_frame.html',
           rect: {
               x: 0,
-              y: headerH,
+              y: 0,
               w: 'auto',
-              h: api.winHeight-headerH 
+              h: 'auto'
           },
-          pageParam: {
-              wareId:api.pageParam.wareId
-          },
-          bounces: true,
+          bounces: false,
       });
 };
-// 设置购物车中的商品数量和金额，被购物车Frame调用
-function fnSetWareCountAndAmount (count_, amount_) {
-    var count = $api.byId('count');
-    var amount = $api.byId('amount');
-    count.innerHTML = count_;
-    amount.innerHTML = '￥' + amount_;
-}
 
-function fnOpenOrderWin () {
-    api.openWin({
-        name: 'order',
-        url: './order.html',
-        pageParam: {
-            name: 'test'
-        }
-    });
-}
 </script>
 
 </html>

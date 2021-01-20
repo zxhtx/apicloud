@@ -1,417 +1,277 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>shoppingcart_frame</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css" />
-    <style type="text/css">
-    html,
-    body {
-        height: 100%;
-        background-color: #eee;
-    }
-    
-    .list {
-        display: block;
-        position: relative;
-        box-sizing: border-box;
-        width: 100%;
-        height: auto;
-    }
-    
-    .ware {
-        position: relative;
-        width: 100%;
-        height: 108px;
-        margin-bottom: 8px;
-        background-color: #fff;
-    }
-    
-    .ware .content {
-        position: relative;
-        box-sizing: border-box;
-        width: 100%;
-        height: 100%;
-        padding-top: 8px;
-        padding-bottom: 8px;
-    }
-    
-    .ware .select {
-        position: absolute;
-        width: 16px;
-        height: 16px;
-        top: 56px;
-        left: 8px;
-        background-repeat: no-repeat;
-        background-image: url(../image/select_on.png);
-        background-size: 100% 100%;
-        background-position: center center;
-        z-index: 2;
-    }
-    
-    .ware .select-off {
-        background-image: url(../image/select_off.png);
-    }
-    
-    .ware .thumbnail {
-        position: absolute;
-        top: 14px;
-        left: 12px;
-        height: 88px;
-        width: 88px;
-        border-radius: 20PX;
-    }
-    
-    .ware .info {
-        position: relative;
-        box-sizing: border-box;
-        padding-left: 104px;
-        width: 100%;
-        height: 114px;
-        padding-right: 28px;
-    }
-    
-    .ware .info .name {
-        width: 100%;
-        height: 15px;
-        color: #000;
-        margin-top: 8px;
-        font-size: 15px;
-    }
-    
-    .ware .info .price-tag {
-        margin-top: 10px;
-        width: 100%;
-        height: 12px;
-        font-size: 12px;
-        vertical-align: top;
-    }
-    
-    .ware .info .price-tag .price {
-        color: #000;
-        font-size: 16px;
-    }
-    
-    .ware .info .price-tag .unit {
-        font-size: 8px;
-        color: #cbcbcb;
-    }
-    
-    .ware .control {
-        position: absolute;
-        width: 38px;
-        height: 38px;
-        top: 53px;
-        right: 8px;
-        /*border: 1px solid red;*/
-    }
-    
-    .ware .control .minus {
-        position: absolute;
-        top: 0;
-        right:  0;
-        width: 28px;
-        height: 28px;
-        /*border: 1px solid red;*/
-    }
-  /*  
-    .ware .control .count {
-        position: relative;
-        top: 0;
-        margin-left: 31px;
-        margin-right: 31px;
-        width: auto;
-        height: 23px;
-        text-align: center;
-        line-height: 23px;
-        color: #444;
-        font-size: 12px;
-        background-image: url(../image/count.png);
-        background-repeat: no-repeat;
-        background-size: 48px 23px;
-    }
-    */
-    .ware .control .add {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 23px;
-        height: 23px;
-    }
-    
-    .empty {
-        display: none;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: #fff;
-        background-image: url(../image/shoppingcart_empty.png);
-        background-repeat: no-repeat;
-        background-size: 128px 128px;
-        background-position: center 50px;
-    }
-    
-    .active {
-        opacity: 0.7;
-    }
-    .description{
-        margin-top: 10px;
-        font-size: 12px;
-        color: gray;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        overflow: hidden;
-
-    }
-</style>
-</head>
-
-<body>
-    <section id="list" class="list">
-       <!--  <div id="ware_id" class="ware">
-            <div class="content">
-                <div class="select"></div>
-                <img class="thumbnail" src="../image/default_square.png">
-                <div class="info">
-                    <div class="name">商品名称</div>
-                    <div class="price-tag">
-                        <span class="price">￥价格</span>
-                        <span class="unit">/数量</span>
-                    </div>
-                </div>
-            </div>
-            <div class="control">
-                <img class="minus" src="../image/minus.png">
-                <div id="count_id" class="count">0</div>
-                <img class="add" src="../image/add.png">
-            </div>
-        </div>         -->
-    </section>
-    <section id="empty" class="empty"></section>
-</body>
-<script type="text/javascript" src="../script/api.js"></script>
-<script type="text/javascript" src="../script/db.js"></script>
-<script type="text/javascript" src="../script/doT.min.js"></script>
-<script type="text/javascript" src="../script/SHA1.js"></script>
-<script type="text/template" id="template">
-    {{~it:value:index}}
-    <div id="ware_{{=value.id}}" class="ware">
-        <div class="content" tapmode onclick="fnOpenWareWin('{{=value.id}}');">
-
-            <img class="thumbnail" src="{{=value.thumbnail}}">
-            <div class="info">
-                <div class="name">{{=value.name}}</div>
-                <div class="description">{{=value.description}}</div>
-                <div class="price-tag">
-                    <span class="price">￥{{=value.price}}</span>
-                </div>
-            </div>
-        </div>
-        <div class="control" id="control_{{=value.id}}">
-            <img class="minus" src="../image/close.png" tapmode onclick="fnMinus('{{=value.id}}');">
-            <div id="count_{{=value.id}}" class="count"></div>
-        </div>
-    </div>
-    {{~}}
-</script>
-<script type="text/javascript">
-   var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
-      apiready = function() {
-        // initEventListener();
-        getWareListFromDB();
-    };
-    var activity;
-    var curShoppingCart;
-
-
-    function getWareListFromDB() {
-        $db.open();
-        var ret = $db.select();
-    // 购物车中有商品，则显示商品列表
-    if (ret && ret.data.length > 0) {
-        fnGetWareList(ret.data);
-    } else {
-        // 购物车中无商品，则提示用户去购物
-        fnShowWareList(false);
-    }
-}
-
-function fnGetWareList(wareList_) {
- activity = api.require('UILoading');
- activity.keyFrame({
-    rect: {
-        w: 80,
-        h: 100
-    },
-    styles: {
-        bg: 'rgba(0,0,0,0.5)',
-        corner: 5,
-        interval: 50,
-        frame: {
-            w: 80,
-            h: 80
-        }
-    }
-});
- var cart=$api.getStorage('cart');
- if (cart==undefined) {
-    // loading.hide();
-    api.toast({
-        msg: '收藏夹没有东西哟o.o~~~',
-        duration: 2000,
-        location: 'bottom'
-    });
-    return;
-}else if (cart.length==0){
-   // loading.hide();
-   api.toast({
-      msg: '收藏夹没有东西哟o.o~~~',
-      duration: 2000,
-      location: 'bottom'
-  });
-   return;
-}
-
-var params = {
-    fields: {},
-    where: {
-        id: {
-            inq: cart
-        }
-    },
-    skip: 0,
-    limit: cart.length,
-    order:"createdAt DESC"
-}
-params = $api.jsonToStr(params);
-api.ajax({
-    url: 'http://d.apicloud.com/mcm/api/ware?filter=' + params,
-    method: 'get',
-    headers: {
-        "X-APICloud-AppId": "A6099267504667",
-        "X-APICloud-AppKey": appKey
-    }
-}, function(ret, err) {
-    fnUpdateWareListByShoppingCart(ret);
-     activity.closeKeyFrame();
-});
-}
-
-function fnUpdateWareListByShoppingCart(data_) {
-    var list = $api.byId('list');
-
-    // 编译模板函数
-    var tempFn = doT.template($api.byId('template').innerHTML);
-
-    // 使用模板函数生成HTML文本
-    var resultHTML = tempFn(data_);
-    list.innerHTML = resultHTML;
-
-}
-// 计算购物车中的商品总数及总金额
-function fnGetShoppingCartAmount(data_) {
-    var amountValue = 0;
-    var countValue = 0;
-    var offState = 0;
-    for (var i = 0; i < data_.length; i++) {
-        if (data_[i].wareState == 'off') {
-            if (data_[i].wareCount > 0) {
-                offState += 1;
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+        <title>聊天界面</title>
+        <script src="../script/commonjs.js">
+        </script>
+        <script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+        <style type="text/css">
+            header {
+                position: fixed;
+                top: 0px;
+                left: 0px;
+                width: 100%;
+                height: 40px;
+                background-color: white;
+                z-index: 999;
+                box-shadow: 0px 6px 6px -6px black;
             }
-            continue;
-        }
-        countValue += parseInt(data_[i].wareCount);
-        amountValue += parseFloat(data_[i].price) * parseInt(data_[i].wareCount);
-    }
-    amountValue = Math.round(amountValue * 10) / 10;
-
-    if (countValue == 0 && offState == 0) {
-        fnShowWareList(false);
-    }
-    // 在购物车Window中显示
-    api.execScript({
-        name: 'shoppingcart',
-        script: 'fnSetWareCountAndAmount(' + countValue + ', ' + amountValue + ');'
-    });
-}
-
-// 更新当前窗口中显示的购物车中的商品数量
-function fnUpdateWareCount(wareId_, wareCount_) {
-    for (var i = 0; i < curShoppingCart.length; i++) {
-        if (curShoppingCart[i].id == wareId_) {
-            curShoppingCart[i].wareCount = wareCount_;
-        }
-    }
-    fnGetShoppingCartAmount(curShoppingCart);
-}
-
-// 更新当前窗口中显示的购物车中的商品选中状态
-function fnUpdateWareState(wareId_, wareState_) {
-    for (var i = 0; i < curShoppingCart.length; i++) {
-        if (curShoppingCart[i].id == wareId_) {
-            curShoppingCart[i].wareState = wareState_;
-        }
-    }
-    fnGetShoppingCartAmount(curShoppingCart);
-}
-
-// 显示商品列表
-function fnShowWareList(show_) {
-    var empty = $api.byId('empty');
-    var list = $api.byId('list');
-    if (show_) {
-        empty.style.display = 'none';
-        list.style.display = 'block';
-    } else {
-        empty.style.display = 'block';
-        list.style.display = 'none';
-    }
-}
-
-// 打开商品详情Window，指定商品Id
-function fnOpenWareWin(wareId_) {
-    // 获取指定商品在购物车中的数量
-    var count = $api.byId('count_' + wareId_);
-    var wareCount = parseInt(count.innerHTML);
-    api.openWin({
-        name: 'ware',
-        url: './ware.html',
-        pageParam: {
-            wareId: wareId_,
-            wareCount: wareCount
-        },
-       
-    });
-}
 
 
-// 从购物车删除按钮的监听函数
-function fnMinus(wareid){
-    var ware=$api.byId('ware_'+wareid);
-    // console.log(ware);
-    ware.style.display='none';
-    var cart=$api.getStorage('cart');
-    for (var i = 0; i <cart.length; i++) {
-        if (cart[i]==wareid) {
-            cart.splice(i,1);
-            $api.setStorage('cart', cart);
-            api.toast({
-                msg: '移除成功',
-                duration: 2000,
-                location: 'bottom'
-            });
-        }
+            header h1 {
+                width: 100%;
+                height: 40px;
+                text-align: center;
+                color: #000;
+                font-size: 18px;
+                line-height: 40px;
+                margin: 0px;
+            }
+
+            header .back {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 32px;
+                height: 28px;
+                margin-left: 5px;
+                margin-top: 6px;
+                /*border: 1px solid red;*/
+                background: url(../image/back.png);
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+
+            .list {
+                width: 100%;
+                height: auto;
+                margin-top: 50px;
+            }
+
+            .item {
+                width: 100%;
+                height: 88px;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                border-bottom: 1px solid #F7F7F7;
+            }
+
+            .wareimg {
+                width: 66px;
+                height: 66px;
+                border-radius: 6px;
+                background-position: center;
+                background-size: cover;
+            }
+
+            .description {
+                max-width: 58%;
+                font-size: 16px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+            }
+
+            .footer {
+                height: 100%;
+                min-width: 52px;
+                display: flex;
+                flex-direction: column;
+                align-content: space-around;
+                /* justify-content: space-around; */
+
+            }
+
+            .footer>.price {
+                color: #FF4466;
+                font-family: Georgia;
+                font-weight: bold;
+                font-size: 15px;
+                height: 33%;
+                text-align: center;
+
+            }
+
+            .footer .del {
+                color: #dd1035;
+                font-size: 15px;
+                height: 33%;
+                text-align: center;
+            }
+            .newprice{
+                height: 33%;
+                color: #FF4466;
+                font-family: Georgia;
+                font-size: 13px;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <header id="header">
+            <div class="back" tapmode onclick="window.history.back(-1)"></div>
+            <h1>我的购物车</h1>
+        </header>
+        <div class="list">
+        </div>
+        <script id="template" type="text/template">
+            {{~it.list:value:index}}
+        <div class="item item_{{=value.id}}" onclick="openware('{{=value.wareid}}')">
+            <div class="wareimg lazy"  data-original="{{=it.imgurl}}{{=value.image}}" ></div>
+            <div class="description">{{=value.description}}</div>
+            <div class="footer">
+                {{if(value.price>=30){ }}
+                    <div class="price"><s style="font-size: 12px;">￥{{=value.price}}</s></div>
+                    <div class="newprice">{{!newprice('{{=value.price}}')}}</div>
+                {{ }else{ }}
+                    <div class="price">￥{{=value.price}}</div>
+                {{ } }}
+                <div class="del" onclick="delwarecart('{{=value.id}}')">删除</div>
+            </div>
+        </div>
+        {{~}}
+    </script>
+        <script type="text/javascript">
+            var skip = 0;
+            var limit = 18;
+            var off_on=false;
+            var userInfo;
+           apiready = function(){
+             userInfo =$api.getStorage('userInfo');
+             getcart();  
+           }
+               
+            
         
-    }
-}
+            window.addEventListener("scroll", function() {
+                //当时滚动条离底部0px时开始加载下一页的内容
+
+                if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+                    if (off_on) {
+                        off_on = false;
+                        getcart(true);
+                        // toast("动态加载中...",'bottom',1000);
+                        $('.list').append(
+                            '<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>')
+                    }
 
 
-</script>
+                }
+            });
+
+            function getcart(_LoadMore) {
+                if(_LoadMore){
+                    skip+=limit;
+                }else{
+                    skip=0;
+                    dialog('动态加载中');
+                }
+                getajax(url + 'getshoppingcart', {
+                    userid: userInfo.id,
+                    skip: skip,
+                    limit: limit
+                }, function(ret) {
+                  
+                    if (ret.code == 200) {
+                        updatelist(ret.data, _LoadMore)
+                    } else {
+                    $('.list').append('<p class="nodata" style=" text-align: center;color: #ddd;height: 50px;line-height: 50px;">-木有数据了-</p>');
+                    $('.xz').remove();
+                    dl.close();
+                    }
+                })
+
+            }
+
+            function updatelist(ret, _LoadMore) {
+                var param = {
+                    list: ret,
+                    imgurl: imgurl,
+                };
+                var tempFn = doT.template($('#template').text());
+                // 使用模板函数生成HTML文本
+
+                var resultHTML = tempFn(param);
+                // console.log(tempFn);
+                if (_LoadMore) {
+                    $(".list").append(resultHTML);
+                } else {
+                    $(".list").html(resultHTML);
+                }
+                $(".lazy").lazyload({
+                    // effect: 'fadeIn', 
+                    skip_invisible: false
+                });
+                $('.price,.del').css('line-height', $('.del').height() + 'px');
+                dl.close();
+                $('.xz').remove();
+                off_on = true;
+            }
+            
+            function delwarecart(warecratid){
+                event.stopPropagation();
+                if (confirm("你确定删除此商品吗？")){
+                     postajax(url+'delcratware',{'id':warecratid,'userid':userInfo.id},function(ret){
+                    if(ret.code==200){
+                         api.toast({
+                             msg: ret.message
+                         });
+                        $('.item_'+warecratid).remove();
+                    }else{
+                        api.toast({
+                             msg: ret.message
+                         });
+                    }
+                  })
+                }else{
+                    return;
+                }
+               
+            }
+            function openware(wareid) {
+                // window.location.href = "./ware_frame.html?" + window.btoa(encodeURI("wareId=" + wareid));
+                api.openWin({
+                    name: 'ware',
+                    url: './ware.html',
+                    pageParam: {
+                        wareId: wareid
+                    }
+                });
+            }
+
+            function newprice(price){
+                var dandanjian;
+                var cb;
+                var oldprice=price;
+                if(price>=30 && price<=70){
+                    dandanjian=1;
+                    cb=1;
+                }else if(price>=70 && price<=160){
+                    dandanjian=2;
+                    cb=3;
+                }else if(price>160){
+                    dandanjian=3;
+                    cb=5;
+                }else{
+                    dandanjian=0;
+                    cb=0;
+                }
+                var price=price-dandanjian-cb;
+                if(oldprice>price){
+                    return '折后￥'+price;
+                }
+                
+            }
+        </script>
+    </body>
 
 </html>

@@ -133,7 +133,7 @@ Your browser does not support the audio element.
 <script id="template" type="text/template">
             {{~it.list:value:index}}
                 <div class='musicitem'>
-                   <div class="musicname" tapmode onclick="startorstopmusic('{{=value.music}}',this)"><img src="../image/stop.png" class="ssbtn">&nbsp;{{=value.name}}</div>
+                   <div class="musicname" onclick="startorstopmusic('{{=value.music}}',this)"><img src="../image/stop.png" class="ssbtn">&nbsp;{{=value.name}}</div>
                    <div class="use" style="background-color:{{=value.Dressingbgcolor}}" tapmode onclick="use('{{=value.id}}','{{=value.name}}')">使用</div>
                    <div class="headimg lazy" data-original="{{=it.imgurl}}{{=value.userheadimg}}" tapmode onclick="TAuser('{{=value.userid}}')"></div>
                 </div>
@@ -143,24 +143,27 @@ Your browser does not support the audio element.
 <script type="text/javascript">
     var skip=0;
     var limit=20;
+    var lasturl=0;
+    var audioStreamer;
     apiready = function() {
+         audioStreamer = api.require('audioStreamer');
         getallmusic();
         reshtml();
     };
 
-            window.addEventListener("scroll", function (){
-                 //当时滚动条离底部0px时开始加载下一页的内容
-                 if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
-                                if(off_on){
-                                    off_on=false;
-                                    getallmusic(true);
-                                    $('#list').append('<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; ">')
+ window.addEventListener("scroll", function (){
+        //当时滚动条离底部0px时开始加载下一页的内容
+  if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+             if(off_on){
+                 off_on=false;
+                 getallmusic(true);
+                 $('#list').append('<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; ">')
                                     
-                                }
+             }
                        
                     
-                 }
-             });
+     }
+ });
     function reshtml(){
                
                 api.setCustomRefreshHeaderInfo({
@@ -178,7 +181,7 @@ Your browser does not support the audio element.
                 }, function() {
                     //下拉刷新被触发，自动进入加载状态，使用 api.refreshHeaderLoadDone() 手动结束加载中状态
                     //下拉刷新被触发，使用 api.refreshHeaderLoadDone() 结束加载中状态  
-                   
+                   audioStreamer.pause();
                    getallmusic();
                 });
      }
@@ -233,25 +236,107 @@ Your browser does not support the audio element.
             function startorstopmusic(url,_this){
                 $('.ssbtn').attr('src','../image/stop.png');
                 $(_this).children('img').attr('src','../image/start.png');
-                $('.audio').get(0).pause(); 
-                $('.audio').attr('src', imgurl+url);
-                 $('.audio').get(0).play(); 
+                if(lasturl==url){
+                    // alert('暂停');
+                    audioStreamer.stop();
+                    $('.ssbtn').attr('src','../image/stop.png');
+                    lasturl=0;
+                    return;
+                }
                 
+                audioStreamer.openPlayer({
+                    path: imgurl+url,
+                }, function(ret) {
+                    if (ret.status==false) {
+                        api.toast({
+                            msg: '音乐播放失败'
+                        });
+                        $('.ssbtn').attr('src','../image/stop.png');
+                        // api.alert({ msg: JSON.stringify(ret) });
+                    }else{
+                         // alert('正在播放');
+                        audioStreamer.setLoop({loop:true});
+                        // 播放开始后，监听来电
+                        eventaudio(url,_this)
+                        // 监听后台切换
+                        event(url,_this)
+                    }
+                });
+              
+            
+                 lasturl=url;
                 
             }
+
+            function event(url,_this){
+                 api.addEventListener({
+                    name : 'pause'
+                    }, function(ret, err) {
+                       audioStreamer.pause();
+                    });
+
+                 api.addEventListener({
+                    name : 'resume'
+                    }, function(ret, err) {
+                        startorstopmusic(url,_this)           
+                    });
+
+                  api.addEventListener({
+                     name: 'playmusic'
+                 }, function(ret, err) {
+                     if (ret) {
+                        // alert('1')
+                        startorstopmusic(url,_this) 
+                     }
+                 });
+            }
+            var idle=1;
+            function eventaudio(url,_this){
+               var phoneListener = api.require('phoneListener');
+                phoneListener.callStateListener({
+                   enable : true
+                }, function(ret) {
+                    // alert(ret.state);
+                    if(ret.state=='RINGING'){
+                        audioStreamer.pause();
+                    }else if(ret.state=='IDLE'){
+                        if(idle==0){
+                             startorstopmusic(url,_this)
+                        }
+                        idle=0;
+                       
+                    }
+                });
+
+             } 
             function TAuser(uid){
-  // window.location.href='./TAusercenter.html?'+window.btoa(encodeURI('uid='+uid));
-  api.openWin({
-      name: 'TAusercenter',
-      url: './TAusercenter.html',
-      pageParam: {
-          uid:uid
-      },
-      
-  });
-}
+                var userInfo=$api.getStorage('userInfo');
+                if(userInfo){
+                     audioStreamer.stop();
+                      api.openWin({
+                          name: 'TAusercenter',
+                          url: './TAusercenter.html',
+                          pageParam: {
+                              uid:uid,
+                              page:'Dressing',
+                          },
+                          
+                      });
+                }else{
+                    audioStreamer.pause();
+                      api.openWin({
+                          name: 'login',
+                          url: './login.html',
+                          pageParam: {
+                          }
+                      });
+                      return;
+                }
+            
+            }
 function use(music,name){
-    // alert(musicid)
+    // alert(name)
+    // return;
     api.sendEvent({
         name: 'getmusic',
         extra: {

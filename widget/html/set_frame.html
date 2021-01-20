@@ -8,6 +8,7 @@
         <title>个人中心</title>
                     <meta name="referrer" content="no-referrer" />
         <script src="../script/commonjs.js"></script>
+        <script src="../script/jdate.min.js"></script>
         
         <style>
             html,
@@ -18,14 +19,14 @@
         margin: 0;
 
     }
-    header{
+    .header{
         width: 100%;
         height: 40px;
         background: white;
         border-bottom: 0.3px solid #F1F1F1;
         /*border-style: ridge;*/
     }
-    header .back {
+    .header .back {
         position: absolute;
         top: 0;
         left: 0;
@@ -34,13 +35,13 @@
         z-index: 2;
     }
 
-    header .back img {
+    .header .back img {
         margin-top: 5px;
         margin-left: 5px;
         width: 28px;
         height: 32px;
     }
-    header a{
+    .header a{
         display: block;
         text-align: center;
         line-height: 40px;
@@ -48,7 +49,7 @@
         font-weight: bold;
 
     }
-    header .ok{
+    .header .ok{
         position: absolute;
         right: 0px;
         top: 0px;
@@ -86,13 +87,46 @@
     }
     .row {
         width: auto;
-        height: 30px;
+        height: 45px;
         box-sizing: border-box;
-        margin-left: 18px;
-        margin-right: 18px;
-        /*padding-top: 40px;*/
-        border-bottom: 1px solid #888;
-        /*border: 1px solid red;*/
+        margin: 0 auto;
+        width: 92%;
+        /* border-bottom: 1px solid #888; */
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .title{
+        width: 20%;
+        color: gray;
+        font-size: 13px;
+    }
+    .body{
+        width: 78%;
+        max-height: 18px;
+        color: gray;
+        font-size: 13px;
+        text-align: right;
+        overflow: hidden;
+    }
+    .imgk{
+        /* width: 10%; */
+        background-image: url(../image/address/link-arrow.png);
+        width: 16px;
+        height: 16px;
+        margin-left: 6px;
+        background-size: cover;
+        background-position: center;
+    }
+    .input {
+        width: 100%;
+        height: 20px;
+        border: none;
+        font-size: 16px;
+        line-height: 20px;
+        outline:none;
+        background: white;
+
     }
 
     .input {
@@ -180,11 +214,11 @@
     </head>
 
     <body>
-        <header>
+        <header class="header">
             <div class="back" tapmode onclick="goback()">
                 <img src="../image/back.png">
             </div>
-            <div class="ok" onclick="isok()">确定</div>
+            <!-- <div class="ok" onclick="isok()">确定</div> -->
             <a>编辑主页</a>
         </header>
         <div class="headimglist">
@@ -192,25 +226,30 @@
             <div id="headimg" onclick="upperCase()"></div>
         </div>
         <div class="inp">
-            <p>用户名</p>
-            <div class="row">
-                <input id="name" autocomplete="off" class="input" type="text" placeholder="用户名更容易让人记住">
+                <div class="row">
+                <div class="title">用户名</div>
+                <div class="body name" tapmode onclick="openupdatename()">···</div>
+                <div class="imgk"></div>
             </div>
-            <p>个性签名</p>
             <div class="row">
-                <input id="autograph" autocomplete="off" class="input" type="text" placeholder="个性签名只为自己代言">
+                <div class="title">简介</div>
+                <div class="body autograph" tapmode onclick="openupdateautograph()">···</div>
+                <div class="imgk"></div>
             </div>
-
-            <p>重置密码</p>
             <div class="row">
-                <input id="password" onfocus=this.blur() onclick="updatepwd()" autocomplete="off" class="input" type="text"
-                 placeholder="重置密码">
+                <div class="title">生日</div>
+                <div class="body" id="date">···</div>
+                <div class="imgk"></div>
             </div>
-
-            <p>重置邮箱</p>
-            <div class="row">
-                <input id="qqorwx" onfocus=this.blur() onclick="updateqqorwx()" autocomplete="off" class="input" type="text"
-                 placeholder="重置邮箱">
+            <div class="row" tapmode onclick="updatepwd()">
+                <div class="title">密码</div>
+                <div class="body">重置密码</div>
+                <div class="imgk"></div>
+            </div>
+            <div class="row" tapmode onclick="updateqqorwx()">
+                <div class="title">邮箱</div>
+                <div class="body">重置邮箱</div>
+                <div class="imgk"></div>
             </div>
         </div>
         <div class="sex">
@@ -226,11 +265,45 @@
 
 
     <script type="text/javascript">
-        var userInfo =  $api.getStorage('userInfo');
-        getuser();
+        var userInfo;        
         var sex=0;
-        
+        apiready = function(){
+            userInfo =  $api.getStorage('userInfo');
+             quanxian('storage-w,camera,storage-r,photos-w')
+             getuser();
+             new Jdate({
+                el: '#date',
+                format: 'YYYY-MM-DD',
+                beginYear: 1900,
+                endYear: new Date().getFullYear(),
+                confirm: function(date) {
+                    console.log(date)
+                    updatebirthday(date);
+                    // getDay(date,'2000-12-21')
+                },
+            })
+        }
+            
+        function updatebirthday(date) {
+            var d = new Date(date);
+            var t = d.getTime(d) / 1000;
+            postajax(url + 'updatebirthday', {
+                'userid': userInfo.id,
+                'birthdaytime': date
+            }, function(ret) {
+                if (ret.code == 200) {
+                    api.toast({
+                        msg: ret.message
+                    });
+                    
+                } else {
+                      api.toast({
+                        msg: ret.message
+                    });
+                }
 
+            })
+        }
         function upperCase() {
 
            var UIAlbumBrowser = api.require('UIAlbumBrowser');
@@ -375,15 +448,23 @@
                 })
             }
             if (userInfo.name != '0') {
-                $("#name").val(userInfo.name);
+                $(".name").html(userInfo.name);
             } else {
-                $("#name").val('未设置');
+                $(".name").html('未设置');
+
+
             }
-            
-            if (userInfo.autograph != '0' && userInfo.autograph !=0) {
-                $("#autograph").val(userInfo.autograph);
+
+            if (userInfo.birthday != '0') {
+                $('#date').html(userInfo.birthday);
             } else {
-                $("#autograph").val('未设置');
+                $("#date").html('未设置');
+            }
+
+            if (userInfo.autograph != '0' && userInfo.autograph !=0) {
+                $(".autograph").html(userInfo.autograph);
+            } else {     
+                $(".autograph").html('未设置');
             }
             if (userInfo.sex == '0') {
                 $(".boy").css('background-color','#DBEEFF');
@@ -394,6 +475,27 @@
 
 
 
+        }
+        function openupdateautograph(){
+            api.openWin({
+                name: 'updateautograph',
+                url: './updateautograph.html',
+                pageParam: {
+                    name: 'test'
+                }
+            });
+           
+        }
+        
+        function openupdatename(){
+            api.openWin({
+                name: 'updatename',
+                url: './updatename.html',
+                pageParam: {
+                    name: 'test'
+                }
+            });
+            // window.location.href="./_frame.html"
         }
 
         function updatepwd() {
@@ -471,7 +573,21 @@
                 $(_this).css('background-color','#FFE1DF');
             }
             $(_this).siblings().css('background-color','#fff');
-            sex=_index;
+            updatesex(_index)
+        }
+
+        function updatesex(sex){
+            postajax(url+'updatesex',{'userid':userInfo.id,'sex':sex},function(ret){
+                if(ret.code==200){
+                    api.toast({
+                        msg: ret.message
+                    });
+                }else{
+                    api.toast({
+                        msg: ret.message
+                    });
+                }
+            })
         }
         function logout(){
             $(document).dialog({

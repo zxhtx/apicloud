@@ -11,20 +11,22 @@
                 <title>
                     我的穿搭,才够范儿
                 </title>
-        <link rel="stylesheet" href="../css/chaodashe_frame.css">
+                <!-- <link rel="stylesheet" href="../script/H5actionButton/action-button.css"> -->
+                <link rel="stylesheet" type="text/css" href="../script/H5actionButton/action-button.css">
+                <link rel="stylesheet" href="../css/chaodashe_frame.css">
                 <script src="../script/commonjs.js">    
                 </script>
-  
-
-               <link href="https://cdn.bootcss.com/Swiper/4.5.0/css/swiper.min.css" rel="stylesheet">
-               <script src="https://cdn.bootcss.com/Swiper/4.5.0/js/swiper.min.js"></script>
+    
+                  
+           <!-- <script src="../script/H5actionButton/action-button.js"></script> -->
+           <script type="text/javascript" src="../script/H5actionButton/action-button.js"></script>
+           <link href="https://cdn.bootcss.com/Swiper/4.5.0/css/swiper.min.css" rel="stylesheet">
+           <script src="https://cdn.bootcss.com/Swiper/4.5.0/js/swiper.min.js"></script>
         <script src="https://cdn.bootcss.com/clipboard.js/2.0.4/clipboard.min.js"></script>
                 <!-- <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script> -->
         <script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
-
-               
-            </meta>
-        </meta>
+       
+       
         <style>
          
           .uploadcds{
@@ -82,7 +84,7 @@
             <a class="headphoto" tapmode onclick="headphoto()">
                 <img src="../image/Cphoto.png">
             </a>
-          <a class="headtitleimg" onclick="openTAuser()">
+          <a class="headtitleimg" onclick="TAuser('0')">
            
           
          </a>
@@ -130,33 +132,31 @@
               
                         {{if(value.uauthority==1){ }}
                         <div class="icon iconauthority">
-                         <div class='headimg lazy ' tapmode onclick="TAuser('{{=value.userid}}')" data-original="{{=it.imgurl}}{{=value.userheadimg}}" ></div>
+                         <div class='headimg lazy ' tapmode onclick="TAuser('1','{{=value.userid}}')" data-original="{{=it.imgurl}}{{=value.userheadimg}}" ></div>
+                           <div class="authority" style="background:{{=value.Dressingbgcolor}}" tapmode onclick="authority('{{=value.uauthoritytext}}')">
+                            <img src="../image/authority.png">
+                        </div>
                         </div>
                         {{ }else{ }}
                         <div class="icon iconnoauthority">
-                         <div class='headimg lazy' tapmode onclick="TAuser('{{=value.userid}}')" data-original="{{=it.imgurl}}{{=value.userheadimg}}" ></div>
+                         <div class='headimg lazy' tapmode onclick="TAuser('1','{{=value.userid}}')" data-original="{{=it.imgurl}}{{=value.userheadimg}}" ></div>
                         </div>
                         {{ } }}
             
-                        {{if(value.uauthority=='1'){ }}
+                       
                         <div class="uname">
                          <span class="unametext">{{=value.uname}}</span>
-                        </div>
-                        <div class="authority" tapmode onclick="authority('{{=value.uauthoritytext}}')">
-                            <img src="../image/authority.png">
                         </div>
                       
-                        {{ }else{ }}
-                        <div class="uname">
-                         <span class="unametext">{{=value.uname}}</span>
-                        </div>
-
-                        {{ } }}
+                      
                          {{if(value.Subscribeman=='0' && value.userid!=it.myuserid){ }}
                             <div class="dinyue dinyue_{{=value.userid}}">
                                    <span tapmode onclick="dinyue('{{=value.userid}}')">·订阅</span>
                             </div>
                         {{ } }}
+
+                         <div class="Dressingmore" onclick="Dressingmore('{{=value.id}}')"></div>
+
                         </div>
             <div class="fmdiv">
                 <div class="imglistone lazy"  style="background:{{=value.Dressingbgcolor}};background-image:url(../image/tm.png); width:100%;height: 20rem;" data-original="{{=it.imgurl}}{{=value.fm}}"  data-like_userid="{{=value.like_userid}}"  data-articleid="{{=value.id}}" tapmode onclick="openDressing('{{=value.id}}')" data-likeid="like{{=value.id}}"  >
@@ -169,7 +169,7 @@
             </div>
               
                   <div class="footbox">
-            <div class="warelists warelists_{{=value.id}}"></div>
+                 <div class="warelists warelists_{{=value.id}}"></div>
                     <div class="duogongneng" >
                         {{if(value.like_userid==0)}}
                          <img tapmode onclick="belike('{{=value.id}}',this,'{{=value.userid}}')" data-like_userid="{{=value.like_userid}}" id="like{{=value.id}}" class="like" src="../image/likeb.png">
@@ -186,20 +186,11 @@
                         <img tapmode onclick="beshuqian('{{=value.id}}',this,'{{=value.userid}}')" id="shuqian{{=value.id}}"  data-shuqian_userid="{{=value.shuqian_userid}}" class="shuqian" src="../image/shuqiana.png">
                         {{ } }}
                     </div>
-                     {{ if(value.type=='0'){ }}
-                    <span class="chaodashetype" style="margin-left:6px;">动态类型:穿搭</span>
-                    {{ }else{ }}
-
-                    <span class="chaodashetype" style="margin-left:6px;">动态类型:潮图</span>
-                    {{ } }}
+                    <div class="likecount" id="likecount_{{=value.id}}" data-likecount="{{=value.like}}"><b>{{=value.like}}</b>&nbsp;次赞</div>
                     <div class="textanduser">
-            <!-- <div class="shuxiepng"></div> -->
-                        <div class="user" style="margin-left:2px;"><div class="shuxiepng"></div>{{=value.uname}}：{{=value.text}}</div>
-                        <!-- <div class="text" style="word-break: break-all;word-wrap: break-word;">{{=value.text}}</div> -->
-                    </div>
-          <div class="likesmall"></div>
-                     <span class="likecount" id="likecount_{{=value.id}}" data-likecount="{{=value.like}}">{{=value.like}}个赞</span>
-
+                       <b>{{=value.uname}}</b>：{{=value.text}}    
+                    </div> 
+                  
           
                 </div>
               </div>
@@ -226,8 +217,8 @@
       var warelist;
       var imglist;
       var warearray=[];
-      var sqtime = 0;
-      var liketime = 0;
+      
+    
       var clicki= 0;
       var userInfo;
       apiready = function(){
@@ -246,12 +237,12 @@
             if (ret) {
                 if(ret.value.v1==100){
                   $('.cdsjd').html('发布成功');
-                  setTimeout(function(){
-                    $('.uploadcds').fadeOut(2000);
-                  },2000)
+                  // setTimeout(function(){
+                    $('.uploadcds').slideUp(888);
+                  // },2000)
                   setTimeout(function(){
                     $('.list').css('margin-top','52px');
-                  },4000)
+                  },888)
                   api.sendEvent({
                       name: 'reloaddynamic',
                       extra: {
@@ -271,7 +262,7 @@
                      $('.cdstext').html('...');
                   }
                   
-                  $('.cdsjd').html('正在发布('+ret.value.v1+'%)');
+                  $('.cdsjd').html('正在发布('+ret.value.v1+'%)，请稍等...');
                 }
                 
             } 
@@ -334,25 +325,40 @@
              
           }
       });
-     function openTAuser(){
-    if(userInfo){
-      api.openWin({
-          name: 'TAusercenter',
-          url: './TAusercenter.html',
-          pageParam: {
-              uid: userInfo.id
+     function TAuser(type,uid){
+  
+        if(type=='0'){
+          userInfo=$api.getStorage('userInfo');
+          if(userInfo){
+            api.openWin({
+                name: 'TAusercenter',
+                url: './TAusercenter.html',
+                pageParam: {
+                    uid: userInfo.id
+                }
+            });
+          }else{
+              api.openWin({
+                name: 'login',
+                url: './login.html',
+                pageParam: {
+                    page: 'chaodashe_frame'
+                },
+               
+            });
           }
-      });
-    }else{
-      api.openWin({
-          name: 'login',
-          url: './login.html',
-          pageParam: {
-              name: 'test'
-          }
-      });
-      return;
-    }
+          
+        }else{
+          api.openWin({
+            name: 'TAusercenter',
+            url: './TAusercenter.html',
+            pageParam: {
+                uid: uid
+            }
+        });
+        }
+        
+    
   }
     function getchaodashe(_LoadMore) {
     // toast=$(document).dialog({
@@ -365,7 +371,7 @@
 
      userInfo=$api.getStorage('userInfo');
    if(userInfo){ 
-    $('.headtitleimg').html('<img src='+imgurl+userInfo.headimg+'>')
+    $('.headtitleimg').html('<div class="headtitleimgson" style="background-image:url('+imgurl+userInfo.headimg+')"></div>')
   
   }else{
     $('.headtitleimg').html('<font>C</font>')
@@ -438,7 +444,10 @@ function fnUpdateWareListByShoppingCart(data_,_LoadMore) {
 
   }
   if(data_.length<1){
-    toast('没有动态了...','bottom',800);
+    
+    api.toast({
+        msg: '没有动态啦'
+    });
   }else{
        off_on=true;
   }
@@ -448,6 +457,17 @@ function fnUpdateWareListByShoppingCart(data_,_LoadMore) {
   $(".lazy").lazyload({
      // effect: 'fadeIn',
   });
+  // 艾特TA人后点击直接跳转到TA的主页
+  $('.atnamecls').click(function() {
+            api.openWin({
+                name: 'TAusercenter',
+                url: './TAusercenter.html',
+                pageParam: {
+                    uid: $(this).data('atuid'),
+                    page:'Dressing',
+                }
+            });
+        })
   
   // setTimeout(function(){
     dl.close();
@@ -483,15 +503,7 @@ var userInfo=$api.getStorage('userInfo');
          return;
     }
   // console.log($('#like'+))
-  if (liketime == 0) {
-    liketime = 1;
-    setTimeout(function() {
-      liketime = 0;
-    }, 3000)
-  } else {
-    toast('不能连续点赞哟', 'bottom');
-    return;
-  }
+ 
 
     var like_userid=$(_this).attr('data-like_userid');
     if (like_userid=='0'){
@@ -528,15 +540,7 @@ function beshuqian(articleid,_this,touid){
          return;
     }
         var shuqian_userid=$(_this).attr('data-shuqian_userid');
-    if (sqtime == 0) {
-      sqtime = 1;
-      setTimeout(function() {
-        sqtime = 0;
-      }, 3000)
-    } else {
-      toast('不能连续操作哟', 'bottom');
-      return;
-    }
+  
     if (shuqian_userid=='0'){
        $(_this).fadeOut();
         $(_this).fadeIn();
@@ -571,10 +575,15 @@ function addshuqian(index,articleid,shuqianid,touid){
         postajax(url+'addshuqian',params,function(ret){
             if (ret.code=='400') {
 
-                toast('服务器在开小差','bottom',800)
+                api.toast({
+                    msg: '服务器在开小差'
+                });
             }else{
              
-                 toast('已加入书签','bottom',800)
+                 
+                 api.toast({
+                     msg: '已加入书签'
+                 });
                 $('#'+shuqianid).attr('data-shuqian_userid','1')
             }
         });
@@ -588,10 +597,14 @@ function addshuqian(index,articleid,shuqianid,touid){
         postajax(url+'addshuqian',params,function(ret){
             if (ret.code=='400') {
               
-                 toast('服务器在开小差','bottom',800)
+                  api.toast({
+                    msg: '服务器在开小差'
+                });
             }else{
                 
-                 toast('已移出书签','bottom',800)
+                 api.toast({
+                     msg: '已移出书签'
+                 });
                 $('#'+shuqianid).attr('data-shuqian_userid','0');
             }
         });
@@ -611,14 +624,17 @@ function addlike(index,articleid,likeid,touid){
         postajax(url+'addlike',params,function(ret){
             if (ret.code=='400') {
                
-                 toast('服务器在开小差','bottom',800)
+              
+                  api.toast({
+                     msg: '服务器在开小差'
+                 });
             }else{
                 $('#'+likeid).attr('data-like_userid','1');
 
                 var likecount=$('#likecount_'+articleid).attr('data-likecount');
                 var likecount=++likecount;
                 $('#likecount_'+articleid).attr('data-likecount',likecount);
-                $('#likecount_'+articleid).html(likecount+'个赞');
+                $('#likecount_'+articleid).html('<b>'+likecount+'</b>&nbsp;次赞');
 
             }
         });
@@ -632,13 +648,15 @@ function addlike(index,articleid,likeid,touid){
         postajax(url+'addlike',params,function(ret){
             if (ret.code=='400') {
              
-                 toast('服务器在开小差','bottom',800)
+                 api.toast({
+                     msg: '服务器在开小差'
+                 });
             }else{
                 $('#'+likeid).attr('data-like_userid','0');
                  var likecount=$('#likecount_'+articleid).attr('data-likecount');
                 var likecount=--likecount;
                  $('#likecount_'+articleid).attr('data-likecount',likecount);
-                $('#likecount_'+articleid).html(likecount+'个赞');
+                $('#likecount_'+articleid).html('<b>'+likecount+'</b>&nbsp;次赞');
             }
         });
     }
@@ -664,7 +682,9 @@ function dinyue(articleuserid){
         }
         postajax(url+'dinyue',params,function(ret){
             if (ret.code=='400') {
-                 toast('服务器在开小差','bottom',800)
+                 api.toast({
+                     msg: '服务器在开小差'
+                 });
             }else{
                 $(".dinyue_"+articleuserid).fadeOut();
 
@@ -736,17 +756,6 @@ function loadImage(){
 // alert(1);
 }
 
-function TAuser(uid){
-  // window.location.href='./TAusercenter.html?'+window.btoa(encodeURI('uid='+uid));
-  api.openWin({
-      name: 'TAusercenter',
-      url: './TAusercenter.html',
-      pageParam: {
-          uid:uid
-      },
-      
-  });
-}
 function lianjie(id,imglists,warelists){
   $('.warelists_'+id).append('<div id="xuanzhun" class="xz1" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; border-bottom:1px solid #FF4466; ">')
   
@@ -809,7 +818,17 @@ function lianjie(id,imglists,warelists){
     
     function gobcolor(){
     // location.href="./bgcolor_frame.html";
-    
+    var userInfo=$api.getStorage('userInfo');
+    if (!userInfo) {
+      api.openWin({
+          name: 'login',
+          url: './login.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+      return;
+    }
     api.openWin({
         name: 'bgcolor',
         url: './bgcolor.html',
@@ -818,6 +837,108 @@ function lianjie(id,imglists,warelists){
         },
        
            });
+    }
+
+   function Dressingmore(id){
+      var actionButton = new ActionButton({
+          tapHidden: true,
+          itemClick: function(item) {
+            if(item.index=='0'){
+              share('0',id)
+            }else if(item.index=='1'){
+               share('1',id)
+            }else if(item.index=='2'){
+               share('2',id)
+            }else{
+              jubao(id);
+            }
+          },
+          items: [{
+            img: '../image/action_botton/wx.png',
+            text: '微信'
+          },{
+            img: '../image/action_botton/qq.png',
+            text: 'QQ'
+          }, {
+            img: '../image/action_botton/fuzhi.png',
+            text: '复制链接'
+          }, {
+            img: '../image/action_botton/jubao.png',
+            text: '举报'
+          }]
+        })
+      actionButton.show()
+      
+    }
+    
+    function share(type,id){
+      var html="<input id='copyInput'  value='http://www.chaodashe.com/html/Dressingdetails_frame.html?"+window.btoa(encodeURI('articleid=' + id))+"'/>";
+      $('body').append(html);
+      var copyInput = document.getElementById('copyInput')
+      copyInput.select(); // 选择对象
+      document.execCommand("Copy"); // 执行浏览器复制命令
+      // console.log(copyInput.val())
+      if(type=='0'){
+        api.toast({
+            msg: '已复制，快去微信转发吧'
+        });
+      
+      }else if(type=='1'){
+        api.toast({
+            msg: '已复制，快去QQ转发吧'
+        });
+      
+      }else if(type=='2'){
+        api.toast({
+            msg: '成功复制链接'
+        });
+        
+      }
+      
+      $('#copyInput').remove();
+    }
+    
+    function jubao(id){
+      $(document).dialog({
+        type: 'confirm',
+        style: 'ios',
+        titleText: '动态违规?',
+        content: '此动态是否已违反社区规范?>>详细规范请在个人中心查看',
+        buttons: [{
+            name: '取消',
+            callback: function() {
+      
+            }
+          },
+          {
+            name: '是的,举报',
+            callback: function() {
+      
+              var userInfo = $api.getStorage('userInfo');
+              postajax(url + 'addreport', {
+                'type': 'Dressing',
+                'Violationid': id,
+                'whistleblower': userInfo.id
+              }, function(ret) {
+                if(ret.code=='200'){
+                  // toast(ret.message);
+                  api.toast({
+                      msg: ret.message
+                  });
+                }else{
+                   api.toast({
+                      msg: ret.message
+                  });
+                }
+              })
+          
+            }
+          },
+      
+      
+        ]
+      });
+      
     }
     
 </script>

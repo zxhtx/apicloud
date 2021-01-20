@@ -38,17 +38,21 @@
     width:100%;
     background: #fff;
     margin-top: 47px;
-
+    display: flex;
+	  justify-content: space-around;
+	  flex-wrap: wrap;
+	  align-items: flex-start;
 
 
   }
 
 
   .item {
-    position: absolute;
-    /*width: calc(100%/1);*/
-    margin-left: 3.5px;
+    /*position: absolute;*/
+    width: calc(100%/2.1);
+    /*margin-left: 3.5px;*/
     /*margin: 0 auto;*/
+    margin-top: 8px;
     border-radius: 22px 26px 0px 29px;
     transition:all 0.3s ease-in-out;
     box-shadow:0px 6px 6px -6px black;
@@ -56,9 +60,14 @@
 
 
   }
-  .item>img{
-    width: 100%;
+  .item>.shuqianimg{
+   width: 100%;
     display: block;
+      max-height: 322px;
+    min-height: 166px;
+    display: block;
+    background-position: center;
+    background-size: cover;
     border-radius: 10px 10px 0px 24px;
   }
   .item .headimg{
@@ -82,13 +91,12 @@
   .item .text{
     padding-top: 12px;
     margin-left: 6px;
-    font-size: 15px;
     display: inline-block;
-         overflow:hidden;
-        text-overflow:ellipsis;
-        display:-webkit-box;
-        -webkit-box-orient:vertical;
-        -webkit-line-clamp:2; 
+      font-size: 13px;
+     display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
     
   }
   
@@ -268,7 +276,7 @@
 
 
 			function updateWareList(_data,_LoadMore) {
-				initWaterFall();
+				// initWaterFall();
 				var resultText = '';
 				for (var i = 0; i < _data.length; i++) {
 
@@ -279,8 +287,8 @@
 						
 					}else{
 						resultText += "<div class='item'  data-articleid=" + _data[i].id +
-							"  style='background:white'><img src='../image/loading.png'  data-original=" + imgurl + _data[i].fm +
-							" ><div class='headimg' style='background-image:url(" + imgurl + _data[i].headimg +
+							"  style='background:white'><div class='shuqianimg'  data-original=" + imgurl + _data[i].fm +
+							" ></div><div class='headimg' style='background-image:url(" + imgurl + _data[i].headimg +
 							")'></div> <div class='textbox'><span class='text'>" + _data[i].text + "</span></div></div>";
 						
 					}
@@ -297,7 +305,7 @@
                 }
 
 				dl.close();
-				$("img").lazyload({
+				$(".shuqianimg").lazyload({
 					threshold: 200
 				});
 				$('.item').on('click', function(e) {

@@ -74,7 +74,7 @@
 
     .login .userinfo {
         position: absolute;
-        top: 120px;
+        top: 136px;
         /*margin-left: 109px;*/
         display: block;
         
@@ -91,18 +91,22 @@
         border-radius: 4px;
         /*margin-top: 5px;*/
         padding-left: 18px;
-        padding-top: 16px;
 
     }
-    .login .userinfo .vip {
-        display: inline-block;
-        font-size: 14px;
-        color: #000;
+    .login .userma{
+        position: absolute;
+        top: 132px;
+        right: 12px;
         display: block;
-        /*padding: 3px;*/
-        border-radius: 4px;
-        margin-top: 5px;
     }
+     .login .usermaimg{
+        width: 25px;
+        height: 25px;
+        background-image: url("../image/userma.png");
+        background-position: center;
+        background-size: cover;
+
+     }   
     .login .dingyueandfensi{
         position: absolute;
         bottom: 12px;
@@ -421,7 +425,7 @@
     /* border: 1px solid red; */
     margin-left:6px;
     margin-top: 9px;
-    margin-bottom: 50px;
+    /*margin-bottom: 50px;*/
     border-radius: 6px;
     /*background: #11C1F3;*/
     color: #fff;
@@ -448,6 +452,7 @@
     border-radius: 0px 0px 0px 100px;
     text-align: center;
     color: #fff;
+    z-index: 1;
 }
 .money{
     
@@ -464,4 +469,53 @@
     top:30px;
     width: 68%;
     height: 20px;
+}
+.footer{
+    /*border: 1px solid red;*/
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: flex-start;
+}
+.footer .cdiv{
+    width: 56%;
+    margin-left: 3px;
+    margin-top: 9px;
+    display: flex;
+    justify-content: space-around;
+    
+    /* border: 1px solid red; */
+}
+.footer .cdiv .guifandiv{
+    width: 56%;
+    /* padding: 3% 0 3% 0; */
+    height: 52px;
+    line-height: 52px;
+    color: #fff;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.footer .cdiv .guifantitle{
+    height: 52px;
+    line-height: 52px;
+    font-size: 16px;
+}
+.footer .cdiv .guifanimg{
+    width: 20px;
+    height: 20px;
+    background-image: url('../image/shequguifan.png');
+    background-size: cover;
+    background-position: center;
+}
+.footer .cdiv .copyemail{
+    width: 40%;
+    font-size: 16px;
+    height: 52px;
+    line-height: 52px;
+    text-align: center;
+    color: #fff;
+    
+    border-radius: 6px;
 }

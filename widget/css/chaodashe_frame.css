@@ -50,7 +50,7 @@
         justify-content: space-around;
     }
        #header .headnav .headtitleimg {
-       
+       /*border: 1px solid red;*/
         display: inline-block;
         width: calc(100%/3);
         height: 40px;
@@ -58,8 +58,24 @@
         color: #000;
         font-size: 32px;
         font-weight: bold;
+        position: relative;
           /*border: 1px solid red;*/
         
+    }
+     #header .headnav .headtitleimg .headtitleimgson{
+        width: 30px;
+        height: 30px; 
+       border-radius: 50%;
+       vertical-align: middle;
+       background-position: center;
+       background-size: cover;
+       margin: 0 auto;
+       position: absolute;
+       top: 50%;
+       left: 50%;
+       margin-top: -15px;
+        margin-left: -15px;
+         
     }
      #header .headnav .headtitleimg font{
         height: 38px;
@@ -106,13 +122,7 @@
         height: 42px;    
         vertical-align: middle;   
     }
-       #header .headnav .headtitleimg img{
-        width: 29px;
-        height: 29px; 
-       border-radius: 50%;
-       vertical-align: middle;
-         
-    }
+
     #header .headnav .headtitleimg font{
         height: 38px;
         line-height: 38px;
@@ -164,13 +174,14 @@
     background-color: #000;
  }
 .Dressing{
-    position: relative;
     background: white;
     height: 49px;
     line-height: 39px;
-    padding-left: 6px;
+    margin-left: 6px;
     font-family: '微软雅黑';
-    /*border: 1px solid red;*/
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 .Dressing .icon{
     width: 46px;
@@ -182,6 +193,7 @@
 .iconauthority{
 
     background-image: linear-gradient(to bottom left,#B50C82, #FDA641);
+    position: relative;
 }
 .Dressing .icon .headimg{
     width: 38px;
@@ -197,23 +209,27 @@
 
 }
 .Dressing .uname{
-         display: inline-block;
-         font-weight: bold;
+         
+    font-weight: bold;
+    margin-left: 6px;
          /*border: 1px solid red;*/
          /*height: 30px;*/
-         line-height: 39px;
-         font-size: 15px;
-        }
-.Dressing .authority{
-    display: inline-block;
-    width: 18px;
-    /*height: 18px;*/
-    /*border: 1px solid red;*/
+    line-height: 39px;
+    font-size: 15px;
 }
-.Dressing .authority img{
-    width: 15px;
-    height: 15px;
-    vertical-align: middle;
+.Dressing .iconauthority .authority{
+   position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 16px;
+}
+.Dressing .iconauthority .authority img{
+    width: 11px;
+    height: 11px;
 }
 .Dressing .share{
     position: absolute;
@@ -229,6 +245,16 @@
     font-weight: bold;
     margin-left: 6px;
   }
+  .Dressing .Dressingmore{
+    width: 35px;
+    height: 35px;
+    background-image: url('../image/Dressingmore.png');
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    right: 3px;
+    
+  }
 
      .minimg{
             position: absolute;
@@ -240,53 +266,24 @@
         .footbox{
             position: relative;
             width: 100%;
-            height: auto;
+            padding-bottom: 6px;
+            /*height: auto;*/
             /*border-bottom: 1px solid black;*/
              box-shadow:0px 3px 3px -3px black;
         }
-        .footbox .textanduser{
-            padding-top: 0px;
-            margin-bottom: 0px;
+         .textanduser{
+              overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            /*border: 1px solid red;*/
+            margin: 6px;
+            max-height: 66px;
+            font-size: 15px;
+                
         }
-        .footbox .textanduser .shuxiepng{
-            width: 20px;
-            height: 20px;
-            margin-left: 2px;
-            /* border: 1px solid red; */
-            display: inline-block;
-            vertical-align: middle;
-            background-image: url('../image/shuxie.png');
-            background-position: center;
-            background-size: cover;
-        }
-        .likesmall{
-            width: 20px;
-            height: 20px;
-            margin-left: 2px;
-            /* border: 1px solid red; */
-            display: inline-block;
-            vertical-align: middle;
-            background-image: url('../image/likesmall.png');
-            background-position: center;
-            background-size: cover;
-        }
-        .footbox .textanduser .user{
-            font-weight: bold;
-            /*padding-left: 6px;*/
-            display: inline-block;
-            vertical-align: middle;
-        }
-
-          .footbox .textanduser .text{
-            /*font-weight: bold;*/
-
-            padding-left: 6px;
-             overflow:hidden;
-             text-overflow:ellipsis;
-              display:-webkit-box;
-              -webkit-box-orient:vertical;
-                    -webkit-line-clamp:3;
-        }
+        
         
         .footbox .duogongneng img{
             width: 32px;
@@ -325,14 +322,12 @@
     height: 20px;
     line-height: 20px;
   }
-  .likecount{
-    color: gray;
-    font-size: 15px;
-    display: inline-block;
-    margin-left: 1px;
-    margin-bottom: 5px;
-    
-  }
+   .likecount {
+        color: #000;
+        font-size: 15px;
+        margin-left: 8px;
+
+      }
   .box{
          box-shadow:0px 6px 6px -6px black;
          margin-top: 6px;
@@ -361,7 +356,7 @@
     background-size: cover !important;
      -webkit-background-size: cover !important;
      -o-background-size: cover !important;
-     background-position: center center;
+     background-position: center center !important;
      background-repeat: no-repeat !important;
 }
 .lianjie{

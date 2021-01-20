@@ -111,6 +111,7 @@
 		</header>
 
 		<div class="list"></div>
+		<input id="copyInput" value="" style=" position: fixed;  width: 5px;    top: -16px;   height: 0px;"readonly />
 	</body>
 	<script id="template" type="text/template">
 		{{~it:value:index}}
@@ -131,7 +132,7 @@
 			</div>
 		 </div>
 		 {{if(value.is_withdrawal==0){}}
-		 <div class="dindanhao">{{=value.dindanhao}}&nbsp;复制</div>
+		 <div class="dindanhao" onclick="copy('{{=value.dindanhao}}')">{{=value.dindanhao}}&nbsp;复制</div>
 		 {{ } }}
 		 
 		</div>
@@ -204,6 +205,17 @@
 
 			off_on = true;
 			$('.xz').remove();
+		}
+		function copy(dindanhao) {
+			var copyInput =$('#copyInput');
+			copyInput.val(dindanhao);
+			copyInput.select(); // 选择对象
+			document.execCommand("Copy"); // 执行浏览器复制命令
+
+			// toast('');
+			api.toast({
+			    msg: '成功复制链接'
+			});
 		}
 	</script>
 

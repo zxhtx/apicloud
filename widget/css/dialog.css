@@ -368,10 +368,8 @@
 
 /* toast */
 .dialog-toast .dialog-overlay {
-  background-color: rgba(0, 0, 0,0);
+  background-color: rgba(0, 0, 0,0.6);
    z-index: 1;
-  /* filter: blur(2px); */
-  backdrop-filter: blur(2px)brightness(66%);
 }
 .dialog-toast .dialog-content {
   width: 128px;

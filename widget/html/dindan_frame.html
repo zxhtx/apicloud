@@ -41,6 +41,8 @@
 				left: 6px;
 				height: 58px;
 				width: 58px;
+				background-position: center;
+				background-size: cover;
 				border-radius: 10px;
 			}
 
@@ -271,89 +273,7 @@
 
 			}
 
-			header {
-				width: 100%;
-				height: 40px;
-				background: white;
-				border-bottom: 0.3px solid #F1F1F1;
-				box-shadow: 0px 6px 6px -6px black;
-			}
-
-			header .back {
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 40px;
-				height: 40px;
-				z-index: 2;
-			}
-
-			header .back img {
-				margin-top: 5px;
-				margin-left: 4px;
-				width: 28px;
-				height: 30px;
-			}
-
-			header a {
-				display: block;
-				text-align: center;
-				line-height: 40px;
-				font-size: 16px;
-				font-weight: bold;
-
-			}
-
-			.nav {
-				border-bottom: 1px solid #ddd;
-				width: 100%;
-				overflow-x: scroll;
-				white-space: nowrap;
-				height: 50px;
-				line-height: 50px;
-
-			}
-
-			.nav::-webkit-scrollbar {
-				display: none
-			}
-
-			.nav p {
-				display: inline-block;
-				width: calc(100%/6);
-				/*padding: 5px 0;*/
-				/*padding-left: 2px;*/
-				/* margin-left: 5px; */
-				text-align: center;
-				font-size: 14px;
-				height: 36px;
-			}
-
-			.nav .active {
-				font-weight: bold;
-				font-size: 15px;
-				border-bottom: 1px solid #46D8AB;
-				color: #46D8AB;
-				height: 36px;
-
-			}
-
-
-			.noshopping {
-				z-index: 9999;
-				text-align: center;
-				/*position: fixed;*/
-				/*top: 36%;
-				left: 36%;*/
-				color: #ddd;
-				height: 50px;
-				line-height: 50px;
-			}
-
-			.noshoppingshow {
-				display: '';
-			}
-
+			
 			.sizecolor {
 				color: #9d9d9d;
 				font-size: 12px;
@@ -421,42 +341,24 @@
 
 			.green {
 				color: #01C5C0;
+
 			}
 		</style>
 	</head>
 
 	<body>
 
-
-		<header>
-			<div class="back" tapmode onclick="api.closeWin();">
-				<img src="../image/back.png">
-			</div>
-			<a>我的订单</a>
-		</header>
-		<div class="nav">
-			<p class="active nav0" i="0">待付款</p>
-			<p class="nav1" i="1">待收货</p>
-			<p class="nav2" i="2">已签收</p>
-			<p i="all">全部商品</p>
-			<p class="nav3" i="3">换货</p>
-			<p class="nav4" i="4">退货</p>
+		<div id="list" class="list">
 
 		</div>
-
-		<div id="list">
-
-		</div>
-		<div class="noshopping">
-			<p>-木有啦-</p>
-		</div>
-
+		
 	</body>
 	<script type="text/template" id="template">
 	{{~it.list:value:index}}
 	<div class="ware ware-1" id="ware_{{=value.id}}">
 		<div class="content" >
-			<img src="{{=it.imgurl}}{{=value.url}}" data-wareTypeId="{{=value.wareTypeId}}"  class="thumbnail" id="thumbnail_{{=value.id}}" src="../image/default_square.png">
+			<div class='thumbnail' id="thumbnail_{{=value.id}}" data-wareTypeId="{{=value.wareTypeId}}" style="background-image:url('{{=it.imgurl}}{{=value.url}}')"></div>
+			
 			<div class="info" tapmode onclick="shoppingrenzheng('{{=value.id}}')">
 				<div class="description">{{=value.description}}</div>
 				<div class="xaingq">
@@ -559,16 +461,12 @@
 		var skip = 0;
 		var LIMIT = 20;
 		var off_on = false;
-		var wareindex2 = 0;
-		var wareindex;
+		// var wareindex2 = 0;
+		// var wareindex;
 		apiready = function(){
 		
 		 wareindex = api.pageParam.nav;
-		
-
-		$(".nav .active").removeClass("active");
-		$('.nav' + api.pageParam.nav).addClass("active");
-		setNavMenuIndex();
+		// setNavMenuIndex();
 		getAddressList(api.pageParam.nav);
 		event();
 		}
@@ -588,7 +486,8 @@
 			    name: 'updatedindantype'
 			}, function(ret, err) {
 			    if (ret) {
-			  		getAddressList(api.pageParam.nav);
+			  		getAddressList(wareindex);
+			  		$('.nodata').remove();
 			    }
 			});
 		}
@@ -600,7 +499,7 @@
 					off_on = false;
 					getAddressList(wareindex, true);
 					// toast("动态加载中...",'bottom',1000);
-					// $('.list').append('<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>')
+					$('.list').append('<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>')
 				}
 
 
@@ -635,15 +534,22 @@
 
 		function look(_id) {
 			// event.stopPropagation();
-			window.location.href = "./lookxiangqing_frame.html?" + window.btoa(encodeURI('shooping=' + _id));
+			
+			api.openWin({
+			    name: 'wuliu',
+			    url: './wuliu.html',
+			    pageParam: {
+			        shooping: _id
+			    }
+			});
 		}
 
 		function shoppingrenzheng(_id) {
 			// event.stopPropagation();
 			// window.location.href = "./shoppingrenzheng_frame.html?" + window.btoa(encodeURI('shooping=' + _id));
 			api.openWin({
-			    name: 'shoppingrenzheng',
-			    url: './shoppingrenzheng.html',
+			    name: 'shoppinginfo',
+			    url: './shoppinginfo.html',
 			    pageParam: {
 			        shopping:_id
 			    }
@@ -657,7 +563,8 @@
 			    name: 'tuihuan',
 			    url: './tuihuan.html',
 			    pageParam: {
-			        shoopingid:_id
+			        shoopingid:_id,
+			        wareindex:wareindex,
 			    }
 			});
 			
@@ -697,7 +604,7 @@
 				'userid': userInfo.id
 			}, function(e) {
 				if (e.code == 200) {
-					getAddressList(1);
+					getAddressList(wareindex);
 					$('#ware_' + _id).remove();
 				}
 			})
@@ -705,7 +612,7 @@
 
 		function no(_data, dindantypeid) {
 
-			event.stopPropagation();
+			// event.stopPropagation();
 			if (dindantypeid == '5c2a39add37a824c5ac6cc64' || dindantypeid == '5c2a39add37a824c5ac6cc67') {
 				$(document).dialog({
 					type: 'confirm',
@@ -822,7 +729,7 @@
 		}
 		// 获取列表页数据
 		function getAddressList(_index, _LoadMore) {
-			dialog('订单加载中');
+			
 			dindanTypeList = [{
 					id: "5c2a3991af3114d73d9ddfc2",
 					name: "待付款"
@@ -848,17 +755,15 @@
 					name: "已取消购买"
 				}
 			]
-			if (_LoadMore) {
-				// mui('#refreshContainer').pullRefresh().endPullupToRefresh(true);
-			} else {
-
-			}
+			
 			if (_LoadMore) {
 				skip += LIMIT;
 			} else {
+				dialog('订单加载中');
 				skip = 0;
 			}
-			if (_index == 'all') {
+			if (_index == 5) {
+				// 下标5是全部商品
 				var params = {
 					// dindantypeid:dindanTypeList[_index].id,
 					userid: userInfo.id,
@@ -876,17 +781,29 @@
 			}
 
 			getajax(url + 'getdindan', params, function(ret) {
+				// alert($api.jsonToStr(ret))
 				if (ret.code == '200') {
 					// console.log(ret.data[0]);
-					updateWareList(ret.data, _index);
+					updateWareList(ret.data,_LoadMore);
 
+				}else{
+					$('.list').append('<p class="nodata" style=" text-align: center;color: #ddd;height: 50px;line-height: 50px;">-没有订单了-</p>');
+      				$('.xz').remove();
+					dl.close();
+					// wareindex2表示上一次的类型,index表示这次加载类型（两个类型相同表示加载同一类型,反之则加载的是不同类型版块）
+					// if(wareindex2==_index){
+					// 	console.log('追加')
+					// }else{
+					// 	// console.log('换类型')
+					// 	$('#list').empty();
+					// }
 				}
 			})
 
 		}
 
 
-		function updateWareList(_data, _index) {
+		function updateWareList(_data,_LoadMore) {
 			var params={
 				list:_data,
 				imgurl:imgurl
@@ -900,7 +817,7 @@
 			} else {
 				off_on = true;
 			}
-			if (_index == wareindex2) {
+			if (_LoadMore) {
 				$('#list').append(resultText);
 			} else {
 				$('#list').html(resultText);
@@ -908,7 +825,7 @@
 
 
 			$("#loading").addClass("hidden");
-			wareindex2 = _index;
+			
 
 
 

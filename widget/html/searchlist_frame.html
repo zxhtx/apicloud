@@ -4,94 +4,62 @@
 		<meta charset="utf-8">
 		<title>搜索就这么简单</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="../css/swiper.min.css">
-		<link rel="stylesheet" href="../css/searchlist.css">
+
+		
 		<script src="../script/commonjs.js"></script>
-		<!-- <link href="https://cdn.bootcss.com/Swiper/4.0.7/css/swiper.min.css" rel="stylesheet"> -->
-		<!-- <script src="https://cdn.bootcss.com/Swiper/4.0.7/js/swiper.min.js"></script> -->
-		<!-- <link href="https://cdn.bootcss.com/Swiper/4.0.7/css/swiper.min.css" rel="stylesheet"> -->
-		<!-- <script src="https://cdn.bootcss.com/Swiper/4.0.7/js/swiper.min.js"></script> -->
+		<link rel="stylesheet" href="../css/searchlist.css">
+
 		<script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
-		<script type="text/javascript" src=" ../script/pinterest_grid.js"></script>
+		<style type="text/css">
+			
+		</style>
 	</head>
 	<body>
-		<div id="top">
-			<div class="header">
-				<div class="back" onclick="api.closeWin();"></div>
-				<div class="searchbox">
-					<input type="text" class="searchtext" placeholder="搜你想要的">
-				</div>
-				<div class="searchpng" onclick="btn()" style="width:32px;height: 32px; background-image: url('../image/search_groupbuy.png'); background-position: center; background-size: cover;"></div>
-			</div>
-			<div class="swiper-container" id="nav" style="margin-top: 0px;">
-				<div class="swiper-wrapper">
-					<div class="swiper-slide">
-						<span style="color:#000;">潮搭社</span></div>
-					<div class="swiper-slide">
-						<span>用户</span></div>
-					<div class="swiper-slide">
-						<span>商品</span></div>
+		
+	<!-- 	<div class="find_nav">
+			<div class="find_nav_left">
+				<div class="find_nav_list">
+					<ul id="pagenavi1">
 
-					<div class="bar">
-						<div class="color"></div>
-					</div>
+						<li><a href="#" class="active">潮搭社</a></li>
+						<li><a href="#">用户</a></li>
+						<li><a href="#">商品</a></li>
+
+
+						<li class="sideline"></li>
+					</ul>
+
 				</div>
 			</div>
 		</div>
-		<div class="swiper-container" id="page">
-			<div class="swiper-wrapper">
-				<div class="swiper-slide slidepage">
-					<div class="swiper-container scroll">
-						<div class="swiper-wrapper">
-							<div class="swiper-slide slidescroll  ">
-								<div class="nav0 nav pobu">
-									<div id="xuanzhun" class="xz0" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>
 
-								</div>
-
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="swiper-slide slidepage">
-					<div class="swiper-container scroll">
-						<div class="swiper-wrapper">
-							<div class="swiper-slide slidescroll">
-								<div class="nav1 nav">
-									<div id="xuanzhun" class="xz1" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="swiper-slide slidepage">
-					<div class="swiper-container scroll">
-						<div class="swiper-wrapper">
-							<div class="swiper-slide slidescroll">
-								<div class="nav2 nav">
-
-									<div id="xuanzhun" class="xz2" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
+		<div id="slider1" class="swipe">
+			<ul class="box01_list">
+				<li class="li_list nav0" ></li>
+				<li class="li_list nav1" ></li>
+				<li class="li_list nav2" ></li>
+			</ul>
+		</div>	 -->
+		<div class="list">
+			
 		</div>
 
-
-		<script src="../script/swiper.min.js"></script>
+		
+		<!-- <script type="text/javascript" src="../script/huadong/touchslider.js"></script> -->
+		<!-- <script type="text/javascript" src="../script/huadong/huadong.js"></script> -->
 		<script type="text/template" id="cdstemplate">
 			{{~it.list:value:index}}
-			<div class="cdslist" onclick="openDressing('{{=value.id}}')">
-  		 <img  class="img"  data-original="{{=it.imgurl}}{{=value.fm}}" >
+			<div class="cdslist" tapmode onclick="openDressing('{{=value.id}}')">
+  		 <div  class="cdsimg" style="background-image:url('{{=it.imgurl}}{{=value.fm}}');"></div>
   		 <span class='text'>{{=value.text}}</span>
   		 <div class="user">
-  			 <div class="head_img" data-original="{{=it.imgurl}}{{=value.headimg}}"></div>
-  			 <div class="name">{{=value.name}}</div>
-  			 <div class="like"></div>
-  			 <div class="likecount">{{=value.like}}</div>
+  		 	<div class="userinfo">
+  			  <div class="head_img" style="background-image:url('{{=it.imgurl}}{{=value.headimg}}');"></div>
+  			 <div class="name">{{=value.name}}</div>	
+			</div>	 
+  			 <div class="likecount">{{=value.like}}次赞</div>
+  			
+  			
   		 </div>
   		
   		
@@ -101,243 +69,92 @@
 		<script type="text/template" id="usertemplate">
 			{{~it.list:value:index}}
   		<div  class="userlist">
-  		 <div class="head_img img"  data-original="{{=it.imgurl}}{{=value.headimg}}"></div>
+  		 <div class="head_img img" style="background-image:url('{{=it.imgurl}}{{=value.headimg}}');"></div>
   		 <div class="text">
   			 <p class="name">{{=value.name}}</p>
   			 <p class=" autograph">{{=value. autograph}}</p>
   		 </div>
-  		 <p class="lookusercenter" onclick="TAuser({{=value.id}})">看TA主页</p> 
+  		 <p class="lookusercenter" tapmode onclick="TAuser('{{=value.id}}')">看TA主页</p> 
        	</div>
   		{{~}}
     </script>
 		<script type="text/template" id="waretemplate">
 			{{~it.list:value:index}}
-			<div class='item'   onclick="openware('{{=value.bid}}')" style='background:white'>
-			<div class="wareimg img"  data-original="{{=value.image}}"></div>
+			<div class='item' tapmode   onclick="openware('{{=value.bid}}')" style='background:white'>
+			<div class="wareimg img"  style="background-image:url('{{=value.image}}');"></div>
 			<span class='description'>{{=value.description}}</span>
 			<span class='price'>￥{{=value.price}}</span>
 			</div>
 		{{~}}
 	</script>
 		<script>
-			var initskip = 0;
-			var initlimit = 16;
-			var cdsskip = 0;
-			var cdslimit = 16;
-			var userskip = 0;
-			var userlimit = 16;
-			var wareskip = 0;
-			var warelimit = 22;
-			var searchval;
-			var nav0off_on = false;
-			var nav1off_on = false;
-			var nav2off_on = false;
-			//暂时设计每个slide大小需要一致
-			barwidth = 36 //导航粉色条的长度px
-			tSpeed = 300 //切换速度300ms
+			
+			var skip = 0;
+			var limit = 8;
+			var searchval,pageindex;
+			var off_on = false;
+		
 			apiready = function(){
-			    $('.searchtext').val(api.pageParam.val);
-				searchval = $('.searchtext').val();
-
-				initsearch();
-				initware();
+			    searchval=api.pageParam.searchval;
+			    pageindex=api.pageParam.index;
+				initsearch(false);
+				event();
 
 			}
 			    
+			function event(){
+				api.addEventListener({
+				    name: 'searchbtnevent'
+				}, function(ret, err) {
+				    if (ret) {
+				        // alert(JSON.stringify(ret));
+				        searchval=ret.value.searchvalue
+				        $('.nodata').remove();
+				        initsearch(false);
+				    } 
+				});
+			}
+
 			
 
-			$('.nav0').scroll(function() {
-				// console.log( $('.nav0').height());
-				if (($('.nav0').height() + $(this).scrollTop() + 200) >= $(this)[0].scrollHeight) {
-					if (nav0off_on) {
-						nav0off_on = false;
-						getcds(true);
-						$('.nav0').append(
-							'<div id="xuanzhun" class="xz0" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>'
-						)
+			window.addEventListener("scroll", function() {
+			//当时滚动条离底部0px时开始加载下一页的内容
 
-					}
-				}
-
-			});
-			$('.nav1').scroll(function() {
-				// console.log( $('.nav0').height());
-				if (($('.nav1').height() + $(this).scrollTop() + 200) >= $(this)[0].scrollHeight) {
-					if (nav1off_on) {
-						nav1off_on = false;
-						getuser(true);
+			if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+				if (off_on) {
+						off_on = false;
+						initsearch(true);
 						// console.log(i++);
-						$('.nav1').append(
-							'<div id="xuanzhun" class="xz1" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>'
+						$('.list').append(
+							'<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>'
 						)
 					}
+
+
+			}
+		});
+			
+
+			function initsearch(_loadMore) {
+
+				if (pageindex==0) {
+					getcds(_loadMore);
+				}else if(pageindex==1){
+					getuser(_loadMore);
+				}else{
+					getware(_loadMore);
 				}
-
-			});
-			$('.nav2').scroll(function() {
-				// console.log( $('.nav0').height());
-				if (($('.nav2').height() + $(this).scrollTop() + 200) >= $(this)[0].scrollHeight) {
-					if (nav2off_on) {
-						nav2off_on = false;
-						initware(true);
-						// console.log(i++);
-						$('.nav2').append(
-							'<div id="xuanzhun" class="xz2" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>'
-						)
-					}
-				}
-
-			});
-			var navSwiper = new Swiper('#nav', {
-				slidesPerView: 3,
-				freeMode: true,
-				on: {
-					init: function() {
-						navSlideWidth = this.slides.eq(0).css('width'); //导航字数需要统一,每个导航宽度一致
-						bar = this.$el.find('.bar')
-						bar.css('width', navSlideWidth)
-						bar.transition(tSpeed)
-						navSum = this.slides[this.slides.length - 1].offsetLeft //最后一个slide的位置
-
-						clientWidth = parseInt(this.$wrapperEl.css('width')) //Nav的可视宽度
-						navWidth = 0
-						for (i = 0; i < this.slides.length; i++) {
-							navWidth += parseInt(this.slides.eq(i).css('width'))
-						}
-
-						topBar = this.$el.parents('body').find('#top') //页头
-
-					},
-
-				},
-			});
-
-			var pageSwiper = new Swiper('#page', {
-				watchSlidesProgress: true,
-				resistanceRatio: 0,
-				on: {
-					touchMove: function(e) {
-
-
-						progress = this.progress
-						bar.transition(0)
-						bar.transform('translateX(' + navSum * progress + 'px)')
-						//粉色255,72,145灰色51,51,51
-						for (i = 0; i < this.slides.length; i++) {
-							slideProgress = this.slides[i].progress
-							if (Math.abs(slideProgress) < 1) {
-								r = Math.floor((255 - 51) * (1 - Math.pow(Math.abs(slideProgress), 2)) + 51)
-								g = Math.floor((72 - 51) * (1 - Math.pow(Math.abs(slideProgress), 2)) + 51)
-								b = Math.floor((145 - 51) * (1 - Math.pow(Math.abs(slideProgress), 2)) + 51)
-								navSwiper.slides.eq(i).find('span').css('color', '#000')
-							}
-						}
-					},
-
-					transitionStart: function(e) {
-
-						activeIndex = this.activeIndex
-						activeSlidePosition = navSwiper.slides[activeIndex].offsetLeft
-						//释放时导航粉色条移动过渡
-						bar.transition(tSpeed)
-						bar.transform('translateX(' + activeSlidePosition + 'px)')
-						//释放时文字变色过渡
-						navSwiper.slides.eq(activeIndex).find('span').transition(tSpeed)
-						navSwiper.slides.eq(activeIndex).find('span').css('color', '#000')
-						if (activeIndex > 0) {
-							navSwiper.slides.eq(activeIndex - 1).find('span').transition(tSpeed)
-							navSwiper.slides.eq(activeIndex - 1).find('span').css('color', '#9D9D9D')
-						}
-						if (activeIndex < this.slides.length) {
-							navSwiper.slides.eq(activeIndex + 1).find('span').transition(tSpeed)
-							navSwiper.slides.eq(activeIndex + 1).find('span').css('color', '#9D9D9D')
-						}
-						//导航居中
-						navActiveSlideLeft = navSwiper.slides[activeIndex].offsetLeft //activeSlide距左边的距离
-
-						navSwiper.setTransition(tSpeed)
-						if (navActiveSlideLeft < (clientWidth - parseInt(navSlideWidth)) / 2) {
-							navSwiper.setTranslate(0)
-						} else if (navActiveSlideLeft > navWidth - (parseInt(navSlideWidth) + clientWidth) / 2) {
-							navSwiper.setTranslate(clientWidth - navWidth)
-						} else {
-							navSwiper.setTranslate((clientWidth - parseInt(navSlideWidth)) / 2 - navActiveSlideLeft)
-						}
-
-					},
-				}
-			});
-
-			navSwiper.$el.on('touchstart', function(e) {
-				e.preventDefault() //去掉按压阴影
-			})
-			navSwiper.on('tap', function(e) {
-
-				clickIndex = this.clickedIndex
-				clickSlide = this.slides.eq(clickIndex)
-				pageSwiper.slideTo(clickIndex, 0);
-				this.slides.find('span').css('color', '#9D9D9D');
-				clickSlide.find('span').css('color', '#000');
-			})
-
-			//内容滚动			
-			var scrollSwiper = new Swiper('.scroll', {
-				//65是头部的高
-				//36是top地址和搜索的高
-
-				slidesOffsetBefore: 79,
-				direction: 'vertical',
-				freeMode: false,
-				slidesPerView: 'auto',
-				// noSwiping : true,
-				noSwipingClass: 'slidepage',
-				height: 100,
-
-
-				// mousewheel: {
-				// 	releaseOnEdges: true,
-				// },
-				on: {
-					touchMove: function() {
-
-						// if (this.translate > 72 - 36 && this.translate < 72) {
-						// 	topBar.transform('translateY(' + (this.translate - 72) + 'px)');
-						// }
-
-					},
-
-				}
-
-			})
-
-			function initsearch() {
-
-				postajax(url + 'initsearch', {
-					'skip': initskip,
-					'limit': initlimit,
-					'value': searchval,
-				}, function(e) {
-					setTimeout(function() {
-						initWaterFall();
-					}, 300);
-
-					// console.log(e);
-					updatacds(e.cds, false);
-					updatauser(e.user, false);
-
-
-				})
 			}
 
 			function getcds(_loadMore) {
 				if (_loadMore) {
-					cdsskip += cdslimit;
+					skip += limit;
 				} else {
-					cdsskip = 0;
+					skip = 0;
 				}
 				postajax(url + 'searchcds', {
-					'skip': cdsskip,
-					'limit': cdslimit,
+					'skip': skip,
+					'limit': limit,
 					'value': searchval
 				}, function(e) {
 					// console.log(e);
@@ -347,14 +164,14 @@
 
 			function getuser(_loadMore) {
 				if (_loadMore) {
-					userskip += userlimit;
+					skip += limit;
 				} else {
-					userskip = 0;
+					skip = 0;
 				}
 				postajax(url + 'searchuser', {
-					'skip': userskip,
-					'limit': userlimit,
-					'value': searchval
+					'skip': skip,
+					'limit':limit,
+					'value':searchval
 				}, function(e) {
 
 					updatauser(e, _loadMore);
@@ -365,8 +182,8 @@
 
 
 				if (e) {
-
-					initWaterFall();
+					$('.list').addClass('cdswarelist')
+					// initWaterFall();
 					var param = {
 						list: e,
 						imgurl: imgurl,
@@ -374,22 +191,22 @@
 					var tempFn = doT.template($('#cdstemplate').text());
 					var resultHTML = tempFn(param);
 					if (_loadMore) {
-						$(".nav0").append(resultHTML);
+						$(".list").append(resultHTML);
 					} else {
-						$(".nav0").html(resultHTML);
+						$(".list").html(resultHTML);
 					}
 
 
 					loadimg();
-					$('.xz0').remove();
-					nav0off_on = true;
+					$('.xz').remove();
+					off_on = true;
 
 				} else {
 
-					nav0off_on = false;
-					$('.xz0').remove();
-					$('.nav0').append(
-						'<p class="nodata nodata0 w" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;font-size:14px">-木有了-</p>'
+					off_on = false;
+					$('.xz').remove();
+					$('.list').append(
+						'<p class="nodata nodata0 w" style=" text-align: center;color: #ddd;height: 50px;line-height: 50px;font-size:14px">-木有了-</p>'
 					);
 				}
 			}
@@ -405,35 +222,35 @@
 					var tempFn = doT.template($('#usertemplate').text());
 					var resultHTML = tempFn(param);
 					if (_loadMore) {
-						$(".nav1").append(resultHTML);
+						$(".list").append(resultHTML);
 					} else {
-						$(".nav1").html(resultHTML);
+						$(".list").html(resultHTML);
 					}
 
 					loadimg();
-					$('.xz1').remove();
-					nav1off_on = true;
+					$('.xz').remove();
+					off_on = true;
 
 				} else {
-					nav1off_on = false;
-					$('.xz1').remove();
-					$('.nav1').append(
-						'<p class="nodata" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;font-size:14px">-木有了-</p>'
+					off_on = false;
+					$('.xz').remove();
+					$('.list').append(
+						'<p class="nodata" style=" text-align: center;color: #ddd;height: 50px;line-height: 50px;font-size:14px">-木有了-</p>'
 					);
 				}
 			}
 
-			function initware(_loadMore) {
+			function getware(_loadMore) {
 
 				if (_loadMore) {
-					wareskip += warelimit;
+					skip += limit;
 				} else {
-					wareskip = 0;
+					skip = 0;
 				}
 				var params = {
 					value:searchval,
-					skip: wareskip,
-					limit: warelimit,
+					skip: skip,
+					limit:limit,
 				}
 				getajax(url+'searchware', params, function(ret) {
 					if (ret.length) {
@@ -441,10 +258,10 @@
 						updataware(ret, _loadMore);
 
 					} else {
-						nav2off_on = false;
-						$('.xz2').remove();
-						$('.nav2').append(
-							'<p class="nodata nodata0" style="  text-align: center;color: #ddd;height: 24px;line-height: 24px;font-size:14px">-木有了-</p>'
+						off_on = false;
+						$('.xz').remove();
+						$('.list').append(
+							'<p class="nodata nodata0" style="  text-align: center;color: #ddd;height: 50px;line-height: 50px;font-size:14px">-木有了-</p>'
 						);
 					}
 
@@ -454,7 +271,7 @@
 			function updataware(e, _loadMore) {
 
 				if (e) {
-
+					$('.list').addClass('cdswarelist')
 					var param = {
 						list: e,
 						imgurl: imgurl,
@@ -462,21 +279,21 @@
 					var tempFn = doT.template($('#waretemplate').text());
 					var resultHTML = tempFn(param);
 					if (_loadMore) {
-						$(".nav2").append(resultHTML);
+						$(".list").append(resultHTML);
 					} else {
-						$(".nav2").html(resultHTML);
+						$(".list").html(resultHTML);
 					}
 
 					loadimg();
-					$('.xz2').remove();
-					nav2off_on = true;
+					$('.xz').remove();
+					off_on = true;
 
 				} else {
-					nav2off_on = false;
-					$('.xz2').remove();
+					off_on = false;
+					$('.xz').remove();
 
-					$('.nav2').append(
-						'<p class="nodata nodata0" style=" text-align: center;color: #ddd;height: 24px;line-height: 24px;font-size:14px">-木有了-</p>'
+					$('.list').append(
+						'<p class="nodata nodata0" style=" text-align: center;color: #ddd;height: 50px;line-height: 50px;font-size:14px">-木有了-</p>'
 					);
 				}
 			}
@@ -484,8 +301,8 @@
 
 			function loadimg() {
 
-				$(".head_img,.img").lazyload({
-					threshold: 88,
+				$(".head_img,.wareimg,.cdsimg").lazyload({
+					threshold: 200,
 				});
 
 
@@ -509,20 +326,7 @@
 
 
 
-			$('.searchpng').click(function() {
-				searchval = $('.searchtext').val();
-				if (searchval.length > 0) {
-					initsearch();
-					initware();
-					$('.nodata').remove();
-					$('.nav').empty();
-				} else {
-				
-					api.toast({
-					    msg: '请输入搜索关键词'
-					});
-				}
-			})
+			
 
 
 

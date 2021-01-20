@@ -15,7 +15,7 @@
  // if ($api.getStorage('userInfo')) {
   
  // }
- var AppVersion='0.14';
+ var AppVersion='0.70';
  var userInfo=$api.getStorage('userInfo')?$api.getStorage('userInfo'):0;
  var header={
   "Token":$api.getStorage('token') ? $api.getStorage('token') : 0,
@@ -41,7 +41,7 @@ function getajax(url,data,callback){
     data:data,
     headers:header,
     success: function (data) {
-       if (data.code == 403) {
+       if (data.code == 406) {
         api.toast({
             msg: '登录信息失效,请重新登录'
         });
@@ -75,7 +75,7 @@ function postajax(url, data, callback){
     data: data,
     headers:header,
     success: function (data) {
-      if (data.code == 403) {
+      if (data.code == 406) {
         api.toast({
             msg: '登录信息失效,请重新登录'
         });
@@ -167,4 +167,32 @@ function timestampFormat( timestamp ) {
   }
 }
 
+function quanxian(permission){
+  permission=permission.split(',');
+  // alert($api.jsonToStr(permission))
+  // var permission = new Array('camera','');
+    var resultList = api.hasPermission({
+        list: permission
+    });
+    if (resultList[0].granted) {
+        // 已授权，可以继续下一步操作
+        // api.alert({
+            // msg: '已授权'
+        // });
+    } else {
+        
+      api.requestPermission({
+           list: permission,
+       }, function(res) {
+           if (res.list[0].granted) {
+               // 已授权，可以继续下一步操作
+              api.toast({
+                 msg: '已授权'
+              });
+          }
+      });
+            
+      
+    }
+}
 

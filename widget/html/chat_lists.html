@@ -37,6 +37,13 @@
 	</div>
 </div>
 <div class="height10"></div>
+<div class="system" onclick="opensystem()">
+	<div class="png">
+		<div class="systempng"></div>
+	</div>
+	<div class="title">系统消息</div>
+	<div class="systemcount"></div>
+</div>
  <div class="lists">
 	<!-- <div class="list">
 		<div class="head_img" style="background-image: url('images/touxiang.png');"></div>
@@ -63,7 +70,7 @@
 		$('.likecount').css('background-color',userInfo.Dressingbgcolor);	
 		$('.dinyuecount').css('background-color',userInfo.Dressingbgcolor);	
 		$('.commentcount').css('background-color',userInfo.Dressingbgcolor);
-		$('.atcount').css('background-color',userInfo.Dressingbgcolor);	
+		$('.atcount,.systemcount').css('background-color',userInfo.Dressingbgcolor);	
 		
 	 }
 	     
@@ -234,6 +241,14 @@
 					 $('.atcount').html('').css('display','none');
 				}
 
+				if(e.data.system){
+					$('.systemcount').html(e.data.system).css('display','block');
+					
+				}else{
+					
+					 $('.systemcount').html('').css('display','none');
+				}
+
 			 }
 		 })
 	}
@@ -323,13 +338,25 @@
  			}else if(ret.value.page=='atlist'){
 
  				$('.atcount').html('').css('display','none');
+ 			}else if(ret.value.page=='readsystem_shangxin'){
+
+ 				$('.systemcount').html('').css('display','none');
+
  			}
  		    
  		});
     }
 
   
-
+    function opensystem(){
+    	api.openWin({
+    	    name: 'system_shangxin',
+    	    url: './system_shangxin.html',
+    	    pageParam: {
+    	        name: 'test'
+    	    }
+    	});
+    }
  </script>
 </body>
 </html>

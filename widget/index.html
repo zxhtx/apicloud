@@ -94,6 +94,9 @@
         if (userInfo) {
           workman();
         }
+        // 打开所有权限
+        quanxian('storage-w,camera,storage-r,photos-w')
+
         getversion();
         fnNVTabBar_open();
         kouling();
@@ -176,7 +179,10 @@
                       cache: false,
                       allowResume: false
                   }, function(ret, err) {
-                    
+                      // api.toast({
+                      //     msg: ret.percent
+                      // });
+                      // alert(ret.state);
                     if(ret.state==1){
                       api.installApp({
                           appUri: 'fs://CDS/CDS_'+app_version+'.apk'
@@ -336,7 +342,7 @@
 
             }else{
               api.toast({
-                msg: '链接不是本站链接',
+                msg: '链接无效',
                 duration: 2000,
                 location: 'bottom'
               });
@@ -405,8 +411,8 @@
           {
             w: api.winWidth / 5.0,
             iconRect: {
-              w: 38.0,
-              h: 39.0,
+              w: 32.0,
+              h: 32.0,
             },
             icon: {
               normal: 'widget://image/footer/cds.png',
@@ -424,8 +430,8 @@
           {
             w: api.winWidth / 5.0,
             iconRect: {
-              w: 25.0,
-              h: 25.0,
+              w: 32.0,
+              h: 32.0,
             },
             icon: {
               normal: 'widget://image/footer/home.png',
@@ -443,8 +449,8 @@
             {
             w: api.winWidth / 5.0,
             iconRect: {
-              w: 25.0,
-              h: 25.0,
+              w: 32.0,
+              h: 32.0,
             },
             icon: {
               normal: 'widget://image/footer/chat.png',
@@ -462,8 +468,8 @@
           {
             w: api.winWidth / 5.0,
             iconRect: {
-              w: 43.0,
-              h: 25.0,
+              w: 32.0,
+              h: 32.0,
             },
             icon: {
               normal: 'widget://image/footer/call.png',
@@ -471,7 +477,7 @@
               selected: 'widget://image/footer/call_act.png'
             },
             title: {
-              text: '打call CDS',
+              text: '打call',
               size: 12.0,
               normal: '#696969',
               selected: '#000',
@@ -480,8 +486,8 @@
           },{
             w: api.winWidth / 5.0,
             iconRect: {
-              w: 25.0,
-              h: 25.0,
+              w: 32.0,
+              h: 32.0,
             },
             icon: {
               normal: 'widget://image/footer/me.png',
@@ -538,12 +544,16 @@
           
 
         });
+
+
         hiddensaybug();
         hiddenhome();
        hiddenchatlist();
         hiddenmy();
       }
       function openmain(){
+
+        // homeFrameGroup
         api.openFrame({
           name: 'home_frame',
           url: './html/home_frame.html',
@@ -671,10 +681,12 @@
      }
 
      function hiddenhome(){
+
       api.setFrameAttr({
         name: 'home_frame',
         hidden: true
       });
+
       
     }
     function hiddensaybug(){

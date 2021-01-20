@@ -68,7 +68,7 @@
 			dl=$(document).dialog({
 				    type : 'notice',
 				    infoIcon: '../image/icon/loading.gif',
-				    infoText: '正在与好友连线中'
+				    infoText: '正在连线中'
 				});
 			var ws=new WebSocket("ws://socket.chaodashe.com:8282");
 			ws.onmessage=function(e) {
@@ -228,26 +228,79 @@
 			}
 
 			$('.imgup').click(function(){
-				$('#file').click();
-			});
+					var UIAlbumBrowser = api.require('UIAlbumBrowser');
+					UIAlbumBrowser.open({
+						max: 1,
+						styles: {
+							bg: '#fff',
+							mark: {
+								icon: '',
+								position: 'bottom_left',
+								size: 20
+							},
+							nav: {
+								bg: 'rgba(0,0,0,0.6)',
+								titleColor: '#fff',
+								titleSize: 18,
+								cancelColor: '#fff',
+								cancelSize: 16,
+								finishColor: '#fff',
+								finishSize: 16
+							}
+						},
+						rotation: true
+					}, function(ret) {
+						// alert($api.jsonToStr(ret))
+						if (ret) {
+							if (ret.list == '[]' || ret.list == '' || ret.list == undefined) {
+								api.toast({
+									msg: '未检测到图片路径',
+									duration: 2000,
+									location: 'bottom'
+								});
 
-			$("#file").change(function(){
-				toast('图片发送较慢请稍等...','center',2000)
-				var formdata=new FormData();
-				formdata.append('fromid',fromid);
-				formdata.append('toid',toid);
-				formdata.append('online',online);
-				formdata.append('file',$('#file')[0].files[0])
-				$.ajax({
-					url:url+'chat_upimg',
-					type:'post',
-					cache:false,
-					data:formdata,
-					dataType:'json',
-					processData:false,
-					contentType:false,
-					success:function(data,status,xhr){
-						if (data.status=='200'){
+							} else {
+								// alert(ret.list[0].path)
+								if((ret.list[0].size/1024)>2048){
+									api.toast({
+									    msg: '只能上传储存为2MB以内的图片'
+									});
+									return;
+								}
+								upload(ret.list[0].path);
+							}
+								// alert($api.jsonToStr(listimg))
+						}
+					});
+
+			});
+	 function upload(path){
+	 	toast('图片发送较慢请稍等...','center',2000)
+				var param={
+					'fromid':fromid,
+					'toid':toid,
+					'online':online,
+					
+				}
+				
+				// formdata.append('toid',toid);
+				// formdata.append('online',online);
+				// formdata.append('file',$('#file')[0].files[0])
+				// alert($api.jsonToStr(formdata))
+				api.ajax({
+				url: 'http://api.chaodashe.com/index.php/chat_upimg',
+				method: 'post',
+				data: {
+					values: param,
+					files: {
+						"file": path,
+					},
+				},
+				headers:{'Token':$api.getStorage('token')},
+				report: true,
+				}, function(ret, err) {
+					// alert($api.jsonToStr(ret))//
+						if (ret.statusCode=='200'){
 							$('.message').append('<div class="show"><div class="msg"><div class="head_img" style="background-image:url('+from_head+')" ></div><p><i clas="msg_input"></i><img max-width="188em" max-height="188em" src="'+imgurl+data.img+'"/></p><span class="time">'+timestampFormat(data.time)+'</span></div></div>');
 							  var message='{"data":"'+data.img+'","fromid":"'+fromid+'","toid":"'+toid+'","type":"say_img"}';
 							  ws.send(message);
@@ -257,9 +310,23 @@
 						setTimeout(function(){
 							 for_bottom();
 						},1500)
+					
+				});
+				$.ajax({
+					url:url+'chat_upimg',
+					type:'post',
+					cache:false,
+					data:formdata,
+					dataType:'json',
+					processData:false,
+					contentType:false,
+					success:function(data,status,xhr){
+
+					
 					}
 				});
-			});
+	 }
+			
 			
 
 		 function for_bottom(){

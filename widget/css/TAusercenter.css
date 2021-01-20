@@ -21,12 +21,12 @@ body,html{
 	background-position: center center;
 	vertical-align: middle;
 }
-#head .share{
+#head .report{
 	margin-top: 8px;
 	margin-right: 6px;
 	width: 30px;
 	height: 36px;
-	background-image: url('../image/share.png');
+	background-image: url('../image/action_botton/jubao.png');
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: center center;
@@ -101,7 +101,7 @@ body,html{
 	width: 100%;
 	/* border: 1px solid red; */
 	margin-top: 20px;
-	margin-left: 3px;
+	/*margin-left: 3px;*/
 }
 
 .userinfo .head .headinfo .is_dinyueandchat .is_dinyue{
@@ -138,7 +138,7 @@ body,html{
 
 .userinfo .textinfo{
 	width: 100%;
-	min-height: 52x;
+	min-height: 52px;
 	border-bottom: 1px solid #ddd;
 	background-color: #fff;
 	
@@ -149,30 +149,43 @@ body,html{
 	background-position: center center;
 	width: 22px;
 	height: 22px;
-	margin-left: 16px;
-	margin-top: 6px;
-	display: inline-block;
+	margin-left: 6px;
 }
 .line{
 	border-right:1px solid #ddd ;
-	display: inline-block;
+	margin-left: 6px;
 	height: 18px;
 }
 .userinfo .textinfo .rzdiv {
-	display: inline-block;
-	/* display: flex; */
-	/* justify-content: flex-start; */
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	min-height: 38px;
 }
 .userinfo .textinfo .rzdiv .authority{
-	background-image: url('../image/noauthority.png');
-	background-size: cover;
-	background-position: center center;
-	width: 18px;
-	height: 18px;
-	display: inline-block;
-	font-size: 14px;
-	margin-left: 5px;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 16px;
+	margin-left: 9px;
 	
+	
+}
+.userinfo .textinfo .rzdiv .birthday{
+	width:auto;
+	border-radius: 2px;
+	text-align: center;
+	height: 16px;
+	line-height: 16px;
+	color: #fff;
+	font-size: 12px;
+	margin-left: 6px;
+	padding:0px 2px 0px 2px;
+}
+.userinfo .textinfo .rzdiv .authority img{
+	width: 11px;
+	height: 11px;
 	
 }
 
@@ -189,6 +202,7 @@ body,html{
 	vertical-align: top;
 	font-size: 14px;
 	font-weight: bold;
+	margin-left: 3px;
 }
 
 .cdslist {

@@ -6,7 +6,8 @@
 	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 	<title>下单Frame</title>
-	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+	<script src="../script/commonjs.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/wuliu.css" />
 	<style>
 	html,
 	body {
@@ -189,12 +190,12 @@
 	.order .icon-panel .info .bottom {
 		position: relative;
 		box-sizing: border-box;
-		padding-bottom:2px;
 		width: 100%;
-		height: 32px;
-		font-size: 16px;
+		height: 26px;
+		line-height: 26px;
 		color: #444;
 		text-align: left;
+		font-size: 15px;
 	}
 
 	.order .icon-panel .right {
@@ -364,10 +365,10 @@
 	}
 	.wuliu{
 		width: 95%;
-		height: 40%;
+		/*height: 43%;*/
 		margin:10px;
 		/*border: 1px solid red;*/
-		overflow-x: scroll;
+		overflow-y: scroll;
 
 
 	}
@@ -392,10 +393,15 @@
 		font-size: 13px;
 		color: #9d9d9d;
 	}
+	.colorandsize{
+		font-size: 13px;
+		color: gray;
+	}
 </style>
 </head>
 
 <body>
+
 	<section class="address" id="address">
 		<div class="icon">
 		</div>
@@ -417,9 +423,10 @@
 				<img src="../image/order_ware.gif" id="image" alt="">
 			</div>
 			<div class="info">
-				<div class="top" id="warename">佳沛绿奇异果</div>
-				<div class="description" id="description"></div>
-				<div class="bottom" id="wareprice">￥19.9</div>
+				<!-- <div class="top" id="warename"></div> -->
+				<div class="description" id="description">...</div>
+				<div class="bottom" id="wareprice">￥0.00</div>
+				<div class="colorandsize">.../...</div>
 			</div>
 			
 		</div>
@@ -437,109 +444,95 @@
 		<p class="time"></p>
 	</section>
 </body>
-<script type="text/javascript" src="../script/api.js"></script>
-<script type="text/javascript" src="../script/SHA1.js"></script>
-<script type="text/javascript" src="../script/doT.min.js"></script>
 <script type="text/template" id="template">
 	{{~it:value:index}}
-	<span class="text">{{=value.content}}</span>
-	<p class="time">{{=value.time}}</p>
+		<div class="item-inner flex-box-x">
+		    <div class="item-date">
+		        <div class="date">{{!timesplit('{{=value.time}}',0)}}</div>
+		        <div class="time">{{!timesplit('{{=value.time}}',1)}}</div>
+		    </div>
+		
+		    <div class="dot"><i></i></div>
+		    <div class="item-main col-xs-x">
+		        <div class="item-type"></div>
+		        <div class="item-content">{{=value.status}}</div>
+		    </div>
+		</div>
 	{{~}}
 </script>
 <script type="text/javascript">
 	apiready = function() {
 		getware();
+		
+
+	};  
+		var types = ['公司', '住宅', '学校', '其它'];
+
+		function timesplit(time, index) {
+			return time.split(' ')[index];
+			// console.log(time.split(' '))
+
+		}
+
+		function getware() {
+
+			var params = {
+				id: api.pageParam.shooping,
+				uid: userInfo.id
+
+			}
+			postajax(url + 'getoneshopping', params, function(ret) {
+				if (ret.code == 200) {
+					updateWare(ret.data);
+				}
+			})
 
 
-	};  var types = ['公司', '住宅', '学校', '其它'];
-	var now = Date.now();
-      //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-      var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
-      function getware(){
-		// var now = Date.now();
-  //     //5FB51794-FCDC-1FE9-19E0-xxxxxxxxxxxx换成自己appkey
-  //     var appKey = SHA1("A6099267504667"+"UZ"+"8FC0173C-B395-B797-D516-7A6CD23939B3"+"UZ"+now)+"."+now
-  var params={
-  	fields:{},
-  	fields: {},
-  	where: {
-  		id:api.pageParam.lookid
-  	},
-  	skip:0
-  }
-  params=$api.jsonToStr(params);
-  api.ajax({
-  	url: 'http://d.apicloud.com/mcm/api/shoppinginformation?filter='+params,
-  	method: 'get',
-  	headers: {
-  		"X-APICloud-AppId": "A6099267504667",
-  		"X-APICloud-AppKey":   appKey
-  	},
+		}
 
-  },function(ret, err){
-  	if (ret) {
-            // 赋值
-            updateWare(ret);
-        } else {
-        	api.toast({
-        		msg: err.msg,
-        		duration: 2000,
-        		location: 'bottom'
-        	});
-        }
-    });
+		function updateWare(_data) {
+			// var warename=$('#warename');
+			var wareprice = $('#wareprice');
+			var danhao = $('#danhao');
+			var image = $('#image');
+			var shouhuoren = $('#shouhuoren');
+			var mobile = $('#mobile');
+			var type = $('#type');
+			var text = $('#text');
+			var description = $('#description');
+			var colorandsize=$('.colorandsize');
+			description.html(_data[0].description);
+			shouhuoren.html('收货人:' + _data[0].shoppingname);
+			mobile.html(_data[0].mobile);
+			type.html('[' + types[_data[0].addresstype] + ']');
+			text.html(_data[0].address + '/' + _data[0].house)
+			// warename.html(_data[0].warename);
+			wareprice.html('￥' + _data[0].newprice);
+			image.attr('src', imgurl + _data[0].url);
+			colorandsize.html(_data[0].size+'/'+_data[0].color);
+			var wuliu = JSON.parse(_data[1]);
+			if (_data[0].danhao != '0' && wuliu.status == '0') {
+				danhao.html(_data[0].danhao);
+				updatewuliu(wuliu);
+			}
 
-}
-function updateWare(_data){
-	var warename=$api.byId('warename');
-	var wareprice=$api.byId('wareprice');
-	var danhao=$api.byId('danhao');
-	var image=$api.byId('image');
-	var shouhuoren=$api.byId('shouhuoren');
-	var mobile=$api.byId('mobile');
-	var type=$api.byId('type');
-	var text=$api.byId('text');
-	alert($api.jsonToStr(_data))
-	var description=$api.byId('description');
-	description.innerHTML=_data[0].description;
-	shouhuoren.innerHTML='收货人:'+_data[0].shoppingname;
-	mobile.innerHTML=_data[0].mobile;
-	type.innerHTML='['+ types[_data[0].addresstype] +']'
-	text.innerHTML=_data[0].address+'/'+_data[0].house    
-	warename.innerHTML=_data[0].warename;
-	wareprice.innerHTML='￥'+_data[0].price;
-	image.src=_data[0].url;
-	if (_data[0].danhao) {
-		danhao.innerHTML=_data[0].danhao;
-		wuliu(_data[0].danhao);
-	}
+		}
 
-}
-function wuliu(danhao){
-	api.ajax({
-		url: 'https://cexpress.market.alicloudapi.com/cexpress?no='+danhao,
-		method: 'get',
-		headers: {
-			"X-APICloud-AppId": "A6099267504667",
-			"X-APICloud-AppKey":   appKey,
-			"Authorization":'APPCODE 2256b318236a41d68bb5aa94ff6d6abb'
-		},
+		function updatewuliu(_data) {
+			console.log(_data)
+			$('#wuliugongsi').html(_data.result.expName);
+			
+			var tempFn = doT.template($('#template').text());
+			var resultText = tempFn(_data.result.list)
+			$("#wuliu").html(resultText);
+			$('.wuliu').find('.item-inner:first-child').addClass('active');
 
-	},function(ret, err){
-		if (ret) {
-			var wuliugongsi=$api.byId('wuliugongsi');
-			wuliugongsi.innerHTML=ret.name;
-			updatewuliu(ret.list)
-		} 
-	});
-}
-function updatewuliu(_data){
-	// _data.reverse();
-	var list=$api.byId('wuliu');
-	var tempFn=doT.template($api.byId('template').innerHTML);
-	var resultText=tempFn(_data)
-	$api.html(list, resultText);
-}
+			// outerHeight()获取高度包括(padding+border)，outerHeight(true)获取高度包括(padding+border+margin)
+			var addressheight=$('.address').outerHeight(true);
+			var orderheight=$('.order').outerHeight(true);
+			var $wuliuheight=window.innerHeight-addressheight-orderheight
+			$('.wuliu').height($wuliuheight);
+		}
 
 </script>
 

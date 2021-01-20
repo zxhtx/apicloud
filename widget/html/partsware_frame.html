@@ -1,0 +1,276 @@
+<!doctype html>
+<html>
+
+	<head>
+		<link rel="shortcut icon" href="../image/chao.ico" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<title>购物大厅</title>
+		<script src="../script/commonjs.js"></script>
+		<script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+		<!-- <script type="text/javascript" src=" ../script/pinterest_grid.js"></script> -->
+		<script type="text/javascript" src=" ../script/ajax.js"></script>
+
+
+		<style>
+			html,
+  body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin:0;
+    background-color:#F4F7F9;
+  }
+  a{
+    text-decoration: none;
+    color: #fff;
+    -webkit-tap-highlight-color:rgba(255,0,0,0);
+  }
+  * {
+    box-sizing: border-box;
+    font-family: Georgia;
+  }
+
+  /* swipe begin. */
+#list{
+    position: relative;
+    width:100%;
+    background: #fff;
+	 margin-top: 47px;
+	height: 100%;
+	
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: flex-start;
+
+  }
+
+  .item {
+    /*position: absolute;*/
+    width: calc(100%/2.1);
+    /*margin-left: 3.5px;*/
+    /*margin: 0 auto;*/
+    margin-top: 8px;
+    border-radius: 22px 26px 0px 29px;
+    transition:all 0.3s ease-in-out;
+      box-shadow:0px 6px 6px -6px black;
+
+
+  }
+  .item>.wareimg{
+    width: 100%;
+    display: block;
+      max-height: 322px;
+    min-height: 166px;
+    display: block;
+    background-position: center;
+    background-size: cover;
+    border-radius: 10px 10px 0px 24px;
+  }
+  .item .description{
+    /*padding: 6px;*/
+    font-size: 13px;
+     display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    /*border: 1px solid red;*/
+  }
+  .item .price{
+    display: inline-block;
+    padding-left:69%;
+    color: #FF4521;
+    margin-bottom: 10px;
+    /*border: 1px solid red;*/
+
+  }
+
+     header {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 40px;
+        background-color: white;
+        z-index: 999;
+        box-shadow:0px 6px 6px -6px black;
+    }
+
+    
+    header h1 {
+      margin:0px;
+        width: 100%;
+        height: 40px;
+        text-align: center;
+        color: #000;
+        font-size: 18px;
+        line-height: 40px;
+    }
+     header .back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 28px;
+      height: 34px;
+      /*border: 1px solid red;*/
+      background: url(../image/back.png);
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat;
+	  margin-top: 3px;
+	  margin-left: 5px;
+  }
+   
+ </style>
+	</head>
+
+	<body>
+
+
+		<header id="header">
+			<div class="back" tapmode onclick="javascript:history.back(-1);"></div>
+			<h1>配件</h1>
+		</header>
+
+		<div id="list">
+
+
+		</div>
+
+		<script type="text/javascript">
+			// wareTypeList=$api.getStorage('WareTypeList');
+
+			var off_on=false;
+			var skip = 0;
+			var LIMIT = 22;
+
+			getWareList();
+
+			window.addEventListener("scroll", function() {
+				//当时滚动条离底部0px时开始加载下一页的内容
+				if (($(window).height() + $(window).scrollTop() + 200) >= $(document).height()) {
+					if (off_on) {
+						off_on = false;
+						getWareList(true);
+						
+					}
+
+
+				}
+			});
+
+
+
+
+
+			function opensearch() {
+				api.openWin({
+					name: 'search',
+					url: './search.html',
+					pageParam: {
+						name: 'test'
+					},
+					animation: {
+						type: 'fade'
+					}
+				});
+			}
+
+
+
+			function getWareList(_LoadMore) {
+
+				if (_LoadMore) {
+
+					skip += LIMIT;
+				} else {
+
+					skip = 0;
+					dialog('数据加载中');
+
+				}
+				var params = {
+					waretypeid:"5d0b369cb2d5c22418ad7a49",
+					skip:skip,
+					limit:LIMIT,
+
+				};
+				getajax(url+'allware',params,function(ret){
+				
+					if(ret.code==200){
+						updateWareList(ret.data);
+					}else{
+						off_on=false;
+						
+					}
+					
+				})
+				
+
+			}
+
+
+
+
+			function updateWareList(_data) {
+			
+				var resultText = '';
+				for (var i = 0; i < _data.length; i++) {
+
+					resultText += "<div class='item'  onclick='openware(" + '"' + _data[i].bid + '"' + ")'  style='background:white'><div  class='wareimg'  data-original=" +
+						_data[i].image + " ></div><span class='description'>" + _data[i].description + "</span><span class='price'>￥" +
+						_data[i].price + "</span></div>";
+
+
+				}
+				if (resultText == 0) {
+					dl.close();
+					toast('没有资源啦', 'bottom', 2000);
+					return;
+				}
+
+
+				$('#list').append(resultText);
+				off_on=true;
+				dl.close();
+				$(".wareimg").lazyload({
+					threshold: 200
+				});
+				
+
+			}
+
+			function initWaterFall() {
+
+				$("#list").pinterest_grid({
+					no_columns: 2,
+					padding_x: 8,
+					padding_y: 8,
+					margin_bottom: 10,
+					single_column_breakpoint: 100
+				});
+
+
+			}
+			
+			function openware(wareid){
+		       api.openWin({
+		           name: 'ware',
+		           url: './ware.html',
+		           pageParam: {
+		               wareId: wareid
+		           },
+		           
+
+		       });
+			}
+		</script>
+
+	</body>
+
+
+
+
+</html>

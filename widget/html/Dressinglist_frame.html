@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="shortcut icon" href="../image/chao.ico" />
+		<meta charset="utf-8">
+		<meta content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" name="viewport" />
+		<meta content="telephone=no,email=no,date=no,address=no" name="format-detection">
+		<meta name="referrer" content="no-referrer" />
+		<title>
+			潮搭社,用户动态
+		</title>
+		<script src="../script/commonjs.js">
+		</script>
+		<script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+		<style type="text/css">
+			html,
+			body {
+				margin: 0px;
+				padding: 0px;
+			}
+
+			header {
+				width: 100%;
+				height: 40px;
+				background: white;
+				box-shadow: 0px 6px 6px -6px black;
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				z-index: 999;
+			}
+
+			header .back {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 40px;
+				height: 40px;
+				z-index: 2;
+			}
+
+			header .back img {
+				margin-top: 5px;
+				margin-left: 4px;
+				width: 28px;
+				height: 30px;
+			}
+
+			header a {
+				display: block;
+				text-align: center;
+				line-height: 40px;
+				font-size: 16px;
+				font-weight: bold;
+
+			}
+
+			.cdslist {
+
+				width: calc(100%/2.06);
+				display: inline-block !important;
+				/* margin-left: 3.5px; */
+				margin-top: 8px;
+				/*margin: 0 auto;*/
+				border-radius: 22px 26px 0px 16px;
+				transition: all 0.3s ease-in-out;
+				box-shadow: 0px 6px 6px -6px black;
+				/* display: block; */
+
+
+			}
+
+			.cdslist>.cdsimg {
+				width: 100%;
+				height: 166px;
+				/* max-height: 320px; */
+				/* display: block; */
+				background-position: center;
+				background-size: cover;
+				border-radius: 10px 10px 0px 24px;
+			}
+
+			.cdslist .text {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 1;
+				font-weight: bold;
+				font-size: 14px;
+				padding: 3px;
+				max-height: 66px;
+			}
+
+			.cdslist .user {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				height: 30px;
+				width: 100%;
+			}
+
+			.cdslist .user .userinfo {
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+				width: 52%;
+			}
+
+			.cdslist .user .userinfo .head_img {
+				width: 24px;
+				height: 24px;
+				border-radius: 50%;
+				display: inline-block;
+				background-position: center;
+				background-size: cover;
+				vertical-align: middle;
+				margin-left: 3px;
+			}
+
+			.cdslist .user .userinfo .name {
+				display: inline-block;
+				overflow: hidden;
+				color: gray;
+				width: 58%;
+				overflow: hidden;
+				white-space: nowrap;
+			}
+
+
+			.cdslist .user .likecount {
+				display: inline-block;
+				font-size: 13px;
+				margin-right: 12px;
+				color: gray;
+			}
+
+			.list {
+				margin-top: 39px;
+				width: 100%;
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+				flex-wrap: wrap;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header>
+			<div class="back" tapmode onclick="javascript:history.go(-1);">
+				<img src="../image/back.png">
+			</div>
+			<a class="title"></a>
+		</header>
+		<div class="list">
+
+		</div>
+	</body>
+	<script type="text/template" id="cdstemplate">
+		{{~it.list:value:index}}
+				<div class="cdslist" onclick="openDressing('{{=value.id}}')">
+				<div  class="cdsimg" data-original="{{=it.imgurl}}{{=value.fm}}"></div>
+	 
+			 <span class='text'>{{=value.text}}</span>
+			 <div class="user">
+				<div class="userinfo">
+				  <div class="head_img"data-original="{{=it.imgurl}}{{=value.headimg}}"></div>
+				 <div class="name">{{=value.name}}</div>	
+				</div>	 
+				 <div class="likecount">{{=value.like}}次赞</div>
+				  		 	
+			 </div>
+			
+			
+		</div>
+		{{~}}
+	</script>
+	<script type="text/javascript">
+		var typeindex;
+		var skip = 0;
+		var limit = 18;
+		var off_on=false;
+		apiready = function(){
+		   	typeindex =api.pageParam.type;
+			if (api.pageParam.type == '0') {
+				$('.title').html('个性穿搭');
+			} else {
+				$('.title').html('各类风格潮图');
+			}
+			getDressinglist();
+		}
+		    
+		
+		
+		window.addEventListener("scroll", function() {
+			//当时滚动条离底部0px时开始加载下一页的内容
+			if (($(window).height() + $(window).scrollTop() + 500) >= $(document).height()) {
+				if (off_on) {
+					off_on = false;
+					getDressinglist(true);
+					$('.list').append(
+						'<div id="xuanzhun" class="xz" style="width: 30px; height: 30px; margin:0 auto; margin-top:12px; "></div>'
+					)
+					// toast("商品加载中",'bottom',1000);
+
+				}
+
+
+			}
+		});
+
+		function getDressinglist(_LoadMore) {
+			if (_LoadMore) {
+				skip += limit;
+			} else {
+				skip = 0;
+				dialog('动态加载中');
+			}
+			getajax(url + 'getDressinglist', {
+				'skip': skip,
+				'limit': limit,
+				'type': typeindex
+			}, function(ret) {
+				if (ret.code == 200) {
+					update(ret.data, _LoadMore);
+				} else {
+					$('.list').append(
+						'<p class="nodata w" style="width:100%; text-align: center;color: #ddd;height: 30px; line-height:30px;font-size:14px">-木有了-</p>'
+					);
+					dl.close();
+					$('.xz').remove();
+				}
+
+			})
+		}
+
+		function update(data, _LoadMore) {
+
+
+			// initWaterFall();
+			var param = {
+				list: data,
+				imgurl: imgurl,
+			};
+			var tempFn = doT.template($('#cdstemplate').text());
+			var resultHTML = tempFn(param);
+			if (_LoadMore) {
+				$(".list").append(resultHTML);
+			} else {
+				$(".list").html(resultHTML);
+			}
+
+			// loadimg();
+			off_on=true;
+			dl.close();
+			$('.xz').remove();
+			$(".cdsimg,.head_img").lazyload({
+				threshold: 200
+			});
+
+		}
+		function openDressing(id){
+ 		   api.openWin({
+        	   name: 'Dressingdetails',
+           	   url: './Dressingdetails.html',
+               pageParam: {
+                	articleid:id
+           		},
+          
+       		});
+       
+		}
+	</script>
+</html>

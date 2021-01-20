@@ -143,7 +143,23 @@
                          
                             bounces: false
                         });
-                            
+                    }else if(page=='Dressing'){
+                        api.closeWin({
+                            name: 'Dressingdetails'
+                        });
+                        api.sendEvent({
+                            name: 'resmy',
+                        });
+                        api.closeWin();
+                        api.openWin({
+                           name: 'Dressingdetails',
+                           url: './Dressingdetails.html',
+                           pageParam: {
+                               articleid:api.pageParam.Dressingid
+                           },
+                          bounces: false
+                       });
+
                     }else{
                          api.sendEvent({
                             name: 'resmy',
